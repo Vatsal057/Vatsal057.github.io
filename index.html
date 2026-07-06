@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vatsal Vaghasiya — AI Engineer</title>
+<meta name="description" content="Vatsal Vaghasiya — AI engineer in training. MTech Data Science. 13 shipped projects, 2 research papers under review.">
+<meta property="og:title" content="Vatsal Vaghasiya — AI Engineer">
+<meta property="og:description" content="Lab notebook of an AI engineer: projects, papers, and honest failed experiments.">
+<meta property="og:image" content="images/og.png">
+<link rel="icon" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<header class="topbar">
+  <a class="logo" href="#top">V<span class="logo-dot">.</span>V</a>
+  <nav class="topnav">
+    <a href="#skills">Skills</a>
+    <a href="#experiments">Experiments</a>
+    <a href="#projects">Projects</a>
+    <a href="#apps">Apps</a>
+    <a href="#research">Research</a>
+    <a href="#timeline">Journey</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <button class="terminal-btn mono" id="terminalBtn" title="Terminal mode (Ctrl+`)">&gt;_ terminal</button>
+  <label class="recruiter-switch" title="Recruiter mode: no tilt, no toys, just facts">
+    <input type="checkbox" id="recruiterToggle">
+    <span class="rs-track"><span class="rs-thumb"></span></span>
+    <span class="rs-label">Recruiter&nbsp;mode</span>
+  </label>
+</header>
+
+<!-- ============ HERO ============ -->
+<main id="top">
+<section class="hero">
+  <div class="hero-inner">
+    <div class="notebook-card mono reveal">
+      <div class="nc-head"><span id="ncDay">Mon</span><span>lab notebook — page <span id="ncPage">147</span></span></div>
+      <div class="nc-body">
+        <p class="nc-label">currently training:</p>
+        <p>□ MTech Data Science — epoch 1/4</p>
+        <p>□ Cachy — knowledge engine</p>
+        <p>□ RAG evals — reading list</p>
+      </div>
+    </div>
+    <h1 class="reveal"><span class="marker">Vatsal Vaghasiya</span></h1>
+    <p class="typewriter mono reveal"><span id="typeTarget"></span><span class="caret">▊</span></p>
+    <p class="hero-sub reveal">AI engineer in training. Builds models, ships real apps,
+    and <em>documents the failures</em> — because that's where the learning is.</p>
+    <p class="hero-stats mono reveal">13 projects shipped &nbsp;·&nbsp; 2 papers under review &nbsp;·&nbsp; 4 experiments running</p>
+    <div class="hero-cta reveal">
+      <a class="btn btn-primary" href="#projects">See the experiments</a>
+      <a class="btn btn-ghost" href="resume.pdf" download>Download résumé</a>
+    </div>
+  </div>
+  <div class="hero-doodle reveal" aria-hidden="true">
+    <img src="images/hero-doodle.png" alt="" onerror="this.closest('.hero-doodle').classList.add('fallback')">
+    <svg class="nn-fallback" viewBox="0 0 320 200" fill="none">
+      <g class="nn-edges" stroke="currentColor" stroke-width="1" opacity=".35">
+        <path d="M40 40 C90 40 110 70 160 60"/><path d="M40 100 C90 95 110 65 160 60"/>
+        <path d="M40 160 C90 150 110 70 160 60"/><path d="M40 40 C90 60 110 100 160 105"/>
+        <path d="M40 100 C90 100 110 105 160 105"/><path d="M40 160 C90 140 110 110 160 105"/>
+        <path d="M40 40 C95 80 115 140 160 150"/><path d="M40 100 C95 115 115 145 160 150"/>
+        <path d="M40 160 C95 160 115 152 160 150"/>
+        <path d="M160 60 C210 60 230 85 280 100"/><path d="M160 105 C210 102 230 100 280 100"/>
+        <path d="M160 150 C210 140 230 112 280 100"/>
+      </g>
+      <g class="nn-nodes">
+        <circle cx="40" cy="40" r="9"/><circle cx="40" cy="100" r="9"/><circle cx="40" cy="160" r="9"/>
+        <circle cx="160" cy="60" r="9"/><circle cx="160" cy="105" r="9"/><circle cx="160" cy="150" r="9"/>
+        <circle cx="280" cy="100" r="11"/>
+      </g>
+      <text x="128" y="30" class="nn-label caveat-svg">hidden layer</text>
+      <text x="252" y="140" class="nn-label caveat-svg">output ↑</text>
+    </svg>
+  </div>
+</section>
+
+<!-- ============ SKILLS / TRAINING PROGRESS ============ -->
+<section id="skills" class="section">
+  <div class="section-head reveal">
+    <img class="section-icon" src="images/icon-graph.png" alt="">
+    <p class="eyebrow mono">// training progress</p>
+    <h2>Skills, honestly measured</h2>
+    <p class="section-sub">No "expert in everything". Bars show where training has converged — and where it's still running.</p>
+  </div>
+  <div class="skills-grid">
+    <div class="skill reveal" data-pct="90"><div class="skill-top mono"><span>Python</span><span class="skill-pct">0%</span></div><div class="bar"><div class="bar-fill"></div></div><p class="skill-note">Primary language of every shipped AI project.</p><p class="skill-ships mono">✓ Cachy &nbsp;✓ AirSwipe &nbsp;✓ IPL pipeline &nbsp;✓ +10 more</p></div>
+    <div class="skill reveal" data-pct="82"><div class="skill-top mono"><span>Deep Learning · PyTorch</span><span class="skill-pct">0%</span></div><div class="bar"><div class="bar-fill"></div></div><p class="skill-note">Two research papers built on it.</p><p class="skill-ships mono">✓ ProbCLIP-A &nbsp;✓ preference paper</p></div>
+    <div class="skill reveal" data-pct="80"><div class="skill-top mono"><span>Computer Vision</span><span class="skill-pct">0%</span></div><div class="bar"><div class="bar-fill"></div></div><p class="skill-note">MediaPipe, OpenCV, CLIP in shipped products.</p><p class="skill-ships mono">✓ AirSwipe &nbsp;✓ Cachy OCR &nbsp;✓ ProbCLIP-A</p></div>
+    <div class="skill reveal" data-pct="68"><div class="skill-top mono"><span>LLMs &amp; RAG</span><span class="skill-pct">0%</span></div><div class="bar"><div class="bar-fill"></div></div><p class="skill-note">Built retrieval from scratch. Still training — deliberately.</p><p class="skill-ships mono">✓ Constitution QA &nbsp;✓ Cachy LLM chain &nbsp;→ current focus: evals</p></div>
+    <div class="skill reveal" data-pct="72"><div class="skill-top mono"><span>SQL &amp; Data Wrangling</span><span class="skill-pct">0%</span></div><div class="bar"><div class="bar-fill"></div></div><p class="skill-note">pandas, SQLite, messy real-world Excel included.</p><p class="skill-ships mono">✓ Bangalore AQI &nbsp;✓ 14-station consolidation</p></div>
+    <div class="skill reveal" data-pct="70"><div class="skill-top mono"><span>MLOps · Docker · FastAPI</span><span class="skill-pct">0%</span></div><div class="bar"><div class="bar-fill"></div></div><p class="skill-note">Drift detection, monitoring, multi-service deploys.</p><p class="skill-ships mono">✓ IPL drift pipeline &nbsp;✓ HF Spaces deploys</p></div>
+    <div class="skill reveal" data-pct="78"><div class="skill-top mono"><span>App Development</span><span class="skill-pct">0%</span></div><div class="bar"><div class="bar-fill"></div></div><p class="skill-note">Models are better with a product around them.</p><p class="skill-ships mono">✓ 7 shipped apps &nbsp;✓ Flutter &nbsp;✓ Swift</p></div>
+  </div>
+</section>
+
+<!-- ============ EXPERIMENT BOARD ============ -->
+<section id="experiments" class="section">
+  <div class="section-head reveal">
+    <img class="section-icon" src="images/icon-flask.png" alt="">
+    <p class="eyebrow mono">// experiment board</p>
+    <h2>Trying · Finished · Failed</h2>
+    <p class="section-sub">Real lab boards have a failed column. So does this one.</p>
+  </div>
+  <div class="board">
+    <div class="board-col reveal">
+      <h3 class="board-title mono">→ trying</h3>
+      <div class="sticky s-sage">RAG deep-dive — retrieval, chunking, eval. No framework crutches.</div>
+      <div class="sticky s-sage">ProbCLIP-A paper — surviving peer review.</div>
+      <div class="sticky s-sage">MTech Data Science — epoch 1 of 4.</div>
+    </div>
+    <div class="board-col reveal">
+      <h3 class="board-title mono">✓ finished</h3>
+      <div class="sticky s-amber">Swap augmentation killed position bias in preference model.</div>
+      <div class="sticky s-amber">DBSCAN beat K-Means at finding pollution hotspots.</div>
+      <div class="sticky s-amber">Drift monitor computing PSI every 5 minutes, in production style.</div>
+    </div>
+    <div class="board-col reveal">
+      <h3 class="board-title mono">✗ failed (kept on purpose) <span class="margin-note caveat">← the useful column</span></h3>
+      <div class="sticky s-rose">First RAG stress test: 20 hard queries, many misses. Fixed chunking → 78% accuracy, documented in FAILURES.md.</div>
+      <div class="sticky s-rose">LangChain version — too much overhead. Deleted. Rewrote retrieval in ~60 lines.</div>
+      <div class="sticky s-rose">CLIP adapter variance collapsed to zero. KL warmup schedule fixed it.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ENGINEERING PRINCIPLES ============ -->
+<section id="principles" class="section">
+  <div class="section-head reveal">
+    <img class="section-icon" src="images/icon-plane.png" alt="">
+    <p class="eyebrow mono">// index cards — how I work</p>
+    <h2>Engineering principles</h2>
+  </div>
+  <div class="principles">
+    <div class="index-card reveal">
+      <h3 class="caveat">Ship before perfect</h3>
+      <p>Small working systems beat ambitious prototypes. Cachy launched with fallback chains, not excuses.</p>
+    </div>
+    <div class="index-card reveal">
+      <h3 class="caveat">Measure everything</h3>
+      <p>If I can't evaluate it, I can't improve it. Even the skills section on this page has numbers.</p>
+    </div>
+    <div class="index-card reveal">
+      <h3 class="caveat">Understand the abstraction</h3>
+      <p>Core pieces from scratch before frameworks. RAG in 60 lines taught me more than any wrapper would.</p>
+    </div>
+    <div class="index-card reveal">
+      <h3 class="caveat">Failures are artifacts</h3>
+      <p>Dead ends get documented — FAILURES.md ships with the repo. Future me always needs it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section id="projects" class="section">
+  <div class="section-head reveal">
+    <img class="section-icon" src="images/icon-gpu.png" alt="">
+    <p class="eyebrow mono">// pinned to the desk</p>
+    <h2>Selected projects <span class="margin-note caveat">start with the RAG one ↓</span></h2>
+    <p class="section-sub">Each card shows the pipeline it ran through. All code on <a href="https://github.com/Vatsal057" target="_blank" rel="noopener">GitHub</a>.</p>
+  </div>
+  <div class="cards">
+
+    <article class="card reveal">
+      <div class="pin"></div>
+      <h3>Cachy</h3>
+      <p class="card-tag mono">knowledge engine · flutter + fastapi</p>
+      <p>Turns Reels, Shorts and articles into structured knowledge cards — transcription, OCR, LLM chain with automatic fallback across Gemini / Cerebras / Groq, all linked in a semantic knowledge graph.</p>
+      <div class="pipeline mono"><span>ingest</span><span>transcribe/OCR</span><span>LLM chain</span><span>cards</span><span>graph</span></div>
+      <p class="card-stack mono">Whisper · OpenCV · Tesseract · SQLite · HF Spaces</p>
+    </article>
+
+    <article class="card reveal">
+      <div class="pin"></div>
+      <h3>Constitution of India — RAG Q&amp;A</h3>
+      <p class="card-tag mono">rag from scratch · no langchain</p>
+      <p>Ask the Indian Constitution anything, get grounded answers with exact citations and similarity scores. Retrieval written from scratch in <mark class="hl">~60 lines</mark>. 20-query stress test documented — <mark class="hl">78% accuracy</mark> after fixes.</p>
+      <div class="pipeline mono"><span>pdf</span><span>chunk</span><span>embed</span><span>retrieve</span><span>cite</span></div>
+      <p class="card-stack mono">sentence-transformers · ChromaDB · Mistral-7B</p>
+    </article>
+
+    <article class="card reveal">
+      <div class="pin"></div>
+      <h3>IPL Match Predictor — MLOps</h3>
+      <p class="card-tag mono">full ml lifecycle · self-monitoring</p>
+      <p>XGBoost match-outcome model served over FastAPI, with a monitor computing Population Stability Index every 5 minutes to catch data drift, and a live Streamlit health dashboard. Three services, Docker Compose.</p>
+      <div class="pipeline mono"><span>data</span><span>features</span><span>train</span><span>serve</span><span>monitor</span></div>
+      <p class="card-stack mono">XGBoost · FastAPI · Streamlit · Docker</p>
+    </article>
+
+    <article class="card reveal">
+      <div class="pin"></div>
+      <h3>AirSwipe</h3>
+      <p class="card-tag mono">computer vision · gesture control</p>
+      <p>Control PowerPoint with bare hands through a webcam: swipe to navigate, point for a live laser dot, pinch to zoom. Orientation-invariant detection with dwell-time guards against accidental triggers.</p>
+      <div class="pipeline mono"><span>webcam</span><span>landmarks</span><span>gesture</span><span>action</span></div>
+      <p class="card-stack mono">MediaPipe · OpenCV · PyQt6</p>
+    </article>
+
+    <article class="card reveal">
+      <div class="pin"></div>
+      <h3>Bangalore Air Quality</h3>
+      <p class="card-tag mono">data mining · unsupervised</p>
+      <p>A year of data from 14 CPCB stations, 6 engineered features, three clustering algorithms compared. DBSCAN won — it flags outliers, and outliers are the hotspots: Silk Board hit <mark class="hl">AQI 500</mark>.</p>
+      <div class="pipeline mono"><span>excel mess</span><span>clean</span><span>features</span><span>cluster</span><span>hotspots</span></div>
+      <p class="card-stack mono">pandas · scikit-learn · DBSCAN</p>
+    </article>
+
+    <article class="card reveal">
+      <div class="pin"></div>
+      <h3>ScribbleType</h3>
+      <p class="card-tag mono">on-device ml · accessibility</p>
+      <p>Handwriting-to-text Android keyboard for seniors: on-device ink recognition, a personal dictionary that learns your writing, and Catmull-Rom smoothing to filter hand tremor.</p>
+      <div class="pipeline mono"><span>strokes</span><span>smooth</span><span>recognize</span><span>learn</span></div>
+      <p class="card-stack mono">ML Kit · Flutter · Kotlin IME</p>
+    </article>
+  </div>
+
+</section>
+
+<!-- ============ APPS ============ -->
+<section id="apps" class="section">
+  <div class="section-head reveal">
+    <img class="section-icon" src="images/icon-gpu.png" alt="">
+    <p class="eyebrow mono">// the app shelf — native, no electron</p>
+    <h2>Apps, shipped</h2>
+    <p class="section-sub">Five native macOS apps in Swift, plus mobile and web. Built because I wanted them to exist — the best reason.</p>
+  </div>
+  <div class="app-grid">
+    <article class="app-window reveal">
+      <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span class="app-name">Insomniac.app</span><span class="app-platform">macOS</span></div>
+      <div class="app-body">
+        <p>Keeps a Mac awake — lid closed included. Timed durations, global shortcut, and smart triggers: auto-enables on chosen apps, Wi-Fi networks, high CPU, or active downloads. Scriptable via <code>insomniac://</code> URL scheme.</p>
+        <p class="card-stack mono">Swift 5.9 · AppKit · IOKit · NWPathMonitor</p>
+      </div>
+    </article>
+    <article class="app-window reveal">
+      <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span class="app-name">Glide.app</span><span class="app-platform">macOS</span></div>
+      <div class="app-body">
+        <p>Custom 3/4/5-finger trackpad gestures for window snapping, media, launching — anything. Speed-aware: a slow swipe switches windows, a fast flick opens the browser. Reciprocal undo, haptic feedback, per-app filters.</p>
+        <p class="card-stack mono">Swift · AppKit · IOKit multitouch</p>
+      </div>
+    </article>
+    <article class="app-window reveal">
+      <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span class="app-name">iBar.app</span><span class="app-platform">macOS</span></div>
+      <div class="app-body">
+        <p>Themes the macOS menu bar — a thing Apple provides no API for. Click-through overlay at the menu bar's own window level, gradients and blur, auto-presets on window state, notch-aware, and it reads menu titles via Accessibility API to keep them legible.</p>
+        <p class="card-stack mono">Swift · SwiftUI · Accessibility API · CGWindowList</p>
+      </div>
+    </article>
+    <article class="app-window reveal">
+      <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span class="app-name">Dimmer.app</span><span class="app-platform">macOS</span></div>
+      <div class="app-body">
+        <p>Dims displays below the hardware minimum using overlay windows — every connected monitor, independently. Lives in the menu bar, does one thing well.</p>
+        <p class="card-stack mono">Swift · SwiftUI · AppKit</p>
+      </div>
+    </article>
+    <article class="app-window reveal">
+      <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span class="app-name">PhotoWidget.app</span><span class="app-platform">macOS</span></div>
+      <div class="app-body">
+        <p>Your own photos as desktop widgets — four sizes, per-widget photo choice, full color even in monochrome widget mode.</p>
+        <p class="card-stack mono">Swift · WidgetKit · AppIntents</p>
+      </div>
+    </article>
+    <article class="app-window app-featured reveal">
+      <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span class="app-name">Smart Wardrobe</span><span class="app-platform">Flutter · Android/iOS</span></div>
+      <div class="app-body">
+        <p>A smart closet manager: photograph your clothes once, and the app decides what you wear — every day, for every occasion.</p>
+        <ul class="app-features">
+          <li><b>AI outfit generation</b> — recommendations by occasion (casual, formal, date, party, outdoor) built from your actual wardrobe, not stock photos</li>
+          <li><b>"Today" screen</b> — factors in live weather for your city and recent wear history, so it never repeats yesterday's outfit</li>
+          <li><b>Wash tracker</b> — knows what's clean, dedicated wash screen, streak badges</li>
+          <li><b>Packing-list generator</b> — give it trip duration + destination, it checks the forecast and packs for you</li>
+          <li><b>Wear analytics</b> — cost-per-wear per item, utilization insights, favorite-color stats, underused-item alerts</li>
+          <li><b>Weekly planner</b> — plan outfits for the week ahead</li>
+        </ul>
+        <p>Everything stored on-device in SQLite. No account, no server, no data leaving your phone.</p>
+        <p class="card-stack mono">Flutter · Provider · SQLite · weather API</p>
+      </div>
+    </article>
+    <article class="app-window app-featured reveal">
+      <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span class="app-name">AI Career OS</span><span class="app-platform">Web</span></div>
+      <div class="app-body">
+        <p>A personal career operating system — built to answer one question every morning: <em>what is the highest-ROI thing I can do right now to get hired?</em></p>
+        <ul class="app-features">
+          <li><b>Readiness engine</b> — weighted, explainable 0–100 hiring score across six dimensions (roadmap 28%, projects 24%, interview 20%, resume 12%, GitHub 10%, LinkedIn 6%); pure functions, unit-tested</li>
+          <li><b>Daily missions</b> — generates a morning/afternoon/evening plan from your weak areas and time budget, feeds streaks and readiness</li>
+          <li><b>Learning playground</b> — interactive lessons with runnable Python in the browser (Pyodide), exercises, quizzes, real interview questions</li>
+          <li><b>Resume builder</b> — deterministic ATS score, keyword coverage vs target roles, stronger-bullet suggestions</li>
+          <li><b>Interview prep</b> — spaced-repetition flashcards, company-tagged question bank, coding playground</li>
+          <li><b>GitHub optimizer + application CRM</b> — repo quality scoring, README generator, and a full pipeline tracker for every application</li>
+          <li><b>Gamified</b> — XP, levels, badges, weekly challenges, command palette for power users</li>
+        </ul>
+        <p class="card-stack mono">Next.js 16 · React 19 · TypeScript (strict) · Zustand · Dexie · Pyodide · Vitest</p>
+      </div>
+    </article>
+  </div>
+  <p class="app-count mono reveal">// running total: 13 projects, all listed on this page. nothing hidden, nothing padded.</p>
+</section>
+
+<!-- ============ DATASET SHELF ============ -->
+<section id="shelf" class="section">
+  <div class="section-head reveal">
+    <img class="section-icon" src="images/icon-books.png" alt="">
+    <p class="eyebrow mono">// research shelf</p>
+    <h2>Domains I've actually shipped in</h2>
+    <p class="section-sub">Hover a book. Each one lists the projects behind it — no empty spines.</p>
+  </div>
+  <div class="bookshelf reveal">
+    <div class="book b1" tabindex="0"><span class="book-spine">Computer Vision</span><span class="book-info">AirSwipe · Cachy OCR · ProbCLIP-A · ScribbleType</span></div>
+    <div class="book b2" tabindex="0"><span class="book-spine">NLP &amp; LLMs</span><span class="book-info">Constitution RAG · Preference paper · Cachy LLM chain</span></div>
+    <div class="book b3" tabindex="0"><span class="book-spine">MLOps</span><span class="book-info">IPL drift pipeline · Docker · PSI monitoring</span></div>
+    <div class="book b4" tabindex="0"><span class="book-spine">Data Mining</span><span class="book-info">Bangalore AQI · clustering · feature engineering</span></div>
+    <div class="book b5" tabindex="0"><span class="book-spine">App Development</span><span class="book-info">7 shipped apps · Flutter · Swift · Kotlin</span></div>
+    <div class="book b6" tabindex="0"><span class="book-spine">Preference Learning</span><span class="book-info">Siamese DeBERTa paper · human preference prediction</span></div>
+    <div class="shelf-plank"></div>
+  </div>
+</section>
+
+<!-- ============ RESEARCH WALL ============ -->
+<section id="research" class="section">
+  <div class="section-head reveal">
+    <img class="section-icon" src="images/icon-brain.png" alt="">
+    <p class="eyebrow mono">// research wall — click a paper</p>
+    <h2>Papers under review</h2>
+    <p class="section-sub">Written as an MTech student, trained on free GPUs. Click to flip.</p>
+  </div>
+  <div class="papers">
+    <div class="paper-flip reveal" tabindex="0" role="button" aria-label="Flip paper: Efficient LLM Preference Prediction">
+      <div class="paper-inner">
+        <div class="paper-face paper-front">
+          <div class="pin"></div>
+          <p class="mono paper-status">status: under review</p>
+          <h3>Efficient LLM Preference Prediction</h3>
+          <p class="paper-venue">Siamese DeBERTa with swap augmentation &amp; temperature calibration</p>
+          <span class="paper-note caveat">trained for $0 !</span>
+          <p class="mono flip-hint">flip →</p>
+        </div>
+        <div class="paper-face paper-back">
+          <h4 class="mono">the short version</h4>
+          <p>Predicts which chatbot answer humans prefer — at 98% of state-of-the-art with a model <mark class="hl">127× smaller</mark> (71M params), trained for <mark class="hl">$0</mark> on free T4s in 8.4 hours.</p>
+          <p class="mono paper-metrics">log loss 1.052 → 0.987 · accuracy +3.5pts</p>
+          <p class="paper-learned"><span class="caveat">what I learned:</span> clever data handling (swap augmentation) beats brute-force scale.</p>
+        </div>
+      </div>
+    </div>
+    <div class="paper-flip reveal" tabindex="0" role="button" aria-label="Flip paper: ProbCLIP-A">
+      <div class="paper-inner">
+        <div class="paper-face paper-front">
+          <div class="pin"></div>
+          <p class="mono paper-status">status: under review</p>
+          <h3>ProbCLIP-A: Uncertainty-Aware Retrieval</h3>
+          <p class="paper-venue">Probabilistic adapters for frozen CLIP vision foundation models</p>
+          <span class="paper-note caveat">knows when it's unsure</span>
+          <p class="mono flip-hint">flip →</p>
+        </div>
+        <div class="paper-face paper-back">
+          <h4 class="mono">the short version</h4>
+          <p>Makes CLIP say <em>how sure it is</em>: a 4.2M-param adapter on frozen CLIP outputs distributions, Monte Carlo sampling turns them into uncertainty scores that catch <mark class="hl">36.6% of failures</mark> at 8.1% false alarms.</p>
+          <p class="mono paper-metrics">R@1 68.9% · ECE 0.062 (best of all baselines)</p>
+          <p class="paper-learned"><span class="caveat">what I learned:</span> KL warmup is the difference between real uncertainty and variance collapse.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHAT I BRING ============ -->
+<section id="value" class="section">
+  <div class="section-head reveal">
+    <img class="section-icon" src="images/icon-brain.png" alt="">
+    <p class="eyebrow mono">// for the team considering me</p>
+    <h2>What I bring on day one</h2>
+  </div>
+  <div class="value-grid">
+    <div class="value-item reveal">
+      <p class="mono value-k">✓ models that actually ship</p>
+      <p>Notebook → Dockerized FastAPI service → drift monitoring. Already done end to end for the IPL pipeline — three services, PSI checks every five minutes.</p>
+    </div>
+    <div class="value-item reveal">
+      <p class="mono value-k">✓ RAG without training wheels</p>
+      <p>Retrieval, chunking, and evaluation written from scratch and stress-tested with a published failure analysis. I know what's under the framework.</p>
+    </div>
+    <div class="value-item reveal">
+      <p class="mono value-k">✓ research rigor on a budget</p>
+      <p>Two first-author papers built entirely on free-tier GPUs. I read methods, implement them, and improve them — then document what didn't work.</p>
+    </div>
+    <div class="value-item reveal">
+      <p class="mono value-k">✓ the whole product</p>
+      <p>If the model needs an app around it, I ship that too — Swift, Flutter, or web. Thirteen shipped projects say the last mile gets finished.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TIMELINE ============ -->
+<section id="timeline" class="section">
+  <div class="section-head reveal">
+    <img class="section-icon" src="images/icon-git.png" alt="">
+    <p class="eyebrow mono">// git log --journey</p>
+    <h2>Commit history</h2>
+  </div>
+  <div class="gitlog mono reveal">
+    <div class="commit"><span class="c-hash">a1f2021</span><span class="c-date">Oct 2021</span><span class="c-msg">init: B.Tech Computer Engineering @ SAL College of Engineering</span></div>
+    <div class="commit"><span class="c-hash">b3c4d55</span><span class="c-date">2023</span><span class="c-msg">feat: Python + OpenCV — first computer vision experiments</span></div>
+    <div class="commit"><span class="c-hash">c7e8f01</span><span class="c-date">2024</span><span class="c-msg">feat: AirSwipe, gesture control, first real users</span></div>
+    <div class="commit"><span class="c-hash">d9a0b12</span><span class="c-date">Apr 2025</span><span class="c-msg">release: B.Tech complete 🎓</span></div>
+    <div class="commit"><span class="c-hash">e2c3d44</span><span class="c-date">2025</span><span class="c-msg">feat: two research papers submitted, RAG systems, MLOps pipeline</span></div>
+    <div class="commit"><span class="c-hash">f5e6a78</span><span class="c-date">Nov 2025</span><span class="c-msg">checkout -b mtech: Data Science @ Ramaiah University of Applied Sciences</span></div>
+    <div class="commit c-head"><span class="c-hash">HEAD</span><span class="c-date">now</span><span class="c-msg">training… next commit: your team? <span class="margin-note caveat">← you are here</span></span></div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="section contact">
+  <div class="section-head reveal">
+    <img class="section-icon" src="images/icon-mail.png" alt="">
+    <p class="eyebrow mono">// open a pull request</p>
+    <h2>Let's build something</h2>
+    <p class="section-sub">Looking for AI/ML internships and roles.</p>
+  </div>
+  <p class="end-note caveat reveal">— end of notebook. rest of the pages are being written. —</p>
+  <p class="gh-live mono reveal" id="ghLive" hidden></p>
+  <div class="contact-row reveal">
+    <a class="btn btn-primary" href="mailto:kvaghasiya057@gmail.com">kvaghasiya057@gmail.com</a>
+    <a class="btn btn-ghost" href="https://github.com/Vatsal057" target="_blank" rel="noopener">GitHub</a>
+    <a class="btn btn-ghost" href="https://www.linkedin.com/in/vatsal-vaghasiya/" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="btn btn-ghost" href="https://www.kaggle.com/vatsalvaghasiya" target="_blank" rel="noopener">Kaggle</a>
+    <a class="btn btn-ghost" href="resume.pdf" download>Résumé (PDF)</a>
+  </div>
+  <p class="footer-joke mono reveal">this site's robot has read my résumé more times than any recruiter · built by hand, no template</p>
+</section>
+</main>
+
+<!-- ============ AI COMPANION ============ -->
+<div class="companion" id="companion">
+  <div class="companion-panel" id="companionPanel">
+    <div class="bubble" id="companionBubble">Welcome. I trained all night.</div>
+    <form class="ask-form" id="askForm">
+      <input type="text" id="askInput" placeholder="ask, or try 'tour'…" autocomplete="off" aria-label="Ask the robot a question or give a command">
+    </form>
+  </div>
+  <div class="robot" id="robotBtn" role="button" tabindex="0" aria-label="AI companion — click to talk">
+    <img src="images/robot-wave.png" alt="" id="robotImg" draggable="false" onerror="this.parentElement.classList.add('fallback')">
+    <span class="robot-emoji" aria-hidden="true">🤖</span>
+  </div>
+</div>
+
+<!-- ============ TERMINAL ============ -->
+<div class="terminal-overlay" id="terminalOverlay" hidden>
+  <div class="terminal" role="dialog" aria-label="Terminal">
+    <div class="term-titlebar mono">
+      <span class="term-dots"><i></i><i></i><i></i></span>
+      <span>vatsal@lab — zsh</span>
+      <button class="term-close" id="terminalClose" aria-label="Close terminal">✕</button>
+    </div>
+    <div class="term-body mono" id="termBody" tabindex="-1">
+      <div id="termOut"></div>
+      <div class="term-inputline">
+        <span class="term-prompt">vatsal@lab:~$</span>
+        <input type="text" id="termInput" autocomplete="off" spellcheck="false" aria-label="Terminal input">
+      </div>
+    </div>
+  </div>
+</div>
+
+<canvas id="rain" hidden></canvas>
+
+<script src="script.js"></script>
+</body>
+</html>
