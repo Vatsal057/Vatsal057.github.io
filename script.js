@@ -60,9 +60,9 @@ const typeTarget = document.getElementById('typeTarget');
 })();
 
 // ============ Paper flip cards ============
-document.querySelectorAll('.paper-flip').forEach(card => {
+document.querySelectorAll('.paper-flip, .card-flip').forEach(card => {
   const flip = () => card.classList.toggle('flipped');
-  card.addEventListener('click', flip);
+  card.addEventListener('click', e => { if (!e.target.closest('a')) flip(); });
   card.addEventListener('keydown', e => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); }
   });
@@ -82,17 +82,17 @@ recruiterToggle.addEventListener('change', () => {
 const LINES = [
   "Welcome. I trained all night.",
   "Say 'tour' below and I'll walk you through everything.",
-  "13 projects. 2 papers. Scroll — I'll wait.",
+  "13 projects. 2 papers. Scroll, I'll wait.",
   "I can run things. Try 'run train' or 'flip the papers'.",
   "Try the terminal. Top right. Ctrl+` also works.",
   "Recruiter? There's a switch up top. It makes me disappear. Rude.",
 ];
 const ANSWERS = [
-  [/rag|retrieval|chroma|vector/i, "He built RAG from scratch — no LangChain, ~60 lines of retrieval logic over the Indian Constitution, with citations. 78% accuracy, failures documented publicly."],
-  [/paper|research|publish|deberta|clip/i, "Two first-author papers under review: a preference model 127× smaller than rivals, and ProbCLIP-A — uncertainty for CLIP. Flip the papers on the research wall."],
+  [/rag|retrieval|chroma|vector/i, "He wrote the RAG retrieval himself, about 60 lines over the Indian Constitution, with citations. 78% accuracy, failures documented in the repo."],
+  [/paper|research|publish|deberta|clip/i, "Two first-author papers under review: a preference model 127× smaller than rivals, and ProbCLIP-A, which adds uncertainty to CLIP. Flip the papers on the research wall."],
   [/project|built|portfolio|work/i, "13 shipped. Strongest: Cachy (knowledge engine), Constitution RAG, IPL MLOps pipeline. Cards are pinned above."],
-  [/skill|python|pytorch|stack|know/i, "Python 4 years, PyTorch (two papers), CV, RAG, SQL, Docker. Honest bars in the skills section — nothing inflated."],
-  [/mlops|docker|deploy|drift/i, "IPL predictor runs 3 dockerized services with drift detection — PSI computed every 5 minutes. Real lifecycle, not a notebook."],
+  [/skill|python|pytorch|stack|know/i, "Python 4 years, PyTorch (two papers), CV, RAG, SQL, Docker. The bars in the skills section are his own estimates."],
+  [/mlops|docker|deploy|drift/i, "IPL predictor runs 3 dockerized services with drift detection; PSI computed every 5 minutes."],
   [/hire|intern|job|contact|email|reach/i, "kvaghasiya057@gmail.com. He replies faster than my inference. Résumé button is in the hero."],
   [/terminal|cli|command/i, "Top right: >_ terminal. Or Ctrl+`. Try `train` in there."],
   [/who|you|robot|name/i, "Phase-1 brain: keyword matching, fully offline. Phase 2 gives me real RAG. He believes in shipping first."],
@@ -216,7 +216,7 @@ function roamAct() {
     const ids = ['experiments', 'projects', 'research', 'principles'];
     const id = ids[Math.floor(Math.random() * ids.length)];
     pendingGoto = id;
-    say(`Have you seen the ${id} section? Click me — I'll take you.`, true);
+    say(`Have you seen the ${id} section? Click me and I'll take you.`, true);
   } else {
     walkTo(...homeXY());
   }
@@ -228,7 +228,7 @@ function scheduleRoam() {
 }
 if (roamOK) scheduleRoam();
 
-// chat left open blocks roaming — auto-close it when the user scrolls away
+// chat left open blocks roaming - auto-close it when the user scrolls away
 addEventListener('scroll', () => {
   if (companion.classList.contains('open') && document.activeElement !== askInput) {
     companion.classList.remove('open');
@@ -254,14 +254,14 @@ bubble.addEventListener('click', e => {
   if (pendingGoto) followGoto();
 });
 
-// ============ Guided tour — the robot drives ============
+// ============ Guided tour - the robot drives ============
 const TOUR = [
-  ['skills', "Skills. Every bar backed by shipped work — no vibes-based percentages."],
-  ['experiments', "The lab board. The failed column is the honest part."],
-  ['principles', "How he works. Index cards, because that's how he actually thinks."],
-  ['projects', "The desk. Start with the RAG one — built without frameworks."],
-  ['apps', "Five native macOS apps in Swift. No Electron in this house."],
-  ['research', "Two first-author papers, under review. Click one — they flip."],
+  ['skills', "Skills. Each bar lists the projects it came from."],
+  ['experiments', "The lab board. Check the failed column."],
+  ['principles', "How he works, on index cards."],
+  ['projects', "The desk. Start with the RAG one."],
+  ['apps', "Five native macOS apps, all Swift."],
+  ['research', "Two first-author papers, under review. Click one to flip it."],
   ['timeline', "Four years in one git log."],
   ['contact', "End of notebook. This is where you email him. Tour's over."],
 ];
@@ -338,7 +338,7 @@ const ACTIONS = [
   [/terminal|cli/i, () => { openTerminal(); say("Your shell, my desk. Type help.", true); }],
   [/resume|cv/i, () => {
     const a = document.createElement('a'); a.href = 'resume.pdf'; a.download = 'Vatsal-Vaghasiya-Resume.pdf'; a.click();
-    say("Sent. One page, no fluff.", true);
+    say("Sent. It's one page.", true);
   }],
   [/flip|paper/i, () => {
     goToSection('research');
@@ -348,8 +348,8 @@ const ACTIONS = [
   [/github/i, () => { window.open('https://github.com/Vatsal057', '_blank'); say("Opening his GitHub. Judge the commits yourself.", true); }],
   [/linkedin/i, () => { window.open('https://www.linkedin.com/in/vatsal-vaghasiya/', '_blank'); say("LinkedIn. He's less funny there.", true); }],
   [/apps?|macos|swift/i, () => goToSection('apps', "Five macOS apps. All native.")],
-  [/skills?$|show skills/i, () => goToSection('skills', "Honest numbers. I checked.")],
-  [/experiments?|board|fail/i, () => goToSection('experiments', "The failed column is the point.")],
+  [/skills?$|show skills/i, () => goToSection('skills', "His own estimates. I checked.")],
+  [/experiments?|board|fail/i, () => goToSection('experiments', "Go read the failed column.")],
   [/principles|how.*(work|think)/i, () => goToSection('principles', "Four cards. All true.")],
   [/projects?|cachy|airswipe/i, () => goToSection('projects', "Thirteen shipped. Six pinned.")],
   [/research|papers?/i, () => goToSection('research', "Both first-author. Click to flip.")],
@@ -377,11 +377,11 @@ setTimeout(() => say(LINES[0]), 1400);
 
 // contextual lines as sections scroll into view (each said once)
 const SECTION_LINES = {
-  experiments: "The failed column is the point. Most portfolios don't have one.",
-  principles: "Index cards. He actually works like this.",
+  experiments: "Most portfolios skip the failed experiments. These stayed on the board.",
+  principles: "Index cards. His desk really looks like this.",
   projects: "Try `cat rag` in the terminal for the short version.",
-  apps: "He ships Mac apps between papers. Native Swift, no Electron.",
-  value: "This section is for you, recruiter. Yes, you.",
+  apps: "He ships Mac apps between papers.",
+  value: "If you're skimming, this section is the summary.",
   research: "Two papers, both first-author, both trained on free GPUs.",
   timeline: "Four years, one git log.",
   contact: "This is the part where you email him.",
@@ -401,19 +401,19 @@ Object.keys(SECTION_LINES).forEach(id => {
 
 // ============ Terminal ============
 const PROJECT_FILES = {
-  'cachy':        'Cachy — knowledge engine. Reels/articles → structured cards.\n  transcription (faster-whisper) + OCR (tesseract) + LLM chain w/ 3-provider fallback\n  semantic knowledge graph · Flutter + FastAPI · offline-capable',
-  'rag':          'Constitution of India RAG — QA with citations.\n  sentence-transformers + ChromaDB + Mistral-7B\n  retrieval written from scratch (~60 lines, no framework) · 78% accuracy, failures documented',
-  'ipl-mlops':    'IPL Match Predictor — full ML lifecycle.\n  XGBoost + FastAPI + Streamlit, 3 services on Docker Compose\n  drift monitor computes PSI every 5 min → flags retraining',
-  'airswipe':     'AirSwipe — control slides with bare hands.\n  MediaPipe + OpenCV · swipe/point/pinch · orientation-invariant',
-  'aqi':          'Bangalore AQI — clustering 14 stations, 1 year of data.\n  K-Means vs hierarchical vs DBSCAN → DBSCAN found hotspots (Silk Board, AQI 500)',
-  'scribbletype': 'ScribbleType — handwriting → text for seniors.\n  on-device ML Kit ink recognition · tremor smoothing · system-wide Android IME',
-  'insomniac':    'Insomniac — macOS keep-awake, lid closed included.\n  smart triggers (app/Wi-Fi/CPU/downloads) · insomniac:// URL scheme · Swift + IOKit',
-  'glide':        'Glide — custom 3/4/5-finger trackpad gestures.\n  speed-aware actions · reciprocal undo · haptics · IOKit multitouch',
-  'ibar':         'iBar — menu bar theming where Apple provides no API.\n  click-through overlay at menu bar window level · Accessibility API · notch-aware',
-  'dimmer':       'Dimmer — dims displays below hardware minimum.\n  overlay windows · multi-monitor · menu bar app · Swift',
-  'photowidget':  'PhotoWidget — your photos as desktop widgets.\n  4 sizes · per-widget photo choice · WidgetKit + AppIntents',
-  'wardrobe':     'Smart Wardrobe — AI outfit suggestions.\n  weather + occasion + wash history · cost-per-wear analytics · Flutter, all local',
-  'career-os':    'AI Career OS — career operating system.\n  explainable readiness scoring · in-browser Python (Pyodide) · ATS resume scorer · Next.js',
+  'cachy':        'Cachy - knowledge engine. Reels/articles → structured cards.\n  transcription (faster-whisper) + OCR (tesseract) + LLM chain w/ 3-provider fallback\n  semantic knowledge graph · Flutter + FastAPI · offline-capable',
+  'rag':          'Constitution of India RAG - QA with citations.\n  sentence-transformers + ChromaDB + Mistral-7B\n  retrieval written from scratch (~60 lines, no framework) · 78% accuracy, failures documented',
+  'ipl-mlops':    'IPL Match Predictor - full ML lifecycle.\n  XGBoost + FastAPI + Streamlit, 3 services on Docker Compose\n  drift monitor computes PSI every 5 min → flags retraining',
+  'airswipe':     'AirSwipe - control slides with bare hands.\n  MediaPipe + OpenCV · swipe/point/pinch · orientation-invariant',
+  'aqi':          'Bangalore AQI - clustering 14 stations, 1 year of data.\n  K-Means vs hierarchical vs DBSCAN → DBSCAN found hotspots (Silk Board, AQI 500)',
+  'scribbletype': 'ScribbleType - handwriting → text for seniors.\n  on-device ML Kit ink recognition · tremor smoothing · system-wide Android IME',
+  'insomniac':    'Insomniac - macOS keep-awake, lid closed included.\n  smart triggers (app/Wi-Fi/CPU/downloads) · insomniac:// URL scheme · Swift + IOKit',
+  'glide':        'Glide - custom 3/4/5-finger trackpad gestures.\n  speed-aware actions · reciprocal undo · haptics · IOKit multitouch',
+  'ibar':         'iBar - menu bar theming where Apple provides no API.\n  click-through overlay at menu bar window level · Accessibility API · notch-aware',
+  'dimmer':       'Dimmer - dims displays below hardware minimum.\n  overlay windows · multi-monitor · menu bar app · Swift',
+  'photowidget':  'PhotoWidget - your photos as desktop widgets.\n  4 sizes · per-widget photo choice · WidgetKit + AppIntents',
+  'wardrobe':     'Smart Wardrobe - AI outfit suggestions.\n  weather + occasion + wash history · cost-per-wear analytics · Flutter, all local',
+  'career-os':    'AI Career OS - career operating system.\n  explainable readiness scoring · in-browser Python (Pyodide) · ATS resume scorer · Next.js',
 };
 const HELP = `available commands:
   <span class="t-sage">about</span>          who is this guy
@@ -446,7 +446,7 @@ function tprint(html, cls = '') {
 function openTerminal() {
   overlay.hidden = false;
   if (!termOut.childElementCount) {
-    tprint(`<span class="t-amber">vatsal-lab OS 1.0</span> — type <span class="t-sage">help</span> to begin`);
+    tprint(`<span class="t-amber">vatsal-lab OS 1.0</span> - type <span class="t-sage">help</span> to begin`);
   }
   termInput.focus();
 }
@@ -475,7 +475,7 @@ function runCommand(raw) {
     case 'help': tprint(HELP); break;
     case 'about':
     case 'whoami':
-      tprint(`Vatsal Vaghasiya — AI engineer in training.
+      tprint(`Vatsal Vaghasiya - AI engineer in training.
 MTech Data Science @ Ramaiah University (Bengaluru).
 Builds ML systems end to end and keeps the failed experiments on the board.
 2 first-author papers under review · 13 projects shipped.`); break;
@@ -487,15 +487,15 @@ Builds ML systems end to end and keeps the failed experiments on the board.
       tprint(`macOS: <span class="t-sage">insomniac glide ibar dimmer photowidget</span>
 mobile: <span class="t-sage">scribbletype wardrobe cachy</span>
 web:    <span class="t-sage">career-os</span>
-<span class="t-dim">native swift, no electron — try: cat ibar</span>`); break;
+<span class="t-dim">all native swift · try: cat ibar</span>`); break;
     case 'cat': {
       const key = arg.replace(/\/$/, '');
       tprint(PROJECT_FILES[key] ? esc(PROJECT_FILES[key]) : `cat: ${esc(arg) || '?'}: no such file. try: projects`, PROJECT_FILES[key] ? '' : 't-err'); break;
     }
     case 'papers':
-      tprint(`[1] Efficient LLM Preference Prediction — Siamese DeBERTa
+      tprint(`[1] Efficient LLM Preference Prediction - Siamese DeBERTa
     98% of SOTA at 127× smaller · $0 training cost · <span class="t-amber">under review</span>
-[2] ProbCLIP-A — uncertainty-aware retrieval, frozen CLIP + 4.2M adapter
+[2] ProbCLIP-A - uncertainty-aware retrieval, frozen CLIP + 4.2M adapter
     R@1 68.9% · ECE 0.062 (best) · <span class="t-amber">under review</span>`); break;
     case 'skills':
       tprint(`Python        ██████████████████░░  90%
@@ -536,7 +536,7 @@ send offer to kvaghasiya057@gmail.com`, 't-amber');
     case 'pwd': tprint(`/home/vatsal/lab`); break;
     case 'clear': termOut.innerHTML = ''; break;
     case 'exit': closeTerminal(); break;
-    default: tprint(`zsh: command not found: ${esc(cmd)} — try <span class="t-sage">help</span>`, 't-err');
+    default: tprint(`zsh: command not found: ${esc(cmd)} - try <span class="t-sage">help</span>`, 't-err');
   }
 }
 
