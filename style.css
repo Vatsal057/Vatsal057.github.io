@@ -199,6 +199,32 @@ a { color: var(--sage-deep); }
 .card p { font-size: .92rem; color: var(--ink-soft); }
 .card > p:nth-of-type(2) { color: var(--ink); opacity: .85; }
 
+/* flip card (RAG project) */
+.card-flip { perspective: 1200px; cursor: pointer; outline-offset: 4px; }
+.cardflip-inner {
+  position: relative; transform-style: preserve-3d;
+  transition: transform .65s cubic-bezier(.4,.1,.2,1);
+}
+.card-flip.flipped .cardflip-inner { transform: rotateY(180deg); }
+.cardflip-front { backface-visibility: hidden; }
+.cardflip-back {
+  position: absolute; inset: 0; backface-visibility: hidden; transform: rotateY(180deg);
+  display: flex; flex-direction: column; gap: .5rem;
+}
+.cardflip-back .rag-sketch {
+  width: 100%; height: auto; flex: none; margin: auto 0;
+  border: 1px solid #EAE4D5; border-radius: 4px;
+}
+.cardflip-back .cardflip-links { margin-top: auto; }
+.cardflip-links { font-size: .78rem; }
+.cardflip-links a { color: var(--sage-deep); text-decoration: none; border-bottom: 1px dotted var(--sage); }
+.rag-title { font-size: 26px; fill: var(--ink); }
+.rag-sketch .caveat-svg { font-size: 19px; }
+.rag-sketch .rag-title { font-size: 26px; }
+.rag-mono { font-family: 'JetBrains Mono', monospace; font-size: 15px; fill: var(--ink); }
+.rag-box rect { fill: #FFFEFA; stroke: var(--ink-soft); stroke-width: 1.5; }
+.rag-arrow { stroke: var(--sage-deep); stroke-width: 1.8; stroke-linecap: round; marker-end: url(#ragArrowhead); }
+
 /* pipeline chips */
 .pipeline { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem; margin: .9rem 0 .6rem; font-size: .7rem; }
 .pipeline span {
