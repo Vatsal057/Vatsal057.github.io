@@ -53,7 +53,7 @@
     <p class="typewriter mono reveal"><span id="typeTarget"></span><span class="caret">▊</span></p>
     <p class="hero-sub reveal">AI engineer in training. I build models, ship the apps around them,
     and <em>keep notes on what didn't work</em>.</p>
-    <p class="hero-stats mono reveal">13 projects shipped &nbsp;·&nbsp; 2 papers under review &nbsp;·&nbsp; 4 experiments running</p>
+    <p class="hero-stats mono reveal"><span class="count" data-count="13">13</span> projects shipped &nbsp;·&nbsp; <span class="count" data-count="2">2</span> papers under review &nbsp;·&nbsp; <span class="count" data-count="4">4</span> experiments running</p>
     <div class="hero-cta reveal">
       <a class="btn btn-primary" href="#projects">See the experiments</a>
       <a class="btn btn-ghost" href="resume.pdf" download>Download résumé</a>
@@ -277,15 +277,16 @@
 
 </section>
 
-<!-- ============ APPS ============ -->
-<section id="apps" class="section">
-  <div class="section-head reveal">
+<!-- ============ APPS · PINNED SHELF ============ -->
+<section id="apps" class="apps-section">
+  <div class="apps-pin">
+  <div class="section-head reveal apps-head">
     <img class="section-icon" src="images/icon-gpu.png" alt="">
     <p class="eyebrow mono">// the app shelf</p>
-    <h2>Apps, shipped</h2>
+    <h2>Apps, shipped <span class="margin-note caveat shelf-hint">keep scrolling → the shelf slides</span></h2>
     <p class="section-sub">Five native macOS apps in Swift, plus mobile and web. Each one started as something I wanted on my own machine.</p>
   </div>
-  <div class="app-grid">
+  <div class="shelf" id="appShelf">
     <article class="app-window reveal">
       <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span class="app-name">Insomniac.app</span><span class="app-platform">macOS</span></div>
       <div class="app-body">
@@ -321,40 +322,33 @@
         <p class="card-stack mono">Swift · WidgetKit · AppIntents</p>
       </div>
     </article>
-    <article class="app-window app-featured reveal">
-      <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span class="app-name">Smart Wardrobe</span><span class="app-platform">Flutter · Android/iOS</span></div>
+    <article class="app-window reveal">
+      <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span class="app-name">Smart Wardrobe</span><span class="app-platform">Flutter</span></div>
       <div class="app-body">
         <p>A closet manager: photograph your clothes once and the app plans what you wear.</p>
         <ul class="app-features">
-          <li>Outfit suggestions by occasion (casual, formal, date, party, outdoor), built from clothes you own</li>
-          <li>A "Today" screen that checks live weather and recent wear history before suggesting anything</li>
-          <li>Wash tracking, so it knows what's actually clean</li>
-          <li>Packing lists: give it a trip length and destination and it checks the forecast</li>
-          <li>Cost-per-wear and usage stats per item, with alerts for clothes you never touch</li>
-          <li>A weekly outfit planner</li>
+          <li>Outfit suggestions by occasion, from clothes you actually own</li>
+          <li>"Today" screen checks live weather + recent wear history first</li>
+          <li>Wash tracking and packing lists built against the forecast</li>
         </ul>
-        <p>Everything lives on the phone in SQLite; there's no account and no server.</p>
-        <p class="card-stack mono">Flutter · Provider · SQLite · weather API</p>
+        <p class="card-stack mono">Flutter · SQLite · on-device, no account</p>
       </div>
     </article>
-    <article class="app-window app-featured reveal">
+    <article class="app-window reveal">
       <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span class="app-name">AI Career OS</span><span class="app-platform">Web</span></div>
       <div class="app-body">
-        <p>A personal career dashboard I built to answer one question each morning: <em>what should I work on today to get hired?</em></p>
+        <p>A career dashboard answering one question each morning: <em>what should I work on today to get hired?</em></p>
         <ul class="app-features">
-          <li>A weighted hiring-readiness score, 0 to 100, across six areas (roadmap 28%, projects 24%, interview 20%, resume 12%, GitHub 10%, LinkedIn 6%), computed by unit-tested pure functions</li>
-          <li>Daily missions generated from weak areas and available time</li>
-          <li>Interactive lessons with Python running in the browser via Pyodide, plus exercises and quizzes</li>
-          <li>A resume builder with a deterministic ATS score and keyword coverage against target roles</li>
-          <li>Spaced-repetition flashcards and a company-tagged interview question bank</li>
-          <li>Repo quality scoring, a README generator, and a tracker for every job application</li>
-          <li>XP, levels, badges, and a command palette</li>
+          <li>Weighted hiring-readiness score, 0–100, across six areas</li>
+          <li>Interactive lessons with Python in the browser via Pyodide</li>
+          <li>Resume builder with a deterministic ATS score</li>
         </ul>
-        <p class="card-stack mono">Next.js 16 · React 19 · TypeScript (strict) · Zustand · Dexie · Pyodide · Vitest</p>
+        <p class="card-stack mono">Next.js 16 · React 19 · TypeScript · Pyodide</p>
       </div>
     </article>
   </div>
   <p class="app-count mono reveal">// running total: 13 projects, all listed on this page.</p>
+  </div>
 </section>
 
 <!-- ============ DATASET SHELF ============ -->
@@ -524,6 +518,9 @@
 
 <canvas id="rain" hidden></canvas>
 
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
 <script src="script.js"></script>
 </body>
 </html>

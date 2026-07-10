@@ -594,3 +594,229 @@ function gradientRain() {
     if (++frames > 260) { clearInterval(iv); cv.hidden = true; }
   }, 33);
 }
+
+// ============ Premium motion layer — Lenis smooth scroll + GSAP ============
+// Sits on top of the notebook. Recruiter mode and reduced-motion turn it off.
+(() => {
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // count-up hero stats (vanilla; same easing as the skill bars)
+  if (!reduced) {
+    document.querySelectorAll('.hero-stats .count').forEach(el => {
+      const end = +el.dataset.count, t0 = performance.now(), dur = 1400;
+      (function tick(t) {
+        const p = Math.min((t - t0) / dur, 1);
+        el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3)));
+        if (p < 1) requestAnimationFrame(tick);
+      })(t0);
+    });
+  }
+
+  if (reduced || typeof gsap === 'undefined') return;
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.ticker.lagSmoothing(0);
+  document.documentElement.classList.add('premium');
+
+  const finePointer = matchMedia('(pointer: fine)').matches;
+  const recruiterOn = () => document.body.classList.contains('recruiter');
+
+  // ---- Lenis + pinned shelf: built/torn down with recruiter mode ----
+  let lenis = null, shelfCtx = null;
+  gsap.ticker.add(t => { if (lenis) lenis.raf(t * 1000); });
+
+  function buildPremium() {
+    if (typeof Lenis !== 'undefined' && !lenis) {
+      lenis = new Lenis({ lerp: 0.1 });
+      lenis.on('scroll', ScrollTrigger.update);
+    }
+    if (!shelfCtx) {
+      shelfCtx = gsap.matchMedia();
+      shelfCtx.add('(min-width: 821px)', () => {
+        const shelf = document.getElementById('appShelf');
+        const pinEl = document.querySelector('.apps-pin');
+        if (!shelf || !pinEl) return;
+        const dist = () => shelf.scrollWidth - document.documentElement.clientWidth + 48;
+        const tween = gsap.to(shelf, {
+          x: () => -Math.max(dist(), 0), ease: 'none',
+          scrollTrigger: {
+            trigger: pinEl, start: 'top top', end: () => '+=' + Math.max(dist(), 1),
+            pin: true, scrub: 1, invalidateOnRefresh: true,
+          },
+        });
+        return () => { tween.scrollTrigger && tween.scrollTrigger.kill(); tween.kill(); gsap.set(shelf, { clearProps: 'x' }); };
+      });
+    }
+  }
+  function teardownPremium() {
+    if (lenis) { lenis.destroy(); lenis = null; }
+    if (shelfCtx) { shelfCtx.revert(); shelfCtx = null; ScrollTrigger.refresh(); }
+  }
+
+  // ---- magnetic buttons ----
+  document.querySelectorAll('.btn, .terminal-btn').forEach(el => {
+    const qx = gsap.quickTo(el, 'x', { duration: .4, ease: 'expo.out' });
+    const qy = gsap.quickTo(el, 'y', { duration: .4, ease: 'expo.out' });
+    el.addEventListener('pointermove', e => {
+      if (recruiterOn()) return;
+      const r = el.getBoundingClientRect();
+      qx((e.clientX - r.left - r.width / 2) * .3);
+      qy((e.clientY - r.top - r.height / 2) * .4);
+    });
+    el.addEventListener('pointerleave', () => { qx(0); qy(0); });
+  });
+
+  // ---- 3D tilt: pinned cards, index cards, app windows ----
+  if (finePointer) {
+    document.querySelectorAll('.card:not(.card-flip), .index-card, .app-window').forEach(el => {
+      el.addEventListener('pointermove', e => {
+        if (recruiterOn()) return;
+        const r = el.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - .5;
+        const py = (e.clientY - r.top) / r.height - .5;
+        gsap.to(el, {
+          rotationY: px * 7, rotationX: -py * 7, rotation: 0, y: -4,
+          transformPerspective: 700, duration: .45, ease: 'power2.out',
+          boxShadow: 'var(--shadow-lift)',
+        });
+      });
+      el.addEventListener('pointerleave', () => {
+        gsap.to(el, { rotationX: 0, rotationY: 0, y: 0, duration: .6, ease: 'power3.out',
+          onComplete: () => gsap.set(el, { clearProps: 'transform,boxShadow' }) });
+      });
+    });
+  }
+
+  // ---- hero doodle: gentle mouse parallax ----
+  const doodle = document.querySelector('.hero-doodle');
+  if (doodle && finePointer) {
+    const dx = gsap.quickTo(doodle, 'x', { duration: .9, ease: 'power3.out' });
+    const dy = gsap.quickTo(doodle, 'y', { duration: .9, ease: 'power3.out' });
+    addEventListener('pointermove', e => {
+      if (recruiterOn()) return;
+      dx((e.clientX / innerWidth - .5) * 18);
+      dy((e.clientY / innerHeight - .5) * 12);
+    }, { passive: true });
+  }
+
+  // ---- topnav anchors glide through lenis ----
+  document.querySelectorAll('.topnav a[href^="#"], .logo').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (!target || !lenis) return;
+      e.preventDefault();
+      lenis.scrollTo(target, { offset: -56, duration: 1.2 });
+    });
+  });
+
+  // ---- recruiter switch controls the whole layer ----
+  const rt = document.getElementById('recruiterToggle');
+  const sync = () => recruiterOn() ? teardownPremium() : buildPremium();
+  rt.addEventListener('change', sync);
+  sync();
+})();
+
+// ============ Notebook cursor — ink dot + sketch ring ============
+// Shape-shifts per element. Off for touch, reduced motion, recruiter mode,
+// and steps aside over text inputs so the native caret works.
+(() => {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!matchMedia('(pointer: fine)').matches) return;
+  if (typeof gsap === 'undefined') return;
+
+  const dot = document.createElement('div');
+  const ring = document.createElement('div');
+  const label = document.createElement('span');
+  dot.className = 'nbc-dot';
+  ring.className = 'nbc-ring';
+  label.className = 'nbc-label';
+  ring.appendChild(label);
+  document.body.append(dot, ring);
+
+  gsap.set(ring, { xPercent: -50, yPercent: -50 });
+
+  // dot snaps, ring lags — pen tip and its halo
+  const dx = gsap.quickTo(dot, 'x', { duration: .12, ease: 'power2.out' });
+  const dy = gsap.quickTo(dot, 'y', { duration: .12, ease: 'power2.out' });
+  const rx = gsap.quickTo(ring, 'x', { duration: .38, ease: 'power3.out' });
+  const ry = gsap.quickTo(ring, 'y', { duration: .38, ease: 'power3.out' });
+
+  const recruiterOn = () => document.body.classList.contains('recruiter');
+  let started = false, stuck = null, cx = 0, cy = 0;
+
+  addEventListener('pointermove', e => {
+    if (!started && !recruiterOn()) { document.body.classList.add('nbc-on'); started = true; }
+    cx = e.clientX; cy = e.clientY;
+    dx(cx); dy(cy);
+    if (stuck) {
+      // conform to the button, follow the cursor only a little (magnetic stick)
+      const r = stuck.getBoundingClientRect();
+      const bx = r.left + r.width / 2, by = r.top + r.height / 2;
+      rx(bx + (cx - bx) * 0.18); ry(by + (cy - by) * 0.18);
+    } else {
+      rx(cx); ry(cy);
+    }
+  }, { passive: true });
+
+  // ring morphs into the button's own box (size + corner radius) and sticks
+  function morphTo(el) {
+    if (stuck === el) return;
+    stuck = el;
+    const r = el.getBoundingClientRect();
+    const br = parseFloat(getComputedStyle(el).borderRadius) || 6;
+    dot.classList.add('is-shape'); ring.classList.add('is-shape');
+    gsap.to(ring, {
+      width: r.width + 12, height: r.height + 12, borderRadius: (br + 5) + 'px',
+      duration: .35, ease: 'power3.out', overwrite: 'auto',
+    });
+  }
+  function morphReset() {
+    if (!stuck) return;
+    stuck = null;
+    dot.classList.remove('is-shape'); ring.classList.remove('is-shape');
+    gsap.to(ring, { width: 38, height: 38, borderRadius: '50%', duration: .4, ease: 'power3.out', overwrite: 'auto' });
+  }
+
+  // what the cursor becomes, first match wins
+  const LABELS = [
+    ['.card-flip, .paper-flip', 'flip →'],
+    ['.book', 'peek'],
+    ['#robotBtn', 'drag me'],
+    ['.recruiter-switch', 'quiet mode'],
+  ];
+  const BTNS = '.btn, .terminal-btn, button:not(#robotBtn)';
+  const GROW = 'a, [role="button"], label, .topnav a';
+  const NATIVE = 'input, textarea, .terminal-overlay';
+
+  const setState = (link, lbl) => {
+    dot.classList.toggle('is-link', link);
+    ring.classList.toggle('is-link', link);
+    dot.classList.toggle('is-label', !!lbl);
+    ring.classList.toggle('is-label', !!lbl);
+    if (lbl) label.textContent = lbl;
+  };
+
+  document.addEventListener('mouseover', e => {
+    const t = e.target;
+    if (recruiterOn()) return;
+    if (t.closest(NATIVE)) { document.body.classList.remove('nbc-on'); morphReset(); setState(false, null); return; }
+    if (started) document.body.classList.add('nbc-on');
+    for (const [sel, text] of LABELS) {
+      if (t.closest(sel)) { morphReset(); setState(false, text); return; }
+    }
+    const btn = t.closest(BTNS);
+    if (btn) { setState(false, null); morphTo(btn); return; }
+    morphReset();
+    setState(!!t.closest(GROW), null);
+  });
+  document.documentElement.addEventListener('mouseleave', () => document.body.classList.remove('nbc-on'));
+  document.documentElement.addEventListener('mouseenter', () => { if (started && !recruiterOn()) document.body.classList.add('nbc-on'); });
+
+  addEventListener('pointerdown', () => { dot.classList.add('is-down'); ring.classList.add('is-down'); });
+  addEventListener('pointerup', () => { dot.classList.remove('is-down'); ring.classList.remove('is-down'); });
+
+  // recruiter switch kills it, native cursor returns
+  document.getElementById('recruiterToggle').addEventListener('change', () => {
+    document.body.classList.toggle('nbc-on', started && !recruiterOn());
+    morphReset(); setState(false, null);
+  });
+})();
