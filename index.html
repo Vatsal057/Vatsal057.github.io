@@ -175,6 +175,7 @@
       <p class="card-tag mono">knowledge engine · flutter + fastapi</p>
       <p>Turns Reels, Shorts and articles into structured knowledge cards: transcription, OCR, an LLM chain with automatic fallback across Gemini / Cerebras / Groq, all linked in a semantic knowledge graph.</p>
       <div class="pipeline mono"><span>ingest</span><span>transcribe/OCR</span><span>LLM chain</span><span>cards</span><span>graph</span></div>
+      <p class="card-proof mono"><span>3-provider LLM fallback</span><span>semantic graph</span><span>1 SQLite, 0 Redis</span></p>
       <p class="card-stack mono">Whisper · OpenCV · Tesseract · SQLite · HF Spaces</p>
       <a class="card-link mono" href="case/project.html?id=cachy">case study →</a>
     </article>
@@ -187,6 +188,7 @@
           <p class="card-tag mono">rag from scratch · no langchain</p>
           <p>Ask the Indian Constitution anything, get grounded answers with exact citations and similarity scores. Retrieval written from scratch in <mark class="hl">~60 lines</mark>. A 20-query stress test is documented in the repo, <mark class="hl">78% accuracy</mark> after fixing chunking.</p>
           <div class="pipeline mono"><span>pdf</span><span>chunk</span><span>embed</span><span>retrieve</span><span>cite</span></div>
+          <p class="card-proof mono"><span>78% on 20-query eval</span><span>~60 lines</span><span>no framework</span></p>
           <p class="card-stack mono">sentence-transformers · ChromaDB · Mistral-7B</p>
           <p class="mono flip-hint">flip →</p>
         </div>
@@ -245,6 +247,7 @@
       <p class="card-tag mono">full ml lifecycle · self-monitoring</p>
       <p>XGBoost match-outcome model served over FastAPI, with a monitor computing Population Stability Index every 5 minutes to catch data drift, and a live Streamlit health dashboard. Three services, Docker Compose.</p>
       <div class="pipeline mono"><span>data</span><span>features</span><span>train</span><span>serve</span><span>monitor</span></div>
+      <p class="card-proof mono"><span>PSI every 5 min</span><span>3 services</span><span>live drift dashboard</span></p>
       <p class="card-stack mono">XGBoost · FastAPI · Streamlit · Docker</p>
       <a class="card-link mono" href="case/project.html?id=ipl-mlops">case study →</a>
     </article>
@@ -255,6 +258,7 @@
       <p class="card-tag mono">computer vision · gesture control</p>
       <p>Control PowerPoint with bare hands through a webcam: swipe to navigate, point for a live laser dot, pinch to zoom. Orientation-invariant detection with dwell-time guards against accidental triggers.</p>
       <div class="pipeline mono"><span>webcam</span><span>landmarks</span><span>gesture</span><span>action</span></div>
+      <p class="card-proof mono"><span>orientation-invariant</span><span>dwell-time guards</span><span>6 gestures</span></p>
       <p class="card-stack mono">MediaPipe · OpenCV · PyQt6</p>
       <a class="card-link mono" href="case/project.html?id=airswipe">case study →</a>
     </article>
@@ -265,6 +269,7 @@
       <p class="card-tag mono">data mining · unsupervised</p>
       <p>A year of data from 14 CPCB stations, 6 engineered features, three clustering algorithms compared. DBSCAN worked best since it flags outliers, and the outliers were the hotspots. Silk Board hit <mark class="hl">AQI 500</mark>.</p>
       <div class="pipeline mono"><span>excel mess</span><span>clean</span><span>features</span><span>cluster</span><span>hotspots</span></div>
+      <p class="card-proof mono"><span>14 stations · 1 year</span><span>3 algorithms compared</span><span>hotspots = outliers</span></p>
       <p class="card-stack mono">pandas · scikit-learn · DBSCAN</p>
       <a class="card-link mono" href="case/project.html?id=bangalore-aqi">case study →</a>
     </article>
@@ -275,6 +280,7 @@
       <p class="card-tag mono">on-device ml · accessibility</p>
       <p>Handwriting-to-text Android keyboard for seniors: on-device ink recognition, a personal dictionary that learns your writing, and Catmull-Rom smoothing to filter hand tremor.</p>
       <div class="pipeline mono"><span>strokes</span><span>smooth</span><span>recognize</span><span>learn</span></div>
+      <p class="card-proof mono"><span>100% on-device</span><span>tremor smoothing</span><span>real Kotlin IME</span></p>
       <p class="card-stack mono">ML Kit · Flutter · Kotlin IME</p>
       <a class="card-link mono" href="case/project.html?id=scribbletype">case study →</a>
     </article>
@@ -285,6 +291,7 @@
       <p class="card-tag mono">clip · text + image retrieval</p>
       <p>Find any Indian dish by describing it in plain English, or by uploading a photo of something similar. Built to test whether CLIP holds up on something domain-specific instead of the usual stock-photo demos. <mark class="hl">It does.</mark></p>
       <div class="pipeline mono"><span>encode</span><span>index</span><span>query</span><span>rank</span><span>explain</span></div>
+      <p class="card-proof mono"><span>text + image queries</span><span>domain CLIP test</span><span>interpretable ranks</span></p>
       <p class="card-stack mono">CLIP · Gradio · HF Spaces</p>
       <a class="card-link mono" href="case/project.html?id=indian-food-search">case study →</a>
     </article>
@@ -295,6 +302,7 @@
       <p class="card-tag mono">cnn · grad-cam explainability</p>
       <p>Upload a leaf photo, get a diagnosis, and a <mark class="hl">Grad-CAM heatmap</mark> showing exactly which part of the leaf the model looked at. Because a prediction plus a confidence score tells you nothing about whether it read the lesion or the background.</p>
       <div class="pipeline mono"><span>leaf</span><span>classify</span><span>grad-cam</span><span>severity</span></div>
+      <p class="card-proof mono"><span>15 classes · 5 crops</span><span>Grad-CAM heatmap</span><span>severity levels</span></p>
       <p class="card-stack mono">PyTorch · Grad-CAM · Gradio</p>
       <a class="card-link mono" href="case/project.html?id=plant-disease">case study →</a>
     </article>
@@ -315,7 +323,12 @@
     <article class="app-window reveal">
       <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span class="app-name">Insomniac.app</span><span class="app-platform">macOS</span></div>
       <div class="app-body">
-        <p>Keeps a Mac awake, lid closed included. Timed durations, global shortcut, and smart triggers: auto-enables on chosen apps, Wi-Fi networks, high CPU, or active downloads. Scriptable via <code>insomniac://</code> URL scheme.</p>
+        <p class="app-lead">Keeps a Mac awake — lid closed included.</p>
+        <ul class="app-features">
+          <li>Smart triggers: auto-enables on chosen apps, Wi-Fi networks, high CPU, active downloads</li>
+          <li>Timed durations + global shortcut</li>
+          <li>Scriptable via <code>insomniac://</code> URL scheme</li>
+        </ul>
         <p class="card-stack mono">Swift 5.9 · AppKit · IOKit · NWPathMonitor</p>
         <a class="card-link mono" href="case/project.html?id=insomniac">case study →</a>
       </div>
@@ -323,7 +336,12 @@
     <article class="app-window reveal">
       <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span class="app-name">Glide.app</span><span class="app-platform">macOS</span></div>
       <div class="app-body">
-        <p>Custom 3/4/5-finger trackpad gestures for window snapping, media control, launching apps. A slow swipe switches windows, a fast flick opens the browser. Reciprocal undo, haptic feedback, per-app filters.</p>
+        <p class="app-lead">Custom 3/4/5-finger trackpad gestures for macOS.</p>
+        <ul class="app-features">
+          <li>Speed-aware: slow swipe switches windows, fast flick opens the browser</li>
+          <li>Window snapping, media control, app launching</li>
+          <li>Reciprocal undo, haptic feedback, per-app filters</li>
+        </ul>
         <p class="card-stack mono">Swift · AppKit · IOKit multitouch</p>
         <a class="card-link mono" href="case/project.html?id=glide">case study →</a>
       </div>
@@ -331,7 +349,12 @@
     <article class="app-window reveal">
       <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span class="app-name">iBar.app</span><span class="app-platform">macOS</span></div>
       <div class="app-body">
-        <p>Themes the macOS menu bar, which Apple gives you no API for. Click-through overlay at the menu bar's own window level, gradients and blur, auto-presets on window state, notch-aware, and it reads menu titles via Accessibility API to keep them legible.</p>
+        <p class="app-lead">Themes the macOS menu bar — Apple gives you no API for this.</p>
+        <ul class="app-features">
+          <li>Click-through overlay at the menu bar's own window level</li>
+          <li>Gradients, blur, notch-aware auto-presets on window state</li>
+          <li>Reads menu titles via Accessibility API to keep them legible</li>
+        </ul>
         <p class="card-stack mono">Swift · SwiftUI · Accessibility API · CGWindowList</p>
         <a class="card-link mono" href="case/project.html?id=ibar">case study →</a>
       </div>
@@ -339,7 +362,11 @@
     <article class="app-window reveal">
       <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span class="app-name">Dimmer.app</span><span class="app-platform">macOS</span></div>
       <div class="app-body">
-        <p>Dims displays below the hardware minimum using overlay windows, each connected monitor independently. Lives in the menu bar, does one thing well.</p>
+        <p class="app-lead">Dims displays below the hardware minimum.</p>
+        <ul class="app-features">
+          <li>Overlay windows, each connected monitor independently</li>
+          <li>Lives in the menu bar; does one thing well</li>
+        </ul>
         <p class="card-stack mono">Swift · SwiftUI · AppKit</p>
         <a class="card-link mono" href="case/project.html?id=dimmer">case study →</a>
       </div>
@@ -347,7 +374,11 @@
     <article class="app-window reveal">
       <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span class="app-name">PhotoWidget.app</span><span class="app-platform">macOS</span></div>
       <div class="app-body">
-        <p>Your own photos as desktop widgets: four sizes, per-widget photo choice, full color even in monochrome widget mode.</p>
+        <p class="app-lead">Your own photos as desktop widgets.</p>
+        <ul class="app-features">
+          <li>Four sizes, per-widget photo choice</li>
+          <li>Full color even in monochrome widget mode</li>
+        </ul>
         <p class="card-stack mono">Swift · WidgetKit · AppIntents</p>
         <a class="card-link mono" href="case/project.html?id=photowidget">case study →</a>
       </div>
@@ -355,7 +386,7 @@
     <article class="app-window reveal">
       <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span class="app-name">Smart Wardrobe</span><span class="app-platform">Flutter</span></div>
       <div class="app-body">
-        <p>A closet manager: photograph your clothes once and the app plans what you wear.</p>
+        <p class="app-lead">Photograph your clothes once; the app plans what you wear.</p>
         <ul class="app-features">
           <li>Outfit suggestions by occasion, from clothes you actually own</li>
           <li>"Today" screen checks live weather + recent wear history first</li>

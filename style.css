@@ -769,3 +769,23 @@ html.js .cards .reveal:nth-child(6), html.js .app-grid .reveal:nth-child(6) { tr
 @media (prefers-reduced-motion: reduce) {
   html.js .reveal { opacity: 1 !important; transform: none !important; translate: none !important; filter: none !important; transition: none !important; }
 }
+
+/* ---- app windows: lead + ticks (replaces the text-wall body) ---- */
+.app-lead { font-weight: 600; color: var(--ink); font-size: .95rem; margin-bottom: .55rem; }
+.app-grid .app-features { list-style: none; margin: 0 0 .4rem; display: grid; gap: .35rem; }
+.app-grid .app-features li {
+  position: relative; padding-left: 1.05rem;
+  font-size: .84rem; color: var(--ink-soft); line-height: 1.45;
+}
+.app-grid .app-features li::before {
+  content: "→"; position: absolute; left: 0; top: 0;
+  color: var(--sage-text); font-family: 'JetBrains Mono', monospace; font-size: .75rem;
+}
+
+/* ---- proof chips: the numbers a recruiter scans for ---- */
+.card-proof { display: flex; flex-wrap: wrap; gap: .35rem; margin: .65rem 0 .1rem; }
+.card-proof span {
+  font-size: .66rem; letter-spacing: .01em; padding: .18rem .5rem;
+  border-radius: 4px; background: #faf6ec; border: 1px solid #eadfc8;
+  color: #7d6a4a; white-space: nowrap;
+}
