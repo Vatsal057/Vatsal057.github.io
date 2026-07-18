@@ -1,0 +1,64 @@
+/* Detail-page layout. Reuses tokens + components from ../style.css */
+
+.back-btn { margin-left: auto; padding: .45rem 1rem; font-size: .82rem; }
+
+.detail {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: clamp(2rem, 6vh, 4rem) 1.5rem 5rem;
+}
+
+.crumb { color: var(--ink-soft); font-size: .8rem; margin-bottom: 1.6rem; }
+.crumb a { color: var(--sage-deep); text-decoration: none; }
+.crumb a:hover { text-decoration: underline; }
+
+.detail-head { margin-bottom: 2.6rem; }
+.detail-head h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 600; margin: .5rem 0 .5rem; }
+.detail-tag { color: var(--sage-deep); font-size: .85rem; margin-bottom: 1rem; }
+.detail-oneliner { font-size: 1.15rem; color: var(--ink); max-width: 58ch; margin-bottom: 1.2rem; }
+.detail-stack { color: var(--ink-soft); font-size: .82rem; margin-bottom: 1.4rem; }
+
+.detail-badge {
+  display: inline-block; font-size: .72rem; letter-spacing: .04em;
+  padding: .22rem .6rem; border-radius: 4px; text-transform: uppercase;
+  border: 1px solid var(--grid); background: var(--card); color: var(--ink-soft);
+}
+.badge-shipped { background: #eef3ee; color: var(--sage-deep); border-color: #d4e0d4; }
+.badge-in-progress { background: #fbf2e3; color: #b07d3a; border-color: #ecd9b8; }
+.badge-under-review { background: #fbf2e3; color: #b07d3a; border-color: #ecd9b8; }
+.badge-planned { background: #f0eef6; color: #7a6ba0; border-color: #ddd6ea; }
+
+.detail-links { display: flex; gap: .8rem; flex-wrap: wrap; }
+.detail-links .btn { padding: .5rem 1.1rem; font-size: .85rem; }
+
+.detail-block { margin-bottom: 2.4rem; }
+.detail-block .eyebrow { margin-bottom: .7rem; }
+.detail-prose { font-size: 1.02rem; max-width: 62ch; color: var(--ink); }
+
+.detail-pipeline { flex-wrap: wrap; margin-top: .2rem; }
+
+.detail-list { list-style: none; display: grid; gap: .8rem; max-width: 64ch; }
+.detail-list li {
+  position: relative; padding-left: 1.4rem; color: var(--ink);
+}
+.detail-list li::before {
+  content: "▪"; position: absolute; left: 0; top: 0;
+  color: var(--sage); font-size: .9rem;
+}
+
+.learned-card { max-width: 62ch; }
+.learned-card h3 { font-size: 1.5rem; margin-bottom: .3rem; color: var(--sage-deep); }
+
+.detail-more { margin-top: 2.5rem; color: var(--ink-soft); font-size: .85rem; }
+.detail-more a { color: var(--sage-deep); }
+
+/* planned projects: dashed, blueprint feel */
+.detail.is-planned .detail-head { position: relative; }
+.detail.is-planned .detail-oneliner { color: var(--ink-soft); }
+
+.notfound { text-align: center; padding-top: 6rem; }
+.notfound h1 { font-size: 2rem; margin-bottom: 1rem; }
+
+@media (max-width: 640px) {
+  .topnav { display: none; }
+}
