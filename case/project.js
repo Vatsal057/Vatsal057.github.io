@@ -46,6 +46,18 @@
 
   document.getElementById("problem").textContent = p.problem || p.oneLiner || "";
 
+  // media: real screenshot when one exists; a quiet honest note for visual
+  // apps still waiting on a capture; nothing at all for research/planned.
+  if (p.media) {
+    var img = document.getElementById("mediaImg");
+    img.src = p.media.src;
+    img.alt = p.media.alt || p.title;
+    document.getElementById("mediaCaption").textContent = p.media.caption || "";
+    document.getElementById("mediaBlock").hidden = false;
+  } else if (p.kind === "app" || p.kind === "tool") {
+    document.getElementById("mediaPending").hidden = false;
+  }
+
   // how (pipeline)
   if (p.how && p.how.length) {
     var how = document.getElementById("how");
