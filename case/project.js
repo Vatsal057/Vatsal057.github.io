@@ -1,5 +1,6 @@
 /* Renders one project detail page from window.PROJECTS by ?id=slug. */
 (function () {
+  document.documentElement.classList.add('js');
   var id = new URLSearchParams(location.search).get("id");
   var p = (window.PROJECTS || []).find(function (x) { return x.slug === id; });
 

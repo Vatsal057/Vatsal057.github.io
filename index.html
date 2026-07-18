@@ -87,17 +87,17 @@
   <div class="section-head reveal">
     <img class="section-icon" src="images/icon-graph.png" alt="">
     <p class="eyebrow mono">// training progress</p>
-    <h2>Skills</h2>
-    <p class="section-sub">Self-scored. Each bar lists the shipped projects it comes from.</p>
+    <h2>Skills, with receipts</h2>
+    <p class="section-sub">No self-scored percentages — each bar is only as long as the shipped work behind it, and the receipts are listed.</p>
   </div>
   <div class="skills-grid">
-    <div class="skill reveal" data-pct="90"><div class="skill-top mono"><span>Python</span><span class="skill-pct">0%</span></div><div class="bar"><div class="bar-fill"></div></div><p class="skill-note">Primary language of every shipped AI project.</p><p class="skill-ships mono">✓ Cachy &nbsp;✓ AirSwipe &nbsp;✓ IPL pipeline &nbsp;✓ +10 more</p></div>
-    <div class="skill reveal" data-pct="82"><div class="skill-top mono"><span>Deep Learning · PyTorch</span><span class="skill-pct">0%</span></div><div class="bar"><div class="bar-fill"></div></div><p class="skill-note">Two research papers built on it.</p><p class="skill-ships mono">✓ ProbCLIP-A &nbsp;✓ preference paper</p></div>
-    <div class="skill reveal" data-pct="80"><div class="skill-top mono"><span>Computer Vision</span><span class="skill-pct">0%</span></div><div class="bar"><div class="bar-fill"></div></div><p class="skill-note">MediaPipe, OpenCV, CLIP in shipped products.</p><p class="skill-ships mono">✓ AirSwipe &nbsp;✓ Cachy OCR &nbsp;✓ ProbCLIP-A</p></div>
-    <div class="skill reveal" data-pct="68"><div class="skill-top mono"><span>LLMs &amp; RAG</span><span class="skill-pct">0%</span></div><div class="bar"><div class="bar-fill"></div></div><p class="skill-note">Built retrieval from scratch; still the newest skill here.</p><p class="skill-ships mono">✓ Constitution QA &nbsp;✓ Cachy LLM chain &nbsp;→ current focus: evals</p></div>
-    <div class="skill reveal" data-pct="72"><div class="skill-top mono"><span>SQL &amp; Data Wrangling</span><span class="skill-pct">0%</span></div><div class="bar"><div class="bar-fill"></div></div><p class="skill-note">pandas, SQLite, messy real-world Excel included.</p><p class="skill-ships mono">✓ Bangalore AQI &nbsp;✓ 14-station consolidation</p></div>
-    <div class="skill reveal" data-pct="70"><div class="skill-top mono"><span>MLOps · Docker · FastAPI</span><span class="skill-pct">0%</span></div><div class="bar"><div class="bar-fill"></div></div><p class="skill-note">Drift detection, monitoring, multi-service deploys.</p><p class="skill-ships mono">✓ IPL drift pipeline &nbsp;✓ HF Spaces deploys</p></div>
-    <div class="skill reveal" data-pct="78"><div class="skill-top mono"><span>App Development</span><span class="skill-pct">0%</span></div><div class="bar"><div class="bar-fill"></div></div><p class="skill-note">Most of my models end up inside an app.</p><p class="skill-ships mono">✓ 7 shipped apps &nbsp;✓ Flutter &nbsp;✓ Swift</p></div>
+    <div class="skill reveal" data-pct="90"><div class="skill-top mono"><span>Python</span><span class="skill-pct">13 repos</span></div><div class="bar"><div class="bar-fill"></div></div><p class="skill-note">Primary language of every shipped AI project.</p><p class="skill-ships mono">✓ Cachy &nbsp;✓ AirSwipe &nbsp;✓ IPL pipeline &nbsp;✓ +10 more</p></div>
+    <div class="skill reveal" data-pct="82"><div class="skill-top mono"><span>Deep Learning · PyTorch</span><span class="skill-pct">2 papers</span></div><div class="bar"><div class="bar-fill"></div></div><p class="skill-note">Two research papers built on it.</p><p class="skill-ships mono">✓ ProbCLIP-A &nbsp;✓ preference paper</p></div>
+    <div class="skill reveal" data-pct="80"><div class="skill-top mono"><span>Computer Vision</span><span class="skill-pct">4 shipped</span></div><div class="bar"><div class="bar-fill"></div></div><p class="skill-note">MediaPipe, OpenCV, CLIP in shipped products.</p><p class="skill-ships mono">✓ AirSwipe &nbsp;✓ Cachy OCR &nbsp;✓ ProbCLIP-A</p></div>
+    <div class="skill reveal" data-pct="68"><div class="skill-top mono"><span>LLMs &amp; RAG</span><span class="skill-pct">3 systems</span></div><div class="bar"><div class="bar-fill"></div></div><p class="skill-note">Built retrieval from scratch; still the newest skill here.</p><p class="skill-ships mono">✓ Constitution QA &nbsp;✓ Cachy LLM chain &nbsp;→ current focus: evals</p></div>
+    <div class="skill reveal" data-pct="72"><div class="skill-top mono"><span>SQL &amp; Data Wrangling</span><span class="skill-pct">14 stations</span></div><div class="bar"><div class="bar-fill"></div></div><p class="skill-note">pandas, SQLite, messy real-world Excel included.</p><p class="skill-ships mono">✓ Bangalore AQI &nbsp;✓ 14-station consolidation</p></div>
+    <div class="skill reveal" data-pct="70"><div class="skill-top mono"><span>MLOps · Docker · FastAPI</span><span class="skill-pct">3 services</span></div><div class="bar"><div class="bar-fill"></div></div><p class="skill-note">Drift detection, monitoring, multi-service deploys.</p><p class="skill-ships mono">✓ IPL drift pipeline &nbsp;✓ HF Spaces deploys</p></div>
+    <div class="skill reveal" data-pct="78"><div class="skill-top mono"><span>App Development</span><span class="skill-pct">7 apps</span></div><div class="bar"><div class="bar-fill"></div></div><p class="skill-note">Most of my models end up inside an app.</p><p class="skill-ships mono">✓ 7 shipped apps &nbsp;✓ Flutter &nbsp;✓ Swift</p></div>
   </div>
 </section>
 
@@ -303,15 +303,14 @@
 </section>
 
 <!-- ============ APPS · PINNED SHELF ============ -->
-<section id="apps" class="apps-section">
-  <div class="apps-pin">
-  <div class="section-head reveal apps-head">
+<section id="apps" class="section">
+  <div class="section-head reveal">
     <img class="section-icon" src="images/icon-gpu.png" alt="">
     <p class="eyebrow mono">// the app shelf</p>
-    <h2>Apps, shipped <span class="margin-note caveat shelf-hint">keep scrolling → the shelf slides</span></h2>
-    <p class="section-sub">Five native macOS apps in Swift, plus mobile and web. Each one started as something I wanted on my own machine.</p>
+    <h2>Apps, shipped <span class="margin-note caveat">each began as an itch on my own machine</span></h2>
+    <p class="section-sub">Five native macOS apps in Swift, plus mobile. Building the whole product around a model is the point — these are the reps.</p>
   </div>
-  <div class="shelf" id="appShelf">
+  <div class="app-grid" id="appShelf">
     <article class="app-window reveal">
       <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span class="app-name">Insomniac.app</span><span class="app-platform">macOS</span></div>
       <div class="app-body">
@@ -367,7 +366,6 @@
     </article>
   </div>
   <p class="app-count mono reveal">// running total: 18 shipped, 5 more building. all on this page.</p>
-  </div>
 </section>
 
 <!-- ============ TOOLS & EXTENSIONS ============ -->
@@ -421,6 +419,23 @@
     <p class="eyebrow mono">// git branch --unmerged</p>
     <h2>Building next <span class="margin-note caveat">← two already live on github</span></h2>
     <p class="section-sub">Five projects with PRDs + TRDs written, in build order — the first two now have working cores on GitHub. One thread runs through them: <em>AI that knows when it doesn't know</em> — calibration, abstention, verifiable privacy.</p>
+  </div>
+  <div class="proof-term reveal" role="img" aria-label="Real terminal output from the Sahayak and Oracle repositories: a cited answer about crop loans, and a backtest where the calibrated model beats its baselines">
+    <div class="term-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span>real output — not a mockup · runs offline, zero API keys</span></div>
+    <pre class="proof-body mono"><code><span class="p-prompt">$</span> python -m sahayak ask <span class="p-str">"cheap crop loan for farmers"</span>
+<span class="p-out">The Kisan Credit Card provides farmers with timely and affordable
+short-term credit… loans up to ₹3 lakh at ~4% with prompt repayment. <span class="p-cite">[1]</span></span>
+<span class="p-dim">Sources: [1] Kisan Credit Card — myscheme.gov.in · (confidence: 0.43)</span>
+
+<span class="p-prompt">$</span> python -m sahayak ask <span class="p-str">"who won the cricket world cup"</span>
+<span class="p-warn">I'm not fully sure, and I won't guess on something that affects
+your benefits. Please verify at the official source. (abstained)</span>
+
+<span class="p-prompt">$</span> python -m oracle backtest
+<span class="p-dim">model                    Brier     ECE</span>
+<span class="p-out">persistence (lag-7)     0.437    0.433
+logistic (calibrated)   <span class="p-good">0.204    0.085</span>   <span class="p-dim">← beats both baselines</span>
+conformal coverage 0.88  (target 0.80)</span></code></pre>
   </div>
   <div class="cards roadmap-cards">
     <article class="card planned-card building-card reveal">
@@ -637,9 +652,6 @@
 
 <canvas id="rain" hidden></canvas>
 
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
 <script src="script.js"></script>
 </body>
 </html>

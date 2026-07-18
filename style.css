@@ -9,12 +9,15 @@
   --amber: #D9A86C;
   --rose: #C98A8A;
   --grid: #E7E3D8;
+  --sage-text: #567856;   /* sage for small text — AA on card + paper */
   --shadow: 0 2px 6px rgba(43, 58, 66, .08), 0 10px 24px rgba(43, 58, 66, .07);
   --shadow-lift: 0 4px 10px rgba(43, 58, 66, .10), 0 18px 36px rgba(43, 58, 66, .12);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
+section[id], #top { scroll-margin-top: 64px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 body {
   font-family: 'Inter', system-ui, sans-serif;
@@ -78,7 +81,7 @@ a { color: var(--sage-deep); }
   display: grid; grid-template-columns: 1.15fr .85fr; gap: 2rem; align-items: center;
   max-width: 1100px; margin: 0 auto; padding: clamp(3rem, 9vh, 6rem) 1.5rem 3rem;
 }
-.eyebrow { color: var(--sage-deep); font-size: .85rem; letter-spacing: .02em; }
+.eyebrow { color: var(--sage-text); font-size: .85rem; letter-spacing: .02em; }
 .hero h1 { font-size: clamp(2.6rem, 6vw, 4.2rem); font-weight: 600; margin: .6rem 0 1rem; }
 
 /* amber marker underline, draws in */
@@ -150,7 +153,7 @@ a { color: var(--sage-deep); }
 /* ============ Skills bars ============ */
 .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.4rem 2.5rem; }
 .skill-top { display: flex; justify-content: space-between; font-size: .88rem; margin-bottom: .45rem; }
-.skill-pct { color: var(--sage-deep); }
+.skill-pct { color: var(--sage-text); }
 .bar { height: 10px; border-radius: 6px; background: #EAE6DA; border: 1px solid #E0DBCC; overflow: hidden; }
 .bar-fill {
   height: 100%; width: 0; border-radius: 6px;
@@ -159,7 +162,7 @@ a { color: var(--sage-deep); }
 }
 .skill.in .bar-fill { width: var(--w); }
 .skill-note { font-size: .82rem; color: var(--ink-soft); margin-top: .35rem; }
-.skill-ships { font-size: .7rem; color: var(--sage-deep); margin-top: .25rem; }
+.skill-ships { font-size: .7rem; color: var(--sage-text); margin-top: .25rem; }
 
 /* ============ Experiment board ============ */
 .board { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.4rem; }
@@ -195,7 +198,7 @@ a { color: var(--sage-deep); }
   box-shadow: 0 3px 4px rgba(43,58,66,.28);
 }
 .card h3 { font-size: 1.25rem; margin-bottom: .2rem; }
-.card-tag { font-size: .74rem; color: var(--sage-deep); margin-bottom: .7rem; letter-spacing: .03em; }
+.card-tag { font-size: .74rem; color: var(--sage-text); margin-bottom: .7rem; letter-spacing: .03em; }
 .card p { font-size: .92rem; color: var(--ink-soft); }
 .card > p:nth-of-type(2) { color: var(--ink); opacity: .85; }
 
@@ -537,8 +540,8 @@ body.recruiter .terminal-btn { display: none; }
 
 /* ============ Scroll reveal — premium blur fade-up ============ */
 .reveal {
-  opacity: 0; transform: translateY(26px); filter: blur(6px);
-  transition: opacity .9s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1), filter .9s cubic-bezier(.22,1,.36,1);
+  opacity: .92; transform: translateY(22px); filter: blur(2.5px);
+  transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1), filter .8s cubic-bezier(.22,1,.36,1);
 }
 .reveal.in { opacity: 1; transform: translateY(0); filter: blur(0); }
 /* orchestrated hero load */
@@ -579,7 +582,13 @@ body.recruiter .gitlog.reveal .commit { opacity: 1; translate: none; transition:
 @media (max-width: 820px) {
   .hero { grid-template-columns: 1fr; padding-top: 2.5rem; }
   .hero-doodle { max-width: 380px; }
-  .topnav { display: none; }
+  .topbar { flex-wrap: wrap; gap: .5rem .9rem; padding-bottom: .55rem; }
+  .topnav {
+    order: 3; width: 100%; flex-wrap: nowrap; overflow-x: auto;
+    -webkit-overflow-scrolling: touch; scrollbar-width: none; gap: 1rem;
+  }
+  .topnav::-webkit-scrollbar { display: none; }
+  .topnav a { white-space: nowrap; padding: .15rem 0 4px; }
   .commit { grid-template-columns: 74px 1fr; }
   .commit .c-date { display: none; }
   .bookshelf { overflow-x: auto; }
@@ -594,14 +603,14 @@ body.recruiter .gitlog.reveal .commit { opacity: 1; translate: none; transition:
    ================================================================ */
 
 /* staggered children: sticky notes settle in one by one */
-.board-col.reveal .sticky { opacity: 0; translate: 0 16px; transition: opacity .6s ease, translate .6s cubic-bezier(.22,1,.36,1); }
+.board-col.reveal .sticky { opacity: .9; translate: 0 16px; transition: opacity .6s ease, translate .6s cubic-bezier(.22,1,.36,1); }
 .board-col.reveal.in .sticky { opacity: 1; translate: 0 0; }
 .board-col.reveal.in .sticky:nth-child(2) { transition-delay: .1s; }
 .board-col.reveal.in .sticky:nth-child(3) { transition-delay: .22s; }
 .board-col.reveal.in .sticky:nth-child(4) { transition-delay: .34s; }
 
 /* books rise off the plank */
-.bookshelf.reveal .book { opacity: 0; translate: 0 26px; transition: opacity .55s ease, translate .55s cubic-bezier(.22,1,.36,1); }
+.bookshelf.reveal .book { opacity: .9; translate: 0 26px; transition: opacity .55s ease, translate .55s cubic-bezier(.22,1,.36,1); }
 .bookshelf.reveal.in .book { opacity: 1; translate: 0 0; }
 .bookshelf.reveal.in .b2 { transition-delay: .08s; }
 .bookshelf.reveal.in .b3 { transition-delay: .16s; }
@@ -610,7 +619,7 @@ body.recruiter .gitlog.reveal .commit { opacity: 1; translate: none; transition:
 .bookshelf.reveal.in .b6 { transition-delay: .40s; }
 
 /* commits type themselves into the log */
-.gitlog.reveal .commit { opacity: 0; translate: -14px 0; transition: opacity .5s ease, translate .5s cubic-bezier(.22,1,.36,1); }
+.gitlog.reveal .commit { opacity: .9; translate: -14px 0; transition: opacity .5s ease, translate .5s cubic-bezier(.22,1,.36,1); }
 .gitlog.reveal.in .commit { opacity: 1; translate: 0 0; }
 .gitlog.reveal.in .commit:nth-child(2) { transition-delay: .09s; }
 .gitlog.reveal.in .commit:nth-child(3) { transition-delay: .18s; }
@@ -619,37 +628,15 @@ body.recruiter .gitlog.reveal .commit { opacity: 1; translate: none; transition:
 .gitlog.reveal.in .commit:nth-child(6) { transition-delay: .45s; }
 .gitlog.reveal.in .commit:nth-child(7) { transition-delay: .54s; }
 
-/* ============ App shelf (pinned horizontal) ============ */
-.apps-section { overflow: clip; }
-.apps-pin { padding: clamp(3rem, 8vh, 5rem) 0 2.5rem; }
-.apps-head { max-width: 1100px; margin: 0 auto 1.6rem; padding: 0 1.5rem; }
-.shelf { display: flex; gap: 1.4rem; padding: 1rem 1.5rem 1.4rem; width: max-content; }
-.shelf .app-window { width: clamp(280px, 30vw, 350px); flex-shrink: 0; display: flex; flex-direction: column; }
-.shelf .app-body { flex: 1; display: flex; flex-direction: column; }
-.shelf .app-body .card-stack { margin-top: auto; padding-top: .6rem; }
-.shelf .app-features { columns: 1; }
-.app-count { max-width: 1100px; margin: .4rem auto 0; padding: 0 1.5rem; }
-
-/* fallbacks: shelf becomes a swipeable strip when the pin is off */
-@media (max-width: 820px) {
-  .shelf { width: auto; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
-  .shelf .app-window { scroll-snap-align: start; width: min(84vw, 330px); }
-  .shelf-hint { display: none; }
+/* ============ App shelf — desktop-window grid (no pin, no scroll-jack) ============ */
+.app-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 1.4rem; align-items: stretch;
 }
-@media (prefers-reduced-motion: reduce) {
-  .shelf { width: auto; overflow-x: auto; }
-}
-body.recruiter .shelf { width: auto; overflow-x: auto; }
-body.recruiter .shelf-hint { display: none; }
-
-/* GSAP owns transforms on these while premium is on */
-html.premium .btn { transition: box-shadow .18s, background .18s, border-color .18s; }
-html.premium .btn-primary:hover { transform: none; }
-html.premium .btn-ghost:hover { transform: none; }
-html.premium .terminal-btn { transition: background .15s; }
-html.premium body:not(.recruiter) .card,
-html.premium body:not(.recruiter) .index-card,
-html.premium body:not(.recruiter) .app-window { transition: box-shadow .25s ease; }
+.app-grid .app-window { display: flex; flex-direction: column; }
+.app-grid .app-body { flex: 1; display: flex; flex-direction: column; }
+.app-grid .app-body .card-stack { margin-top: auto; padding-top: .6rem; }
+.app-count { margin-top: 1.2rem; }
 
 /* ============ Notebook cursor — ink dot + sketch ring ============ */
 body.nbc-on, body.nbc-on * { cursor: none !important; }
@@ -681,7 +668,7 @@ body.nbc-on .nbc-dot, body.nbc-on .nbc-ring { opacity: 1; }
 }
 
 /* states (classes live on the ring; dot follows suit) */
-.nbc-ring, .nbc-ring::before, .nbc-dot { transition: opacity .25s ease, scale .3s cubic-bezier(.22,1,.36,1), background .2s, border-color .2s; }
+.nbc-ring, .nbc-ring::before, .nbc-dot { transition: opacity .25s ease, scale .3s cubic-bezier(.22,1,.36,1), background .2s, border-color .2s, width .35s cubic-bezier(.22,1,.36,1), height .35s cubic-bezier(.22,1,.36,1), border-radius .35s cubic-bezier(.22,1,.36,1); }
 .nbc-ring.is-link { scale: .68; }
 .nbc-ring.is-link::before { border-color: var(--amber); border-style: solid; opacity: 1; animation-play-state: paused; }
 .nbc-dot.is-link { scale: 1.5; background: var(--amber); }
@@ -705,7 +692,7 @@ body.recruiter .nbc-dot, body.recruiter .nbc-ring { opacity: 0; }
 /* ============ Case-study links + new project sections ============ */
 .card-link {
   display: inline-block; margin-top: .9rem;
-  color: var(--sage-deep); text-decoration: none;
+  color: var(--sage-text); text-decoration: none;
   font-size: .8rem; font-weight: 500;
   border-bottom: 1px solid transparent; transition: border-color .2s, gap .2s;
 }
@@ -738,3 +725,47 @@ body.recruiter .nbc-dot, body.recruiter .nbc-ring { opacity: 0; }
 .building-card { border-style: solid; border-color: #d4e0d4; background: #fbfdfb; }
 .building-badge { background: #eef3ee; color: var(--sage-deep); border-color: #d4e0d4; }
 .building-card .card-link + .card-link { margin-left: 1.1rem; }
+
+/* ---- proof terminal: real repo output, the credibility anchor ---- */
+.proof-term {
+  max-width: 720px; margin: 0 auto 2.2rem; border-radius: 10px;
+  overflow: hidden; box-shadow: var(--shadow-lift); border: 1px solid #e3ddcf;
+}
+.proof-term .term-titlebar {
+  display: flex; align-items: center; gap: .6rem;
+  background: #2f3b42; color: #b9c6cc; font-size: .72rem; padding: .5rem .8rem;
+}
+.proof-body {
+  background: #253037; color: #d7e0e4; font-size: .78rem; line-height: 1.65;
+  padding: 1rem 1.1rem; margin: 0; overflow-x: auto; tab-size: 4;
+}
+.p-prompt { color: #8fd0a0; font-weight: 700; }
+.p-str    { color: #e5c07b; }
+.p-out    { color: #d7e0e4; }
+.p-dim    { color: #7f909a; }
+.p-cite   { color: #8fd0a0; }
+.p-warn   { color: #e0b48a; }
+.p-good   { color: #8fd0a0; font-weight: 700; }
+@media (max-width: 640px) { .proof-body { font-size: .68rem; } }
+
+
+/* ---- no-JS fallback: never hide content behind a reveal that cannot fire ---- */
+html:not(.js) .reveal, html:not(.js) .bookshelf .book, html:not(.js) .gitlog .commit,
+html:not(.js) .board-col .sticky {
+  opacity: 1 !important; transform: none !important; translate: none !important; filter: none !important;
+}
+
+/* ---- keyboard focus ---- */
+a:focus-visible, button:focus-visible, [role="button"]:focus-visible, [tabindex]:focus-visible {
+  outline: 2px solid var(--sage-deep); outline-offset: 3px; border-radius: 4px;
+}
+
+/* ---- grid stagger: cards cascade in, 60ms apart ---- */
+html.js .cards .reveal:nth-child(2), html.js .app-grid .reveal:nth-child(2) { transition-delay: .06s; }
+html.js .cards .reveal:nth-child(3), html.js .app-grid .reveal:nth-child(3) { transition-delay: .12s; }
+html.js .cards .reveal:nth-child(4), html.js .app-grid .reveal:nth-child(4) { transition-delay: .18s; }
+html.js .cards .reveal:nth-child(5), html.js .app-grid .reveal:nth-child(5) { transition-delay: .24s; }
+html.js .cards .reveal:nth-child(6), html.js .app-grid .reveal:nth-child(6) { transition-delay: .30s; }
+@media (prefers-reduced-motion: reduce) {
+  html.js .reveal { opacity: 1 !important; transform: none !important; translate: none !important; filter: none !important; transition: none !important; }
+}

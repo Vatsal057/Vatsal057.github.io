@@ -1,4 +1,5 @@
 // ============ Scroll reveal + skill bars ============
+document.documentElement.classList.add('js');   // reveal-gating: no JS, no hiding
 const io = new IntersectionObserver((entries) => {
   for (const e of entries) {
     if (!e.isIntersecting) continue;
@@ -11,16 +12,8 @@ const io = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
 function animateSkill(el) {
-  const pct = +el.dataset.pct;
-  el.style.setProperty('--w', pct + '%');
-  const label = el.querySelector('.skill-pct');
-  const t0 = performance.now(), dur = 1100;
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { label.textContent = pct + '%'; return; }
-  (function tick(t) {
-    const p = Math.min((t - t0) / dur, 1);
-    label.textContent = Math.round(pct * (1 - Math.pow(1 - p, 3))) + '%';
-    if (p < 1) requestAnimationFrame(tick);
-  })(t0);
+  // bars show relative depth; the receipts label carries the claim (no fake %)
+  el.style.setProperty('--w', el.dataset.pct + '%');
 }
 
 document.querySelectorAll('.card .pipeline').forEach(pl => {
@@ -595,12 +588,12 @@ function gradientRain() {
   }, 33);
 }
 
-// ============ Premium motion layer — Lenis smooth scroll + GSAP ============
-// Sits on top of the notebook. Recruiter mode and reduced-motion turn it off.
+// ============ Motion layer — vanilla, zero dependencies ============
+// The pinned shelf, magnetic buttons and card tilt are gone on purpose:
+// they hid content and taxed scroll. Motion now lives in reveals, hovers,
+// the count-up, and the cursor below. Recruiter mode / reduced motion win.
 (() => {
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // count-up hero stats (vanilla; same easing as the skill bars)
   if (!reduced) {
     document.querySelectorAll('.hero-stats .count').forEach(el => {
       const end = +el.dataset.count, t0 = performance.now(), dur = 1400;
@@ -611,108 +604,6 @@ function gradientRain() {
       })(t0);
     });
   }
-
-  if (reduced || typeof gsap === 'undefined') return;
-  gsap.registerPlugin(ScrollTrigger);
-  gsap.ticker.lagSmoothing(0);
-  document.documentElement.classList.add('premium');
-
-  const finePointer = matchMedia('(pointer: fine)').matches;
-  const recruiterOn = () => document.body.classList.contains('recruiter');
-
-  // ---- Lenis + pinned shelf: built/torn down with recruiter mode ----
-  let lenis = null, shelfCtx = null;
-  gsap.ticker.add(t => { if (lenis) lenis.raf(t * 1000); });
-
-  function buildPremium() {
-    if (typeof Lenis !== 'undefined' && !lenis) {
-      lenis = new Lenis({ lerp: 0.1 });
-      lenis.on('scroll', ScrollTrigger.update);
-    }
-    if (!shelfCtx) {
-      shelfCtx = gsap.matchMedia();
-      shelfCtx.add('(min-width: 821px)', () => {
-        const shelf = document.getElementById('appShelf');
-        const pinEl = document.querySelector('.apps-pin');
-        if (!shelf || !pinEl) return;
-        const dist = () => shelf.scrollWidth - document.documentElement.clientWidth + 48;
-        const tween = gsap.to(shelf, {
-          x: () => -Math.max(dist(), 0), ease: 'none',
-          scrollTrigger: {
-            trigger: pinEl, start: 'top top', end: () => '+=' + Math.max(dist(), 1),
-            pin: true, scrub: 1, invalidateOnRefresh: true,
-          },
-        });
-        return () => { tween.scrollTrigger && tween.scrollTrigger.kill(); tween.kill(); gsap.set(shelf, { clearProps: 'x' }); };
-      });
-    }
-  }
-  function teardownPremium() {
-    if (lenis) { lenis.destroy(); lenis = null; }
-    if (shelfCtx) { shelfCtx.revert(); shelfCtx = null; ScrollTrigger.refresh(); }
-  }
-
-  // ---- magnetic buttons ----
-  document.querySelectorAll('.btn, .terminal-btn').forEach(el => {
-    const qx = gsap.quickTo(el, 'x', { duration: .4, ease: 'expo.out' });
-    const qy = gsap.quickTo(el, 'y', { duration: .4, ease: 'expo.out' });
-    el.addEventListener('pointermove', e => {
-      if (recruiterOn()) return;
-      const r = el.getBoundingClientRect();
-      qx((e.clientX - r.left - r.width / 2) * .3);
-      qy((e.clientY - r.top - r.height / 2) * .4);
-    });
-    el.addEventListener('pointerleave', () => { qx(0); qy(0); });
-  });
-
-  // ---- 3D tilt: pinned cards, index cards, app windows ----
-  if (finePointer) {
-    document.querySelectorAll('.card:not(.card-flip), .index-card, .app-window').forEach(el => {
-      el.addEventListener('pointermove', e => {
-        if (recruiterOn()) return;
-        const r = el.getBoundingClientRect();
-        const px = (e.clientX - r.left) / r.width - .5;
-        const py = (e.clientY - r.top) / r.height - .5;
-        gsap.to(el, {
-          rotationY: px * 7, rotationX: -py * 7, rotation: 0, y: -4,
-          transformPerspective: 700, duration: .45, ease: 'power2.out',
-          boxShadow: 'var(--shadow-lift)',
-        });
-      });
-      el.addEventListener('pointerleave', () => {
-        gsap.to(el, { rotationX: 0, rotationY: 0, y: 0, duration: .6, ease: 'power3.out',
-          onComplete: () => gsap.set(el, { clearProps: 'transform,boxShadow' }) });
-      });
-    });
-  }
-
-  // ---- hero doodle: gentle mouse parallax ----
-  const doodle = document.querySelector('.hero-doodle');
-  if (doodle && finePointer) {
-    const dx = gsap.quickTo(doodle, 'x', { duration: .9, ease: 'power3.out' });
-    const dy = gsap.quickTo(doodle, 'y', { duration: .9, ease: 'power3.out' });
-    addEventListener('pointermove', e => {
-      if (recruiterOn()) return;
-      dx((e.clientX / innerWidth - .5) * 18);
-      dy((e.clientY / innerHeight - .5) * 12);
-    }, { passive: true });
-  }
-
-  // ---- topnav anchors glide through lenis ----
-  document.querySelectorAll('.topnav a[href^="#"], .logo').forEach(a => {
-    a.addEventListener('click', e => {
-      const target = document.querySelector(a.getAttribute('href'));
-      if (!target || !lenis) return;
-      e.preventDefault();
-      lenis.scrollTo(target, { offset: -56, duration: 1.2 });
-    });
-  });
-
-  // ---- recruiter switch controls the whole layer ----
-  const rt = document.getElementById('recruiterToggle');
-  const sync = () => recruiterOn() ? teardownPremium() : buildPremium();
-  rt.addEventListener('change', sync);
-  sync();
 })();
 
 // ============ Notebook cursor — ink dot + sketch ring ============
@@ -721,7 +612,6 @@ function gradientRain() {
 (() => {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (!matchMedia('(pointer: fine)').matches) return;
-  if (typeof gsap === 'undefined') return;
 
   const dot = document.createElement('div');
   const ring = document.createElement('div');
@@ -732,13 +622,19 @@ function gradientRain() {
   ring.appendChild(label);
   document.body.append(dot, ring);
 
-  gsap.set(ring, { xPercent: -50, yPercent: -50 });
-
-  // dot snaps, ring lags — pen tip and its halo
-  const dx = gsap.quickTo(dot, 'x', { duration: .12, ease: 'power2.out' });
-  const dy = gsap.quickTo(dot, 'y', { duration: .12, ease: 'power2.out' });
-  const rx = gsap.quickTo(ring, 'x', { duration: .38, ease: 'power3.out' });
-  const ry = gsap.quickTo(ring, 'y', { duration: .38, ease: 'power3.out' });
+  // dot snaps, ring lags — pen tip and its halo. One rAF lerp loop, no library.
+  const pos = { dx: 0, dy: 0, rx: 0, ry: 0, tx: 0, ty: 0, rtx: 0, rty: 0 };
+  (function loop() {
+    pos.dx += (pos.tx - pos.dx) * 0.55;
+    pos.dy += (pos.ty - pos.dy) * 0.55;
+    pos.rx += (pos.rtx - pos.rx) * 0.16;
+    pos.ry += (pos.rty - pos.ry) * 0.16;
+    dot.style.transform = `translate(${pos.dx}px, ${pos.dy}px)`;
+    ring.style.transform = `translate(${pos.rx}px, ${pos.ry}px) translate(-50%, -50%)`;
+    requestAnimationFrame(loop);
+  })();
+  const dx = v => { pos.tx = v; }, dy = v => { pos.ty = v; };
+  const rx = v => { pos.rtx = v; }, ry = v => { pos.rty = v; };
 
   const recruiterOn = () => document.body.classList.contains('recruiter');
   let started = false, stuck = null, cx = 0, cy = 0;
@@ -764,16 +660,15 @@ function gradientRain() {
     const r = el.getBoundingClientRect();
     const br = parseFloat(getComputedStyle(el).borderRadius) || 6;
     dot.classList.add('is-shape'); ring.classList.add('is-shape');
-    gsap.to(ring, {
-      width: r.width + 12, height: r.height + 12, borderRadius: (br + 5) + 'px',
-      duration: .35, ease: 'power3.out', overwrite: 'auto',
-    });
+    ring.style.width = (r.width + 12) + 'px';
+    ring.style.height = (r.height + 12) + 'px';
+    ring.style.borderRadius = (br + 5) + 'px';
   }
   function morphReset() {
     if (!stuck) return;
     stuck = null;
     dot.classList.remove('is-shape'); ring.classList.remove('is-shape');
-    gsap.to(ring, { width: 38, height: 38, borderRadius: '50%', duration: .4, ease: 'power3.out', overwrite: 'auto' });
+    ring.style.width = ''; ring.style.height = ''; ring.style.borderRadius = '';
   }
 
   // what the cursor becomes, first match wins

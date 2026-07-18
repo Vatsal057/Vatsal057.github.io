@@ -119,7 +119,7 @@ window.PROJECTS = [
     ],
     learned: "The interpretability chart wasn't planned. It came from being confused by my own results, and it's now the most useful part.",
     stack: ["CLIP", "Python", "Gradio", "HF Spaces"],
-    links: { github: "https://github.com/Vatsal057/indian-food-search", demo: "https://huggingface.co/spaces/vatsal057/indian-food-search" }
+    links: { github: "https://github.com/Vatsal057/indian-food-search" }
   },
   {
     slug: "plant-disease",
@@ -138,7 +138,7 @@ window.PROJECTS = [
     ],
     learned: "Confidence scores lie by omission. A heatmap is a much harder thing for a model to fake trustworthiness with.",
     stack: ["PyTorch", "Grad-CAM", "Gradio", "HF Spaces"],
-    links: { github: "https://github.com/Vatsal057/plant-disease-detector", demo: "https://huggingface.co/spaces/vatsal057/plant-disease" }
+    links: { github: "https://github.com/Vatsal057/plant-disease-detector" }
   },
   {
     slug: "scribbletype",
