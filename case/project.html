@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project · Vatsal Vaghasiya</title>
+<meta name="description" content="A project by Vatsal Vaghasiya — the problem, how it works, and what didn't.">
+<link rel="icon" href="../images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="project.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="logo" href="../index.html#top">V<span class="logo-dot">.</span>V</a>
+  <nav class="topnav">
+    <a href="../index.html#projects">Projects</a>
+    <a href="../index.html#apps">Apps</a>
+    <a href="../index.html#roadmap">Building next</a>
+    <a href="../index.html#research">Research</a>
+    <a href="../index.html#contact">Contact</a>
+  </nav>
+  <a class="btn btn-ghost back-btn mono" href="../index.html#projects">← all projects</a>
+</header>
+
+<main id="top" class="detail" hidden>
+  <p class="crumb mono"><a href="../index.html">home</a> / <span id="crumbKind">project</span> / <span id="crumbTitle"></span></p>
+
+  <div class="detail-head">
+    <span class="detail-badge mono" id="badge"></span>
+    <h1 id="title"></h1>
+    <p class="detail-tag mono" id="tag"></p>
+    <p class="detail-oneliner" id="oneLiner"></p>
+    <p class="detail-stack mono" id="stack"></p>
+    <div class="detail-links" id="links"></div>
+  </div>
+
+  <section class="detail-block reveal" id="problemBlock">
+    <p class="eyebrow mono">// why I built it</p>
+    <p class="detail-prose" id="problem"></p>
+  </section>
+
+  <section class="detail-block reveal" id="howBlock" hidden>
+    <p class="eyebrow mono">// how it works</p>
+    <div class="pipeline mono detail-pipeline" id="how"></div>
+  </section>
+
+  <section class="detail-block reveal" id="highlightsBlock">
+    <p class="eyebrow mono">// the interesting parts</p>
+    <ul class="detail-list" id="highlights"></ul>
+  </section>
+
+  <section class="detail-block reveal" id="targetsBlock" hidden>
+    <p class="eyebrow mono">// what "done" looks like</p>
+    <p class="detail-prose" id="targets"></p>
+  </section>
+
+  <section class="detail-block reveal" id="learnedBlock" hidden>
+    <div class="index-card learned-card">
+      <h3 class="caveat">what I learned</h3>
+      <p id="learned"></p>
+    </div>
+  </section>
+
+  <p class="detail-more mono reveal">// more experiments →
+    <a href="../index.html#projects">back to the notebook</a>
+  </p>
+</main>
+
+<section class="detail notfound" id="notfound" hidden>
+  <h1>404 · no such experiment</h1>
+  <p class="detail-prose">That project id isn't on the board.
+    <a href="../index.html#projects">Back to all projects →</a>
+  </p>
+</section>
+
+<script src="../projects-data.js"></script>
+<script src="project.js"></script>
+</body>
+</html>

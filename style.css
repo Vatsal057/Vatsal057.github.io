@@ -701,3 +701,40 @@ body.nbc-on .nbc-dot, body.nbc-on .nbc-ring { opacity: 1; }
 .nbc-dot.is-down { scale: .8; }
 .nbc-ring.is-shape.is-down { scale: .96; }
 body.recruiter .nbc-dot, body.recruiter .nbc-ring { opacity: 0; }
+
+/* ============ Case-study links + new project sections ============ */
+.card-link {
+  display: inline-block; margin-top: .9rem;
+  color: var(--sage-deep); text-decoration: none;
+  font-size: .8rem; font-weight: 500;
+  border-bottom: 1px solid transparent; transition: border-color .2s, gap .2s;
+}
+.card-link:hover { border-color: var(--sage-deep); }
+.app-body .card-link { margin-top: .7rem; }
+.cardflip-links a[href^="projects/"] { color: var(--sage-deep); }
+
+/* in-progress tag on a project card heading */
+.card-status {
+  font-family: 'JetBrains Mono', monospace; font-size: .6rem;
+  text-transform: uppercase; letter-spacing: .04em;
+  vertical-align: middle; margin-left: .5rem;
+  padding: .12rem .45rem; border-radius: 4px;
+  background: #fbf2e3; color: #b07d3a; border: 1px solid #ecd9b8;
+}
+
+/* ---- Roadmap / planned cards ---- */
+.planned-card { position: relative; border-style: dashed; background: #fbfaf6; }
+.planned-card::before { display: none; } /* no pin on planned cards */
+.planned-card .pin { display: none; }
+.planned-badge {
+  display: inline-block; font-size: .62rem; text-transform: uppercase;
+  letter-spacing: .05em; padding: .18rem .5rem; border-radius: 4px;
+  background: #f0eef6; color: #7a6ba0; border: 1px solid #ddd6ea;
+  margin-bottom: .7rem;
+}
+#roadmap .section-sub em { color: var(--sage-deep); font-style: normal; }
+
+/* ---- roadmap: cards that have started (code on github) ---- */
+.building-card { border-style: solid; border-color: #d4e0d4; background: #fbfdfb; }
+.building-badge { background: #eef3ee; color: var(--sage-deep); border-color: #d4e0d4; }
+.building-card .card-link + .card-link { margin-left: 1.1rem; }
