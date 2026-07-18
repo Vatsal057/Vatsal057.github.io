@@ -8,6 +8,7 @@ window.PROJECTS = [
   /* ---------- AI / ML projects ---------- */
   {
     slug: "cachy",
+    media: { src: "../images/shots/cachy.png", alt: "Cachy banner — reels to knowledge cards", caption: "the pitch in one frame: short-form media in, structured knowledge cards out" },
     title: "Cachy",
     kind: "project",
     status: "shipped",
@@ -85,6 +86,7 @@ window.PROJECTS = [
   },
   {
     slug: "bangalore-aqi",
+    media: { src: "../images/shots/aqi-dbscan-map.png", alt: "DBSCAN cluster map of Bangalore air-quality stations", caption: "the actual DBSCAN output — outlier stations in the map are the pollution hotspots" },
     title: "Bangalore Air Quality",
     kind: "project",
     status: "shipped",
@@ -179,6 +181,7 @@ window.PROJECTS = [
   },
   {
     slug: "glide",
+    media: { src: "../images/shots/glide.jpg", alt: "Glide hero artwork", caption: "Glide — trackpad gestures the OS never gave you" },
     title: "Glide.app",
     kind: "app",
     status: "shipped",
@@ -197,6 +200,7 @@ window.PROJECTS = [
   },
   {
     slug: "ibar",
+    media: { src: "../images/shots/ibar.jpg", alt: "iBar theming the macOS menu bar", caption: "live on my own menu bar — gradients where Apple ships flat" },
     title: "iBar.app",
     kind: "app",
     status: "shipped",
@@ -233,6 +237,7 @@ window.PROJECTS = [
   },
   {
     slug: "photowidget",
+    media: { src: "../images/shots/photowidget.jpg", alt: "PhotoWidget desktop widgets showing personal photos", caption: "real desktop, real widgets — four sizes, full colour" },
     title: "PhotoWidget.app",
     kind: "app",
     status: "shipped",
@@ -269,6 +274,7 @@ window.PROJECTS = [
   /* ---------- Developer tools & extensions ---------- */
   {
     slug: "chrome-to-safari",
+    media: { src: "../images/shots/chrome-to-safari.png", alt: "chrome-to-safari drop-target app window", caption: "the whole UI: drop an extension folder, get a signed Safari extension" },
     title: "chrome-to-safari",
     kind: "tool",
     status: "shipped",

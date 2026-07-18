@@ -62,3 +62,20 @@
 @media (max-width: 640px) {
   .topnav { display: none; }
 }
+
+/* ---- media: taped-in notebook photo ---- */
+.detail-media { margin: 0 0 2.4rem; position: relative; max-width: 680px; }
+.detail-media img {
+  display: block; width: 100%; height: auto; border-radius: 6px;
+  border: 1px solid #EAE4D5; box-shadow: var(--shadow-lift);
+  transform: rotate(-.6deg); background: var(--card);
+}
+.detail-media::before {
+  content: ""; position: absolute; top: -11px; left: 10%; width: 78px; height: 26px;
+  background: rgba(217, 168, 108, .45); border-radius: 2px; z-index: 2;
+  transform: rotate(-4deg); box-shadow: 0 1px 2px rgba(43,58,66,.12);
+}
+.detail-media figcaption {
+  margin-top: .7rem; font-size: 1.15rem; color: var(--ink-soft); transform: rotate(-.5deg);
+}
+.media-pending { font-size: .78rem; color: var(--ink-soft); margin: -1.2rem 0 2rem; }
