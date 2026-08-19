@@ -25,7 +25,7 @@ window.PROJECTS = [
     ],
     learned: "A three-provider fallback chain shipped faster and broke less than waiting for one reliable paid API.",
     stack: ["Whisper", "OpenCV", "Tesseract", "SQLite", "FastAPI", "Flutter", "HF Spaces"],
-    links: { github: "https://github.com/Vatsal057/Cachy" }
+    links: { github: "https://github.com/Vatsal057/Cachy", website: "https://cachy.vatxzz.workers.dev" }
   },
   {
     slug: "constitution-rag",
