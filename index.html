@@ -387,28 +387,6 @@
 
     </section>
 
-    <!-- ============ DATATHON — ACHIEVEMENT ============ -->
-    <section id="datathon" class="section">
-      <div class="section-head reveal">
-        <img class="section-icon" src="images/icon-flask.png" alt="">
-        <p class="eyebrow mono">// competition · 2026</p>
-        <h2>Competitions &amp; awards</h2>
-      </div>
-
-      <div class="achievements">
-        <article onclick="window.location.href='case/datathon.html'" class="achievement-card reveal" role="link" tabindex="0">
-          <div class="achievement-medal">🥇</div>
-          <div class="achievement-body">
-            <p class="mono achievement-org">Akshara Foundation · Datathon 2026</p>
-            <h3>1st Place — Karnataka Education Datathon</h3>
-            <p class="achievement-desc">Analysed arithmetic learning outcomes across 1.38 million Karnataka government school students. Built indices, OLS residuals, and a 7-screen Streamlit dashboard to argue the gap is skill-shaped, not geography-shaped.</p>
-            <p class="mono achievement-stack">Python · pandas · scipy · plotly · Streamlit · 1.38M records</p>
-          </div>
-          <span class="achievement-arrow mono">view →</span>
-        </article>
-      </div>
-    </section>
-
     <!-- ============ APPS · PINNED SHELF ============ -->
     <section id="apps" class="section">
       <div class="section-head reveal">
@@ -559,9 +537,15 @@
       <div class="section-head reveal">
         <img class="section-icon" src="images/icon-flask.png" alt="">
         <p class="eyebrow mono">// git branch --unmerged</p>
-        <h2>Building next <span class="margin-note caveat">← live on github</span></h2>
-        <p class="section-sub">Two projects currently in active development, both with working cores on GitHub. One thread runs through them: <em>AI that knows when it doesn't know</em> — calibration, abstention, verifiable privacy.</p>
+        <h2>Building next <span class="margin-note caveat">← two already live on github</span></h2>
+        <p class="section-sub">Five projects with PRDs + TRDs written, in build order — the first two now have working
+          cores on GitHub. One thread runs through them: <em>AI that knows when it doesn't know</em> — calibration,
+          abstention, verifiable privacy.</p>
       </div>
+      <div class="proof-term reveal" role="img"
+        aria-label="Real terminal output from the Sahayak and Oracle repositories: a cited answer about crop loans, and a backtest where the calibrated model beats its baselines">
+        <div class="term-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span>real output — not a
+            mockup · runs offline, zero API keys</span></div>
         <pre class="proof-body mono"><code><span class="p-prompt">$</span> python -m sahayak ask <span class="p-str">"cheap crop loan for farmers"</span>
 <span class="p-out">The Kisan Credit Card provides farmers with timely and affordable
 short-term credit… loans up to ₹3 lakh at ~4% with prompt repayment. <span class="p-cite">[1]</span></span>
@@ -604,6 +588,59 @@ conformal coverage 0.88  (target 0.80)</span></code></pre>
           <a class="card-link mono" href="https://github.com/Vatsal057/oracle" target="_blank" rel="noopener">github
             →</a>
         </article>
+        <article class="card planned-card reveal">
+          <span class="planned-badge mono">planned</span>
+          <h3>Cachy Study</h3>
+          <p class="card-tag mono">extends cachy · fastest build</p>
+          <p>Turns a 40-hour lecture playlist into a syllabus-mapped course pack: topic notes cited to video +
+            timestamp, a coverage map, likely exam questions, and Anki flashcards. A full pack must cost ₹0.</p>
+          <p class="card-stack mono">Cachy pipeline · Whisper · LLM chain</p>
+          <a class="card-link mono" href="case/project.html?id=cachy-study">read the plan →</a>
+        </article>
+        <article class="card planned-card reveal">
+          <span class="planned-badge mono">planned</span>
+          <h3>ChatLens</h3>
+          <p class="card-tag mono">100% client-side · verifiable privacy</p>
+          <p>WhatsApp analytics where your chats <mark class="hl">never leave your device</mark> — and you can prove it.
+            Deterministic on-device stats, a Spotify-Wrapped-style share card, and an architecture that makes uploading
+            impossible, not just avoided.</p>
+          <p class="card-stack mono">client-side JS · strict CSP · no backend</p>
+          <a class="card-link mono" href="case/project.html?id=chatlens">read the plan →</a>
+        </article>
+        <article class="card planned-card reveal">
+          <span class="planned-badge mono">planned · maybe</span>
+          <h3>PlacementIQ</h3>
+          <p class="card-tag mono">resume scorer + company intel</p>
+          <p>A calibrated resume scorer (trained shortlist model, not LLM vibes) plus crowdsourced per-company interview
+            intelligence. Flagged "maybe" until the cold-start data problem has a real, no-scraping answer.</p>
+          <p class="card-stack mono">siamese DeBERTa · calibration toolkit</p>
+          <a class="card-link mono" href="case/project.html?id=placementiq">read the plan →</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ DATASET SHELF ============ -->
+    <section id="shelf" class="section">
+      <div class="section-head reveal">
+        <img class="section-icon" src="images/icon-books.png" alt="">
+        <p class="eyebrow mono">// research shelf</p>
+        <h2>Domains I've shipped in</h2>
+        <p class="section-sub">Hover a book to see the projects behind it.</p>
+      </div>
+      <div class="bookshelf reveal">
+        <div class="book b1" tabindex="0"><span class="book-spine">Computer Vision</span><span
+            class="book-info">AirSwipe · Cachy OCR · ProbCLIP-A · ScribbleType</span></div>
+        <div class="book b2" tabindex="0"><span class="book-spine">NLP &amp; LLMs</span><span
+            class="book-info">Constitution RAG · Preference paper · Cachy LLM chain</span></div>
+        <div class="book b3" tabindex="0"><span class="book-spine">MLOps</span><span class="book-info">IPL drift
+            pipeline · Docker · PSI monitoring</span></div>
+        <div class="book b4" tabindex="0"><span class="book-spine">Data Mining</span><span class="book-info">Bangalore
+            AQI · clustering · feature engineering</span></div>
+        <div class="book b5" tabindex="0"><span class="book-spine">App Development</span><span class="book-info">7
+            shipped apps · Flutter · Swift · Kotlin</span></div>
+        <div class="book b6" tabindex="0"><span class="book-spine">Preference Learning</span><span
+            class="book-info">Siamese DeBERTa paper · human preference prediction</span></div>
+        <div class="shelf-plank"></div>
       </div>
     </section>
 
@@ -665,31 +702,6 @@ conformal coverage 0.88  (target 0.80)</span></code></pre>
       </div>
     </section>
 
-    <!-- ============ TIMELINE ============ -->
-    <section id="timeline" class="section">
-      <div class="section-head reveal">
-        <img class="section-icon" src="images/icon-git.png" alt="">
-        <p class="eyebrow mono">// git log --journey</p>
-        <h2>Commit history</h2>
-      </div>
-      <div class="gitlog mono reveal">
-        <div class="commit"><span class="c-hash">a1f2021</span><span class="c-date">Oct 2021</span><span
-            class="c-msg">init: B.Tech Computer Engineering @ SAL College of Engineering</span></div>
-        <div class="commit"><span class="c-hash">b3c4d55</span><span class="c-date">2023</span><span class="c-msg">feat:
-            Python + OpenCV, first computer vision experiments</span></div>
-        <div class="commit"><span class="c-hash">c7e8f01</span><span class="c-date">2024</span><span class="c-msg">feat:
-            AirSwipe, gesture control, first real users</span></div>
-        <div class="commit"><span class="c-hash">d9a0b12</span><span class="c-date">Apr 2025</span><span
-            class="c-msg">release: B.Tech complete 🎓</span></div>
-        <div class="commit"><span class="c-hash">e2c3d44</span><span class="c-date">2025</span><span class="c-msg">feat:
-            two research papers submitted, RAG systems, MLOps pipeline</span></div>
-        <div class="commit"><span class="c-hash">f5e6a78</span><span class="c-date">Nov 2025</span><span
-            class="c-msg">checkout -b mtech: Data Science @ Ramaiah University of Applied Sciences</span></div>
-        <div class="commit c-head"><span class="c-hash">HEAD</span><span class="c-date">now</span><span
-            class="c-msg">training… <span class="margin-note caveat">← you are here</span></span></div>
-      </div>
-    </section>
-
     <!-- ============ WHAT I BRING ============ -->
     <section id="value" class="section">
       <div class="section-head reveal">
@@ -717,6 +729,31 @@ conformal coverage 0.88  (target 0.80)</span></code></pre>
           <p class="mono value-k">✓ the whole product</p>
           <p>If the model needs an app around it, I build that too, in Swift, Flutter, or on the web.</p>
         </div>
+      </div>
+    </section>
+
+    <!-- ============ TIMELINE ============ -->
+    <section id="timeline" class="section">
+      <div class="section-head reveal">
+        <img class="section-icon" src="images/icon-git.png" alt="">
+        <p class="eyebrow mono">// git log --journey</p>
+        <h2>Commit history</h2>
+      </div>
+      <div class="gitlog mono reveal">
+        <div class="commit"><span class="c-hash">a1f2021</span><span class="c-date">Oct 2021</span><span
+            class="c-msg">init: B.Tech Computer Engineering @ SAL College of Engineering</span></div>
+        <div class="commit"><span class="c-hash">b3c4d55</span><span class="c-date">2023</span><span class="c-msg">feat:
+            Python + OpenCV, first computer vision experiments</span></div>
+        <div class="commit"><span class="c-hash">c7e8f01</span><span class="c-date">2024</span><span class="c-msg">feat:
+            AirSwipe, gesture control, first real users</span></div>
+        <div class="commit"><span class="c-hash">d9a0b12</span><span class="c-date">Apr 2025</span><span
+            class="c-msg">release: B.Tech complete 🎓</span></div>
+        <div class="commit"><span class="c-hash">e2c3d44</span><span class="c-date">2025</span><span class="c-msg">feat:
+            two research papers submitted, RAG systems, MLOps pipeline</span></div>
+        <div class="commit"><span class="c-hash">f5e6a78</span><span class="c-date">Nov 2025</span><span
+            class="c-msg">checkout -b mtech: Data Science @ Ramaiah University of Applied Sciences</span></div>
+        <div class="commit c-head"><span class="c-hash">HEAD</span><span class="c-date">now</span><span
+            class="c-msg">training… <span class="margin-note caveat">← you are here</span></span></div>
       </div>
     </section>
 
