@@ -629,8 +629,8 @@ function gradientRain() {
     pos.dy += (pos.ty - pos.dy) * 0.55;
     pos.rx += (pos.rtx - pos.rx) * 0.16;
     pos.ry += (pos.rty - pos.ry) * 0.16;
-    dot.style.transform = `translate(${pos.dx}px, ${pos.dy}px)`;
-    ring.style.transform = `translate(${pos.rx}px, ${pos.ry}px) translate(-50%, -50%)`;
+    dot.style.translate = `${pos.dx}px ${pos.dy}px`;
+    ring.style.translate = `calc(${pos.rx}px - 50%) calc(${pos.ry}px - 50%)`;
     requestAnimationFrame(loop);
   })();
   const dx = v => { pos.tx = v; }, dy = v => { pos.ty = v; };
