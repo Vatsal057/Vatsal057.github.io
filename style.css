@@ -172,6 +172,23 @@ a { color: var(--sage-deep); }
 .btn-ghost { color: var(--ink); border: 1.5px solid #cfc9ba; background: var(--card); }
 .btn-ghost:hover { border-color: var(--sage); transform: translateY(-2px); }
 
+.btn-accent { 
+  background: var(--amber); 
+  color: var(--paper); 
+  box-shadow: 0 0 0 0 rgba(217, 168, 108, 0.7); 
+  animation: pulse-amber 2s infinite; 
+}
+.btn-accent:hover { 
+  transform: translateY(-2px); 
+  animation: none; 
+  box-shadow: var(--shadow-lift);
+}
+@keyframes pulse-amber {
+  0% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(217, 168, 108, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(217, 168, 108, 0); }
+  100% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(217, 168, 108, 0); }
+}
+
 /* ============ Sections ============ */
 .section { max-width: 1100px; margin: 0 auto; padding: clamp(3rem, 8vh, 5rem) 1.5rem; }
 .section-head { max-width: 44rem; margin-bottom: 2.2rem; position: relative; }
@@ -837,3 +854,58 @@ body.dark-mode .shelf-plank { background: linear-gradient(#3B3E42, #24282A); }
 }
 
 
+/* ============ Contact Form ============ */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+  max-width: 600px;
+  margin: 2rem 0 3rem 0;
+}
+.form-row {
+  display: flex;
+  gap: 1.2rem;
+}
+.form-row > * {
+  flex: 1;
+}
+.contact-input {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--grid);
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  color: var(--ink);
+  font-size: 0.95rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+.contact-input::placeholder {
+  color: var(--ink-soft);
+}
+.contact-input:focus {
+  border-color: var(--amber);
+  box-shadow: 0 0 0 2px rgba(217, 168, 108, 0.2);
+}
+body.dark-mode .contact-input:focus {
+  box-shadow: 0 0 0 2px rgba(179, 134, 79, 0.3);
+}
+.contact-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+.submit-btn {
+  align-self: flex-start;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+}
+.form-result {
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+.form-result.success { color: var(--sage); }
+.form-result.error { color: #E0968D; }
+@media (max-width: 600px) {
+  .form-row { flex-direction: column; }
+}
