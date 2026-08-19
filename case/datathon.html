@@ -205,7 +205,8 @@
 </div>
 
 <script>
-  if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark-mode');
+  var isDark = localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  if (isDark) document.body.classList.add('dark-mode');
 
   var reveals = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {

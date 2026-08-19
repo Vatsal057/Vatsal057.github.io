@@ -1,7 +1,8 @@
 /* Renders one project detail page from window.PROJECTS by ?id=slug. */
 (function () {
   document.documentElement.classList.add('js');
-  if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark-mode');
+  var isDark = localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  if (isDark) document.body.classList.add('dark-mode');
 
   var id = new URLSearchParams(location.search).get("id");
   var p = (window.PROJECTS || []).find(function (x) { return x.slug === id; });
