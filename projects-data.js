@@ -160,6 +160,7 @@ window.PROJECTS = [
     stack: ["ML Kit", "Flutter", "Kotlin IME"],
     links: { github: "https://github.com/Vatsal057/Scribbleeeee" }
   },
+
   /* ---------- Native apps ---------- */
   {
     slug: "insomniac",
@@ -197,26 +198,6 @@ window.PROJECTS = [
     ],
     stack: ["Swift", "AppKit", "IOKit multitouch"],
     links: { github: "https://github.com/Vatsal057/Glide" }
-  },
-  {
-    slug: "ibar",
-    media: { src: "../images/shots/ibar.jpg", alt: "iBar theming the macOS menu bar", caption: "live on my own menu bar — gradients where Apple ships flat" },
-    title: "iBar.app",
-    kind: "app",
-    status: "shipped",
-    platform: "macOS",
-    tag: "macOS · menu bar theming",
-    oneLiner: "Themes the macOS menu bar — something Apple gives you no public API for.",
-    problem: "You can theme almost everything on a Mac except the menu bar. There's no API for it. So I did it the hard way, with a click-through overlay window at the menu bar's own level.",
-    highlights: [
-      "Click-through overlay at the menu bar's window level — gradients and blur.",
-      "Auto-presets that respond to window state; notch-aware.",
-      "Reads menu titles via the Accessibility API to keep them legible against any background.",
-      "Solves a problem the OS actively doesn't want solved."
-    ],
-    learned: "Half of the effort was legibility — a themed bar is useless if you can't read the menu titles on top of it.",
-    stack: ["Swift", "SwiftUI", "Accessibility API", "CGWindowList"],
-    links: { github: "https://github.com/Vatsal057/iBar" }
   },
   {
     slug: "dimmer",
