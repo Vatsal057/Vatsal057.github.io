@@ -39,11 +39,16 @@
 
   // links
   var links = document.getElementById("links");
-  if (p.links && p.links.github) {
-    links.appendChild(anchor(p.links.github, "github repo →", "btn btn-primary"));
+  if (p.links && p.links.website) {
+    links.appendChild(anchor(p.links.website, "visit website ↗", "btn btn-primary"));
   }
   if (p.links && p.links.demo) {
-    links.appendChild(anchor(p.links.demo, "live demo →", "btn btn-ghost"));
+    var demoClass = p.links.website ? "btn btn-ghost" : "btn btn-primary";
+    links.appendChild(anchor(p.links.demo, "live demo ↗", demoClass));
+  }
+  if (p.links && p.links.github) {
+    var ghClass = (p.links.website || p.links.demo) ? "btn btn-ghost" : "btn btn-primary";
+    links.appendChild(anchor(p.links.github, "github repo →", ghClass));
   }
   if (p.links && p.links.certificate) {
     links.appendChild(anchor(p.links.certificate, "view certificate →", "btn btn-primary"));
