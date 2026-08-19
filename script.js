@@ -250,9 +250,8 @@ bubble.addEventListener('click', e => {
 // ============ Guided tour - the robot drives ============
 const TOUR = [
   ['skills', "Skills. Each bar lists the projects it came from."],
-  ['experiments', "The lab board. Check the failed column."],
   ['principles', "How he works, on index cards."],
-  ['projects', "The desk. Start with the RAG one."],
+  ['projects', "The desk. Selected shipped projects."],
   ['apps', "Five native macOS apps, all Swift."],
   ['research', "Two first-author papers, under review. Click one to flip it."],
   ['timeline', "Four years in one git log."],
