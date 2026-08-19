@@ -1,460 +1,552 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vatsal Vaghasiya · AI Engineer</title>
-<meta name="description" content="Vatsal Vaghasiya, MTech Data Science student. 18 shipped projects, 2 research papers under review, 5 more building.">
-<meta property="og:title" content="Vatsal Vaghasiya · AI Engineer">
-<meta property="og:description" content="Projects, papers, and the experiments that didn't work.">
-<meta property="og:image" content="images/og.png">
-<link rel="icon" href="images/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vatsal Vaghasiya · AI Engineer</title>
+  <meta name="description"
+    content="Vatsal Vaghasiya, MTech Data Science student. 18 shipped projects, 2 research papers under review, 5 more building.">
+  <meta property="og:title" content="Vatsal Vaghasiya · AI Engineer">
+  <meta property="og:description" content="Projects, papers, and the experiments that didn't work.">
+  <meta property="og:image" content="images/og.png">
+  <link rel="icon" href="images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<!-- ============ TOP BAR ============ -->
-<header class="topbar">
-  <a class="logo" href="#top">V<span class="logo-dot">.</span>V</a>
-  <nav class="topnav">
-    <a href="#skills">Skills</a>
-    <a href="#projects">Projects</a>
-    <a href="#apps">Apps</a>
-    <a href="#tools">Tools</a>
-    <a href="#roadmap">Building next</a>
-    <a href="#research">Research</a>
-    <a href="#contact">Contact</a>
-  </nav>
-  <button class="terminal-btn mono" id="terminalBtn" title="Terminal mode (Ctrl+`)">&gt;_ terminal</button>
-  <label class="recruiter-switch" title="Recruiter mode: turns off the animations and the robot">
-    <input type="checkbox" id="recruiterToggle">
-    <span class="rs-track"><span class="rs-thumb"></span></span>
-    <span class="rs-label">Recruiter&nbsp;mode</span>
-  </label>
-</header>
+  <!-- ============ TOP BAR ============ -->
+  <header class="topbar">
+    <a class="logo" href="#top">V<span class="logo-dot">.</span>V</a>
+    <nav class="topnav">
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#apps">Apps</a>
+      <a href="#tools">Tools</a>
+      <a href="#roadmap">Building next</a>
+      <a href="#research">Research</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="terminal-btn mono" id="terminalBtn" title="Terminal mode (Ctrl+`)">&gt;_ terminal</button>
+    <label class="recruiter-switch" title="Recruiter mode: turns off the animations and the robot">
+      <input type="checkbox" id="recruiterToggle">
+      <span class="rs-track"><span class="rs-thumb"></span></span>
+      <span class="rs-label">Recruiter&nbsp;mode</span>
+    </label>
+  </header>
 
-<!-- ============ HERO ============ -->
-<main id="top">
-<section class="hero">
-  <div class="hero-inner">
-    <div class="notebook-card mono reveal">
-      <div class="nc-head"><span id="ncDay">Mon</span><span>lab notebook · page <span id="ncPage">147</span></span></div>
-      <div class="nc-body">
-        <p class="nc-label">currently training:</p>
-        <p>□ MTech Data Science · epoch 1/4</p>
-        <p>□ Cachy · knowledge engine</p>
-        <p>□ RAG evals · reading list</p>
-      </div>
-    </div>
-    <h1 class="reveal"><span class="marker">Vatsal Vaghasiya</span></h1>
-    <p class="typewriter mono reveal"><span id="typeTarget"></span><span class="caret">▊</span></p>
-    <p class="hero-sub reveal">AI engineer in training. I build models, ship the apps around them,
-    and <em>keep notes on what didn't work</em>.</p>
-    <p class="hero-stats mono reveal"><span class="count" data-count="18">18</span> projects shipped &nbsp;·&nbsp; <span class="count" data-count="2">2</span> papers under review &nbsp;·&nbsp; <span class="count" data-count="5">5</span> building next</p>
-    <div class="hero-cta reveal">
-      <a class="btn btn-primary" href="#projects">See the experiments</a>
-      <a class="btn btn-ghost" href="https://github.com/Vatsal057" target="_blank" rel="noopener">GitHub ↗</a>
-      <a class="btn btn-ghost" href="resume.pdf" download>Download résumé</a>
-    </div>
-  </div>
-  <div class="hero-doodle reveal" aria-hidden="true">
-    <img src="images/hero-doodle.png" alt="" onerror="this.closest('.hero-doodle').classList.add('fallback')">
-    <svg class="nn-fallback" viewBox="0 0 320 200" fill="none">
-      <g class="nn-edges" stroke="currentColor" stroke-width="1" opacity=".35">
-        <path d="M40 40 C90 40 110 70 160 60"/><path d="M40 100 C90 95 110 65 160 60"/>
-        <path d="M40 160 C90 150 110 70 160 60"/><path d="M40 40 C90 60 110 100 160 105"/>
-        <path d="M40 100 C90 100 110 105 160 105"/><path d="M40 160 C90 140 110 110 160 105"/>
-        <path d="M40 40 C95 80 115 140 160 150"/><path d="M40 100 C95 115 115 145 160 150"/>
-        <path d="M40 160 C95 160 115 152 160 150"/>
-        <path d="M160 60 C210 60 230 85 280 100"/><path d="M160 105 C210 102 230 100 280 100"/>
-        <path d="M160 150 C210 140 230 112 280 100"/>
-      </g>
-      <g class="nn-nodes">
-        <circle cx="40" cy="40" r="9"/><circle cx="40" cy="100" r="9"/><circle cx="40" cy="160" r="9"/>
-        <circle cx="160" cy="60" r="9"/><circle cx="160" cy="105" r="9"/><circle cx="160" cy="150" r="9"/>
-        <circle cx="280" cy="100" r="11"/>
-      </g>
-      <text x="128" y="30" class="nn-label caveat-svg">hidden layer</text>
-      <text x="252" y="140" class="nn-label caveat-svg">output ↑</text>
-    </svg>
-  </div>
-</section>
-
-<!-- ============ SKILLS / TRAINING PROGRESS ============ -->
-<section id="skills" class="section">
-  <div class="section-head reveal">
-    <img class="section-icon" src="images/icon-graph.png" alt="">
-    <p class="eyebrow mono">// training progress</p>
-    <h2>Skills, with receipts</h2>
-    <p class="section-sub">No self-scored percentages — each bar is only as long as the shipped work behind it, and the receipts are listed.</p>
-  </div>
-  <div class="skills-grid">
-    <div class="skill reveal" data-pct="90"><div class="skill-top mono"><span>Python</span><span class="skill-pct">13 repos</span></div><div class="bar"><div class="bar-fill"></div></div><p class="skill-note">Primary language of every shipped AI project.</p><p class="skill-ships mono">✓ Cachy &nbsp;✓ AirSwipe &nbsp;✓ IPL pipeline &nbsp;✓ +10 more</p></div>
-    <div class="skill reveal" data-pct="82"><div class="skill-top mono"><span>Deep Learning · PyTorch</span><span class="skill-pct">2 papers</span></div><div class="bar"><div class="bar-fill"></div></div><p class="skill-note">Two research papers built on it.</p><p class="skill-ships mono">✓ ProbCLIP-A &nbsp;✓ preference paper</p></div>
-    <div class="skill reveal" data-pct="80"><div class="skill-top mono"><span>Computer Vision</span><span class="skill-pct">4 shipped</span></div><div class="bar"><div class="bar-fill"></div></div><p class="skill-note">MediaPipe, OpenCV, CLIP in shipped products.</p><p class="skill-ships mono">✓ AirSwipe &nbsp;✓ Cachy OCR &nbsp;✓ ProbCLIP-A</p></div>
-    <div class="skill reveal" data-pct="68"><div class="skill-top mono"><span>LLMs &amp; RAG</span><span class="skill-pct">3 systems</span></div><div class="bar"><div class="bar-fill"></div></div><p class="skill-note">Built retrieval from scratch; still the newest skill here.</p><p class="skill-ships mono">✓ Constitution QA &nbsp;✓ Cachy LLM chain &nbsp;→ current focus: evals</p></div>
-    <div class="skill reveal" data-pct="72"><div class="skill-top mono"><span>SQL &amp; Data Wrangling</span><span class="skill-pct">14 stations</span></div><div class="bar"><div class="bar-fill"></div></div><p class="skill-note">pandas, SQLite, messy real-world Excel included.</p><p class="skill-ships mono">✓ Bangalore AQI &nbsp;✓ 14-station consolidation</p></div>
-    <div class="skill reveal" data-pct="70"><div class="skill-top mono"><span>MLOps · Docker · FastAPI</span><span class="skill-pct">3 services</span></div><div class="bar"><div class="bar-fill"></div></div><p class="skill-note">Drift detection, monitoring, multi-service deploys.</p><p class="skill-ships mono">✓ IPL drift pipeline &nbsp;✓ HF Spaces deploys</p></div>
-    <div class="skill reveal" data-pct="78"><div class="skill-top mono"><span>App Development</span><span class="skill-pct">7 apps</span></div><div class="bar"><div class="bar-fill"></div></div><p class="skill-note">Most of my models end up inside an app.</p><p class="skill-ships mono">✓ 7 shipped apps &nbsp;✓ Flutter &nbsp;✓ Swift</p></div>
-  </div>
-</section>
-
-<!-- ============ EXPERIMENT BOARD ============ -->
-<section id="experiments" class="section">
-  <div class="section-head reveal">
-    <img class="section-icon" src="images/icon-flask.png" alt="">
-    <p class="eyebrow mono">// experiment board</p>
-    <h2>Trying · Finished · Failed</h2>
-    <p class="section-sub">Failed experiments stay on the board.</p>
-  </div>
-  <div class="board">
-    <div class="board-col reveal">
-      <h3 class="board-title mono">→ trying</h3>
-      <div class="sticky s-sage">RAG deep-dive: retrieval, chunking, eval.</div>
-      <div class="sticky s-sage">ProbCLIP-A paper: waiting on peer review.</div>
-      <div class="sticky s-sage">MTech Data Science, epoch 1 of 4.</div>
-    </div>
-    <div class="board-col reveal">
-      <h3 class="board-title mono">✓ finished</h3>
-      <div class="sticky s-amber">Swap augmentation killed position bias in preference model.</div>
-      <div class="sticky s-amber">DBSCAN beat K-Means at finding pollution hotspots.</div>
-      <div class="sticky s-amber">Drift monitor computing PSI every 5 minutes, in production style.</div>
-    </div>
-    <div class="board-col reveal">
-      <h3 class="board-title mono">✗ failed <span class="margin-note caveat">← kept on purpose</span></h3>
-      <div class="sticky s-rose">First RAG stress test: 20 hard queries, many misses. Fixed chunking → 78% accuracy, documented in FAILURES.md.</div>
-      <div class="sticky s-rose">LangChain version had too much overhead. Deleted it, rewrote retrieval in ~60 lines.</div>
-      <div class="sticky s-rose">CLIP adapter variance collapsed to zero. KL warmup schedule fixed it.</div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ ENGINEERING PRINCIPLES ============ -->
-<section id="principles" class="section">
-  <div class="section-head reveal">
-    <img class="section-icon" src="images/icon-plane.png" alt="">
-    <p class="eyebrow mono">// index cards · how I work</p>
-    <h2>Engineering principles</h2>
-  </div>
-  <div class="principles">
-    <div class="index-card reveal">
-      <h3 class="caveat">Ship before perfect</h3>
-      <p>Small working systems beat ambitious prototypes. Cachy launched with a three-provider fallback chain because free APIs kept dropping.</p>
-    </div>
-    <div class="index-card reveal">
-      <h3 class="caveat">Measure everything</h3>
-      <p>If I can't evaluate it, I can't improve it. Even the skills section on this page has numbers.</p>
-    </div>
-    <div class="index-card reveal">
-      <h3 class="caveat">Understand the abstraction</h3>
-      <p>I write core pieces from scratch before reaching for a framework. That's how the 60-line retriever happened.</p>
-    </div>
-    <div class="index-card reveal">
-      <h3 class="caveat">Failures are artifacts</h3>
-      <p>Dead ends get documented. FAILURES.md ships with the repo because I keep needing it later.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ============ PROJECTS ============ -->
-<section id="projects" class="section">
-  <div class="section-head reveal">
-    <img class="section-icon" src="images/icon-gpu.png" alt="">
-    <p class="eyebrow mono">// pinned to the desk</p>
-    <h2>Selected projects <span class="margin-note caveat">start with the RAG one ↓</span></h2>
-    <p class="section-sub">Each card shows the pipeline it ran through. All code on <a href="https://github.com/Vatsal057" target="_blank" rel="noopener">GitHub</a>.</p>
-  </div>
-  <div class="cards">
-
-    <article class="card reveal">
-      <div class="pin"></div>
-      <h3>Cachy</h3>
-      <p class="card-tag mono">knowledge engine · flutter + fastapi</p>
-      <p>Turns Reels, Shorts and articles into structured knowledge cards: transcription, OCR, an LLM chain with automatic fallback across Gemini / Cerebras / Groq, all linked in a semantic knowledge graph.</p>
-      <div class="pipeline mono"><span>ingest</span><span>transcribe/OCR</span><span>LLM chain</span><span>cards</span><span>graph</span></div>
-      <p class="card-proof mono"><span>3-provider LLM fallback</span><span>semantic graph</span><span>1 SQLite, 0 Redis</span></p>
-      <p class="card-stack mono">Whisper · OpenCV · Tesseract · SQLite · HF Spaces</p>
-      <a class="card-link mono" href="case/project.html?id=cachy">case study →</a>
-    </article>
-
-    <article class="card card-flip reveal" tabindex="0" role="button" aria-label="Flip card: RAG pipeline sketch and repo link">
-      <div class="pin"></div>
-      <div class="cardflip-inner">
-        <div class="cardflip-front">
-          <h3>Constitution of India · RAG Q&amp;A</h3>
-          <p class="card-tag mono">rag from scratch · no langchain</p>
-          <p>Ask the Indian Constitution anything, get grounded answers with exact citations and similarity scores. Retrieval written from scratch in <mark class="hl">~60 lines</mark>. A 20-query stress test is documented in the repo, <mark class="hl">78% accuracy</mark> after fixing chunking.</p>
-          <div class="pipeline mono"><span>pdf</span><span>chunk</span><span>embed</span><span>retrieve</span><span>cite</span></div>
-          <p class="card-proof mono"><span>78% on 20-query eval</span><span>~60 lines</span><span>no framework</span></p>
-          <p class="card-stack mono">sentence-transformers · ChromaDB · Mistral-7B</p>
-          <p class="mono flip-hint">flip →</p>
+  <!-- ============ HERO ============ -->
+  <main id="top">
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="notebook-card mono reveal">
+          <div class="nc-head"><span id="ncDay">Mon</span><span>lab notebook · page <span id="ncPage">147</span></span>
+          </div>
+          <div class="nc-body">
+            <p class="nc-label">currently training:</p>
+            <p>□ MTech Data Science · epoch 1/4</p>
+            <p>□ Cachy · knowledge engine</p>
+            <p>□ RAG evals · reading list</p>
+          </div>
         </div>
-        <div class="cardflip-back">
-          <svg class="rag-sketch" viewBox="0 0 460 320" fill="none" aria-hidden="true">
-            <defs>
-              <marker id="ragArrowhead" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
-                <path d="M1 1 L7 4 L1 7" fill="none" stroke="#6E8B6E" stroke-width="1.6" stroke-linecap="round"/>
-              </marker>
-            </defs>
-            <rect width="460" height="320" fill="#FCFAF4"/>
-            <g stroke="#EBE4D3" stroke-width="1">
-              <line x1="0" y1="52" x2="460" y2="52"/><line x1="0" y1="86" x2="460" y2="86"/>
-              <line x1="0" y1="120" x2="460" y2="120"/><line x1="0" y1="154" x2="460" y2="154"/>
-              <line x1="0" y1="188" x2="460" y2="188"/><line x1="0" y1="222" x2="460" y2="222"/>
-              <line x1="0" y1="256" x2="460" y2="256"/><line x1="0" y1="290" x2="460" y2="290"/>
-            </g>
-            <text x="28" y="38" class="caveat-svg rag-title">how it works</text>
-            <path d="M27 44 C60 47 95 46 128 44" stroke="#D9A86C" stroke-width="4" opacity=".55" stroke-linecap="round"/>
-            <g class="rag-box" transform="rotate(-1.4 65 88)">
-              <rect x="30" y="68" width="70" height="38" rx="7"/>
-              <text x="65" y="93" text-anchor="middle" class="rag-mono">pdf</text>
-            </g>
-            <path class="rag-arrow" d="M104 86 C118 83 128 89 142 86"/>
-            <g class="rag-box" transform="rotate(1.1 185 88)">
-              <rect x="150" y="68" width="76" height="38" rx="7"/>
-              <text x="188" y="93" text-anchor="middle" class="rag-mono">chunk</text>
-            </g>
-            <path class="rag-arrow" d="M230 86 C244 89 254 83 268 86"/>
-            <g class="rag-box" transform="rotate(-0.9 314 88)">
-              <rect x="276" y="68" width="76" height="38" rx="7"/>
-              <text x="314" y="93" text-anchor="middle" class="rag-mono">embed</text>
-            </g>
-            <text x="132" y="146" class="caveat-svg">chunking broke first ↑</text>
-            <path class="rag-arrow" d="M352 92 C392 100 396 150 344 178 C320 190 268 186 226 194"/>
-            <g class="rag-box" transform="rotate(1 168 216)">
-              <rect x="118" y="196" width="100" height="38" rx="7"/>
-              <text x="168" y="221" text-anchor="middle" class="rag-mono">retrieve</text>
-            </g>
-            <path class="rag-arrow" d="M222 214 C240 211 252 217 270 214"/>
-            <g class="rag-box" transform="rotate(-1.2 316 216)">
-              <rect x="278" y="196" width="76" height="38" rx="7"/>
-              <text x="316" y="221" text-anchor="middle" class="rag-mono">cite</text>
-            </g>
-            <text x="66" y="264" class="caveat-svg">top-k by cosine ↑</text>
-            <text x="284" y="296" class="caveat-svg">~60 lines. no framework.</text>
-          </svg>
-          <p class="mono cardflip-links"><a href="case/project.html?id=constitution-rag">case study →</a></p>
+        <h1 class="reveal"><span class="marker">Vatsal Vaghasiya</span></h1>
+        <p class="typewriter mono reveal"><span id="typeTarget"></span><span class="caret">▊</span></p>
+        <p class="hero-sub reveal">AI engineer in training. I build models, ship the apps around them,
+          and <em>keep notes on what didn't work</em>.</p>
+        <p class="hero-stats mono reveal"><span class="count" data-count="18">18</span> projects shipped &nbsp;·&nbsp;
+          <span class="count" data-count="2">2</span> papers under review &nbsp;·&nbsp; <span class="count"
+            data-count="5">5</span> building next</p>
+        <div class="hero-cta reveal">
+          <a class="btn btn-primary" href="#projects">See the experiments</a>
+          <a class="btn btn-ghost" href="https://github.com/Vatsal057" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="btn btn-ghost" href="resume.pdf" download>Download résumé</a>
         </div>
       </div>
-    </article>
-
-    <article class="card reveal">
-      <div class="pin"></div>
-      <h3>IPL Match Predictor · MLOps</h3>
-      <p class="card-tag mono">full ml lifecycle · self-monitoring</p>
-      <p>XGBoost match-outcome model served over FastAPI, with a monitor computing Population Stability Index every 5 minutes to catch data drift, and a live Streamlit health dashboard. Three services, Docker Compose.</p>
-      <div class="pipeline mono"><span>data</span><span>features</span><span>train</span><span>serve</span><span>monitor</span></div>
-      <p class="card-proof mono"><span>PSI every 5 min</span><span>3 services</span><span>live drift dashboard</span></p>
-      <p class="card-stack mono">XGBoost · FastAPI · Streamlit · Docker</p>
-      <a class="card-link mono" href="case/project.html?id=ipl-mlops">case study →</a>
-    </article>
-
-    <article class="card reveal">
-      <div class="pin"></div>
-      <h3>AirSwipe</h3>
-      <p class="card-tag mono">computer vision · gesture control</p>
-      <p>Control PowerPoint with bare hands through a webcam: swipe to navigate, point for a live laser dot, pinch to zoom. Orientation-invariant detection with dwell-time guards against accidental triggers.</p>
-      <div class="pipeline mono"><span>webcam</span><span>landmarks</span><span>gesture</span><span>action</span></div>
-      <p class="card-proof mono"><span>orientation-invariant</span><span>dwell-time guards</span><span>6 gestures</span></p>
-      <p class="card-stack mono">MediaPipe · OpenCV · PyQt6</p>
-      <a class="card-link mono" href="case/project.html?id=airswipe">case study →</a>
-    </article>
-
-    <article class="card reveal">
-      <div class="pin"></div>
-      <h3>Bangalore Air Quality</h3>
-      <p class="card-tag mono">data mining · unsupervised</p>
-      <p>A year of data from 14 CPCB stations, 6 engineered features, three clustering algorithms compared. DBSCAN worked best since it flags outliers, and the outliers were the hotspots. Silk Board hit <mark class="hl">AQI 500</mark>.</p>
-      <div class="pipeline mono"><span>excel mess</span><span>clean</span><span>features</span><span>cluster</span><span>hotspots</span></div>
-      <p class="card-proof mono"><span>14 stations · 1 year</span><span>3 algorithms compared</span><span>hotspots = outliers</span></p>
-      <p class="card-stack mono">pandas · scikit-learn · DBSCAN</p>
-      <a class="card-link mono" href="case/project.html?id=bangalore-aqi">case study →</a>
-    </article>
-
-    <article class="card reveal">
-      <div class="pin"></div>
-      <h3>ScribbleType</h3>
-      <p class="card-tag mono">on-device ml · accessibility</p>
-      <p>Handwriting-to-text Android keyboard for seniors: on-device ink recognition, a personal dictionary that learns your writing, and Catmull-Rom smoothing to filter hand tremor.</p>
-      <div class="pipeline mono"><span>strokes</span><span>smooth</span><span>recognize</span><span>learn</span></div>
-      <p class="card-proof mono"><span>100% on-device</span><span>tremor smoothing</span><span>real Kotlin IME</span></p>
-      <p class="card-stack mono">ML Kit · Flutter · Kotlin IME</p>
-      <a class="card-link mono" href="case/project.html?id=scribbletype">case study →</a>
-    </article>
-
-    <article class="card reveal">
-      <div class="pin"></div>
-      <h3>Indian Food Multimodal Search</h3>
-      <p class="card-tag mono">clip · text + image retrieval</p>
-      <p>Find any Indian dish by describing it in plain English, or by uploading a photo of something similar. Built to test whether CLIP holds up on something domain-specific instead of the usual stock-photo demos. <mark class="hl">It does.</mark></p>
-      <div class="pipeline mono"><span>encode</span><span>index</span><span>query</span><span>rank</span><span>explain</span></div>
-      <p class="card-proof mono"><span>text + image queries</span><span>domain CLIP test</span><span>interpretable ranks</span></p>
-      <p class="card-stack mono">CLIP · Gradio · HF Spaces</p>
-      <a class="card-link mono" href="case/project.html?id=indian-food-search">case study →</a>
-    </article>
-
-    <article class="card reveal">
-      <div class="pin"></div>
-      <h3>Plant Disease Detector</h3>
-      <p class="card-tag mono">cnn · grad-cam explainability</p>
-      <p>Upload a leaf photo, get a diagnosis, and a <mark class="hl">Grad-CAM heatmap</mark> showing exactly which part of the leaf the model looked at. Because a prediction plus a confidence score tells you nothing about whether it read the lesion or the background.</p>
-      <div class="pipeline mono"><span>leaf</span><span>classify</span><span>grad-cam</span><span>severity</span></div>
-      <p class="card-proof mono"><span>15 classes · 5 crops</span><span>Grad-CAM heatmap</span><span>severity levels</span></p>
-      <p class="card-stack mono">PyTorch · Grad-CAM · Gradio</p>
-      <a class="card-link mono" href="case/project.html?id=plant-disease">case study →</a>
-    </article>
-
-  </div>
-
-</section>
-
-<!-- ============ APPS · PINNED SHELF ============ -->
-<section id="apps" class="section">
-  <div class="section-head reveal">
-    <img class="section-icon" src="images/icon-gpu.png" alt="">
-    <p class="eyebrow mono">// the app shelf</p>
-    <h2>Apps, shipped <span class="margin-note caveat">each began as an itch on my own machine</span></h2>
-    <p class="section-sub">Five native macOS apps in Swift, plus mobile. Building the whole product around a model is the point — these are the reps.</p>
-  </div>
-  <div class="app-grid" id="appShelf">
-    <article class="app-window reveal">
-      <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span class="app-name">Insomniac.app</span><span class="app-platform">macOS</span></div>
-      <div class="app-body">
-        <p class="app-lead">Keeps a Mac awake — lid closed included.</p>
-        <ul class="app-features">
-          <li>Smart triggers: auto-enables on chosen apps, Wi-Fi networks, high CPU, active downloads</li>
-          <li>Timed durations + global shortcut</li>
-          <li>Scriptable via <code>insomniac://</code> URL scheme</li>
-        </ul>
-        <p class="card-stack mono">Swift 5.9 · AppKit · IOKit · NWPathMonitor</p>
-        <a class="card-link mono" href="case/project.html?id=insomniac">case study →</a>
+      <div class="hero-doodle reveal" aria-hidden="true">
+        <img src="images/hero-doodle.png" alt="" onerror="this.closest('.hero-doodle').classList.add('fallback')">
+        <svg class="nn-fallback" viewBox="0 0 320 200" fill="none">
+          <g class="nn-edges" stroke="currentColor" stroke-width="1" opacity=".35">
+            <path d="M40 40 C90 40 110 70 160 60" />
+            <path d="M40 100 C90 95 110 65 160 60" />
+            <path d="M40 160 C90 150 110 70 160 60" />
+            <path d="M40 40 C90 60 110 100 160 105" />
+            <path d="M40 100 C90 100 110 105 160 105" />
+            <path d="M40 160 C90 140 110 110 160 105" />
+            <path d="M40 40 C95 80 115 140 160 150" />
+            <path d="M40 100 C95 115 115 145 160 150" />
+            <path d="M40 160 C95 160 115 152 160 150" />
+            <path d="M160 60 C210 60 230 85 280 100" />
+            <path d="M160 105 C210 102 230 100 280 100" />
+            <path d="M160 150 C210 140 230 112 280 100" />
+          </g>
+          <g class="nn-nodes">
+            <circle cx="40" cy="40" r="9" />
+            <circle cx="40" cy="100" r="9" />
+            <circle cx="40" cy="160" r="9" />
+            <circle cx="160" cy="60" r="9" />
+            <circle cx="160" cy="105" r="9" />
+            <circle cx="160" cy="150" r="9" />
+            <circle cx="280" cy="100" r="11" />
+          </g>
+          <text x="128" y="30" class="nn-label caveat-svg">hidden layer</text>
+          <text x="252" y="140" class="nn-label caveat-svg">output ↑</text>
+        </svg>
       </div>
-    </article>
-    <article class="app-window reveal">
-      <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span class="app-name">Glide.app</span><span class="app-platform">macOS</span></div>
-      <div class="app-body">
-        <p class="app-lead">Custom 3/4/5-finger trackpad gestures for macOS.</p>
-        <ul class="app-features">
-          <li>Speed-aware: slow swipe switches windows, fast flick opens the browser</li>
-          <li>Window snapping, media control, app launching</li>
-          <li>Reciprocal undo, haptic feedback, per-app filters</li>
-        </ul>
-        <p class="card-stack mono">Swift · AppKit · IOKit multitouch</p>
-        <a class="card-link mono" href="case/project.html?id=glide">case study →</a>
-      </div>
-    </article>
-    <article class="app-window reveal">
-      <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span class="app-name">iBar.app</span><span class="app-platform">macOS</span></div>
-      <div class="app-body">
-        <p class="app-lead">Themes the macOS menu bar — Apple gives you no API for this.</p>
-        <ul class="app-features">
-          <li>Click-through overlay at the menu bar's own window level</li>
-          <li>Gradients, blur, notch-aware auto-presets on window state</li>
-          <li>Reads menu titles via Accessibility API to keep them legible</li>
-        </ul>
-        <p class="card-stack mono">Swift · SwiftUI · Accessibility API · CGWindowList</p>
-        <a class="card-link mono" href="case/project.html?id=ibar">case study →</a>
-      </div>
-    </article>
-    <article class="app-window reveal">
-      <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span class="app-name">Dimmer.app</span><span class="app-platform">macOS</span></div>
-      <div class="app-body">
-        <p class="app-lead">Dims displays below the hardware minimum.</p>
-        <ul class="app-features">
-          <li>Overlay windows, each connected monitor independently</li>
-          <li>Lives in the menu bar; does one thing well</li>
-        </ul>
-        <p class="card-stack mono">Swift · SwiftUI · AppKit</p>
-        <a class="card-link mono" href="case/project.html?id=dimmer">case study →</a>
-      </div>
-    </article>
-    <article class="app-window reveal">
-      <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span class="app-name">PhotoWidget.app</span><span class="app-platform">macOS</span></div>
-      <div class="app-body">
-        <p class="app-lead">Your own photos as desktop widgets.</p>
-        <ul class="app-features">
-          <li>Four sizes, per-widget photo choice</li>
-          <li>Full color even in monochrome widget mode</li>
-        </ul>
-        <p class="card-stack mono">Swift · WidgetKit · AppIntents</p>
-        <a class="card-link mono" href="case/project.html?id=photowidget">case study →</a>
-      </div>
-    </article>
-    <article class="app-window reveal">
-      <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span class="app-name">Smart Wardrobe</span><span class="app-platform">Flutter</span></div>
-      <div class="app-body">
-        <p class="app-lead">Photograph your clothes once; the app plans what you wear.</p>
-        <ul class="app-features">
-          <li>Outfit suggestions by occasion, from clothes you actually own</li>
-          <li>"Today" screen checks live weather + recent wear history first</li>
-          <li>Wash tracking and packing lists built against the forecast</li>
-        </ul>
-        <p class="card-stack mono">Flutter · SQLite · on-device, no account</p>
-        <a class="card-link mono" href="case/project.html?id=smart-wardrobe">case study →</a>
-      </div>
-    </article>
-  </div>
-  <p class="app-count mono reveal">// running total: 18 shipped, 5 more building. all on this page.</p>
-</section>
+    </section>
 
-<!-- ============ TOOLS & EXTENSIONS ============ -->
-<section id="tools" class="section">
-  <div class="section-head reveal">
-    <img class="section-icon" src="images/icon-git.png" alt="">
-    <p class="eyebrow mono">// small sharp tools</p>
-    <h2>Tools &amp; extensions <span class="margin-note caveat">scratch-my-own-itch drawer</span></h2>
-    <p class="section-sub">Little utilities that fix one annoyance each. Most exist because the OS said no.</p>
-  </div>
-  <div class="cards">
-    <article class="card reveal">
-      <div class="pin"></div>
-      <h3>chrome-to-safari</h3>
-      <p class="card-tag mono">dev tool · extension signing</p>
-      <p>Turn any Chrome extension into a working, signed Safari extension — no <mark class="hl">$99/year</mark> Apple Developer ID. Drop a folder or paste a store link; it signs with a free Apple ID so the extension stays enabled across restarts.</p>
-      <p class="card-stack mono">Shell · Xcode toolchain · WebExtensions</p>
-      <a class="card-link mono" href="case/project.html?id=chrome-to-safari">case study →</a>
-    </article>
-    <article class="card reveal">
-      <div class="pin"></div>
-      <h3>mac-app-signer</h3>
-      <p class="card-tag mono">dev tool · code signing</p>
-      <p>Sign any macOS <code>.app</code> locally with a free Apple certificate. Kills Gatekeeper friction on apps you build yourself and keeps development-signed Safari extensions enabled for good. One command.</p>
-      <p class="card-stack mono">Shell · codesign · Xcode CLT</p>
-      <a class="card-link mono" href="case/project.html?id=mac-app-signer">case study →</a>
-    </article>
-    <article class="card reveal">
-      <div class="pin"></div>
-      <h3>HideBars</h3>
-      <p class="card-tag mono">obsidian plugin · focus</p>
-      <p>An Obsidian plugin that auto-hides both sidebars in fullscreen or a narrow window, then reveals them when you hover the window edge. Leaving fullscreen restores the layout you had.</p>
-      <p class="card-stack mono">TypeScript · Obsidian API</p>
-      <a class="card-link mono" href="case/project.html?id=hidebars">case study →</a>
-    </article>
-    <article class="card reveal">
-      <div class="pin"></div>
-      <h3>Chitchat Automator</h3>
-      <p class="card-tag mono">chrome extension · automation</p>
-      <p>Automates the boring parts of a random-chat site behind a toggle: keyword-skip, username filters (regex too), skip-history, auto-greet, and auto-restart on disconnect — all from a clean popup.</p>
-      <p class="card-stack mono">JavaScript · Chrome MV3</p>
-      <a class="card-link mono" href="case/project.html?id=chitchat-automator">case study →</a>
-    </article>
-  </div>
-</section>
+    <!-- ============ SKILLS / TRAINING PROGRESS ============ -->
+    <section id="skills" class="section">
+      <div class="section-head reveal">
+        <img class="section-icon" src="images/icon-graph.png" alt="">
+        <p class="eyebrow mono">// training progress</p>
+        <h2>Technical Skills</h2>
+        <p class="section-sub">What I know, and what I've built with them.</p>
+      </div>
+      <div class="skills-grid">
+        <div class="skill reveal" data-pct="90">
+          <div class="skill-top mono"><span>Python</span><span class="skill-pct">13 repos</span></div>
+          <div class="bar">
+            <div class="bar-fill"></div>
+          </div>
+          <p class="skill-note">Primary language of every shipped AI project.</p>
+          <p class="skill-ships mono">✓ Cachy &nbsp;✓ AirSwipe &nbsp;✓ IPL pipeline &nbsp;✓ +10 more</p>
+        </div>
+        <div class="skill reveal" data-pct="82">
+          <div class="skill-top mono"><span>Deep Learning · PyTorch</span><span class="skill-pct">2 papers</span></div>
+          <div class="bar">
+            <div class="bar-fill"></div>
+          </div>
+          <p class="skill-note">Two research papers built on it.</p>
+          <p class="skill-ships mono">✓ ProbCLIP-A &nbsp;✓ preference paper</p>
+        </div>
+        <div class="skill reveal" data-pct="80">
+          <div class="skill-top mono"><span>Computer Vision</span><span class="skill-pct">4 shipped</span></div>
+          <div class="bar">
+            <div class="bar-fill"></div>
+          </div>
+          <p class="skill-note">MediaPipe, OpenCV, CLIP in shipped products.</p>
+          <p class="skill-ships mono">✓ AirSwipe &nbsp;✓ Cachy OCR &nbsp;✓ ProbCLIP-A</p>
+        </div>
+        <div class="skill reveal" data-pct="68">
+          <div class="skill-top mono"><span>LLMs &amp; RAG</span><span class="skill-pct">3 systems</span></div>
+          <div class="bar">
+            <div class="bar-fill"></div>
+          </div>
+          <p class="skill-note">Built retrieval from scratch; still the newest skill here.</p>
+          <p class="skill-ships mono">✓ Constitution QA &nbsp;✓ Cachy LLM chain &nbsp;→ current focus: evals</p>
+        </div>
+        <div class="skill reveal" data-pct="72">
+          <div class="skill-top mono"><span>SQL &amp; Data Wrangling</span><span class="skill-pct">14 stations</span>
+          </div>
+          <div class="bar">
+            <div class="bar-fill"></div>
+          </div>
+          <p class="skill-note">pandas, SQLite, messy real-world Excel included.</p>
+          <p class="skill-ships mono">✓ Bangalore AQI &nbsp;✓ 14-station consolidation</p>
+        </div>
+        <div class="skill reveal" data-pct="70">
+          <div class="skill-top mono"><span>MLOps · Docker · FastAPI</span><span class="skill-pct">3 services</span>
+          </div>
+          <div class="bar">
+            <div class="bar-fill"></div>
+          </div>
+          <p class="skill-note">Drift detection, monitoring, multi-service deploys.</p>
+          <p class="skill-ships mono">✓ IPL drift pipeline &nbsp;✓ HF Spaces deploys</p>
+        </div>
+        <div class="skill reveal" data-pct="78">
+          <div class="skill-top mono"><span>App Development</span><span class="skill-pct">7 apps</span></div>
+          <div class="bar">
+            <div class="bar-fill"></div>
+          </div>
+          <p class="skill-note">Most of my models end up inside an app.</p>
+          <p class="skill-ships mono">✓ 7 shipped apps &nbsp;✓ Flutter &nbsp;✓ Swift</p>
+        </div>
+      </div>
+    </section>
 
-<!-- ============ ROADMAP · BUILDING NEXT ============ -->
-<section id="roadmap" class="section">
-  <div class="section-head reveal">
-    <img class="section-icon" src="images/icon-flask.png" alt="">
-    <p class="eyebrow mono">// git branch --unmerged</p>
-    <h2>Building next <span class="margin-note caveat">← two already live on github</span></h2>
-    <p class="section-sub">Five projects with PRDs + TRDs written, in build order — the first two now have working cores on GitHub. One thread runs through them: <em>AI that knows when it doesn't know</em> — calibration, abstention, verifiable privacy.</p>
-  </div>
-  <div class="proof-term reveal" role="img" aria-label="Real terminal output from the Sahayak and Oracle repositories: a cited answer about crop loans, and a backtest where the calibrated model beats its baselines">
-    <div class="term-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span>real output — not a mockup · runs offline, zero API keys</span></div>
-    <pre class="proof-body mono"><code><span class="p-prompt">$</span> python -m sahayak ask <span class="p-str">"cheap crop loan for farmers"</span>
+
+    <!-- ============ ENGINEERING PRINCIPLES ============ -->
+    <section id="principles" class="section">
+      <div class="section-head reveal">
+        <img class="section-icon" src="images/icon-plane.png" alt="">
+        <p class="eyebrow mono">// index cards · how I work</p>
+        <h2>Engineering principles</h2>
+      </div>
+      <div class="principles">
+        <div class="index-card reveal">
+          <h3 class="caveat">Ship before perfect</h3>
+          <p>Small working systems beat ambitious prototypes. Cachy launched with a three-provider fallback chain
+            because free APIs kept dropping.</p>
+        </div>
+        <div class="index-card reveal">
+          <h3 class="caveat">Measure everything</h3>
+          <p>If I can't evaluate it, I can't improve it. Even the skills section on this page has numbers.</p>
+        </div>
+        <div class="index-card reveal">
+          <h3 class="caveat">Understand the abstraction</h3>
+          <p>I write core pieces from scratch before reaching for a framework. That's how the 60-line retriever
+            happened.</p>
+        </div>
+        <div class="index-card reveal">
+          <h3 class="caveat">Failures are artifacts</h3>
+          <p>Dead ends get documented. FAILURES.md ships with the repo because I keep needing it later.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROJECTS ============ -->
+    <section id="projects" class="section">
+      <div class="section-head reveal">
+        <img class="section-icon" src="images/icon-gpu.png" alt="">
+        <p class="eyebrow mono">// pinned to the desk</p>
+        <h2>Selected projects</h2>
+        <p class="section-sub">Each card shows the pipeline it ran through. All code on <a
+            href="https://github.com/Vatsal057" target="_blank" rel="noopener">GitHub</a>.</p>
+      </div>
+      <div class="cards">
+
+        <article class="card reveal">
+          <div class="pin"></div>
+          <h3>Cachy</h3>
+          <p class="card-tag mono">knowledge engine · flutter + fastapi</p>
+          <p>Turns Reels, Shorts and articles into structured knowledge cards: transcription, OCR, an LLM chain with
+            automatic fallback across Gemini / Cerebras / Groq, all linked in a semantic knowledge graph.</p>
+          <div class="pipeline mono"><span>ingest</span><span>transcribe/OCR</span><span>LLM
+              chain</span><span>cards</span><span>graph</span></div>
+          <p class="card-proof mono"><span>3-provider LLM fallback</span><span>semantic graph</span><span>1 SQLite, 0
+              Redis</span></p>
+          <p class="card-stack mono">Whisper · OpenCV · Tesseract · SQLite · HF Spaces</p>
+          <a class="card-link mono" href="case/project.html?id=cachy">case study →</a>
+        </article>
+
+        <article class="card card-flip reveal" tabindex="0" role="button"
+          aria-label="Flip card: RAG pipeline sketch and repo link">
+          <div class="pin"></div>
+          <div class="cardflip-inner">
+            <div class="cardflip-front">
+              <h3>Constitution of India · RAG Q&amp;A</h3>
+              <p class="card-tag mono">rag from scratch · no langchain</p>
+              <p>Ask the Indian Constitution anything, get grounded answers with exact citations and similarity scores.
+                Retrieval written from scratch in <mark class="hl">~60 lines</mark>. A 20-query stress test is
+                documented in the repo, <mark class="hl">78% accuracy</mark> after fixing chunking.</p>
+              <div class="pipeline mono">
+                <span>pdf</span><span>chunk</span><span>embed</span><span>retrieve</span><span>cite</span></div>
+              <p class="card-proof mono"><span>78% on 20-query eval</span><span>~60 lines</span><span>no
+                  framework</span></p>
+              <p class="card-stack mono">sentence-transformers · ChromaDB · Mistral-7B</p>
+              <p class="mono flip-hint">flip →</p>
+            </div>
+            <div class="cardflip-back">
+              <svg class="rag-sketch" viewBox="0 0 460 320" fill="none" aria-hidden="true">
+                <defs>
+                  <marker id="ragArrowhead" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                    <path d="M1 1 L7 4 L1 7" fill="none" stroke="#6E8B6E" stroke-width="1.6" stroke-linecap="round" />
+                  </marker>
+                </defs>
+                <rect width="460" height="320" fill="#FCFAF4" />
+                <g stroke="#EBE4D3" stroke-width="1">
+                  <line x1="0" y1="52" x2="460" y2="52" />
+                  <line x1="0" y1="86" x2="460" y2="86" />
+                  <line x1="0" y1="120" x2="460" y2="120" />
+                  <line x1="0" y1="154" x2="460" y2="154" />
+                  <line x1="0" y1="188" x2="460" y2="188" />
+                  <line x1="0" y1="222" x2="460" y2="222" />
+                  <line x1="0" y1="256" x2="460" y2="256" />
+                  <line x1="0" y1="290" x2="460" y2="290" />
+                </g>
+                <text x="28" y="38" class="caveat-svg rag-title">how it works</text>
+                <path d="M27 44 C60 47 95 46 128 44" stroke="#D9A86C" stroke-width="4" opacity=".55"
+                  stroke-linecap="round" />
+                <g class="rag-box" transform="rotate(-1.4 65 88)">
+                  <rect x="30" y="68" width="70" height="38" rx="7" />
+                  <text x="65" y="93" text-anchor="middle" class="rag-mono">pdf</text>
+                </g>
+                <path class="rag-arrow" d="M104 86 C118 83 128 89 142 86" />
+                <g class="rag-box" transform="rotate(1.1 185 88)">
+                  <rect x="150" y="68" width="76" height="38" rx="7" />
+                  <text x="188" y="93" text-anchor="middle" class="rag-mono">chunk</text>
+                </g>
+                <path class="rag-arrow" d="M230 86 C244 89 254 83 268 86" />
+                <g class="rag-box" transform="rotate(-0.9 314 88)">
+                  <rect x="276" y="68" width="76" height="38" rx="7" />
+                  <text x="314" y="93" text-anchor="middle" class="rag-mono">embed</text>
+                </g>
+                <text x="132" y="146" class="caveat-svg">chunking broke first ↑</text>
+                <path class="rag-arrow" d="M352 92 C392 100 396 150 344 178 C320 190 268 186 226 194" />
+                <g class="rag-box" transform="rotate(1 168 216)">
+                  <rect x="118" y="196" width="100" height="38" rx="7" />
+                  <text x="168" y="221" text-anchor="middle" class="rag-mono">retrieve</text>
+                </g>
+                <path class="rag-arrow" d="M222 214 C240 211 252 217 270 214" />
+                <g class="rag-box" transform="rotate(-1.2 316 216)">
+                  <rect x="278" y="196" width="76" height="38" rx="7" />
+                  <text x="316" y="221" text-anchor="middle" class="rag-mono">cite</text>
+                </g>
+                <text x="66" y="264" class="caveat-svg">top-k by cosine ↑</text>
+                <text x="284" y="296" class="caveat-svg">~60 lines. no framework.</text>
+              </svg>
+              <p class="mono cardflip-links"><a href="case/project.html?id=constitution-rag">case study →</a></p>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="pin"></div>
+          <h3>IPL Match Predictor · MLOps</h3>
+          <p class="card-tag mono">full ml lifecycle · self-monitoring</p>
+          <p>XGBoost match-outcome model served over FastAPI, with a monitor computing Population Stability Index every
+            5 minutes to catch data drift, and a live Streamlit health dashboard. Three services, Docker Compose.</p>
+          <div class="pipeline mono">
+            <span>data</span><span>features</span><span>train</span><span>serve</span><span>monitor</span></div>
+          <p class="card-proof mono"><span>PSI every 5 min</span><span>3 services</span><span>live drift
+              dashboard</span></p>
+          <p class="card-stack mono">XGBoost · FastAPI · Streamlit · Docker</p>
+          <a class="card-link mono" href="case/project.html?id=ipl-mlops">case study →</a>
+        </article>
+
+        <article class="card reveal">
+          <div class="pin"></div>
+          <h3>AirSwipe</h3>
+          <p class="card-tag mono">computer vision · gesture control</p>
+          <p>Control PowerPoint with bare hands through a webcam: swipe to navigate, point for a live laser dot, pinch
+            to zoom. Orientation-invariant detection with dwell-time guards against accidental triggers.</p>
+          <div class="pipeline mono"><span>webcam</span><span>landmarks</span><span>gesture</span><span>action</span>
+          </div>
+          <p class="card-proof mono"><span>orientation-invariant</span><span>dwell-time guards</span><span>6
+              gestures</span></p>
+          <p class="card-stack mono">MediaPipe · OpenCV · PyQt6</p>
+          <a class="card-link mono" href="case/project.html?id=airswipe">case study →</a>
+        </article>
+
+        <article class="card reveal">
+          <div class="pin"></div>
+          <h3>Bangalore Air Quality</h3>
+          <p class="card-tag mono">data mining · unsupervised</p>
+          <p>A year of data from 14 CPCB stations, 6 engineered features, three clustering algorithms compared. DBSCAN
+            worked best since it flags outliers, and the outliers were the hotspots. Silk Board hit <mark class="hl">AQI
+              500</mark>.</p>
+          <div class="pipeline mono"><span>excel
+              mess</span><span>clean</span><span>features</span><span>cluster</span><span>hotspots</span></div>
+          <p class="card-proof mono"><span>14 stations · 1 year</span><span>3 algorithms compared</span><span>hotspots =
+              outliers</span></p>
+          <p class="card-stack mono">pandas · scikit-learn · DBSCAN</p>
+          <a class="card-link mono" href="case/project.html?id=bangalore-aqi">case study →</a>
+        </article>
+
+        <article class="card reveal">
+          <div class="pin"></div>
+          <h3>ScribbleType</h3>
+          <p class="card-tag mono">on-device ml · accessibility</p>
+          <p>Handwriting-to-text Android keyboard for seniors: on-device ink recognition, a personal dictionary that
+            learns your writing, and Catmull-Rom smoothing to filter hand tremor.</p>
+          <div class="pipeline mono"><span>strokes</span><span>smooth</span><span>recognize</span><span>learn</span>
+          </div>
+          <p class="card-proof mono"><span>100% on-device</span><span>tremor smoothing</span><span>real Kotlin
+              IME</span></p>
+          <p class="card-stack mono">ML Kit · Flutter · Kotlin IME</p>
+          <a class="card-link mono" href="case/project.html?id=scribbletype">case study →</a>
+        </article>
+
+        <article class="card reveal">
+          <div class="pin"></div>
+          <h3>Indian Food Multimodal Search</h3>
+          <p class="card-tag mono">clip · text + image retrieval</p>
+          <p>Find any Indian dish by describing it in plain English, or by uploading a photo of something similar. Built
+            to test whether CLIP holds up on something domain-specific instead of the usual stock-photo demos. <mark
+              class="hl">It does.</mark></p>
+          <div class="pipeline mono">
+            <span>encode</span><span>index</span><span>query</span><span>rank</span><span>explain</span></div>
+          <p class="card-proof mono"><span>text + image queries</span><span>domain CLIP test</span><span>interpretable
+              ranks</span></p>
+          <p class="card-stack mono">CLIP · Gradio · HF Spaces</p>
+          <a class="card-link mono" href="case/project.html?id=indian-food-search">case study →</a>
+        </article>
+
+        <article class="card reveal">
+          <div class="pin"></div>
+          <h3>Plant Disease Detector</h3>
+          <p class="card-tag mono">cnn · grad-cam explainability</p>
+          <p>Upload a leaf photo, get a diagnosis, and a <mark class="hl">Grad-CAM heatmap</mark> showing exactly which
+            part of the leaf the model looked at. Because a prediction plus a confidence score tells you nothing about
+            whether it read the lesion or the background.</p>
+          <div class="pipeline mono"><span>leaf</span><span>classify</span><span>grad-cam</span><span>severity</span>
+          </div>
+          <p class="card-proof mono"><span>15 classes · 5 crops</span><span>Grad-CAM heatmap</span><span>severity
+              levels</span></p>
+          <p class="card-stack mono">PyTorch · Grad-CAM · Gradio</p>
+          <a class="card-link mono" href="case/project.html?id=plant-disease">case study →</a>
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- ============ APPS · PINNED SHELF ============ -->
+    <section id="apps" class="section">
+      <div class="section-head reveal">
+        <img class="section-icon" src="images/icon-gpu.png" alt="">
+        <p class="eyebrow mono">// the app shelf</p>
+        <h2>Apps, shipped <span class="margin-note caveat">each began as an itch on my own machine</span></h2>
+        <p class="section-sub">Five native macOS apps in Swift, plus mobile. Building the whole product around a model
+          is the point — these are the reps.</p>
+      </div>
+      <div class="app-grid" id="appShelf">
+        <article class="app-window reveal">
+          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
+              class="app-name">Insomniac.app</span><span class="app-platform">macOS</span></div>
+          <div class="app-body">
+            <p class="app-lead">Keeps a Mac awake — lid closed included.</p>
+            <ul class="app-features">
+              <li>Smart triggers: auto-enables on chosen apps, Wi-Fi networks, high CPU, active downloads</li>
+              <li>Timed durations + global shortcut</li>
+              <li>Scriptable via <code>insomniac://</code> URL scheme</li>
+            </ul>
+            <p class="card-stack mono">Swift 5.9 · AppKit · IOKit · NWPathMonitor</p>
+            <a class="card-link mono" href="case/project.html?id=insomniac">case study →</a>
+          </div>
+        </article>
+        <article class="app-window reveal">
+          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
+              class="app-name">Glide.app</span><span class="app-platform">macOS</span></div>
+          <div class="app-body">
+            <p class="app-lead">Custom 3/4/5-finger trackpad gestures for macOS.</p>
+            <ul class="app-features">
+              <li>Speed-aware: slow swipe switches windows, fast flick opens the browser</li>
+              <li>Window snapping, media control, app launching</li>
+              <li>Reciprocal undo, haptic feedback, per-app filters</li>
+            </ul>
+            <p class="card-stack mono">Swift · AppKit · IOKit multitouch</p>
+            <a class="card-link mono" href="case/project.html?id=glide">case study →</a>
+          </div>
+        </article>
+        <article class="app-window reveal">
+          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
+              class="app-name">iBar.app</span><span class="app-platform">macOS</span></div>
+          <div class="app-body">
+            <p class="app-lead">Themes the macOS menu bar — Apple gives you no API for this.</p>
+            <ul class="app-features">
+              <li>Click-through overlay at the menu bar's own window level</li>
+              <li>Gradients, blur, notch-aware auto-presets on window state</li>
+              <li>Reads menu titles via Accessibility API to keep them legible</li>
+            </ul>
+            <p class="card-stack mono">Swift · SwiftUI · Accessibility API · CGWindowList</p>
+            <a class="card-link mono" href="case/project.html?id=ibar">case study →</a>
+          </div>
+        </article>
+        <article class="app-window reveal">
+          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
+              class="app-name">Dimmer.app</span><span class="app-platform">macOS</span></div>
+          <div class="app-body">
+            <p class="app-lead">Dims displays below the hardware minimum.</p>
+            <ul class="app-features">
+              <li>Overlay windows, each connected monitor independently</li>
+              <li>Lives in the menu bar; does one thing well</li>
+            </ul>
+            <p class="card-stack mono">Swift · SwiftUI · AppKit</p>
+            <a class="card-link mono" href="case/project.html?id=dimmer">case study →</a>
+          </div>
+        </article>
+        <article class="app-window reveal">
+          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
+              class="app-name">PhotoWidget.app</span><span class="app-platform">macOS</span></div>
+          <div class="app-body">
+            <p class="app-lead">Your own photos as desktop widgets.</p>
+            <ul class="app-features">
+              <li>Four sizes, per-widget photo choice</li>
+              <li>Full color even in monochrome widget mode</li>
+            </ul>
+            <p class="card-stack mono">Swift · WidgetKit · AppIntents</p>
+            <a class="card-link mono" href="case/project.html?id=photowidget">case study →</a>
+          </div>
+        </article>
+        <article class="app-window reveal">
+          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
+              class="app-name">Smart Wardrobe</span><span class="app-platform">Flutter</span></div>
+          <div class="app-body">
+            <p class="app-lead">Photograph your clothes once; the app plans what you wear.</p>
+            <ul class="app-features">
+              <li>Outfit suggestions by occasion, from clothes you actually own</li>
+              <li>"Today" screen checks live weather + recent wear history first</li>
+              <li>Wash tracking and packing lists built against the forecast</li>
+            </ul>
+            <p class="card-stack mono">Flutter · SQLite · on-device, no account</p>
+            <a class="card-link mono" href="case/project.html?id=smart-wardrobe">case study →</a>
+          </div>
+        </article>
+      </div>
+      <p class="app-count mono reveal">// running total: 18 shipped, 5 more building. all on this page.</p>
+    </section>
+
+    <!-- ============ TOOLS & EXTENSIONS ============ -->
+    <section id="tools" class="section">
+      <div class="section-head reveal">
+        <img class="section-icon" src="images/icon-git.png" alt="">
+        <p class="eyebrow mono">// small sharp tools</p>
+        <h2>Tools &amp; extensions <span class="margin-note caveat">scratch-my-own-itch drawer</span></h2>
+        <p class="section-sub">Little utilities that fix one annoyance each. Most exist because the OS said no.</p>
+      </div>
+      <div class="cards">
+        <article class="card reveal">
+          <div class="pin"></div>
+          <h3>chrome-to-safari</h3>
+          <p class="card-tag mono">dev tool · extension signing</p>
+          <p>Turn any Chrome extension into a working, signed Safari extension — no <mark class="hl">$99/year</mark>
+            Apple Developer ID. Drop a folder or paste a store link; it signs with a free Apple ID so the extension
+            stays enabled across restarts.</p>
+          <p class="card-stack mono">Shell · Xcode toolchain · WebExtensions</p>
+          <a class="card-link mono" href="case/project.html?id=chrome-to-safari">case study →</a>
+        </article>
+        <article class="card reveal">
+          <div class="pin"></div>
+          <h3>mac-app-signer</h3>
+          <p class="card-tag mono">dev tool · code signing</p>
+          <p>Sign any macOS <code>.app</code> locally with a free Apple certificate. Kills Gatekeeper friction on apps
+            you build yourself and keeps development-signed Safari extensions enabled for good. One command.</p>
+          <p class="card-stack mono">Shell · codesign · Xcode CLT</p>
+          <a class="card-link mono" href="case/project.html?id=mac-app-signer">case study →</a>
+        </article>
+        <article class="card reveal">
+          <div class="pin"></div>
+          <h3>HideBars</h3>
+          <p class="card-tag mono">obsidian plugin · focus</p>
+          <p>An Obsidian plugin that auto-hides both sidebars in fullscreen or a narrow window, then reveals them when
+            you hover the window edge. Leaving fullscreen restores the layout you had.</p>
+          <p class="card-stack mono">TypeScript · Obsidian API</p>
+          <a class="card-link mono" href="case/project.html?id=hidebars">case study →</a>
+        </article>
+        <article class="card reveal">
+          <div class="pin"></div>
+          <h3>Chitchat Automator</h3>
+          <p class="card-tag mono">chrome extension · automation</p>
+          <p>Automates the boring parts of a random-chat site behind a toggle: keyword-skip, username filters (regex
+            too), skip-history, auto-greet, and auto-restart on disconnect — all from a clean popup.</p>
+          <p class="card-stack mono">JavaScript · Chrome MV3</p>
+          <a class="card-link mono" href="case/project.html?id=chitchat-automator">case study →</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ ROADMAP · BUILDING NEXT ============ -->
+    <section id="roadmap" class="section">
+      <div class="section-head reveal">
+        <img class="section-icon" src="images/icon-flask.png" alt="">
+        <p class="eyebrow mono">// git branch --unmerged</p>
+        <h2>Building next <span class="margin-note caveat">← two already live on github</span></h2>
+        <p class="section-sub">Five projects with PRDs + TRDs written, in build order — the first two now have working
+          cores on GitHub. One thread runs through them: <em>AI that knows when it doesn't know</em> — calibration,
+          abstention, verifiable privacy.</p>
+      </div>
+      <div class="proof-term reveal" role="img"
+        aria-label="Real terminal output from the Sahayak and Oracle repositories: a cited answer about crop loans, and a backtest where the calibrated model beats its baselines">
+        <div class="term-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span>real output — not a
+            mockup · runs offline, zero API keys</span></div>
+        <pre class="proof-body mono"><code><span class="p-prompt">$</span> python -m sahayak ask <span class="p-str">"cheap crop loan for farmers"</span>
 <span class="p-out">The Kisan Credit Card provides farmers with timely and affordable
 short-term credit… loans up to ₹3 lakh at ~4% with prompt repayment. <span class="p-cite">[1]</span></span>
 <span class="p-dim">Sources: [1] Kisan Credit Card — myscheme.gov.in · (confidence: 0.43)</span>
@@ -468,222 +560,262 @@ your benefits. Please verify at the official source. (abstained)</span>
 <span class="p-out">persistence (lag-7)     0.437    0.433
 logistic (calibrated)   <span class="p-good">0.204    0.085</span>   <span class="p-dim">← beats both baselines</span>
 conformal coverage 0.88  (target 0.80)</span></code></pre>
-  </div>
-  <div class="cards roadmap-cards">
-    <article class="card planned-card building-card reveal">
-      <span class="planned-badge building-badge mono">building · flagship · code on github</span>
-      <h3>Sahayak</h3>
-      <p class="card-tag mono">grounded rag + rules engine</p>
-      <p>Grounded, cited answers about India's 3,000+ welfare schemes, plus a deterministic eligibility engine. Ask "I'm a Karnataka farmer with 2 acres — what do I get?" and get a checklist, not a keyword search. Abstains when it isn't sure. <mark class="hl">Retrieval core shipped</mark> — from-scratch hybrid retriever + rules engine + eval harness.</p>
-      <p class="card-stack mono">hybrid retrieval · BM25 + TF-IDF · rules engine</p>
-      <a class="card-link mono" href="case/project.html?id=sahayak">case study →</a>
-      <a class="card-link mono" href="https://github.com/Vatsal057/sahayak" target="_blank" rel="noopener">github →</a>
-    </article>
-    <article class="card planned-card building-card reveal">
-      <span class="planned-badge building-badge mono">building · code on github</span>
-      <h3>Oracle</h3>
-      <p class="card-tag mono">on-device · conformal calibration</p>
-      <p>Honest, calibrated predictions about your own behaviour — the shown 80% is right ~80% of the time. The hard part is meaningful ML on a tiny, noisy, single-person dataset without lying about confidence. <mark class="hl">Modeling core shipped</mark> — from-scratch logistic regression + split-conformal, backtested.</p>
-      <p class="card-stack mono">conformal prediction · Platt scaling</p>
-      <a class="card-link mono" href="case/project.html?id=oracle">case study →</a>
-      <a class="card-link mono" href="https://github.com/Vatsal057/oracle" target="_blank" rel="noopener">github →</a>
-    </article>
-    <article class="card planned-card reveal">
-      <span class="planned-badge mono">planned</span>
-      <h3>Cachy Study</h3>
-      <p class="card-tag mono">extends cachy · fastest build</p>
-      <p>Turns a 40-hour lecture playlist into a syllabus-mapped course pack: topic notes cited to video + timestamp, a coverage map, likely exam questions, and Anki flashcards. A full pack must cost ₹0.</p>
-      <p class="card-stack mono">Cachy pipeline · Whisper · LLM chain</p>
-      <a class="card-link mono" href="case/project.html?id=cachy-study">read the plan →</a>
-    </article>
-    <article class="card planned-card reveal">
-      <span class="planned-badge mono">planned</span>
-      <h3>ChatLens</h3>
-      <p class="card-tag mono">100% client-side · verifiable privacy</p>
-      <p>WhatsApp analytics where your chats <mark class="hl">never leave your device</mark> — and you can prove it. Deterministic on-device stats, a Spotify-Wrapped-style share card, and an architecture that makes uploading impossible, not just avoided.</p>
-      <p class="card-stack mono">client-side JS · strict CSP · no backend</p>
-      <a class="card-link mono" href="case/project.html?id=chatlens">read the plan →</a>
-    </article>
-    <article class="card planned-card reveal">
-      <span class="planned-badge mono">planned · maybe</span>
-      <h3>PlacementIQ</h3>
-      <p class="card-tag mono">resume scorer + company intel</p>
-      <p>A calibrated resume scorer (trained shortlist model, not LLM vibes) plus crowdsourced per-company interview intelligence. Flagged "maybe" until the cold-start data problem has a real, no-scraping answer.</p>
-      <p class="card-stack mono">siamese DeBERTa · calibration toolkit</p>
-      <a class="card-link mono" href="case/project.html?id=placementiq">read the plan →</a>
-    </article>
-  </div>
-</section>
+      </div>
+      <div class="cards roadmap-cards">
+        <article class="card planned-card building-card reveal">
+          <span class="planned-badge building-badge mono">building · flagship · code on github</span>
+          <h3>Sahayak</h3>
+          <p class="card-tag mono">grounded rag + rules engine</p>
+          <p>Grounded, cited answers about India's 3,000+ welfare schemes, plus a deterministic eligibility engine. Ask
+            "I'm a Karnataka farmer with 2 acres — what do I get?" and get a checklist, not a keyword search. Abstains
+            when it isn't sure. <mark class="hl">Retrieval core shipped</mark> — from-scratch hybrid retriever + rules
+            engine + eval harness.</p>
+          <p class="card-stack mono">hybrid retrieval · BM25 + TF-IDF · rules engine</p>
+          <a class="card-link mono" href="case/project.html?id=sahayak">case study →</a>
+          <a class="card-link mono" href="https://github.com/Vatsal057/sahayak" target="_blank" rel="noopener">github
+            →</a>
+        </article>
+        <article class="card planned-card building-card reveal">
+          <span class="planned-badge building-badge mono">building · code on github</span>
+          <h3>Oracle</h3>
+          <p class="card-tag mono">on-device · conformal calibration</p>
+          <p>Honest, calibrated predictions about your own behaviour — the shown 80% is right ~80% of the time. The hard
+            part is meaningful ML on a tiny, noisy, single-person dataset without lying about confidence. <mark
+              class="hl">Modeling core shipped</mark> — from-scratch logistic regression + split-conformal, backtested.
+          </p>
+          <p class="card-stack mono">conformal prediction · Platt scaling</p>
+          <a class="card-link mono" href="case/project.html?id=oracle">case study →</a>
+          <a class="card-link mono" href="https://github.com/Vatsal057/oracle" target="_blank" rel="noopener">github
+            →</a>
+        </article>
+        <article class="card planned-card reveal">
+          <span class="planned-badge mono">planned</span>
+          <h3>Cachy Study</h3>
+          <p class="card-tag mono">extends cachy · fastest build</p>
+          <p>Turns a 40-hour lecture playlist into a syllabus-mapped course pack: topic notes cited to video +
+            timestamp, a coverage map, likely exam questions, and Anki flashcards. A full pack must cost ₹0.</p>
+          <p class="card-stack mono">Cachy pipeline · Whisper · LLM chain</p>
+          <a class="card-link mono" href="case/project.html?id=cachy-study">read the plan →</a>
+        </article>
+        <article class="card planned-card reveal">
+          <span class="planned-badge mono">planned</span>
+          <h3>ChatLens</h3>
+          <p class="card-tag mono">100% client-side · verifiable privacy</p>
+          <p>WhatsApp analytics where your chats <mark class="hl">never leave your device</mark> — and you can prove it.
+            Deterministic on-device stats, a Spotify-Wrapped-style share card, and an architecture that makes uploading
+            impossible, not just avoided.</p>
+          <p class="card-stack mono">client-side JS · strict CSP · no backend</p>
+          <a class="card-link mono" href="case/project.html?id=chatlens">read the plan →</a>
+        </article>
+        <article class="card planned-card reveal">
+          <span class="planned-badge mono">planned · maybe</span>
+          <h3>PlacementIQ</h3>
+          <p class="card-tag mono">resume scorer + company intel</p>
+          <p>A calibrated resume scorer (trained shortlist model, not LLM vibes) plus crowdsourced per-company interview
+            intelligence. Flagged "maybe" until the cold-start data problem has a real, no-scraping answer.</p>
+          <p class="card-stack mono">siamese DeBERTa · calibration toolkit</p>
+          <a class="card-link mono" href="case/project.html?id=placementiq">read the plan →</a>
+        </article>
+      </div>
+    </section>
 
-<!-- ============ DATASET SHELF ============ -->
-<section id="shelf" class="section">
-  <div class="section-head reveal">
-    <img class="section-icon" src="images/icon-books.png" alt="">
-    <p class="eyebrow mono">// research shelf</p>
-    <h2>Domains I've shipped in</h2>
-    <p class="section-sub">Hover a book to see the projects behind it.</p>
-  </div>
-  <div class="bookshelf reveal">
-    <div class="book b1" tabindex="0"><span class="book-spine">Computer Vision</span><span class="book-info">AirSwipe · Cachy OCR · ProbCLIP-A · ScribbleType</span></div>
-    <div class="book b2" tabindex="0"><span class="book-spine">NLP &amp; LLMs</span><span class="book-info">Constitution RAG · Preference paper · Cachy LLM chain</span></div>
-    <div class="book b3" tabindex="0"><span class="book-spine">MLOps</span><span class="book-info">IPL drift pipeline · Docker · PSI monitoring</span></div>
-    <div class="book b4" tabindex="0"><span class="book-spine">Data Mining</span><span class="book-info">Bangalore AQI · clustering · feature engineering</span></div>
-    <div class="book b5" tabindex="0"><span class="book-spine">App Development</span><span class="book-info">7 shipped apps · Flutter · Swift · Kotlin</span></div>
-    <div class="book b6" tabindex="0"><span class="book-spine">Preference Learning</span><span class="book-info">Siamese DeBERTa paper · human preference prediction</span></div>
-    <div class="shelf-plank"></div>
-  </div>
-</section>
+    <!-- ============ DATASET SHELF ============ -->
+    <section id="shelf" class="section">
+      <div class="section-head reveal">
+        <img class="section-icon" src="images/icon-books.png" alt="">
+        <p class="eyebrow mono">// research shelf</p>
+        <h2>Domains I've shipped in</h2>
+        <p class="section-sub">Hover a book to see the projects behind it.</p>
+      </div>
+      <div class="bookshelf reveal">
+        <div class="book b1" tabindex="0"><span class="book-spine">Computer Vision</span><span
+            class="book-info">AirSwipe · Cachy OCR · ProbCLIP-A · ScribbleType</span></div>
+        <div class="book b2" tabindex="0"><span class="book-spine">NLP &amp; LLMs</span><span
+            class="book-info">Constitution RAG · Preference paper · Cachy LLM chain</span></div>
+        <div class="book b3" tabindex="0"><span class="book-spine">MLOps</span><span class="book-info">IPL drift
+            pipeline · Docker · PSI monitoring</span></div>
+        <div class="book b4" tabindex="0"><span class="book-spine">Data Mining</span><span class="book-info">Bangalore
+            AQI · clustering · feature engineering</span></div>
+        <div class="book b5" tabindex="0"><span class="book-spine">App Development</span><span class="book-info">7
+            shipped apps · Flutter · Swift · Kotlin</span></div>
+        <div class="book b6" tabindex="0"><span class="book-spine">Preference Learning</span><span
+            class="book-info">Siamese DeBERTa paper · human preference prediction</span></div>
+        <div class="shelf-plank"></div>
+      </div>
+    </section>
 
-<!-- ============ RESEARCH WALL ============ -->
-<section id="research" class="section">
-  <div class="section-head reveal">
-    <img class="section-icon" src="images/icon-brain.png" alt="">
-    <p class="eyebrow mono">// research wall · click a paper</p>
-    <h2>Papers under review</h2>
-    <p class="section-sub">Written as an MTech student, trained on free GPUs. Click to flip.</p>
-  </div>
-  <div class="papers">
-    <div class="paper-flip reveal" tabindex="0" role="button" aria-label="Flip paper: Efficient LLM Preference Prediction">
-      <div class="paper-inner">
-        <div class="paper-face paper-front">
-          <div class="pin"></div>
-          <p class="mono paper-status">status: under review</p>
-          <h3>Efficient LLM Preference Prediction</h3>
-          <p class="paper-venue">Siamese DeBERTa with swap augmentation &amp; temperature calibration</p>
-          <span class="paper-note caveat">trained for $0 !</span>
-          <p class="mono flip-hint">flip →</p>
+    <!-- ============ RESEARCH WALL ============ -->
+    <section id="research" class="section">
+      <div class="section-head reveal">
+        <img class="section-icon" src="images/icon-brain.png" alt="">
+        <p class="eyebrow mono">// research wall · click a paper</p>
+        <h2>Papers under review</h2>
+        <p class="section-sub">Written as an MTech student, trained on free GPUs. Click to flip.</p>
+      </div>
+      <div class="papers">
+        <div class="paper-flip reveal" tabindex="0" role="button"
+          aria-label="Flip paper: Efficient LLM Preference Prediction">
+          <div class="paper-inner">
+            <div class="paper-face paper-front">
+              <div class="pin"></div>
+              <p class="mono paper-status">status: under review</p>
+              <h3>Efficient LLM Preference Prediction</h3>
+              <p class="paper-venue">Siamese DeBERTa with swap augmentation &amp; temperature calibration</p>
+              <span class="paper-note caveat">trained for $0 !</span>
+              <p class="mono flip-hint">flip →</p>
+            </div>
+            <div class="paper-face paper-back">
+              <h4 class="mono">the short version</h4>
+              <p>Predicts which chatbot answer humans prefer, at 98% of state-of-the-art with a model <mark
+                  class="hl">127× smaller</mark> (71M params), trained for <mark class="hl">$0</mark> on free T4s in 8.4
+                hours.</p>
+              <p class="mono paper-metrics">log loss 1.052 → 0.987 · accuracy +3.5pts</p>
+              <p class="paper-learned"><span class="caveat">what I learned:</span> swap augmentation bought more
+                accuracy than a bigger model would have.</p>
+              <p class="mono cardflip-links"><a href="case/project.html?id=preference-prediction">the full write-up
+                  →</a></p>
+            </div>
+          </div>
         </div>
-        <div class="paper-face paper-back">
-          <h4 class="mono">the short version</h4>
-          <p>Predicts which chatbot answer humans prefer, at 98% of state-of-the-art with a model <mark class="hl">127× smaller</mark> (71M params), trained for <mark class="hl">$0</mark> on free T4s in 8.4 hours.</p>
-          <p class="mono paper-metrics">log loss 1.052 → 0.987 · accuracy +3.5pts</p>
-          <p class="paper-learned"><span class="caveat">what I learned:</span> swap augmentation bought more accuracy than a bigger model would have.</p>
-          <p class="mono cardflip-links"><a href="case/project.html?id=preference-prediction">the full write-up →</a></p>
+        <div class="paper-flip reveal" tabindex="0" role="button" aria-label="Flip paper: ProbCLIP-A">
+          <div class="paper-inner">
+            <div class="paper-face paper-front">
+              <div class="pin"></div>
+              <p class="mono paper-status">status: under review</p>
+              <h3>ProbCLIP-A: Uncertainty-Aware Retrieval</h3>
+              <p class="paper-venue">Probabilistic adapters for frozen CLIP vision foundation models</p>
+              <span class="paper-note caveat">knows when it's unsure</span>
+              <p class="mono flip-hint">flip →</p>
+            </div>
+            <div class="paper-face paper-back">
+              <h4 class="mono">the short version</h4>
+              <p>Makes CLIP say <em>how sure it is</em>: a 4.2M-param adapter on frozen CLIP outputs distributions,
+                Monte Carlo sampling turns them into uncertainty scores that catch <mark class="hl">36.6% of
+                  failures</mark> at 8.1% false alarms.</p>
+              <p class="mono paper-metrics">R@1 68.9% · ECE 0.062 (best of all baselines)</p>
+              <p class="paper-learned"><span class="caveat">what I learned:</span> skip KL warmup and the variance
+                collapses to zero.</p>
+              <p class="mono cardflip-links"><a href="case/project.html?id=probclip-a">the full write-up →</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WHAT I BRING ============ -->
+    <section id="value" class="section">
+      <div class="section-head reveal">
+        <img class="section-icon" src="images/icon-brain.png" alt="">
+        <p class="eyebrow mono">// the short version</p>
+        <h2>What I bring on day one</h2>
+      </div>
+      <div class="value-grid">
+        <div class="value-item reveal">
+          <p class="mono value-k">✓ models that ship</p>
+          <p>Notebook → Dockerized FastAPI service → drift monitoring. Already done end to end for the IPL pipeline:
+            three services, PSI checks every five minutes.</p>
+        </div>
+        <div class="value-item reveal">
+          <p class="mono value-k">✓ RAG from scratch</p>
+          <p>Retrieval, chunking, and evaluation written by hand and stress-tested, with the failure analysis published
+            in the repo.</p>
+        </div>
+        <div class="value-item reveal">
+          <p class="mono value-k">✓ research rigor on a budget</p>
+          <p>Two first-author papers trained entirely on free-tier GPUs. Both repos document what didn't work along the
+            way.</p>
+        </div>
+        <div class="value-item reveal">
+          <p class="mono value-k">✓ the whole product</p>
+          <p>If the model needs an app around it, I build that too, in Swift, Flutter, or on the web.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TIMELINE ============ -->
+    <section id="timeline" class="section">
+      <div class="section-head reveal">
+        <img class="section-icon" src="images/icon-git.png" alt="">
+        <p class="eyebrow mono">// git log --journey</p>
+        <h2>Commit history</h2>
+      </div>
+      <div class="gitlog mono reveal">
+        <div class="commit"><span class="c-hash">a1f2021</span><span class="c-date">Oct 2021</span><span
+            class="c-msg">init: B.Tech Computer Engineering @ SAL College of Engineering</span></div>
+        <div class="commit"><span class="c-hash">b3c4d55</span><span class="c-date">2023</span><span class="c-msg">feat:
+            Python + OpenCV, first computer vision experiments</span></div>
+        <div class="commit"><span class="c-hash">c7e8f01</span><span class="c-date">2024</span><span class="c-msg">feat:
+            AirSwipe, gesture control, first real users</span></div>
+        <div class="commit"><span class="c-hash">d9a0b12</span><span class="c-date">Apr 2025</span><span
+            class="c-msg">release: B.Tech complete 🎓</span></div>
+        <div class="commit"><span class="c-hash">e2c3d44</span><span class="c-date">2025</span><span class="c-msg">feat:
+            two research papers submitted, RAG systems, MLOps pipeline</span></div>
+        <div class="commit"><span class="c-hash">f5e6a78</span><span class="c-date">Nov 2025</span><span
+            class="c-msg">checkout -b mtech: Data Science @ Ramaiah University of Applied Sciences</span></div>
+        <div class="commit c-head"><span class="c-hash">HEAD</span><span class="c-date">now</span><span
+            class="c-msg">training… <span class="margin-note caveat">← you are here</span></span></div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section id="contact" class="section contact">
+      <div class="section-head reveal">
+        <img class="section-icon" src="images/icon-mail.png" alt="">
+        <p class="eyebrow mono">// open a pull request</p>
+        <h2>Get in touch</h2>
+        <p class="section-sub">Looking for AI/ML internships and roles.</p>
+      </div>
+      <p class="end-note caveat reveal">end of notebook, for now.</p>
+      <p class="gh-live mono reveal" id="ghLive" hidden></p>
+      <div class="contact-row reveal">
+        <a class="btn btn-primary" href="mailto:kvaghasiya057@gmail.com">kvaghasiya057@gmail.com</a>
+        <a class="btn btn-ghost" href="https://github.com/Vatsal057" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/vatsal-vaghasiya/" target="_blank"
+          rel="noopener">LinkedIn</a>
+        <a class="btn btn-ghost" href="https://www.kaggle.com/vatsalvaghasiya" target="_blank" rel="noopener">Kaggle</a>
+        <a class="btn btn-ghost" href="resume.pdf" download>Résumé (PDF)</a>
+      </div>
+      <p class="footer-joke mono reveal">this site's robot has read my résumé more times than any recruiter has</p>
+    </section>
+  </main>
+
+  <!-- ============ AI COMPANION ============ -->
+  <div class="companion" id="companion">
+    <div class="companion-panel" id="companionPanel">
+      <div class="bubble" id="companionBubble">Welcome. I trained all night.</div>
+      <form class="ask-form" id="askForm">
+        <input type="text" id="askInput" placeholder="ask, or try 'tour'…" autocomplete="off"
+          aria-label="Ask the robot a question or give a command">
+      </form>
+    </div>
+    <div class="robot" id="robotBtn" role="button" tabindex="0" aria-label="AI companion, click to talk">
+      <img src="images/robot-wave.png" alt="" id="robotImg" draggable="false"
+        onerror="this.parentElement.classList.add('fallback')">
+      <span class="robot-emoji" aria-hidden="true">🤖</span>
+    </div>
+  </div>
+
+  <!-- ============ TERMINAL ============ -->
+  <div class="terminal-overlay" id="terminalOverlay" hidden>
+    <div class="terminal" role="dialog" aria-label="Terminal">
+      <div class="term-titlebar mono">
+        <span class="term-dots"><i></i><i></i><i></i></span>
+        <span>vatsal@lab — zsh</span>
+        <button class="term-close" id="terminalClose" aria-label="Close terminal">✕</button>
+      </div>
+      <div class="term-body mono" id="termBody" tabindex="-1">
+        <div id="termOut"></div>
+        <div class="term-inputline">
+          <span class="term-prompt">vatsal@lab:~$</span>
+          <input type="text" id="termInput" autocomplete="off" spellcheck="false" aria-label="Terminal input">
         </div>
       </div>
     </div>
-    <div class="paper-flip reveal" tabindex="0" role="button" aria-label="Flip paper: ProbCLIP-A">
-      <div class="paper-inner">
-        <div class="paper-face paper-front">
-          <div class="pin"></div>
-          <p class="mono paper-status">status: under review</p>
-          <h3>ProbCLIP-A: Uncertainty-Aware Retrieval</h3>
-          <p class="paper-venue">Probabilistic adapters for frozen CLIP vision foundation models</p>
-          <span class="paper-note caveat">knows when it's unsure</span>
-          <p class="mono flip-hint">flip →</p>
-        </div>
-        <div class="paper-face paper-back">
-          <h4 class="mono">the short version</h4>
-          <p>Makes CLIP say <em>how sure it is</em>: a 4.2M-param adapter on frozen CLIP outputs distributions, Monte Carlo sampling turns them into uncertainty scores that catch <mark class="hl">36.6% of failures</mark> at 8.1% false alarms.</p>
-          <p class="mono paper-metrics">R@1 68.9% · ECE 0.062 (best of all baselines)</p>
-          <p class="paper-learned"><span class="caveat">what I learned:</span> skip KL warmup and the variance collapses to zero.</p>
-          <p class="mono cardflip-links"><a href="case/project.html?id=probclip-a">the full write-up →</a></p>
-        </div>
-      </div>
-    </div>
   </div>
-</section>
 
-<!-- ============ WHAT I BRING ============ -->
-<section id="value" class="section">
-  <div class="section-head reveal">
-    <img class="section-icon" src="images/icon-brain.png" alt="">
-    <p class="eyebrow mono">// the short version</p>
-    <h2>What I bring on day one</h2>
-  </div>
-  <div class="value-grid">
-    <div class="value-item reveal">
-      <p class="mono value-k">✓ models that ship</p>
-      <p>Notebook → Dockerized FastAPI service → drift monitoring. Already done end to end for the IPL pipeline: three services, PSI checks every five minutes.</p>
-    </div>
-    <div class="value-item reveal">
-      <p class="mono value-k">✓ RAG from scratch</p>
-      <p>Retrieval, chunking, and evaluation written by hand and stress-tested, with the failure analysis published in the repo.</p>
-    </div>
-    <div class="value-item reveal">
-      <p class="mono value-k">✓ research rigor on a budget</p>
-      <p>Two first-author papers trained entirely on free-tier GPUs. Both repos document what didn't work along the way.</p>
-    </div>
-    <div class="value-item reveal">
-      <p class="mono value-k">✓ the whole product</p>
-      <p>If the model needs an app around it, I build that too, in Swift, Flutter, or on the web.</p>
-    </div>
-  </div>
-</section>
+  <canvas id="rain" hidden></canvas>
 
-<!-- ============ TIMELINE ============ -->
-<section id="timeline" class="section">
-  <div class="section-head reveal">
-    <img class="section-icon" src="images/icon-git.png" alt="">
-    <p class="eyebrow mono">// git log --journey</p>
-    <h2>Commit history</h2>
-  </div>
-  <div class="gitlog mono reveal">
-    <div class="commit"><span class="c-hash">a1f2021</span><span class="c-date">Oct 2021</span><span class="c-msg">init: B.Tech Computer Engineering @ SAL College of Engineering</span></div>
-    <div class="commit"><span class="c-hash">b3c4d55</span><span class="c-date">2023</span><span class="c-msg">feat: Python + OpenCV, first computer vision experiments</span></div>
-    <div class="commit"><span class="c-hash">c7e8f01</span><span class="c-date">2024</span><span class="c-msg">feat: AirSwipe, gesture control, first real users</span></div>
-    <div class="commit"><span class="c-hash">d9a0b12</span><span class="c-date">Apr 2025</span><span class="c-msg">release: B.Tech complete 🎓</span></div>
-    <div class="commit"><span class="c-hash">e2c3d44</span><span class="c-date">2025</span><span class="c-msg">feat: two research papers submitted, RAG systems, MLOps pipeline</span></div>
-    <div class="commit"><span class="c-hash">f5e6a78</span><span class="c-date">Nov 2025</span><span class="c-msg">checkout -b mtech: Data Science @ Ramaiah University of Applied Sciences</span></div>
-    <div class="commit c-head"><span class="c-hash">HEAD</span><span class="c-date">now</span><span class="c-msg">training… <span class="margin-note caveat">← you are here</span></span></div>
-  </div>
-</section>
-
-<!-- ============ CONTACT ============ -->
-<section id="contact" class="section contact">
-  <div class="section-head reveal">
-    <img class="section-icon" src="images/icon-mail.png" alt="">
-    <p class="eyebrow mono">// open a pull request</p>
-    <h2>Get in touch</h2>
-    <p class="section-sub">Looking for AI/ML internships and roles.</p>
-  </div>
-  <p class="end-note caveat reveal">end of notebook, for now.</p>
-  <p class="gh-live mono reveal" id="ghLive" hidden></p>
-  <div class="contact-row reveal">
-    <a class="btn btn-primary" href="mailto:kvaghasiya057@gmail.com">kvaghasiya057@gmail.com</a>
-    <a class="btn btn-ghost" href="https://github.com/Vatsal057" target="_blank" rel="noopener">GitHub</a>
-    <a class="btn btn-ghost" href="https://www.linkedin.com/in/vatsal-vaghasiya/" target="_blank" rel="noopener">LinkedIn</a>
-    <a class="btn btn-ghost" href="https://www.kaggle.com/vatsalvaghasiya" target="_blank" rel="noopener">Kaggle</a>
-    <a class="btn btn-ghost" href="resume.pdf" download>Résumé (PDF)</a>
-  </div>
-  <p class="footer-joke mono reveal">this site's robot has read my résumé more times than any recruiter has</p>
-</section>
-</main>
-
-<!-- ============ AI COMPANION ============ -->
-<div class="companion" id="companion">
-  <div class="companion-panel" id="companionPanel">
-    <div class="bubble" id="companionBubble">Welcome. I trained all night.</div>
-    <form class="ask-form" id="askForm">
-      <input type="text" id="askInput" placeholder="ask, or try 'tour'…" autocomplete="off" aria-label="Ask the robot a question or give a command">
-    </form>
-  </div>
-  <div class="robot" id="robotBtn" role="button" tabindex="0" aria-label="AI companion, click to talk">
-    <img src="images/robot-wave.png" alt="" id="robotImg" draggable="false" onerror="this.parentElement.classList.add('fallback')">
-    <span class="robot-emoji" aria-hidden="true">🤖</span>
-  </div>
-</div>
-
-<!-- ============ TERMINAL ============ -->
-<div class="terminal-overlay" id="terminalOverlay" hidden>
-  <div class="terminal" role="dialog" aria-label="Terminal">
-    <div class="term-titlebar mono">
-      <span class="term-dots"><i></i><i></i><i></i></span>
-      <span>vatsal@lab — zsh</span>
-      <button class="term-close" id="terminalClose" aria-label="Close terminal">✕</button>
-    </div>
-    <div class="term-body mono" id="termBody" tabindex="-1">
-      <div id="termOut"></div>
-      <div class="term-inputline">
-        <span class="term-prompt">vatsal@lab:~$</span>
-        <input type="text" id="termInput" autocomplete="off" spellcheck="false" aria-label="Terminal input">
-      </div>
-    </div>
-  </div>
-</div>
-
-<canvas id="rain" hidden></canvas>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
+
 </html>
