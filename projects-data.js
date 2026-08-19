@@ -3,6 +3,89 @@
    Cards in index.html and detail pages (projects/project.html?id=slug)
    both read from window.PROJECTS. Add a project = add one entry here.
    ============================================================ */
+
+window.CONFIG = {
+  // Hero section stats
+  heroStats: {
+    shipped: 18,
+    papers: 2,
+    building: 2
+  },
+
+
+  currentlyTraining: [
+    "MTech Data Science · epoch 1/4",
+    "Cachy · knowledge engine",
+    "RAG evals · reading list"
+  ],
+
+  // Skills section
+  skills: [
+    {
+      name: "Python",
+      pct: 90,
+      ships: "13 repos",
+      note: "Primary language of every shipped AI project.",
+      shipsList: "✓ Cachy &nbsp;✓ AirSwipe &nbsp;✓ IPL pipeline &nbsp;✓ +10 more"
+    },
+    {
+      name: "Deep Learning · PyTorch",
+      pct: 82,
+      ships: "2 papers",
+      note: "Two research papers built on it.",
+      shipsList: "✓ ProbCLIP-A &nbsp;✓ preference paper"
+    },
+    {
+      name: "Computer Vision",
+      pct: 80,
+      ships: "4 shipped",
+      note: "MediaPipe, OpenCV, CLIP in shipped products.",
+      shipsList: "✓ AirSwipe &nbsp;✓ Cachy OCR &nbsp;✓ ProbCLIP-A"
+    },
+    {
+      name: "LLMs & RAG",
+      pct: 68,
+      ships: "3 systems",
+      note: "Built retrieval from scratch; still the newest skill here.",
+      shipsList: "✓ Constitution QA &nbsp;✓ Cachy LLM chain &nbsp;→ current focus: evals"
+    },
+    {
+      name: "SQL & Data Wrangling",
+      pct: 72,
+      ships: "14 stations",
+      note: "pandas, SQLite, messy real-world Excel included.",
+      shipsList: "✓ Bangalore AQI &nbsp;✓ 14-station consolidation"
+    },
+    {
+      name: "MLOps · Docker · FastAPI",
+      pct: 70,
+      ships: "3 services",
+      note: "Drift detection, monitoring, multi-service deploys.",
+      shipsList: "✓ IPL drift pipeline &nbsp;✓ HF Spaces deploys"
+    },
+    {
+      name: "App Development",
+      pct: 78,
+      ships: "7 apps",
+      note: "Most of my models end up inside an app.",
+      shipsList: "✓ 7 shipped apps &nbsp;✓ Flutter &nbsp;✓ Swift"
+    }
+  ],
+
+  // Contact info
+  contact: {
+    phone: "+91 8780335009",
+    email: "kvaghasiya057@gmail.com",
+    github: "https://github.com/Vatsal057",
+    linkedin: "https://www.linkedin.com/in/vatsal-vaghasiya/",
+    kaggle: "https://www.kaggle.com/vatsalvaghasiya",
+    resumeUrl: "resume.pdf"
+  },
+
+  // Contact form access key (Web3Forms)
+  formAccessKey: "2798be8f-9564-4406-aa89-59467c21f038"
+};
+
 window.PROJECTS = [
 
   /* ---------- AI / ML projects ---------- */
