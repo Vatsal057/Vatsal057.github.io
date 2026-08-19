@@ -16,7 +16,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@500;600&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=5">
 </head>
 
 <body>
@@ -33,6 +33,7 @@
       <a href="#research">Research</a>
       <a href="#contact">Contact</a>
     </nav>
+    <button class="theme-btn" id="themeToggle" aria-label="Toggle dark mode">☾</button>
     <button class="terminal-btn mono" id="terminalBtn" title="Terminal mode (Ctrl+`)">&gt;_ terminal</button>
     <label class="recruiter-switch" title="Recruiter mode: turns off the animations and the robot">
       <input type="checkbox" id="recruiterToggle">
@@ -211,7 +212,7 @@
       </div>
       <div class="cards">
 
-        <article class="card reveal">
+        <article onclick="window.location.href='case/project.html?id=cachy'" role="link" tabindex="0" class="card reveal">
           <div class="pin"></div>
           <h3>Cachy</h3>
           <p class="card-tag mono">knowledge engine · flutter + fastapi</p>
@@ -222,7 +223,7 @@
           <p class="card-proof mono"><span>3-provider LLM fallback</span><span>semantic graph</span><span>1 SQLite, 0
               Redis</span></p>
           <p class="card-stack mono">Whisper · OpenCV · Tesseract · SQLite · HF Spaces</p>
-          <a class="card-link mono" href="case/project.html?id=cachy">case study →</a>
+          
         </article>
 
         <article class="card card-flip reveal" tabindex="0" role="button"
@@ -242,7 +243,7 @@
               <p class="card-stack mono">sentence-transformers · ChromaDB · Mistral-7B</p>
               <p class="mono flip-hint">flip →</p>
             </div>
-            <div class="cardflip-back">
+            <div onclick="window.location.href='case/project.html?id=constitution-rag'" role="link" tabindex="0" class="cardflip-back">
               <svg class="rag-sketch" viewBox="0 0 460 320" fill="none" aria-hidden="true">
                 <defs>
                   <marker id="ragArrowhead" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
@@ -291,12 +292,12 @@
                 <text x="66" y="264" class="caveat-svg">top-k by cosine ↑</text>
                 <text x="284" y="296" class="caveat-svg">~60 lines. no framework.</text>
               </svg>
-              <p class="mono cardflip-links"><a href="case/project.html?id=constitution-rag">case study →</a></p>
+              
             </div>
           </div>
         </article>
 
-        <article class="card reveal">
+        <article onclick="window.location.href='case/project.html?id=ipl-mlops'" role="link" tabindex="0" class="card reveal">
           <div class="pin"></div>
           <h3>IPL Match Predictor · MLOps</h3>
           <p class="card-tag mono">full ml lifecycle · self-monitoring</p>
@@ -307,10 +308,10 @@
           <p class="card-proof mono"><span>PSI every 5 min</span><span>3 services</span><span>live drift
               dashboard</span></p>
           <p class="card-stack mono">XGBoost · FastAPI · Streamlit · Docker</p>
-          <a class="card-link mono" href="case/project.html?id=ipl-mlops">case study →</a>
+          
         </article>
 
-        <article class="card reveal">
+        <article onclick="window.location.href='case/project.html?id=airswipe'" role="link" tabindex="0" class="card reveal">
           <div class="pin"></div>
           <h3>AirSwipe</h3>
           <p class="card-tag mono">computer vision · gesture control</p>
@@ -321,10 +322,10 @@
           <p class="card-proof mono"><span>orientation-invariant</span><span>dwell-time guards</span><span>6
               gestures</span></p>
           <p class="card-stack mono">MediaPipe · OpenCV · PyQt6</p>
-          <a class="card-link mono" href="case/project.html?id=airswipe">case study →</a>
+          
         </article>
 
-        <article class="card reveal">
+        <article onclick="window.location.href='case/project.html?id=bangalore-aqi'" role="link" tabindex="0" class="card reveal">
           <div class="pin"></div>
           <h3>Bangalore Air Quality</h3>
           <p class="card-tag mono">data mining · unsupervised</p>
@@ -336,10 +337,10 @@
           <p class="card-proof mono"><span>14 stations · 1 year</span><span>3 algorithms compared</span><span>hotspots =
               outliers</span></p>
           <p class="card-stack mono">pandas · scikit-learn · DBSCAN</p>
-          <a class="card-link mono" href="case/project.html?id=bangalore-aqi">case study →</a>
+          
         </article>
 
-        <article class="card reveal">
+        <article onclick="window.location.href='case/project.html?id=scribbletype'" role="link" tabindex="0" class="card reveal">
           <div class="pin"></div>
           <h3>ScribbleType</h3>
           <p class="card-tag mono">on-device ml · accessibility</p>
@@ -350,10 +351,10 @@
           <p class="card-proof mono"><span>100% on-device</span><span>tremor smoothing</span><span>real Kotlin
               IME</span></p>
           <p class="card-stack mono">ML Kit · Flutter · Kotlin IME</p>
-          <a class="card-link mono" href="case/project.html?id=scribbletype">case study →</a>
+          
         </article>
 
-        <article class="card reveal">
+        <article onclick="window.location.href='case/project.html?id=indian-food-search'" role="link" tabindex="0" class="card reveal">
           <div class="pin"></div>
           <h3>Indian Food Multimodal Search</h3>
           <p class="card-tag mono">clip · text + image retrieval</p>
@@ -365,10 +366,10 @@
           <p class="card-proof mono"><span>text + image queries</span><span>domain CLIP test</span><span>interpretable
               ranks</span></p>
           <p class="card-stack mono">CLIP · Gradio · HF Spaces</p>
-          <a class="card-link mono" href="case/project.html?id=indian-food-search">case study →</a>
+          
         </article>
 
-        <article class="card reveal">
+        <article onclick="window.location.href='case/project.html?id=plant-disease'" role="link" tabindex="0" class="card reveal">
           <div class="pin"></div>
           <h3>Plant Disease Detector</h3>
           <p class="card-tag mono">cnn · grad-cam explainability</p>
@@ -380,11 +381,32 @@
           <p class="card-proof mono"><span>15 classes · 5 crops</span><span>Grad-CAM heatmap</span><span>severity
               levels</span></p>
           <p class="card-stack mono">PyTorch · Grad-CAM · Gradio</p>
-          <a class="card-link mono" href="case/project.html?id=plant-disease">case study →</a>
+          
         </article>
 
       </div>
 
+    </section>
+
+    <!-- ============ DATATHON — ACHIEVEMENT ============ -->
+    <section id="datathon" class="section">
+      <div class="section-head reveal">
+        <img class="section-icon" src="images/icon-flask.png" alt="">
+        <p class="eyebrow mono">// competition · 2026</p>
+        <h2>Competitions &amp; awards</h2>
+      </div>
+      <div class="achievements">
+        <article onclick="window.location.href='case/datathon.html'" class="achievement-card reveal" role="link" tabindex="0">
+          <div class="achievement-medal">🥇</div>
+          <div class="achievement-body">
+            <p class="mono achievement-org">Akshara Foundation · Datathon 2026</p>
+            <h3>1st Place — Karnataka Education Datathon</h3>
+            <p class="achievement-desc">Analysed arithmetic learning outcomes across 1.38 million Karnataka government school students. Built indices, OLS residuals, and a 7-screen Streamlit dashboard to argue the gap is skill-shaped, not geography-shaped.</p>
+            <p class="mono achievement-stack">Python · pandas · scipy · plotly · Streamlit · 1.38M records</p>
+          </div>
+          <span class="achievement-arrow mono">view →</span>
+        </article>
+      </div>
     </section>
 
     <!-- ============ APPS · PINNED SHELF ============ -->
@@ -392,12 +414,11 @@
       <div class="section-head reveal">
         <img class="section-icon" src="images/icon-gpu.png" alt="">
         <p class="eyebrow mono">// the app shelf</p>
-        <h2>Apps, shipped <span class="margin-note caveat">each began as an itch on my own machine</span></h2>
-        <p class="section-sub">Five native macOS apps in Swift, plus mobile. Building the whole product around a model
-          is the point — these are the reps.</p>
+        <h2>Apps I've shipped <span class="margin-note caveat">each began as an itch on my own machine</span></h2>
+        <p class="section-sub">Five native macOS apps in Swift, plus mobile. Most of these started as simple interfaces for my ML projects.</p>
       </div>
       <div class="app-grid" id="appShelf">
-        <article class="app-window reveal">
+        <article onclick="window.location.href='case/project.html?id=insomniac'" role="link" tabindex="0" class="app-window reveal">
           <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
               class="app-name">Insomniac.app</span><span class="app-platform">macOS</span></div>
           <div class="app-body">
@@ -408,10 +429,10 @@
               <li>Scriptable via <code>insomniac://</code> URL scheme</li>
             </ul>
             <p class="card-stack mono">Swift 5.9 · AppKit · IOKit · NWPathMonitor</p>
-            <a class="card-link mono" href="case/project.html?id=insomniac">case study →</a>
+            
           </div>
         </article>
-        <article class="app-window reveal">
+        <article onclick="window.location.href='case/project.html?id=glide'" role="link" tabindex="0" class="app-window reveal">
           <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
               class="app-name">Glide.app</span><span class="app-platform">macOS</span></div>
           <div class="app-body">
@@ -422,24 +443,10 @@
               <li>Reciprocal undo, haptic feedback, per-app filters</li>
             </ul>
             <p class="card-stack mono">Swift · AppKit · IOKit multitouch</p>
-            <a class="card-link mono" href="case/project.html?id=glide">case study →</a>
+            
           </div>
         </article>
-        <article class="app-window reveal">
-          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
-              class="app-name">iBar.app</span><span class="app-platform">macOS</span></div>
-          <div class="app-body">
-            <p class="app-lead">Themes the macOS menu bar — Apple gives you no API for this.</p>
-            <ul class="app-features">
-              <li>Click-through overlay at the menu bar's own window level</li>
-              <li>Gradients, blur, notch-aware auto-presets on window state</li>
-              <li>Reads menu titles via Accessibility API to keep them legible</li>
-            </ul>
-            <p class="card-stack mono">Swift · SwiftUI · Accessibility API · CGWindowList</p>
-            <a class="card-link mono" href="case/project.html?id=ibar">case study →</a>
-          </div>
-        </article>
-        <article class="app-window reveal">
+        <article onclick="window.location.href='case/project.html?id=dimmer'" role="link" tabindex="0" class="app-window reveal">
           <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
               class="app-name">Dimmer.app</span><span class="app-platform">macOS</span></div>
           <div class="app-body">
@@ -449,10 +456,10 @@
               <li>Lives in the menu bar; does one thing well</li>
             </ul>
             <p class="card-stack mono">Swift · SwiftUI · AppKit</p>
-            <a class="card-link mono" href="case/project.html?id=dimmer">case study →</a>
+            
           </div>
         </article>
-        <article class="app-window reveal">
+        <article onclick="window.location.href='case/project.html?id=photowidget'" role="link" tabindex="0" class="app-window reveal">
           <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
               class="app-name">PhotoWidget.app</span><span class="app-platform">macOS</span></div>
           <div class="app-body">
@@ -462,10 +469,10 @@
               <li>Full color even in monochrome widget mode</li>
             </ul>
             <p class="card-stack mono">Swift · WidgetKit · AppIntents</p>
-            <a class="card-link mono" href="case/project.html?id=photowidget">case study →</a>
+            
           </div>
         </article>
-        <article class="app-window reveal">
+        <article onclick="window.location.href='case/project.html?id=smart-wardrobe'" role="link" tabindex="0" class="app-window reveal">
           <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
               class="app-name">Smart Wardrobe</span><span class="app-platform">Flutter</span></div>
           <div class="app-body">
@@ -476,7 +483,7 @@
               <li>Wash tracking and packing lists built against the forecast</li>
             </ul>
             <p class="card-stack mono">Flutter · SQLite · on-device, no account</p>
-            <a class="card-link mono" href="case/project.html?id=smart-wardrobe">case study →</a>
+            
           </div>
         </article>
       </div>
@@ -492,7 +499,7 @@
         <p class="section-sub">Little utilities that fix one annoyance each. Most exist because the OS said no.</p>
       </div>
       <div class="cards">
-        <article class="card reveal">
+        <article onclick="window.location.href='case/project.html?id=chrome-to-safari'" role="link" tabindex="0" class="card reveal">
           <div class="pin"></div>
           <h3>chrome-to-safari</h3>
           <p class="card-tag mono">dev tool · extension signing</p>
@@ -500,34 +507,34 @@
             Apple Developer ID. Drop a folder or paste a store link; it signs with a free Apple ID so the extension
             stays enabled across restarts.</p>
           <p class="card-stack mono">Shell · Xcode toolchain · WebExtensions</p>
-          <a class="card-link mono" href="case/project.html?id=chrome-to-safari">case study →</a>
+          
         </article>
-        <article class="card reveal">
+        <article onclick="window.location.href='case/project.html?id=mac-app-signer'" role="link" tabindex="0" class="card reveal">
           <div class="pin"></div>
           <h3>mac-app-signer</h3>
           <p class="card-tag mono">dev tool · code signing</p>
           <p>Sign any macOS <code>.app</code> locally with a free Apple certificate. Kills Gatekeeper friction on apps
             you build yourself and keeps development-signed Safari extensions enabled for good. One command.</p>
           <p class="card-stack mono">Shell · codesign · Xcode CLT</p>
-          <a class="card-link mono" href="case/project.html?id=mac-app-signer">case study →</a>
+          
         </article>
-        <article class="card reveal">
+        <article onclick="window.location.href='case/project.html?id=hidebars'" role="link" tabindex="0" class="card reveal">
           <div class="pin"></div>
           <h3>HideBars</h3>
           <p class="card-tag mono">obsidian plugin · focus</p>
           <p>An Obsidian plugin that auto-hides both sidebars in fullscreen or a narrow window, then reveals them when
             you hover the window edge. Leaving fullscreen restores the layout you had.</p>
           <p class="card-stack mono">TypeScript · Obsidian API</p>
-          <a class="card-link mono" href="case/project.html?id=hidebars">case study →</a>
+          
         </article>
-        <article class="card reveal">
+        <article onclick="window.location.href='case/project.html?id=chitchat-automator'" role="link" tabindex="0" class="card reveal">
           <div class="pin"></div>
           <h3>Chitchat Automator</h3>
           <p class="card-tag mono">chrome extension · automation</p>
           <p>Automates the boring parts of a random-chat site behind a toggle: keyword-skip, username filters (regex
             too), skip-history, auto-greet, and auto-restart on disconnect — all from a clean popup.</p>
           <p class="card-stack mono">JavaScript · Chrome MV3</p>
-          <a class="card-link mono" href="case/project.html?id=chitchat-automator">case study →</a>
+          
         </article>
       </div>
     </section>
@@ -537,32 +544,11 @@
       <div class="section-head reveal">
         <img class="section-icon" src="images/icon-flask.png" alt="">
         <p class="eyebrow mono">// git branch --unmerged</p>
-        <h2>Building next <span class="margin-note caveat">← two already live on github</span></h2>
-        <p class="section-sub">Five projects with PRDs + TRDs written, in build order — the first two now have working
-          cores on GitHub. One thread runs through them: <em>AI that knows when it doesn't know</em> — calibration,
-          abstention, verifiable privacy.</p>
-      </div>
-      <div class="proof-term reveal" role="img"
-        aria-label="Real terminal output from the Sahayak and Oracle repositories: a cited answer about crop loans, and a backtest where the calibrated model beats its baselines">
-        <div class="term-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span>real output — not a
-            mockup · runs offline, zero API keys</span></div>
-        <pre class="proof-body mono"><code><span class="p-prompt">$</span> python -m sahayak ask <span class="p-str">"cheap crop loan for farmers"</span>
-<span class="p-out">The Kisan Credit Card provides farmers with timely and affordable
-short-term credit… loans up to ₹3 lakh at ~4% with prompt repayment. <span class="p-cite">[1]</span></span>
-<span class="p-dim">Sources: [1] Kisan Credit Card — myscheme.gov.in · (confidence: 0.43)</span>
-
-<span class="p-prompt">$</span> python -m sahayak ask <span class="p-str">"who won the cricket world cup"</span>
-<span class="p-warn">I'm not fully sure, and I won't guess on something that affects
-your benefits. Please verify at the official source. (abstained)</span>
-
-<span class="p-prompt">$</span> python -m oracle backtest
-<span class="p-dim">model                    Brier     ECE</span>
-<span class="p-out">persistence (lag-7)     0.437    0.433
-logistic (calibrated)   <span class="p-good">0.204    0.085</span>   <span class="p-dim">← beats both baselines</span>
-conformal coverage 0.88  (target 0.80)</span></code></pre>
+        <h2>Building next <span class="margin-note caveat">← live on github</span></h2>
+        <p class="section-sub">Two projects currently in active development, both with working cores on GitHub. One thread runs through them: AI that knows when it doesn't know — calibration, abstention, verifiable privacy.</p>
       </div>
       <div class="cards roadmap-cards">
-        <article class="card planned-card building-card reveal">
+        <article onclick="window.location.href='case/project.html?id=sahayak'" role="link" tabindex="0" class="card planned-card building-card reveal">
           <span class="planned-badge building-badge mono">building · flagship · code on github</span>
           <h3>Sahayak</h3>
           <p class="card-tag mono">grounded rag + rules engine</p>
@@ -571,11 +557,11 @@ conformal coverage 0.88  (target 0.80)</span></code></pre>
             when it isn't sure. <mark class="hl">Retrieval core shipped</mark> — from-scratch hybrid retriever + rules
             engine + eval harness.</p>
           <p class="card-stack mono">hybrid retrieval · BM25 + TF-IDF · rules engine</p>
-          <a class="card-link mono" href="case/project.html?id=sahayak">case study →</a>
+          
           <a class="card-link mono" href="https://github.com/Vatsal057/sahayak" target="_blank" rel="noopener">github
             →</a>
         </article>
-        <article class="card planned-card building-card reveal">
+        <article onclick="window.location.href='case/project.html?id=oracle'" role="link" tabindex="0" class="card planned-card building-card reveal">
           <span class="planned-badge building-badge mono">building · code on github</span>
           <h3>Oracle</h3>
           <p class="card-tag mono">on-device · conformal calibration</p>
@@ -584,65 +570,13 @@ conformal coverage 0.88  (target 0.80)</span></code></pre>
               class="hl">Modeling core shipped</mark> — from-scratch logistic regression + split-conformal, backtested.
           </p>
           <p class="card-stack mono">conformal prediction · Platt scaling</p>
-          <a class="card-link mono" href="case/project.html?id=oracle">case study →</a>
+          
           <a class="card-link mono" href="https://github.com/Vatsal057/oracle" target="_blank" rel="noopener">github
             →</a>
-        </article>
-        <article class="card planned-card reveal">
-          <span class="planned-badge mono">planned</span>
-          <h3>Cachy Study</h3>
-          <p class="card-tag mono">extends cachy · fastest build</p>
-          <p>Turns a 40-hour lecture playlist into a syllabus-mapped course pack: topic notes cited to video +
-            timestamp, a coverage map, likely exam questions, and Anki flashcards. A full pack must cost ₹0.</p>
-          <p class="card-stack mono">Cachy pipeline · Whisper · LLM chain</p>
-          <a class="card-link mono" href="case/project.html?id=cachy-study">read the plan →</a>
-        </article>
-        <article class="card planned-card reveal">
-          <span class="planned-badge mono">planned</span>
-          <h3>ChatLens</h3>
-          <p class="card-tag mono">100% client-side · verifiable privacy</p>
-          <p>WhatsApp analytics where your chats <mark class="hl">never leave your device</mark> — and you can prove it.
-            Deterministic on-device stats, a Spotify-Wrapped-style share card, and an architecture that makes uploading
-            impossible, not just avoided.</p>
-          <p class="card-stack mono">client-side JS · strict CSP · no backend</p>
-          <a class="card-link mono" href="case/project.html?id=chatlens">read the plan →</a>
-        </article>
-        <article class="card planned-card reveal">
-          <span class="planned-badge mono">planned · maybe</span>
-          <h3>PlacementIQ</h3>
-          <p class="card-tag mono">resume scorer + company intel</p>
-          <p>A calibrated resume scorer (trained shortlist model, not LLM vibes) plus crowdsourced per-company interview
-            intelligence. Flagged "maybe" until the cold-start data problem has a real, no-scraping answer.</p>
-          <p class="card-stack mono">siamese DeBERTa · calibration toolkit</p>
-          <a class="card-link mono" href="case/project.html?id=placementiq">read the plan →</a>
         </article>
       </div>
     </section>
 
-    <!-- ============ DATASET SHELF ============ -->
-    <section id="shelf" class="section">
-      <div class="section-head reveal">
-        <img class="section-icon" src="images/icon-books.png" alt="">
-        <p class="eyebrow mono">// research shelf</p>
-        <h2>Domains I've shipped in</h2>
-        <p class="section-sub">Hover a book to see the projects behind it.</p>
-      </div>
-      <div class="bookshelf reveal">
-        <div class="book b1" tabindex="0"><span class="book-spine">Computer Vision</span><span
-            class="book-info">AirSwipe · Cachy OCR · ProbCLIP-A · ScribbleType</span></div>
-        <div class="book b2" tabindex="0"><span class="book-spine">NLP &amp; LLMs</span><span
-            class="book-info">Constitution RAG · Preference paper · Cachy LLM chain</span></div>
-        <div class="book b3" tabindex="0"><span class="book-spine">MLOps</span><span class="book-info">IPL drift
-            pipeline · Docker · PSI monitoring</span></div>
-        <div class="book b4" tabindex="0"><span class="book-spine">Data Mining</span><span class="book-info">Bangalore
-            AQI · clustering · feature engineering</span></div>
-        <div class="book b5" tabindex="0"><span class="book-spine">App Development</span><span class="book-info">7
-            shipped apps · Flutter · Swift · Kotlin</span></div>
-        <div class="book b6" tabindex="0"><span class="book-spine">Preference Learning</span><span
-            class="book-info">Siamese DeBERTa paper · human preference prediction</span></div>
-        <div class="shelf-plank"></div>
-      </div>
-    </section>
 
     <!-- ============ RESEARCH WALL ============ -->
     <section id="research" class="section">
@@ -664,7 +598,7 @@ conformal coverage 0.88  (target 0.80)</span></code></pre>
               <span class="paper-note caveat">trained for $0 !</span>
               <p class="mono flip-hint">flip →</p>
             </div>
-            <div class="paper-face paper-back">
+            <div onclick="window.location.href='case/project.html?id=preference-prediction'" role="link" tabindex="0" class="paper-face paper-back">
               <h4 class="mono">the short version</h4>
               <p>Predicts which chatbot answer humans prefer, at 98% of state-of-the-art with a model <mark
                   class="hl">127× smaller</mark> (71M params), trained for <mark class="hl">$0</mark> on free T4s in 8.4
@@ -672,8 +606,7 @@ conformal coverage 0.88  (target 0.80)</span></code></pre>
               <p class="mono paper-metrics">log loss 1.052 → 0.987 · accuracy +3.5pts</p>
               <p class="paper-learned"><span class="caveat">what I learned:</span> swap augmentation bought more
                 accuracy than a bigger model would have.</p>
-              <p class="mono cardflip-links"><a href="case/project.html?id=preference-prediction">the full write-up
-                  →</a></p>
+              
             </div>
           </div>
         </div>
@@ -687,7 +620,7 @@ conformal coverage 0.88  (target 0.80)</span></code></pre>
               <span class="paper-note caveat">knows when it's unsure</span>
               <p class="mono flip-hint">flip →</p>
             </div>
-            <div class="paper-face paper-back">
+            <div onclick="window.location.href='case/project.html?id=probclip-a'" role="link" tabindex="0" class="paper-face paper-back">
               <h4 class="mono">the short version</h4>
               <p>Makes CLIP say <em>how sure it is</em>: a 4.2M-param adapter on frozen CLIP outputs distributions,
                 Monte Carlo sampling turns them into uncertainty scores that catch <mark class="hl">36.6% of
@@ -695,14 +628,40 @@ conformal coverage 0.88  (target 0.80)</span></code></pre>
               <p class="mono paper-metrics">R@1 68.9% · ECE 0.062 (best of all baselines)</p>
               <p class="paper-learned"><span class="caveat">what I learned:</span> skip KL warmup and the variance
                 collapses to zero.</p>
-              <p class="mono cardflip-links"><a href="case/project.html?id=probclip-a">the full write-up →</a></p>
+              
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ============ WHAT I BRING ============ -->
+
+    <!-- ============ TIMELINE ============ -->
+    <section id="timeline" class="section">
+      <div class="section-head reveal">
+        <img class="section-icon" src="images/icon-git.png" alt="">
+        <p class="eyebrow mono">// git log --journey</p>
+        <h2>Commit history</h2>
+      </div>
+      <div class="gitlog mono reveal">
+        <div class="commit"><span class="c-hash">a1f2021</span><span class="c-date">Oct 2021</span><span
+            class="c-msg">init: B.Tech Computer Engineering @ SAL College of Engineering</span></div>
+        <div class="commit"><span class="c-hash">b3c4d55</span><span class="c-date">2023</span><span class="c-msg">feat:
+            Python + OpenCV, first computer vision experiments</span></div>
+        <div class="commit"><span class="c-hash">c7e8f01</span><span class="c-date">2024</span><span class="c-msg">feat:
+            AirSwipe, gesture control, first real users</span></div>
+        <div class="commit"><span class="c-hash">d9a0b12</span><span class="c-date">Apr 2025</span><span
+            class="c-msg">release: B.Tech complete 🎓</span></div>
+        <div class="commit"><span class="c-hash">e2c3d44</span><span class="c-date">2025</span><span class="c-msg">feat:
+            two research papers submitted, RAG systems, MLOps pipeline</span></div>
+        <div class="commit"><span class="c-hash">f5e6a78</span><span class="c-date">Nov 2025</span><span
+            class="c-msg">checkout -b mtech: Data Science @ Ramaiah University of Applied Sciences</span></div>
+        <div class="commit c-head"><span class="c-hash">HEAD</span><span class="c-date">now</span><span
+            class="c-msg">training… <span class="margin-note caveat">← you are here</span></span></div>
+      </div>
+    </section>
+
+<!-- ============ WHAT I BRING ============ -->
     <section id="value" class="section">
       <div class="section-head reveal">
         <img class="section-icon" src="images/icon-brain.png" alt="">
@@ -732,30 +691,7 @@ conformal coverage 0.88  (target 0.80)</span></code></pre>
       </div>
     </section>
 
-    <!-- ============ TIMELINE ============ -->
-    <section id="timeline" class="section">
-      <div class="section-head reveal">
-        <img class="section-icon" src="images/icon-git.png" alt="">
-        <p class="eyebrow mono">// git log --journey</p>
-        <h2>Commit history</h2>
-      </div>
-      <div class="gitlog mono reveal">
-        <div class="commit"><span class="c-hash">a1f2021</span><span class="c-date">Oct 2021</span><span
-            class="c-msg">init: B.Tech Computer Engineering @ SAL College of Engineering</span></div>
-        <div class="commit"><span class="c-hash">b3c4d55</span><span class="c-date">2023</span><span class="c-msg">feat:
-            Python + OpenCV, first computer vision experiments</span></div>
-        <div class="commit"><span class="c-hash">c7e8f01</span><span class="c-date">2024</span><span class="c-msg">feat:
-            AirSwipe, gesture control, first real users</span></div>
-        <div class="commit"><span class="c-hash">d9a0b12</span><span class="c-date">Apr 2025</span><span
-            class="c-msg">release: B.Tech complete 🎓</span></div>
-        <div class="commit"><span class="c-hash">e2c3d44</span><span class="c-date">2025</span><span class="c-msg">feat:
-            two research papers submitted, RAG systems, MLOps pipeline</span></div>
-        <div class="commit"><span class="c-hash">f5e6a78</span><span class="c-date">Nov 2025</span><span
-            class="c-msg">checkout -b mtech: Data Science @ Ramaiah University of Applied Sciences</span></div>
-        <div class="commit c-head"><span class="c-hash">HEAD</span><span class="c-date">now</span><span
-            class="c-msg">training… <span class="margin-note caveat">← you are here</span></span></div>
-      </div>
-    </section>
+    <!-- ============ CONTACT ============ -->
 
     <!-- ============ CONTACT ============ -->
     <section id="contact" class="section contact">

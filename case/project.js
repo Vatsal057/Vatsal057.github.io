@@ -1,6 +1,8 @@
 /* Renders one project detail page from window.PROJECTS by ?id=slug. */
 (function () {
   document.documentElement.classList.add('js');
+  if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark-mode');
+
   var id = new URLSearchParams(location.search).get("id");
   var p = (window.PROJECTS || []).find(function (x) { return x.slug === id; });
 
@@ -42,6 +44,9 @@
   }
   if (p.links && p.links.demo) {
     links.appendChild(anchor(p.links.demo, "live demo →", "btn btn-ghost"));
+  }
+  if (p.links && p.links.certificate) {
+    links.appendChild(anchor(p.links.certificate, "view certificate →", "btn btn-primary"));
   }
 
   document.getElementById("problem").textContent = p.problem || p.oneLiner || "";

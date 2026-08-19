@@ -1,3 +1,18 @@
+
+// ============ Dark Mode ============
+const themeToggle = document.getElementById('themeToggle');
+if (themeToggle) {
+  const isDark = localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  if (isDark) document.body.classList.add('dark-mode');
+  themeToggle.textContent = isDark ? '☀' : '☾';
+  themeToggle.addEventListener('click', () => {
+    const willBeDark = !document.body.classList.contains('dark-mode');
+    document.body.classList.toggle('dark-mode', willBeDark);
+    themeToggle.textContent = willBeDark ? '☀' : '☾';
+    localStorage.setItem('theme', willBeDark ? 'dark' : 'light');
+  });
+}
+
 // ============ Scroll reveal + skill bars ============
 document.documentElement.classList.add('js');   // reveal-gating: no JS, no hiding
 const io = new IntersectionObserver((entries) => {
@@ -401,7 +416,6 @@ const PROJECT_FILES = {
   'scribbletype': 'ScribbleType - handwriting → text for seniors.\n  on-device ML Kit ink recognition · tremor smoothing · system-wide Android IME',
   'insomniac':    'Insomniac - macOS keep-awake, lid closed included.\n  smart triggers (app/Wi-Fi/CPU/downloads) · insomniac:// URL scheme · Swift + IOKit',
   'glide':        'Glide - custom 3/4/5-finger trackpad gestures.\n  speed-aware actions · reciprocal undo · haptics · IOKit multitouch',
-  'ibar':         'iBar - menu bar theming where Apple provides no API.\n  click-through overlay at menu bar window level · Accessibility API · notch-aware',
   'dimmer':       'Dimmer - dims displays below hardware minimum.\n  overlay windows · multi-monitor · menu bar app · Swift',
   'photowidget':  'PhotoWidget - your photos as desktop widgets.\n  4 sizes · per-widget photo choice · WidgetKit + AppIntents',
   'wardrobe':     'Smart Wardrobe - AI outfit suggestions.\n  weather + occasion + wash history · cost-per-wear analytics · Flutter, all local',
@@ -476,10 +490,10 @@ Builds ML systems end to end and keeps the failed experiments on the board.
       tprint(Object.keys(PROJECT_FILES).map(k => `<span class="t-sage">${k}/</span>`).join('  ') +
         `\n<span class="t-dim">13 total. try: cat rag</span>`); break;
     case 'apps':
-      tprint(`macOS: <span class="t-sage">insomniac glide ibar dimmer photowidget</span>
+      tprint(`macOS: <span class="t-sage">insomniac glide dimmer photowidget</span>
 mobile: <span class="t-sage">scribbletype wardrobe cachy</span>
 web:    <span class="t-sage">career-os</span>
-<span class="t-dim">all native swift · try: cat ibar</span>`); break;
+<span class="t-dim">all native swift · try: cat glide</span>`); break;
     case 'cat': {
       const key = arg.replace(/\/$/, '');
       tprint(PROJECT_FILES[key] ? esc(PROJECT_FILES[key]) : `cat: ${esc(arg) || '?'}: no such file. try: projects`, PROJECT_FILES[key] ? '' : 't-err'); break;
@@ -678,7 +692,7 @@ function gradientRain() {
     ['.recruiter-switch', 'quiet mode'],
   ];
   const BTNS = '.btn, .terminal-btn, button:not(#robotBtn)';
-  const GROW = 'a, [role="button"], label, .topnav a';
+  const GROW = 'a, [role="button"], [role="link"], label, .topnav a';
   const NATIVE = 'input, textarea, .terminal-overlay';
 
   const setState = (link, lbl) => {
@@ -697,6 +711,11 @@ function gradientRain() {
     for (const [sel, text] of LABELS) {
       if (t.closest(sel)) { morphReset(); setState(false, text); return; }
     }
+
+    // Card cursor logic (V1: view →)
+    const card = t.closest('.card:not(.card-flip), .app-window, .cardflip-back, .paper-back, .achievement-card');
+    if (card) { morphReset(); setState(false, 'view →'); return; }
+
     const btn = t.closest(BTNS);
     if (btn) { setState(false, null); morphTo(btn); return; }
     morphReset();
