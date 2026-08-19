@@ -516,12 +516,16 @@ MLOps         ██████████████░░░░░░  70%`
 <span class="t-amber">b3c4d55</span> 2023      feat: Python + OpenCV
 <span class="t-amber">c7e8f01</span> 2024      feat: AirSwipe, first real users
 <span class="t-amber">d9a0b12</span> Apr 2025  release: B.Tech complete
-<span class="t-amber">e2c3d44</span> 2025      feat: 2 papers submitted, RAG, MLOps
 <span class="t-amber">f5e6a78</span> Nov 2025  checkout -b mtech @ Ramaiah University
+<span class="t-amber">e2c3d44</span> Feb 2026  feat: 1st paper submitted (LLM Preference Prediction)
+<span class="t-amber">a8b9c01</span> Jul 2026  feat: 2nd paper submitted (ProbCLIP-A)
+<span class="t-amber">b9c0d12</span> Aug 2026  feat: won 1st prize @ Karnataka Education Datathon
 <span class="t-sage">HEAD</span>    now       training…`); break;
     case 'train': fakeTrain(); break;
     case 'contact':
-      tprint(`email:    <span class="t-sage">kvaghasiya057@gmail.com</span>
+      const cPhone = window.CONFIG?.contact?.phone || '+91 8780335009';
+      tprint(`phone:    ${cPhone}
+email:    <span class="t-sage">kvaghasiya057@gmail.com</span>
 github:   github.com/Vatsal057
 linkedin: linkedin.com/in/vatsal-vaghasiya
 kaggle:   kaggle.com/vatsalvaghasiya`); break;
@@ -606,6 +610,60 @@ function gradientRain() {
 // they hid content and taxed scroll. Motion now lives in reveals, hovers,
 // the count-up, and the cursor below. Recruiter mode / reduced motion win.
 (() => {
+  if (window.CONFIG) {
+    const c = window.CONFIG;
+    
+    // 1. Hero Stats
+    if (c.heroStats) {
+      const update = (id, val) => { const el = document.getElementById(id); if (el && val !== undefined) { el.dataset.count = val; el.textContent = val; } };
+      update('stat-shipped', c.heroStats.shipped); update('stat-papers', c.heroStats.papers); update('stat-building', c.heroStats.building);
+    }
+    
+
+    // 3. Currently Training
+    const trainList = document.getElementById('trainingList');
+    if (trainList && c.currentlyTraining) {
+      let html = '<p class="nc-label">currently training:</p>';
+      c.currentlyTraining.forEach(t => html += `<p>□ ${t}</p>`);
+      trainList.innerHTML = html;
+    }
+    
+    // 4. Skills Grid
+    const skillsGrid = document.getElementById('skillsGrid');
+    if (skillsGrid && c.skills) {
+      let html = '';
+      c.skills.forEach(s => {
+        html += `
+        <div class="skill reveal" data-pct="${s.pct}">
+          <div class="skill-top mono"><span>${s.name}</span><span class="skill-pct">${s.ships}</span></div>
+          <div class="bar"><div class="bar-fill"></div></div>
+          <p class="skill-note">${s.note}</p>
+          <p class="skill-ships mono">${s.shipsList}</p>
+        </div>`;
+      });
+      skillsGrid.innerHTML = html;
+      skillsGrid.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    }
+    
+    // 5. Contact Form Access Key
+    const accessKey = document.getElementById('formAccessKey');
+    if (accessKey && c.formAccessKey) accessKey.value = c.formAccessKey;
+    
+    // 6. Contact Links
+    const contactLinks = document.getElementById('contactLinks');
+    if (contactLinks && c.contact) {
+      contactLinks.innerHTML = `
+        <a class="btn btn-ghost" href="tel:${c.contact.phone.replace(/\s+/g, '')}">${c.contact.phone}</a>
+        <a class="btn btn-ghost" href="mailto:${c.contact.email}">${c.contact.email}</a>
+        <a class="btn btn-ghost" href="${c.contact.github}" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn-ghost" href="${c.contact.linkedin}" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn btn-ghost" href="${c.contact.kaggle}" target="_blank" rel="noopener">Kaggle</a>
+        <a class="btn btn-ghost" href="${c.contact.resumeUrl}" download>Résumé (PDF)</a>
+      `;
+      contactLinks.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    }
+  }
+
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!reduced) {
     document.querySelectorAll('.hero-stats .count').forEach(el => {
@@ -690,6 +748,7 @@ function gradientRain() {
     ['.book', 'peek'],
     ['#robotBtn', 'drag me'],
     ['.recruiter-switch', 'quiet mode'],
+    ['.cert-card', 'view PDF'],
   ];
   const BTNS = '.btn, .terminal-btn, button:not(#robotBtn)';
   const GROW = 'a, [role="button"], [role="link"], label, .topnav a';
@@ -712,12 +771,13 @@ function gradientRain() {
       if (t.closest(sel)) { morphReset(); setState(false, text); return; }
     }
 
+    const btn = t.closest(BTNS + ', a');
+    if (btn) { setState(false, null); morphTo(btn); return; }
+
     // Card cursor logic (V1: view →)
     const card = t.closest('.card:not(.card-flip), .app-window, .cardflip-back, .paper-back, .achievement-card');
     if (card) { morphReset(); setState(false, 'view →'); return; }
 
-    const btn = t.closest(BTNS);
-    if (btn) { setState(false, null); morphTo(btn); return; }
     morphReset();
     setState(!!t.closest(GROW), null);
   });

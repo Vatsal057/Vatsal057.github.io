@@ -26,6 +26,8 @@
     <a class="logo" href="#top">V<span class="logo-dot">.</span>V</a>
     <nav class="topnav">
       <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#education">Education</a>
       <a href="#projects">Projects</a>
       <a href="#apps">Apps</a>
       <a href="#tools">Tools</a>
@@ -49,20 +51,16 @@
         <div class="notebook-card mono reveal">
           <div class="nc-head"><span id="ncDay">Mon</span><span>lab notebook · page <span id="ncPage">147</span></span>
           </div>
-          <div class="nc-body">
-            <p class="nc-label">currently training:</p>
-            <p>□ MTech Data Science · epoch 1/4</p>
-            <p>□ Cachy · knowledge engine</p>
-            <p>□ RAG evals · reading list</p>
+          <div class="nc-body" id="trainingList">
+            <!-- Injected by script.js from window.CONFIG -->
           </div>
         </div>
         <h1 class="reveal"><span class="marker">Vatsal Vaghasiya</span></h1>
         <p class="typewriter mono reveal"><span id="typeTarget"></span><span class="caret">▊</span></p>
         <p class="hero-sub reveal">AI engineer in training. I build models, ship the apps around them,
           and <em>keep notes on what didn't work</em>.</p>
-        <p class="hero-stats mono reveal"><span class="count" data-count="18">18</span> projects shipped &nbsp;·&nbsp;
-          <span class="count" data-count="2">2</span> papers under review &nbsp;·&nbsp; <span class="count"
-            data-count="5">5</span> building next
+        <p class="hero-stats mono reveal"><span class="count" id="stat-shipped" data-count="18">18</span> projects shipped &nbsp;·&nbsp;
+          <span class="count" id="stat-papers" data-count="2">2</span> papers under review &nbsp;·&nbsp; <span class="count" id="stat-building" data-count="2">2</span> building next
         </p>
         <div class="hero-cta reveal">
           <a class="btn btn-primary" href="#projects">See the experiments</a>
@@ -110,68 +108,108 @@
         <h2>Technical Skills</h2>
         <p class="section-sub">What I know, and what I've built with them.</p>
       </div>
-      <div class="skills-grid">
-        <div class="skill reveal" data-pct="90">
-          <div class="skill-top mono"><span>Python</span><span class="skill-pct">13 repos</span></div>
-          <div class="bar">
-            <div class="bar-fill"></div>
-          </div>
-          <p class="skill-note">Primary language of every shipped AI project.</p>
-          <p class="skill-ships mono">✓ Cachy &nbsp;✓ AirSwipe &nbsp;✓ IPL pipeline &nbsp;✓ +10 more</p>
+      <div class="skills-grid" id="skillsGrid">
+        <!-- Injected by script.js from window.CONFIG -->
+      </div>
+    </section>
+
+    <!-- ============ EXPERIENCE ============ -->
+    <section id="experience" class="section">
+      <div class="section-head reveal">
+        <img class="section-icon" src="images/icon-graph.png" alt="">
+        <p class="eyebrow mono">// professional track</p>
+        <h2>Experience</h2>
+      </div>
+      <div class="cards">
+        <div class="card reveal" style="transform: none;">
+          <h3>Data Science Intern</h3>
+          <p class="card-tag">Amar Infotech – Ahmedabad, Gujarat &nbsp;·&nbsp; 01/2025 to 06/2025</p>
+          <ul style="color: var(--ink-soft); font-size: 0.95rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6;">
+            <li style="margin-bottom: 0.6rem;">Engineered data preprocessing pipelines in Python for 50k+ records, reducing inconsistencies by <mark class="hl">35%</mark>.</li>
+            <li style="margin-bottom: 0.6rem;">Trained predictive ML models (TensorFlow, scikit-learn) achieving <mark class="hl">87% accuracy</mark> and lowering false positives by 22%.</li>
+            <li style="margin-bottom: 0.6rem;">Built <mark class="hl">5+ interactive dashboards</mark> in Power BI to track KPIs and model performance.</li>
+            <li>Automated extraction workflows, reducing manual processing time by <mark class="hl">40%</mark>.</li>
+          </ul>
         </div>
-        <div class="skill reveal" data-pct="82">
-          <div class="skill-top mono"><span>Deep Learning · PyTorch</span><span class="skill-pct">2 papers</span></div>
-          <div class="bar">
-            <div class="bar-fill"></div>
-          </div>
-          <p class="skill-note">Two research papers built on it.</p>
-          <p class="skill-ships mono">✓ ProbCLIP-A &nbsp;✓ preference paper</p>
-        </div>
-        <div class="skill reveal" data-pct="80">
-          <div class="skill-top mono"><span>Computer Vision</span><span class="skill-pct">4 shipped</span></div>
-          <div class="bar">
-            <div class="bar-fill"></div>
-          </div>
-          <p class="skill-note">MediaPipe, OpenCV, CLIP in shipped products.</p>
-          <p class="skill-ships mono">✓ AirSwipe &nbsp;✓ Cachy OCR &nbsp;✓ ProbCLIP-A</p>
-        </div>
-        <div class="skill reveal" data-pct="68">
-          <div class="skill-top mono"><span>LLMs &amp; RAG</span><span class="skill-pct">3 systems</span></div>
-          <div class="bar">
-            <div class="bar-fill"></div>
-          </div>
-          <p class="skill-note">Built retrieval from scratch; still the newest skill here.</p>
-          <p class="skill-ships mono">✓ Constitution QA &nbsp;✓ Cachy LLM chain &nbsp;→ current focus: evals</p>
-        </div>
-        <div class="skill reveal" data-pct="72">
-          <div class="skill-top mono"><span>SQL &amp; Data Wrangling</span><span class="skill-pct">14 stations</span>
-          </div>
-          <div class="bar">
-            <div class="bar-fill"></div>
-          </div>
-          <p class="skill-note">pandas, SQLite, messy real-world Excel included.</p>
-          <p class="skill-ships mono">✓ Bangalore AQI &nbsp;✓ 14-station consolidation</p>
-        </div>
-        <div class="skill reveal" data-pct="70">
-          <div class="skill-top mono"><span>MLOps · Docker · FastAPI</span><span class="skill-pct">3 services</span>
-          </div>
-          <div class="bar">
-            <div class="bar-fill"></div>
-          </div>
-          <p class="skill-note">Drift detection, monitoring, multi-service deploys.</p>
-          <p class="skill-ships mono">✓ IPL drift pipeline &nbsp;✓ HF Spaces deploys</p>
-        </div>
-        <div class="skill reveal" data-pct="78">
-          <div class="skill-top mono"><span>App Development</span><span class="skill-pct">7 apps</span></div>
-          <div class="bar">
-            <div class="bar-fill"></div>
-          </div>
-          <p class="skill-note">Most of my models end up inside an app.</p>
-          <p class="skill-ships mono">✓ 7 shipped apps &nbsp;✓ Flutter &nbsp;✓ Swift</p>
+        <div class="card reveal" style="transform: none;">
+          <h3>Data Science Intern</h3>
+          <p class="card-tag">iTechBrains – Ahmedabad, India &nbsp;·&nbsp; 06/2024 to 07/2024</p>
+          <ul style="color: var(--ink-soft); font-size: 0.95rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6;">
+            <li style="margin-bottom: 0.6rem;">Implemented data visualization techniques to communicate insights to stakeholders.</li>
+            <li style="margin-bottom: 0.6rem;">Analyzed complex datasets using supervised and unsupervised learning techniques.</li>
+            <li>Performed data extraction and manipulation using <mark class="hl">Python and SQL</mark>.</li>
+          </ul>
         </div>
       </div>
     </section>
 
+    <!-- ============ EDUCATION ============ -->
+    <section id="education" class="section">
+      <div class="section-head reveal">
+        <img class="section-icon" src="images/icon-books.png" alt="">
+        <p class="eyebrow mono">// academic background</p>
+        <h2>Education</h2>
+      </div>
+      <div class="cards">
+        <div class="card reveal" style="transform: none;">
+          <h3>M.Tech in Data Science</h3>
+          <p class="card-tag">M.S. Ramaiah University of Applied Sciences – Bengaluru, Karnataka &nbsp;·&nbsp; Expected 2027</p>
+        </div>
+        <div class="card reveal" style="transform: none;">
+          <h3>B.Tech in Computer Engineering</h3>
+          <p class="card-tag">SAL College of Engineering – Ahmedabad, Gujarat &nbsp;·&nbsp; 2021 to 2025</p>
+          <ul style="color: var(--ink-soft); font-size: 0.92rem; padding-left: 1.2rem; margin-top: 0.8rem; line-height: 1.5;">
+            <li>CGPA: 8.3 / 10.0</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CERTIFICATIONS ============ -->
+    <section id="certifications" class="section">
+      <div class="section-head reveal">
+        <img class="section-icon" src="images/icon-brain.png" alt="">
+        <p class="eyebrow mono">// continuous learning</p>
+        <h2>Certifications</h2>
+      </div>
+      <div class="cert-grid">
+        <a href="certificates/Python for Data Science AI and Development.pdf" target="_blank" class="cert-card reveal">
+          <span class="cert-seal">🏅</span>
+          <div>
+            <h3>Python for Data Science, AI & Development</h3>
+            <p class="mono">IBM · Coursera</p>
+          </div>
+        </a>
+        <a href="certificates/Data Science Methodology.pdf" target="_blank" class="cert-card reveal">
+          <span class="cert-seal">🏅</span>
+          <div>
+            <h3>Data Science Methodology</h3>
+            <p class="mono">IBM · Coursera</p>
+          </div>
+        </a>
+        <a href="certificates/Tools for Data Science.pdf" target="_blank" class="cert-card reveal">
+          <span class="cert-seal">🏅</span>
+          <div>
+            <h3>Tools for Data Science</h3>
+            <p class="mono">IBM · Coursera</p>
+          </div>
+        </a>
+        <a href="certificates/What is Data Science.pdf" target="_blank" class="cert-card reveal">
+          <span class="cert-seal">🏅</span>
+          <div>
+            <h3>What is Data Science?</h3>
+            <p class="mono">IBM · Coursera</p>
+          </div>
+        </a>
+        <a href="certificates/Python Project for Data Science.pdf" target="_blank" class="cert-card reveal">
+          <span class="cert-seal">🏅</span>
+          <div>
+            <h3>Python Project for Data Science</h3>
+            <p class="mono">IBM · Coursera</p>
+          </div>
+        </a>
+      </div>
+    </section>
 
     <!-- ============ ENGINEERING PRINCIPLES ============ -->
     <section id="principles" class="section">
@@ -680,14 +718,22 @@
             class="c-msg">init: B.Tech Computer Engineering @ SAL College of Engineering</span></div>
         <div class="commit"><span class="c-hash">b3c4d55</span><span class="c-date">2023</span><span class="c-msg">feat:
             Python + OpenCV, first computer vision experiments</span></div>
+        <div class="commit"><span class="c-hash">c8d9e03</span><span class="c-date">Jun 2024</span><span class="c-msg">feat:
+            Data Science Intern @ iTechBrains</span></div>
         <div class="commit"><span class="c-hash">c7e8f01</span><span class="c-date">2024</span><span class="c-msg">feat:
             AirSwipe, gesture control, first real users</span></div>
+        <div class="commit"><span class="c-hash">c9a8b71</span><span class="c-date">Jan 2025</span><span class="c-msg">feat:
+            Data Science Intern @ Amar Infotech</span></div>
         <div class="commit"><span class="c-hash">d9a0b12</span><span class="c-date">Apr 2025</span><span
             class="c-msg">release: B.Tech complete 🎓</span></div>
-        <div class="commit"><span class="c-hash">e2c3d44</span><span class="c-date">2025</span><span class="c-msg">feat:
-            two research papers submitted, RAG systems, MLOps pipeline</span></div>
         <div class="commit"><span class="c-hash">f5e6a78</span><span class="c-date">Nov 2025</span><span
             class="c-msg">checkout -b mtech: Data Science @ Ramaiah University of Applied Sciences</span></div>
+        <div class="commit"><span class="c-hash">e2c3d44</span><span class="c-date">Feb 2026</span><span class="c-msg">feat:
+            1st paper submitted (LLM Preference Prediction)</span></div>
+        <div class="commit"><span class="c-hash">a8b9c01</span><span class="c-date">Jul 2026</span><span class="c-msg">feat:
+            2nd paper submitted (ProbCLIP-A)</span></div>
+        <div class="commit"><span class="c-hash">b9c0d12</span><span class="c-date">Aug 2026</span><span class="c-msg">feat:
+            won 1st prize @ Karnataka Education Datathon 🏆</span></div>
         <div class="commit c-head"><span class="c-hash">HEAD</span><span class="c-date">now</span><span
             class="c-msg">training… <span class="margin-note caveat">← you are here</span></span></div>
       </div>
@@ -737,7 +783,8 @@
       <!-- Contact Form -->
       <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
         <!-- Replace with your actual Web3Forms Access Key -->
-        <input type="hidden" name="access_key" value="2798be8f-9564-4406-aa89-59467c21f038">
+        <!-- Access key injected via script.js -->
+        <input type="hidden" name="access_key" id="formAccessKey" value="">
         <input type="hidden" name="subject" value="🔥 New Portfolio Inquiry">
         <input type="hidden" name="from_name" value="Portfolio Bot">
         <div class="form-row">
@@ -754,13 +801,8 @@
         <p id="formResult" class="mono form-result" style="display: none;"></p>
       </form>
 
-      <div class="contact-row reveal">
-        <a class="btn btn-ghost" href="mailto:kvaghasiya057@gmail.com">kvaghasiya057@gmail.com</a>
-        <a class="btn btn-ghost" href="https://github.com/Vatsal057" target="_blank" rel="noopener">GitHub</a>
-        <a class="btn btn-ghost" href="https://www.linkedin.com/in/vatsal-vaghasiya/" target="_blank"
-          rel="noopener">LinkedIn</a>
-        <a class="btn btn-ghost" href="https://www.kaggle.com/vatsalvaghasiya" target="_blank" rel="noopener">Kaggle</a>
-        <a class="btn btn-ghost" href="resume.pdf" download>Résumé (PDF)</a>
+      <div class="contact-row reveal" id="contactLinks">
+        <!-- Injected by script.js from window.CONFIG -->
       </div>
 
       <p class="end-note caveat reveal" style="margin-top: 3rem;">end of notebook, for now.</p>
