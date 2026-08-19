@@ -70,6 +70,18 @@ recruiterToggle.addEventListener('change', () => {
   localStorage.setItem('recruiter', recruiterToggle.checked ? '1' : '0');
 });
 
+// ============ Dark mode ============
+const themeToggle = document.getElementById('themeToggle');
+const isDark = localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+document.body.classList.toggle('dark-mode', isDark);
+themeToggle.textContent = isDark ? '☀' : '☾';
+themeToggle.addEventListener('click', () => {
+  const willBeDark = !document.body.classList.contains('dark-mode');
+  document.body.classList.toggle('dark-mode', willBeDark);
+  themeToggle.textContent = willBeDark ? '☀' : '☾';
+  localStorage.setItem('theme', willBeDark ? 'dark' : 'light');
+});
+
 // ============ AI companion ============
 // ponytail: keyword matcher now; swap answer() for a RAG endpoint when an API key exists
 const LINES = [
@@ -664,20 +676,22 @@ function gradientRain() {
     ring.style.borderRadius = (br + 5) + 'px';
   }
   function morphReset() {
-    if (!stuck) return;
-    stuck = null;
-    dot.classList.remove('is-shape'); ring.classList.remove('is-shape');
-    ring.style.width = ''; ring.style.height = ''; ring.style.borderRadius = '';
+    if (stuck) {
+      stuck = null;
+      dot.classList.remove('is-shape'); ring.classList.remove('is-shape');
+      ring.style.width = ''; ring.style.height = ''; ring.style.borderRadius = '';
+    }
+    dot.classList.remove('is-spotlight'); ring.classList.remove('is-spotlight');
   }
 
   // what the cursor becomes, first match wins
   const LABELS = [
-    ['.card-flip, .paper-flip', 'flip →'],
+    ['.cardflip-front, .paper-front', 'flip →'],
     ['.book', 'peek'],
     ['#robotBtn', 'drag me'],
     ['.recruiter-switch', 'quiet mode'],
   ];
-  const BTNS = '.btn, .terminal-btn, button:not(#robotBtn)';
+  const BTNS = '.btn, .terminal-btn, button:not(#robotBtn), .card:not(.card-flip), .app-window, .cardflip-back, .paper-back';
   const GROW = 'a, [role="button"], label, .topnav a';
   const NATIVE = 'input, textarea, .terminal-overlay';
 
@@ -697,7 +711,12 @@ function gradientRain() {
     for (const [sel, text] of LABELS) {
       if (t.closest(sel)) { morphReset(); setState(false, text); return; }
     }
-    const btn = t.closest(BTNS);
+    
+    // Card cursor logic (V1: view →)
+    const card = t.closest('.card:not(.card-flip), .app-window, .cardflip-back, .paper-back');
+    if (card) { morphReset(); setState(false, 'view →'); return; }
+
+    const btn = t.closest('.btn, .terminal-btn, button:not(#robotBtn)');
     if (btn) { setState(false, null); morphTo(btn); return; }
     morphReset();
     setState(!!t.closest(GROW), null);
