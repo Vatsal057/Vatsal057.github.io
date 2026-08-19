@@ -41,7 +41,7 @@
   // links
   var links = document.getElementById("links");
   if (p.links && p.links.website) {
-    links.appendChild(anchor(p.links.website, "visit website ↗", "btn btn-primary"));
+    links.appendChild(anchor(p.links.website, "visit website ↗", "btn btn-accent"));
   }
   if (p.links && p.links.demo) {
     var demoClass = p.links.website ? "btn btn-ghost" : "btn btn-primary";
