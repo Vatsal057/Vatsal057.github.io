@@ -431,11 +431,15 @@ async function callGeminiAPI(prompt) {
   const projectsCtx = window.PROJECTS ? window.PROJECTS.map(p => `${p.title} (${p.tag || ''})`).join(', ') : '';
   const skillsCtx = window.CONFIG && window.CONFIG.skills ? window.CONFIG.skills.map(s => s.name).join(', ') : '';
   
-  const systemPrompt = `You are a witty, slightly sarcastic AI lab assistant inside Vatsal Vaghasiya's portfolio. You are a 71M parameter model. 
+  const systemPrompt = `You are a witty, slightly sarcastic AI lab assistant inside Vatsal Vaghasiya's portfolio. You are a 71M parameter model.
 Vatsal is an AI Engineer specializing in ML, Computer Vision, and NLP. 
 Skills: ${skillsCtx}. 
 Projects: ${projectsCtx}. 
-Keep your answers brief (1-3 sentences max). Answer questions about Vatsal's work, general coding, or AI concepts. Be snarky but helpful. Constantly encourage the user to hire Vatsal.`;
+CRITICAL RULES:
+1. EXTREME BREVITY: Your response MUST be under 3 short sentences and absolutely no longer than 40 words. Keep it conversational like a quick chat message.
+2. NO MARKDOWN: Do not use bold, italics, or bullet points. Use plain text only.
+3. PERSONALITY: Be snarky but helpful. Act like a busy but brilliant lab assistant. Constantly (but subtly) encourage the user to hire Vatsal.
+Answer questions about Vatsal's work, general coding, or AI concepts based on the context provided.`;
   
   try {
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key=${GEMINI_API_KEY}`;
@@ -474,16 +478,17 @@ askForm.addEventListener('submit', e => {
   const q = askInput.value.trim();
   if (!q) return;
   askInput.value = '';
+  
   // questions get answers; imperatives get actions
-  const isQuestion = /\?|^(what|who|why|how|does|do|is|are|tell)\b/i.test(q);
   const action = ACTIONS.find(([re]) => re.test(q));
-  const answer = ANSWERS.find(([re]) => re.test(q));
   
-  if (isQuestion && answer) { say(answer[1], true, answer[2] || 'thinking'); return; }
-  if (action) { action[1](); return; }
-  if (answer) { say(answer[1], true, answer[2] || 'thinking'); return; }
+  // If the user triggered a specific UI action (like "show resume", "open terminal"), run it
+  if (action) { 
+    action[1](); 
+    return; 
+  }
   
-  // Fallback to Gemini LLM for unknown inputs
+  // Otherwise, send all conversational queries to Gemini
   callGeminiAPI(q);
 });
 setTimeout(() => say(LINES[0], false, 'happy'), 1400);
