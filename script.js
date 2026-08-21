@@ -109,8 +109,18 @@ const ANSWERS = [
 const POSES = ['robot-wave.png', 'robot-think.png', 'robot-point.png'];
 const companion = document.getElementById('companion');
 const bubble = document.getElementById('companionBubble');
-const robotImg = document.getElementById('robotImg');
+const robotAvatar = document.getElementById('robotAvatar');
 const robotBtn = document.getElementById('robotBtn');
+let avatarController = null;
+
+import('https://esm.sh/@bible-strong/avatar-web@0.1.0').then(({ createAvatar }) => {
+  fetch('strobi.avatar.json').then(r => r.json()).then(definition => {
+    avatarController = createAvatar('#robotAvatar', { definition, defaultAnimation: 'idle' });
+  });
+}).catch(err => {
+  console.error('Avatar failed to load:', err);
+  if (robotBtn) robotBtn.classList.add('fallback');
+});
 const askForm = document.getElementById('askForm');
 const askInput = document.getElementById('askInput');
 let lineIdx = 0, hideTimer;
@@ -153,7 +163,13 @@ place(...homeXY());
 addEventListener('resize', () => { if (!walking) place(pos.x, pos.y); });
 
 function setPose(name) {
-  if (!robotImg.parentElement.classList.contains('fallback')) robotImg.src = 'images/' + name;
+  if (!avatarController) return;
+  if (name.includes('wave')) avatarController.play('idle');
+  else if (name.includes('think')) avatarController.play('thinking');
+  else if (name.includes('point')) avatarController.play('proud');
+  else if (name.includes('sleep')) avatarController.play('sleeping');
+  else if (name.includes('cheer')) avatarController.play('celebrate');
+  else avatarController.play('idle');
 }
 
 const easeInOut = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
