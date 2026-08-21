@@ -37,7 +37,7 @@
     </nav>
     <button class="theme-btn" id="themeToggle" aria-label="Toggle dark mode">☾</button>
     <button class="terminal-btn mono" id="terminalBtn" title="Terminal mode (Ctrl+`)">&gt;_ terminal</button>
-    <label class="recruiter-switch" title="Recruiter mode: turns off the animations and the robot">
+    <label class="recruiter-switch" title="Recruiter mode: turns off the animations and Vee">
       <input type="checkbox" id="recruiterToggle">
       <span class="rs-track"><span class="rs-thumb"></span></span>
       <span class="rs-label">Recruiter&nbsp;mode</span>
@@ -807,7 +807,7 @@
 
       <p class="end-note caveat reveal" style="margin-top: 3rem;">end of notebook, for now.</p>
       <p class="gh-live mono reveal" id="ghLive" hidden></p>
-      <p class="footer-joke mono reveal">this site's robot has read my résumé more times than any recruiter has</p>
+      <p class="footer-joke mono reveal">Vee has read my résumé more times than any recruiter has</p>
     </section>
   </main>
 
@@ -817,13 +817,12 @@
       <div class="bubble" id="companionBubble">Welcome. I trained all night.</div>
       <form class="ask-form" id="askForm">
         <input type="text" id="askInput" placeholder="ask, or try 'tour'…" autocomplete="off"
-          aria-label="Ask the robot a question or give a command">
+          aria-label="Ask Vee a question or give a command">
       </form>
     </div>
     <div class="robot" id="robotBtn" role="button" tabindex="0" aria-label="AI companion, click to talk">
-      <img src="images/robot-wave.png" alt="" id="robotImg" draggable="false"
-        onerror="this.parentElement.classList.add('fallback')">
-      <span class="robot-emoji" aria-hidden="true">🤖</span>
+      <div id="robotAvatar"></div>
+      <span class="robot-emoji" aria-hidden="true">✨</span>
     </div>
   </div>
 
@@ -849,6 +848,15 @@
 
   <script src="projects-data.js?v=2"></script>
   <script src="script.js?v=2"></script>
+  <script type="module">
+    import { createAvatar } from 'https://esm.sh/@bible-strong/avatar-web';
+    fetch('./grok-bot.avatar.json')
+      .then(response => response.json())
+      .then(definition => {
+        window.veeAvatar = createAvatar('#robotAvatar', { definition, defaultAnimation: 'idle', size: '100%' });
+      })
+      .catch(console.error);
+  </script>
 </body>
 
 </html>

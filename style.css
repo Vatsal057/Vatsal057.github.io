@@ -408,7 +408,7 @@ a { color: var(--sage-deep); }
   width: max-content;
 }
 .companion.on-left .companion-panel { right: auto; left: 0; align-items: flex-start; }
-.companion.on-left .bubble { border-radius: 12px 12px 12px 2px; }
+.companion.on-left .bubble { border-radius: 28px 28px 28px 6px; transform-origin: bottom left; }
 .robot { width: 74px; height: 74px; animation: bob 3.2s ease-in-out infinite; position: relative; }
 .robot img {
   width: 100%; height: 100%; object-fit: contain;
@@ -416,23 +416,41 @@ a { color: var(--sage-deep); }
   transform: scaleX(var(--fx, 1));
   -webkit-user-drag: none; user-select: none; pointer-events: none;
 }
+.robot #robotAvatar {
+  width: 100%; height: 100%; object-fit: contain;
+  filter: drop-shadow(0 4px 6px rgba(43,58,66,.2));
+  transform: scaleX(var(--fx, 1));
+  -webkit-user-drag: none; user-select: none; pointer-events: auto;
+}
 .robot.walking { animation: none; }
 /* glide: gentle lean into the direction of travel */
-.robot.walking img { transform: scaleX(var(--fx, 1)) rotate(calc(var(--fx, 1) * -5deg)); transition: transform .3s; }
+.robot.walking img, .robot.walking #robotAvatar { transform: scaleX(var(--fx, 1)) rotate(calc(var(--fx, 1) * -5deg)); transition: transform .3s; }
 .robot-emoji {
   display: none; font-size: 2.6rem; line-height: 74px;
   filter: grayscale(.25) drop-shadow(0 4px 6px rgba(43,58,66,.2));
 }
-.robot.fallback img { display: none; }
+.robot.fallback img, .robot.fallback #robotAvatar { display: none; }
 .robot.fallback .robot-emoji { display: block; }
 @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
 .bubble {
-  background: var(--card); border: 1px solid #E3DECE; border-radius: 12px 12px 2px 12px;
-  padding: .6rem .9rem; margin-bottom: .55rem; font-size: .84rem; color: var(--ink);
-  box-shadow: var(--shadow); max-width: 230px; text-align: left;
-  opacity: 0; transform: translateY(6px); transition: opacity .3s, transform .3s;
+  background: rgba(15, 17, 20, 0.85); 
+  border: 1px solid rgba(255, 255, 255, 0.1); 
+  border-radius: 28px 28px 6px 28px;
+  padding: .85rem 1.2rem; 
+  margin-bottom: .6rem; 
+  font-size: .85rem; 
+  font-weight: 500;
+  color: #F7F5F0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25), inset 0 0 0 1px rgba(255, 255, 255, 0.05); 
+  max-width: 240px; 
+  text-align: left;
+  line-height: 1.4;
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  opacity: 0; transform: translateY(8px) scale(0.96); 
+  transform-origin: bottom right;
+  transition: opacity .4s cubic-bezier(0.16, 1, 0.3, 1), transform .4s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.bubble.show { opacity: 1; transform: translateY(0); }
+.bubble.show { opacity: 1; transform: translateY(0) scale(1); }
 
 /* ============ Notebook page card (hero) ============ */
 .notebook-card {
@@ -557,11 +575,26 @@ mark.hl {
 .ask-form { opacity: 0; transform: translateY(4px); transition: opacity .3s, transform .3s; pointer-events: none; }
 .companion.open .ask-form { opacity: 1; transform: none; pointer-events: auto; }
 #askInput {
-  width: 210px; padding: .45rem .7rem; border-radius: 18px; border: 1px solid #D8D2C2;
-  background: var(--card); font: .8rem 'JetBrains Mono', monospace; color: var(--ink);
-  outline: none; box-shadow: var(--shadow);
+  width: 210px; padding: .6rem 1rem; border-radius: 30px; 
+  border: 1px solid rgba(15, 17, 20, 0.15);
+  background: rgba(255, 255, 255, 0.9); 
+  font: .8rem 'JetBrains Mono', monospace; 
+  color: #111;
+  outline: none; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
 }
-#askInput:focus { border-color: var(--sage); }
+#askInput:focus { border-color: rgba(15, 17, 20, 0.5); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 0 0 3px rgba(15, 17, 20, 0.1); }
+body.dark-mode #askInput {
+  background: rgba(20, 22, 25, 0.85);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #F7F5F0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+}
+body.dark-mode #askInput:focus {
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
 
 /* ============ Gradient-descent rain (konami) ============ */
 #rain { position: fixed; inset: 0; z-index: 200; pointer-events: none; }
