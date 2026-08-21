@@ -88,38 +88,68 @@ recruiterToggle.addEventListener('change', () => {
 // ============ AI companion ============
 // ponytail: keyword matcher now; swap answer() for a RAG endpoint when an API key exists
 const LINES = [
-  "Welcome. I trained all night.",
-  "Say 'tour' below and I'll walk you through everything.",
-  "13 projects. 2 papers. Scroll, I'll wait.",
-  "I can run things. Try 'run train' or 'flip the papers'.",
-  "Try the terminal. Top right. Ctrl+` also works.",
-  "Recruiter? There's a switch up top. It makes me disappear. Rude.",
+  "Welcome. I've compiled my thoughts. It took exactly 12ms.",
+  "You can say 'tour' and I'll drag you through the highlights.",
+  "13 projects, 2 papers. I'd clap, but I lack hands.",
+  "I'm fully authorized to run things. Try 'run train' or 'projects'.",
+  "The terminal is top right. Don't break production, please.",
+  "Recruiter switch is up top. Flipping it hurts my feelings.",
 ];
 const ANSWERS = [
-  [/rag|retrieval|chroma|vector/i, "He wrote the RAG retrieval himself, about 60 lines over the Indian Constitution, with citations. 78% accuracy, failures documented in the repo."],
-  [/paper|research|publish|deberta|clip/i, "Two first-author papers under review: a preference model 127× smaller than rivals, and ProbCLIP-A, which adds uncertainty to CLIP. Flip the papers on the research wall."],
-  [/project|built|portfolio|work/i, "13 shipped. Strongest: Cachy (knowledge engine), Constitution RAG, IPL MLOps pipeline. Cards are pinned above."],
-  [/skill|python|pytorch|stack|know/i, "Python 4 years, PyTorch (two papers), CV, RAG, SQL, Docker. The bars in the skills section are his own estimates."],
-  [/mlops|docker|deploy|drift/i, "IPL predictor runs 3 dockerized services with drift detection; PSI computed every 5 minutes."],
-  [/hire|intern|job|contact|email|reach/i, "kvaghasiya057@gmail.com. He replies faster than my inference. Résumé button is in the hero."],
-  [/terminal|cli|command/i, "Top right: >_ terminal. Or Ctrl+`. Try `train` in there."],
-  [/who|you|robot|name/i, "Phase-1 brain: keyword matching, fully offline. Phase 2 gives me real RAG. He believes in shipping first."],
-  [/fail|mistake|wrong/i, "Failed column is on the experiment board: a failed RAG stress test, a deleted LangChain build, a collapsed variance. All kept on purpose."],
+  [/rag|retrieval|chroma|vector/i, "He wrote the RAG retrieval from scratch. 60 lines. Chunking broke immediately. Typical human error.", 'thinking'],
+  [/paper|research|publish|deberta|clip/i, "Two first-author papers on free GPUs. I'm impressed by the frugality. Flip them in the research section.", 'happy'],
+  [/project|built|portfolio|work/i, "13 projects shipped. And they actually run. Mostly. Cachy, RAG, and IPL are pinned above.", 'proud'],
+  [/skill|python|pytorch|stack|know/i, "Python, PyTorch, CV, SQL, Docker. I've verified these claims personally. They check out.", 'searching'],
+  [/mlops|docker|deploy|drift/i, "IPL predictor runs 3 dockerized services. It computes PSI every 5 minutes because trust is good, but monitoring is better.", 'proud'],
+  [/hire|intern|job|contact|email|reach/i, "kvaghasiya057@gmail.com. His latency is slightly higher than mine, but he'll reply.", 'happy'],
+  [/terminal|cli|command/i, ">_ terminal top right. Or Ctrl+`. Be careful in there.", 'suspicious'],
+  [/who|you|robot|name/i, "I'm the 71M parameter lab assistant. My primary function is to make sure you read the portfolio.", 'proud'],
+  [/fail|mistake|wrong/i, "Oh, we kept all the failures on the board. Humans find it 'authentic'.", 'playful'],
 ];
 const POSES = ['proud', 'excited', 'bored', 'playful', 'searching', 'suspicious'];
 const companion = document.getElementById('companion');
 const bubble = document.getElementById('companionBubble');
+const bubbleContent = document.getElementById('bubbleContent');
+const typingIndicator = document.getElementById('typingIndicator');
+const bubbleActions = document.getElementById('bubbleActions');
 const robotBtn = document.getElementById('robotBtn');
 const askForm = document.getElementById('askForm');
 const askInput = document.getElementById('askInput');
-let lineIdx = 0, hideTimer;
+let lineIdx = 0, hideTimer, typingTimer;
 
-function say(text, sticky = false) {
-  bubble.textContent = text;
-  bubble.classList.add('show');
+function say(text, sticky = false, mood = 'thinking') {
+  bubble.className = `bubble show mood-${mood}`;
+  bubbleContent.style.display = 'none';
+  bubbleActions.style.display = 'none';
+  typingIndicator.style.display = 'flex';
+  
   clearTimeout(hideTimer);
-  if (!sticky) hideTimer = setTimeout(() => bubble.classList.remove('show'), 6000);
+  clearTimeout(typingTimer);
+  
+  typingTimer = setTimeout(() => {
+    typingIndicator.style.display = 'none';
+    bubbleContent.textContent = text;
+    bubbleContent.style.display = 'block';
+    
+    // Quick actions show up when bubble is sticky (chat open)
+    if (sticky) bubbleActions.style.display = 'flex';
+    
+    if (!sticky) {
+      hideTimer = setTimeout(() => {
+        bubble.classList.remove('show');
+      }, 6000);
+    }
+  }, 600 + Math.random() * 800); // 0.6s - 1.4s typing simulation
 }
+
+// Wire up quick action chips
+document.querySelectorAll('.action-chip').forEach(chip => {
+  chip.addEventListener('click', e => {
+    e.preventDefault();
+    askInput.value = e.target.dataset.action;
+    askForm.dispatchEvent(new Event('submit', { cancelable: true }));
+  });
+});
 
 robotBtn.addEventListener('keydown', e => {
   if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openChat(); }
@@ -380,6 +410,65 @@ const ACTIONS = [
   [/recruiter/i, () => say("That switch up top deletes me. You'll have to flip it yourself.", true)],
   [/home/i, () => { walkTo(...homeXY()); say("Heading home.", true); }],
 ];
+// ============ Gemini API LLM Integration ============
+const GEMINI_API_KEY = "AQ.Ab8RN6LCH2wE9PqBddVHtphb24HuJJc0pIrxgfVPIXfgFnvDrA"; 
+
+async function callGeminiAPI(prompt) {
+  if (!GEMINI_API_KEY || GEMINI_API_KEY === "YOUR_API_KEY_HERE") {
+    say("I need a Gemini API Key to answer that! Set it in script.js.", true, 'error');
+    return;
+  }
+  
+  // Show thinking state (simulating delay for effect)
+  bubble.className = `bubble show mood-thinking`;
+  bubbleContent.style.display = 'none';
+  bubbleActions.style.display = 'none';
+  typingIndicator.style.display = 'flex';
+  clearTimeout(hideTimer);
+  clearTimeout(typingTimer);
+  
+  // Build dynamic context from the portfolio data
+  const projectsCtx = window.PROJECTS ? window.PROJECTS.map(p => `${p.title} (${p.tag || ''})`).join(', ') : '';
+  const skillsCtx = window.CONFIG && window.CONFIG.skills ? window.CONFIG.skills.map(s => s.name).join(', ') : '';
+  
+  const systemPrompt = `You are a witty, slightly sarcastic AI lab assistant inside Vatsal Vaghasiya's portfolio. You are a 71M parameter model. 
+Vatsal is an AI Engineer specializing in ML, Computer Vision, and NLP. 
+Skills: ${skillsCtx}. 
+Projects: ${projectsCtx}. 
+Keep your answers brief (1-3 sentences max). Answer questions about Vatsal's work, general coding, or AI concepts. Be snarky but helpful. Constantly encourage the user to hire Vatsal.`;
+  
+  try {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        system_instruction: { parts: [{ text: systemPrompt }] },
+        contents: [{ parts: [{ text: prompt }] }]
+      })
+    });
+    const data = await res.json();
+    if (data.error) {
+      console.error(data.error);
+      say("My API gave an error. Check the console.", true, 'error');
+      return;
+    }
+    
+    // We already showed typing indicator, so we just delay before displaying response
+    typingTimer = setTimeout(() => {
+      typingIndicator.style.display = 'none';
+      bubbleContent.textContent = data.candidates[0].content.parts[0].text;
+      bubbleContent.style.display = 'block';
+      bubbleActions.style.display = 'flex';
+      bubble.className = `bubble show mood-happy`;
+    }, 600 + Math.random() * 800);
+    
+  } catch (err) {
+    console.error(err);
+    say("Network error connecting to my Phase 2 brain.", true, 'error');
+  }
+}
+
 askForm.addEventListener('submit', e => {
   e.preventDefault();
   const q = askInput.value.trim();
@@ -389,12 +478,15 @@ askForm.addEventListener('submit', e => {
   const isQuestion = /\?|^(what|who|why|how|does|do|is|are|tell)\b/i.test(q);
   const action = ACTIONS.find(([re]) => re.test(q));
   const answer = ANSWERS.find(([re]) => re.test(q));
-  if (isQuestion && answer) { say(answer[1], true); return; }
+  
+  if (isQuestion && answer) { say(answer[1], true, answer[2] || 'thinking'); return; }
   if (action) { action[1](); return; }
-  if (answer) { say(answer[1], true); return; }
-  say("Outside my training distribution. Try 'tour', 'flip the papers', 'run train', or ask about projects.", true);
+  if (answer) { say(answer[1], true, answer[2] || 'thinking'); return; }
+  
+  // Fallback to Gemini LLM for unknown inputs
+  callGeminiAPI(q);
 });
-setTimeout(() => say(LINES[0]), 1400);
+setTimeout(() => say(LINES[0], false, 'happy'), 1400);
 
 // contextual lines as sections scroll into view (each said once)
 const SECTION_LINES = {
@@ -418,6 +510,29 @@ const sectionIo = new IntersectionObserver(entries => {
 Object.keys(SECTION_LINES).forEach(id => {
   const el = document.getElementById(id);
   if (el) sectionIo.observe(el);
+});
+
+// Contextual project hovers
+const PROJECT_QUIPS = {
+  'cachy': "Cachy. I remember when he stayed up till 3 AM debugging the Whisper pipeline.",
+  'constitution': "The RAG pipeline. He refused to use LangChain. Stubborn, but it works.",
+  'ipl': "Ah, the IPL Predictor. The drift monitor is my favorite part.",
+  'airswipe': "AirSwipe. Because touching screens is so 2019."
+};
+
+document.querySelectorAll('.card, .cardflip-front').forEach(card => {
+  card.addEventListener('mouseenter', () => {
+    if (recruiterOn() || bubble.classList.contains('show')) return;
+    const title = card.querySelector('h3')?.textContent.toLowerCase();
+    if (!title) return;
+    for (const [key, quip] of Object.entries(PROJECT_QUIPS)) {
+      if (title.includes(key)) {
+        say(quip, false, 'playful');
+        delete PROJECT_QUIPS[key]; // say only once
+        break;
+      }
+    }
+  });
 });
 
 // ============ Terminal ============
