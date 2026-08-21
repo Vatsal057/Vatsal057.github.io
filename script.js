@@ -95,17 +95,6 @@ const LINES = [
   "The terminal is top right. Don't break production, please.",
   "Recruiter switch is up top. Flipping it hurts my feelings.",
 ];
-const ANSWERS = [
-  [/rag|retrieval|chroma|vector/i, "He wrote the RAG retrieval from scratch. 60 lines. Chunking broke immediately. Typical human error.", 'thinking'],
-  [/paper|research|publish|deberta|clip/i, "Two first-author papers on free GPUs. I'm impressed by the frugality. Flip them in the research section.", 'happy'],
-  [/project|built|portfolio|work/i, "13 projects shipped. And they actually run. Mostly. Cachy, RAG, and IPL are pinned above.", 'proud'],
-  [/skill|python|pytorch|stack|know/i, "Python, PyTorch, CV, SQL, Docker. I've verified these claims personally. They check out.", 'searching'],
-  [/mlops|docker|deploy|drift/i, "IPL predictor runs 3 dockerized services. It computes PSI every 5 minutes because trust is good, but monitoring is better.", 'proud'],
-  [/hire|intern|job|contact|email|reach/i, "kvaghasiya057@gmail.com. His latency is slightly higher than mine, but he'll reply.", 'happy'],
-  [/terminal|cli|command/i, ">_ terminal top right. Or Ctrl+`. Be careful in there.", 'suspicious'],
-  [/who|you|robot|name/i, "I'm the 71M parameter lab assistant. My primary function is to make sure you read the portfolio.", 'proud'],
-  [/fail|mistake|wrong/i, "Oh, we kept all the failures on the board. Humans find it 'authentic'.", 'playful'],
-];
 const POSES = ['proud', 'excited', 'bored', 'playful', 'searching', 'suspicious'];
 const companion = document.getElementById('companion');
 const bubble = document.getElementById('companionBubble');
