@@ -438,7 +438,7 @@ Projects: ${projectsCtx}.
 Keep your answers brief (1-3 sentences max). Answer questions about Vatsal's work, general coding, or AI concepts. Be snarky but helpful. Constantly encourage the user to hire Vatsal.`;
   
   try {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key=${GEMINI_API_KEY}`;
     const res = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
