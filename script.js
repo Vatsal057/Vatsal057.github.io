@@ -106,10 +106,9 @@ const ANSWERS = [
   [/who|you|robot|name/i, "Phase-1 brain: keyword matching, fully offline. Phase 2 gives me real RAG. He believes in shipping first."],
   [/fail|mistake|wrong/i, "Failed column is on the experiment board: a failed RAG stress test, a deleted LangChain build, a collapsed variance. All kept on purpose."],
 ];
-const POSES = ['robot-wave.png', 'robot-think.png', 'robot-point.png'];
+const POSES = ['proud', 'excited', 'bored', 'playful', 'searching', 'suspicious'];
 const companion = document.getElementById('companion');
 const bubble = document.getElementById('companionBubble');
-const robotImg = document.getElementById('robotImg');
 const robotBtn = document.getElementById('robotBtn');
 const askForm = document.getElementById('askForm');
 const askInput = document.getElementById('askInput');
@@ -153,7 +152,22 @@ place(...homeXY());
 addEventListener('resize', () => { if (!walking) place(pos.x, pos.y); });
 
 function setPose(name) {
-  if (!robotImg.parentElement.classList.contains('fallback')) robotImg.src = 'images/' + name;
+  if (robotBtn.classList.contains('fallback')) return;
+  if (!window.veeAvatar) return;
+  
+  if (name.includes('sleep')) {
+    window.veeAvatar.play('sleeping');
+  } else if (name.includes('think')) {
+    window.veeAvatar.play('thinking');
+  } else if (name.includes('point')) {
+    window.veeAvatar.play('searching');
+  } else if (name.includes('cheer')) {
+    window.veeAvatar.play('working');
+  } else if (name.includes('wave')) {
+    window.veeAvatar.play('idle');
+  } else {
+    window.veeAvatar.play(name);
+  }
 }
 
 const easeInOut = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
@@ -746,7 +760,6 @@ function gradientRain() {
   const LABELS = [
     ['.card-flip, .paper-flip', 'flip →'],
     ['.book', 'peek'],
-    ['#robotBtn', 'drag me'],
     ['.recruiter-switch', 'quiet mode'],
     ['.cert-card', 'view PDF'],
   ];
