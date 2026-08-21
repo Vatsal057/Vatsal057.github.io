@@ -384,31 +384,31 @@ function armIdle() {
 armIdle();
 // commands the robot executes on the site, checked before Q&A answers
 const ACTIONS = [
-  [/tour|show me around|guide/i, () => startTour()],
-  [/train/i, () => { openTerminal(); runCommand('train'); say("Watch the loss. It always goes down eventually.", true); }],
-  [/terminal|cli/i, () => { openTerminal(); say("Your shell, my desk. Type help.", true); }],
-  [/resume|cv/i, () => {
+  [/^(take me on a )?tour|^show me around|^guide me/i, () => startTour()],
+  [/^run train/i, () => { openTerminal(); runCommand('train'); say("Watch the loss. It always goes down eventually.", true); }],
+  [/^open (terminal|cli)|^terminal$/i, () => { openTerminal(); say("Your shell, my desk. Type help.", true); }],
+  [/^(download )?(resume|cv)$/i, () => {
     const a = document.createElement('a'); a.href = 'resume.pdf'; a.download = 'Vatsal-Vaghasiya-Resume.pdf'; a.click();
     say("Sent. It's one page.", true);
   }],
-  [/flip|paper/i, () => {
+  [/^flip( the)? paper/i, () => {
     goToSection('research');
     setTimeout(() => document.querySelectorAll('.paper-flip').forEach(p => p.classList.add('flipped')), 1000);
     say("Flipped them for you. The backs are the good part.", true);
   }],
-  [/github/i, () => { window.open('https://github.com/Vatsal057', '_blank'); say("Opening his GitHub. Judge the commits yourself.", true); }],
-  [/linkedin/i, () => { window.open('https://www.linkedin.com/in/vatsal-vaghasiya/', '_blank'); say("LinkedIn. He's less funny there.", true); }],
-  [/apps?|macos|swift/i, () => goToSection('apps', "Five macOS apps. All native.")],
-  [/skills?$|show skills/i, () => goToSection('skills', "His own estimates. I checked.")],
-  [/experiments?|board|fail/i, () => goToSection('experiments', "Go read the failed column.")],
-  [/principles|how.*(work|think)/i, () => goToSection('principles', "Four cards. All true.")],
-  [/projects?|cachy|airswipe/i, () => goToSection('projects', "Thirteen shipped. Six pinned.")],
-  [/research|papers?/i, () => goToSection('research', "Both first-author. Click to flip.")],
-  [/timeline|journey|history/i, () => goToSection('timeline', "git log --journey.")],
-  [/contact|email|hire|reach/i, () => { goToSection('contact'); cheer("kvaghasiya057@gmail.com. Go on."); }],
-  [/party|rain|konami|dance/i, () => { gradientRain(); cheer(); }],
-  [/recruiter/i, () => say("That switch up top deletes me. You'll have to flip it yourself.", true)],
-  [/home/i, () => { walkTo(...homeXY()); say("Heading home.", true); }],
+  [/^open github/i, () => { window.open('https://github.com/Vatsal057', '_blank'); say("Opening his GitHub. Judge the commits yourself.", true); }],
+  [/^open linkedin/i, () => { window.open('https://www.linkedin.com/in/vatsal-vaghasiya/', '_blank'); say("LinkedIn. He's less funny there.", true); }],
+  [/^(show|go to) (apps?|macos|swift)/i, () => goToSection('apps', "Five macOS apps. All native.")],
+  [/^(show|go to) skills?/i, () => goToSection('skills', "His own estimates. I checked.")],
+  [/^(show|go to) (experiments?|board|fail)/i, () => goToSection('experiments', "Go read the failed column.")],
+  [/^(show|go to) (principles)/i, () => goToSection('principles', "Four cards. All true.")],
+  [/^(show|go to) (projects?|cachy|airswipe)/i, () => goToSection('projects', "Thirteen shipped. Six pinned.")],
+  [/^(show|go to) (research|papers?)/i, () => goToSection('research', "Both first-author. Click to flip.")],
+  [/^(show|go to) (timeline|journey|history)/i, () => goToSection('timeline', "git log --journey.")],
+  [/^(show|go to) (contact|email)/i, () => { goToSection('contact'); cheer("kvaghasiya057@gmail.com. Go on."); }],
+  [/^party|^rain|^konami|^dance/i, () => { gradientRain(); cheer(); }],
+  [/^toggle recruiter/i, () => say("That switch up top deletes me. You'll have to flip it yourself.", true)],
+  [/^go home/i, () => { walkTo(...homeXY()); say("Heading home.", true); }],
 ];
 // ============ Gemini API LLM Integration ============
 const GEMINI_API_KEY = "AQ.Ab8RN6LCH2wE9PqBddVHtphb24HuJJc0pIrxgfVPIXfgFnvDrA"; 
