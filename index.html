@@ -16,7 +16,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@500;600&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=5">
+  <link rel="stylesheet" href="style.css?v=6">
 </head>
 
 <body>
@@ -827,15 +827,20 @@
             <button class="action-chip mono" data-action="train">train</button>
           </div>
         </div>
-        <div class="ask-form-wrapper">
-          <form class="ask-form" id="askForm" onsubmit="event.preventDefault(); return false;">
-            <input type="text" id="askInput" class="mono" placeholder="Ask about this repo..." autocomplete="off">
-          </form>
-        </div>
       </div>
-      <div class="robot" id="robotBtn" role="button" tabindex="0" aria-label="AI companion, click to talk">
+      <!-- Mascot stays the dominant element; the input unfolds out of it -->
+      <div class="robot" id="robotBtn" role="button" tabindex="0" aria-label="AI companion, click to talk"
+        aria-expanded="false" aria-controls="askShell">
         <div id="robotAvatar"></div>
         <span class="robot-emoji" aria-hidden="true">✨</span>
+      </div>
+      <!-- Input: its own element. Its trailing end is parked behind the sphere
+           and it extrudes sideways out of the mascot's centre. -->
+      <div class="ask-shell" id="askShell">
+        <form class="ask-form" id="askForm" onsubmit="event.preventDefault(); return false;">
+          <input type="text" id="askInput" class="mono" placeholder="Ask about this repo..." autocomplete="off"
+            tabindex="-1">
+        </form>
       </div>
     </div>
   </div>
@@ -861,7 +866,7 @@
   <canvas id="rain" hidden></canvas>
 
   <script src="projects-data.js?v=2"></script>
-  <script src="script.js?v=2"></script>
+  <script src="script.js?v=3"></script>
   <script type="module">
     import { createAvatar } from 'https://esm.sh/@bible-strong/avatar-web';
     fetch('./grok-bot.avatar.json')
@@ -869,7 +874,12 @@
       .then(definition => {
         window.veeAvatar = createAvatar('#robotAvatar', { definition, defaultAnimation: 'idle', size: '100%' });
       })
-      .catch(console.error);
+      .catch(err => {
+        // Most likely cause: the page was opened over file://, where fetch of a
+        // local JSON is blocked by CORS. Serve over http to get the real avatar.
+        console.error('[vee] avatar failed to load, falling back to the emoji:', err);
+        document.getElementById('robotBtn')?.classList.add('fallback');
+      });
   </script>
 </body>
 

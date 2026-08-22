@@ -36,10 +36,11 @@ document.querySelectorAll('.card .pipeline').forEach(pl => {
 });
 
 // ============ Notebook card: real day + page = days since B.Tech init ============
-document.getElementById('ncDay').textContent =
-  new Date().toLocaleDateString('en', { weekday: 'short' });
-document.getElementById('ncPage').textContent =
-  Math.floor((Date.now() - new Date('2021-10-01')) / 864e5);
+// hero-only elements — case pages share this script, so don't throw without them
+const ncDay = document.getElementById('ncDay');
+const ncPage = document.getElementById('ncPage');
+if (ncDay) ncDay.textContent = new Date().toLocaleDateString('en', { weekday: 'short' });
+if (ncPage) ncPage.textContent = Math.floor((Date.now() - new Date('2021-10-01')) / 864e5);
 
 // ============ GitHub live activity ============
 fetch('https://api.github.com/users/Vatsal057/events/public')
@@ -58,6 +59,7 @@ fetch('https://api.github.com/users/Vatsal057/events/public')
 const ROLES = ['AI engineer in training', 'MTech · Data Science', 'RAG, from scratch', 'two papers under review', '13 projects shipped'];
 const typeTarget = document.getElementById('typeTarget');
 (function typeLoop(ri = 0, ci = 0, deleting = false) {
+  if (!typeTarget) return; // hero-only, absent on case pages
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) { typeTarget.textContent = ROLES[0]; return; }
   const word = ROLES[ri % ROLES.length];
   typeTarget.textContent = word.slice(0, ci);
@@ -78,12 +80,14 @@ document.querySelectorAll('.paper-flip, .card-flip').forEach(card => {
 
 // ============ Recruiter mode ============
 const recruiterToggle = document.getElementById('recruiterToggle');
-recruiterToggle.checked = localStorage.getItem('recruiter') === '1';
-document.body.classList.toggle('recruiter', recruiterToggle.checked);
-recruiterToggle.addEventListener('change', () => {
-  document.body.classList.toggle('recruiter', recruiterToggle.checked);
-  localStorage.setItem('recruiter', recruiterToggle.checked ? '1' : '0');
-});
+document.body.classList.toggle('recruiter', localStorage.getItem('recruiter') === '1');
+if (recruiterToggle) {
+  recruiterToggle.checked = localStorage.getItem('recruiter') === '1';
+  recruiterToggle.addEventListener('change', () => {
+    document.body.classList.toggle('recruiter', recruiterToggle.checked);
+    localStorage.setItem('recruiter', recruiterToggle.checked ? '1' : '0');
+  });
+}
 
 // ============ AI companion ============
 // ponytail: keyword matcher now; swap answer() for a RAG endpoint when an API key exists
@@ -141,13 +145,78 @@ document.querySelectorAll('.action-chip').forEach(chip => {
 });
 
 robotBtn.addEventListener('keydown', e => {
-  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openChat(); }
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleChat(); }
 });
+
+// ============ Mascot → chat unfolding ============
+// The bubble and the input stay independent elements. The illusion that the
+// mascot opens into them is carried entirely by timing: the sphere reacts with
+// an existing avatar animation, gathers (CSS squash), then the seam and input
+// grow out of its centre. Closing runs the same beats in reverse.
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const UNFOLD_MS = reduceMotion ? 0 : 640;   // matches .mascot-unfold + .ask-shell
+const FOLD_MS = reduceMotion ? 0 : 360;     // input is back inside the sphere
+let unfoldTimer, foldTimer;
+
+const chatOpen = () => companion.classList.contains('open');
+
 function openChat() {
-  companion.classList.add('open');
-  setPose(POSES[lineIdx % POSES.length]);
+  if (chatOpen()) { askInput?.focus({ preventScroll: true }); return; }
+  clearTimeout(unfoldTimer);
+  clearTimeout(foldTimer);
+  companion.classList.remove('folding');
+
+  // 1. the mascot notices you, using its own expression system
+  setPose('curious');
+  // 2. + 3. sphere gathers, then the seam and input grow out of its centre
+  companion.classList.add('unfolding', 'open');
+  robotBtn?.setAttribute('aria-expanded', 'true');
+  // 4. bubble rises alongside
   say(LINES[lineIdx++ % LINES.length], true);
+
+  unfoldTimer = setTimeout(() => {
+    companion.classList.remove('unfolding');
+    // 5. only now is the input a real, focusable control
+    askInput?.setAttribute('tabindex', '0');
+    askInput?.focus({ preventScroll: true });
+    // 6. settle into the listening loop while the user types
+    setPose('listening');
+  }, UNFOLD_MS);
 }
+
+function closeChat() {
+  if (!chatOpen()) return;
+  clearTimeout(unfoldTimer);
+  clearTimeout(foldTimer);
+
+  askInput?.setAttribute('tabindex', '-1');
+  if (document.activeElement === askInput) askInput.blur();
+
+  // 7. reverse: input contracts back into the sphere, sphere absorbs it,
+  //    and only after that does the bubble leave.
+  companion.classList.remove('open', 'unfolding');
+  companion.classList.add('folding');
+  robotBtn?.setAttribute('aria-expanded', 'false');
+
+  foldTimer = setTimeout(() => {
+    companion.classList.remove('folding');
+    bubble.classList.remove('show');
+    if (!asleep && !walking) setPose('idle');
+  }, FOLD_MS);
+}
+
+function toggleChat() { chatOpen() ? closeChat() : openChat(); }
+
+// typing keeps the mascot attentive; an empty field lets it drift back
+askInput?.addEventListener('focus', () => { if (chatOpen()) setPose('listening'); });
+askInput?.addEventListener('input', () => {
+  if (!chatOpen()) return;
+  setPose(askInput.value.trim() ? 'thinking' : 'listening');
+});
+askInput?.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { e.stopPropagation(); closeChat(); robotBtn?.focus(); }
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeChat(); });
 
 // ============ Free-roaming behavior ============
 const roamOK = !matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -218,6 +287,7 @@ function setPose(name) {
   if (robotBtn?.classList.contains('fallback')) return;
   if (!window.veeAvatar) return;
   
+  // names below all exist in grok-bot.avatar.json → animations
   const map = {
     'searching': 'searching',
     'playful': 'playful',
@@ -226,7 +296,10 @@ function setPose(name) {
     'surprised': 'surprised',
     'idle': 'idle',
     'sleeping': 'sleeping',
-    'thinking': 'thinking'
+    'thinking': 'thinking',
+    'curious': 'curious',
+    'listening': 'listening',
+    'happy': 'happy'
   };
 
   if (map[name]) {
@@ -336,7 +409,7 @@ if (roamOK) scheduleRoam();
 // chat left open blocks roaming - auto-close it when the user scrolls away
 addEventListener('scroll', () => {
   if (companion.classList.contains('open') && document.activeElement !== askInput) {
-    companion.classList.remove('open');
+    closeChat();
   }
 }, { passive: true });
 
@@ -431,12 +504,12 @@ robotBtn?.addEventListener('pointerup', () => {
     }
   }
   else if (pendingGoto) followGoto();
-  else openChat();
+  else toggleChat();
 });
 
 // close chat when clicking elsewhere
 document.addEventListener('click', e => {
-  if (companion && !companion.contains(e.target)) companion.classList.remove('open');
+  if (companion && !companion.contains(e.target)) closeChat();
 });
 
 // idle → sleep; any activity wakes
@@ -495,6 +568,7 @@ async function callGeminiAPI(prompt) {
   }
   
   // Show thinking state (simulating delay for effect)
+  setPose('thinking');
   bubble.className = `bubble show mood-thinking`;
   bubbleContent.style.display = 'none';
   bubbleActions.style.display = 'none';
@@ -540,6 +614,7 @@ Answer questions about Vatsal's work, general coding, or AI concepts based on th
       bubbleContent.style.display = 'block';
       bubbleActions.style.display = 'flex';
       bubble.className = `bubble show mood-happy`;
+      setPose(chatOpen() ? 'listening' : 'happy');
     }, 600 + Math.random() * 800);
     
   } catch (err) {
@@ -658,23 +733,29 @@ function tprint(html, cls = '') {
   termBody.scrollTop = termBody.scrollHeight;
 }
 
+// the terminal only exists on the index page; the companion can be asked to
+// open it from a case page, so every entry point has to tolerate its absence
+const hasTerminal = !!(overlay && termOut && termInput && termBody);
 function openTerminal() {
+  if (!hasTerminal) return;
   overlay.hidden = false;
   if (!termOut.childElementCount) {
     tprint(`<span class="t-amber">vatsal-lab OS 1.0</span> - type <span class="t-sage">help</span> to begin`);
   }
   termInput.focus();
 }
-function closeTerminal() { overlay.hidden = true; }
+function closeTerminal() { if (hasTerminal) overlay.hidden = true; }
 
-document.getElementById('terminalBtn').addEventListener('click', openTerminal);
-document.getElementById('terminalClose').addEventListener('click', closeTerminal);
-overlay.addEventListener('click', e => { if (e.target === overlay) closeTerminal(); });
-termBody.addEventListener('click', () => termInput.focus());
-document.addEventListener('keydown', e => {
-  if (e.key === '`' && e.ctrlKey) { e.preventDefault(); overlay.hidden ? openTerminal() : closeTerminal(); }
-  if (e.key === 'Escape' && !overlay.hidden) closeTerminal();
-});
+if (hasTerminal) {
+  document.getElementById('terminalBtn')?.addEventListener('click', openTerminal);
+  document.getElementById('terminalClose')?.addEventListener('click', closeTerminal);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeTerminal(); });
+  termBody.addEventListener('click', () => termInput.focus());
+  document.addEventListener('keydown', e => {
+    if (e.key === '`' && e.ctrlKey) { e.preventDefault(); overlay.hidden ? openTerminal() : closeTerminal(); }
+    if (e.key === 'Escape' && !overlay.hidden) closeTerminal();
+  });
+}
 
 const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 
@@ -771,7 +852,7 @@ function fakeTrain() {
   });
 }
 
-termInput.addEventListener('keydown', e => {
+termInput?.addEventListener('keydown', e => {
   if (e.key === 'Enter') { runCommand(termInput.value); termInput.value = ''; }
   else if (e.key === 'ArrowUp') { e.preventDefault(); if (histIdx < history.length - 1) termInput.value = history[++histIdx] || ''; }
   else if (e.key === 'ArrowDown') { e.preventDefault(); termInput.value = histIdx > 0 ? history[--histIdx] : (histIdx = -1, ''); }
@@ -996,7 +1077,7 @@ function gradientRain() {
   addEventListener('pointerup', () => { dot.classList.remove('is-down'); ring.classList.remove('is-down'); });
 
   // recruiter switch kills it, native cursor returns
-  document.getElementById('recruiterToggle').addEventListener('change', () => {
+  document.getElementById('recruiterToggle')?.addEventListener('change', () => {
     document.body.classList.toggle('nbc-on', started && !recruiterOn());
     morphReset(); setState(false, null);
   });
