@@ -136,7 +136,7 @@ document.querySelectorAll('.action-chip').forEach(chip => {
   chip.addEventListener('click', e => {
     e.preventDefault();
     askInput.value = e.target.dataset.action;
-    askForm.dispatchEvent(new Event('submit', { cancelable: true }));
+    askForm?.dispatchEvent(new Event('submit', { cancelable: true }));
   });
 });
 
@@ -158,31 +158,88 @@ let walkAnim = null, pendingGoto = null, walkSeq = 0;
 
 const vw = () => document.documentElement.clientWidth;
 const vh = () => document.documentElement.clientHeight;
+
+function isOverlapping(x, y) {
+  const rect = { left: x, top: y, right: x + SIZE, bottom: y + SIZE };
+  const obstacles = Array.from(document.querySelectorAll('header, .topbar, p, img, .card, .notebook-card, .index-card'));
+  
+  for (const el of obstacles) {
+    const elRect = el.getBoundingClientRect();
+    if (elRect.width === 0 || elRect.height === 0) continue;
+    
+    // Strict header protection - header spans full width essentially, 
+    // but we can just use its bounding box. 
+    // Add some padding to obstacles
+    const pad = 10;
+    if (rect.right > elRect.left - pad && 
+        rect.left < elRect.right + pad && 
+        rect.bottom > elRect.top - pad && 
+        rect.top < elRect.bottom + pad) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function getSafePlace(x, y) {
+  if (!isOverlapping(x, y)) return {x, y};
+  
+  // spiral search for a safe spot
+  let radius = 20;
+  let angle = 0;
+  while (radius < Math.max(vw(), vh())) {
+    const nx = Math.max(8, Math.min(x + Math.cos(angle) * radius, vw() - SIZE - 8));
+    const ny = Math.max(8, Math.min(y + Math.sin(angle) * radius, vh() - SIZE - 12));
+    if (!isOverlapping(nx, ny)) return {x: nx, y: ny};
+    angle += Math.PI / 4;
+    if (angle >= Math.PI * 2) {
+      angle = 0;
+      radius += 30;
+    }
+  }
+  return {x, y}; // fallback
+}
+
 function place(x, y) {
   // hard bounds: the robot can never leave the viewport
   x = Math.max(8, Math.min(x, vw() - SIZE - 8));
   y = Math.max(8, Math.min(y, vh() - SIZE - 12));
   pos = { x, y };
-  companion.style.transform = `translate(${x}px, ${y}px)`;
-  companion.classList.toggle('on-left', x < vw() / 2);
+  if (companion) {
+    companion.style.transform = `translate(${x}px, ${y}px)`;
+    companion.classList.toggle('on-left', x < vw() / 2);
+  }
 }
 const homeXY = () => [vw() - SIZE - 22, vh() - SIZE - 22];
 place(...homeXY());
 addEventListener('resize', () => { if (!walking) place(pos.x, pos.y); });
 
 function setPose(name) {
-  if (robotBtn.classList.contains('fallback')) return;
+  if (robotBtn?.classList.contains('fallback')) return;
   if (!window.veeAvatar) return;
   
-  if (name.includes('sleep')) {
+  const map = {
+    'searching': 'searching',
+    'playful': 'playful',
+    'celebrate': 'celebrate',
+    'working': 'working',
+    'surprised': 'surprised',
+    'idle': 'idle',
+    'sleeping': 'sleeping',
+    'thinking': 'thinking'
+  };
+
+  if (map[name]) {
+    window.veeAvatar.play(map[name]);
+  } else if (name.includes('sleep')) {
     window.veeAvatar.play('sleeping');
   } else if (name.includes('think')) {
     window.veeAvatar.play('thinking');
-  } else if (name.includes('point')) {
+  } else if (name.includes('point') || name.includes('searching')) {
     window.veeAvatar.play('searching');
-  } else if (name.includes('cheer')) {
-    window.veeAvatar.play('working');
-  } else if (name.includes('wave')) {
+  } else if (name.includes('cheer') || name.includes('celebrate')) {
+    window.veeAvatar.play('celebrate');
+  } else if (name.includes('wave') || name.includes('idle')) {
     window.veeAvatar.play('idle');
   } else {
     window.veeAvatar.play(name);
@@ -194,17 +251,22 @@ const easeInOut = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
 function walkTo(nx, ny, done) {
   nx = Math.max(12, Math.min(nx, vw() - SIZE - 12));
   ny = Math.max(vh() * .35, Math.min(ny, vh() - SIZE - 16));
+  
+  // Find a safe spot near nx, ny
+  const safe = getSafePlace(nx, ny);
+  nx = safe.x; ny = safe.y;
+  
   const sx = pos.x, sy = pos.y;
   const dist = Math.hypot(nx - sx, ny - sy);
   if (dist < 24) { done && done(); return; }
   cancelAnimationFrame(walkAnim);
   const id = ++walkSeq; // invalidates any pending/running glide
   // turn to face the destination, brief beat, then go
-  robotBtn.style.setProperty('--fx', nx < sx ? -1 : 1);
+  robotBtn?.style.setProperty('--fx', nx < sx ? -1 : 1);
   walking = true;
   setTimeout(() => {
     if (id !== walkSeq) return; // superseded while turning
-    robotBtn.classList.add('walking');
+    robotBtn?.classList.add('walking');
     const dur = 350 + (dist / SPEED) * 1000;
     const t0 = performance.now();
     (function step(t) {
@@ -216,8 +278,8 @@ function walkTo(nx, ny, done) {
       place(sx + (nx - sx) * e, sy + (ny - sy) * e + drift);
       if (p < 1) { walkAnim = requestAnimationFrame(step); return; }
       walking = false;
-      robotBtn.classList.remove('walking');
-      if (!asleep) setPose('robot-wave.png');
+      robotBtn?.classList.remove('walking');
+      if (!asleep) setPose('idle');
       done && done();
     })(t0);
   }, 160);
@@ -226,13 +288,13 @@ function stopWalk() {
   walkSeq++; // kills pending turn-timers and glide loops
   cancelAnimationFrame(walkAnim);
   walking = false;
-  robotBtn.classList.remove('walking');
-  setPose('robot-wave.png');
+  robotBtn?.classList.remove('walking');
+  setPose('idle');
 }
 function cheer(line) {
-  setPose('robot-cheer.png');
+  setPose('celebrate');
   if (line) say(line, true);
-  setTimeout(() => { if (!asleep && !walking) setPose('robot-wave.png'); }, 3500);
+  setTimeout(() => { if (!asleep && !walking) setPose('idle'); }, 3500);
 }
 
 const WANDER_QUIPS = [
@@ -259,7 +321,9 @@ function roamAct() {
     pendingGoto = id;
     say(`Have you seen the ${id} section? Click me and I'll take you.`, true);
   } else {
-    walkTo(...homeXY());
+    // If homing, ensure it doesn't land on something
+    const home = getSafePlace(...homeXY());
+    walkTo(home.x, home.y);
   }
   scheduleRoam();
 }
@@ -287,10 +351,10 @@ function goToSection(id, line) {
   const el = document.getElementById(id);
   if (!el) return;
   el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  setPose('robot-point.png');
+  setPose('searching');
   if (line) setTimeout(() => say(line), 900);
 }
-bubble.addEventListener('click', e => {
+bubble?.addEventListener('click', e => {
   e.stopPropagation();
   if (pendingGoto) followGoto();
 });
@@ -331,35 +395,48 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') stopTour(); 
 
 // drag the robot anywhere; click (no move) = chat
 let dragStart = null;
-robotBtn.addEventListener('pointerdown', e => {
+robotBtn?.addEventListener('pointerdown', e => {
   if (e.button !== 0) return;
   e.preventDefault(); // stop native image drag
   stopWalk(); // freeze any glide NOW so the grab position is the real position
   dragStart = { x: e.clientX, y: e.clientY, px: pos.x, py: pos.y, moved: false };
   robotBtn.setPointerCapture(e.pointerId);
 });
-robotBtn.addEventListener('pointermove', e => {
+robotBtn?.addEventListener('pointermove', e => {
   if (!dragStart) return;
   const dx = e.clientX - dragStart.x, dy = e.clientY - dragStart.y;
   if (Math.abs(dx) + Math.abs(dy) > 6) {
     dragStart.moved = true;
-    companion.classList.add('dragging');
+    companion?.classList.add('dragging');
     place(dragStart.px + dx, dragStart.py + dy);
   }
 });
-robotBtn.addEventListener('pointerup', () => {
+robotBtn?.addEventListener('pointerup', () => {
   if (!dragStart) return;
   const moved = dragStart.moved;
   dragStart = null;
-  companion.classList.remove('dragging');
-  if (moved) { stopWalk(); stopTour(); say("Fine. I live here now."); }
+  companion?.classList.remove('dragging');
+  if (moved) { 
+    stopWalk(); stopTour(); 
+    if (isOverlapping(pos.x, pos.y)) {
+      setPose('surprised');
+      say("Whoa, too crowded here!", true);
+      const safe = getSafePlace(pos.x, pos.y);
+      walkTo(safe.x, safe.y, () => {
+        setPose('idle');
+        say("That's better.", false);
+      });
+    } else {
+      say("Fine. I live here now."); 
+    }
+  }
   else if (pendingGoto) followGoto();
   else openChat();
 });
 
 // close chat when clicking elsewhere
 document.addEventListener('click', e => {
-  if (!companion.contains(e.target)) companion.classList.remove('open');
+  if (companion && !companion.contains(e.target)) companion.classList.remove('open');
 });
 
 // idle → sleep; any activity wakes
@@ -377,11 +454,13 @@ const ACTIONS = [
   [/^run train/i, () => { openTerminal(); runCommand('train'); say("Watch the loss. It always goes down eventually.", true); }],
   [/^open (terminal|cli)|^terminal$/i, () => { openTerminal(); say("Your shell, my desk. Type help.", true); }],
   [/^(download )?(resume|cv)$/i, () => {
+    setPose('working');
     const a = document.createElement('a'); a.href = 'resume.pdf'; a.download = 'Vatsal-Vaghasiya-Resume.pdf'; a.click();
     say("Sent. It's one page.", true);
   }],
   [/^flip( the)? paper/i, () => {
     goToSection('research');
+    setPose('playful');
     setTimeout(() => document.querySelectorAll('.paper-flip').forEach(p => p.classList.add('flipped')), 1000);
     say("Flipped them for you. The backs are the good part.", true);
   }],
@@ -398,6 +477,13 @@ const ACTIONS = [
   [/^party|^rain|^konami|^dance/i, () => { gradientRain(); cheer(); }],
   [/^toggle recruiter/i, () => say("That switch up top deletes me. You'll have to flip it yourself.", true)],
   [/^go home/i, () => { walkTo(...homeXY()); say("Heading home.", true); }],
+  [/^(open project|show case) (.+)/i, (m) => {
+    const p = m[2].trim().toLowerCase();
+    say(`Opening ${p}.`, true);
+    setTimeout(() => {
+      window.location.href = `case/project.html?id=${p}`;
+    }, 800);
+  }]
 ];
 // ============ Gemini API LLM Integration ============
 const GEMINI_API_KEY = "AQ.Ab8RN6LCH2wE9PqBddVHtphb24HuJJc0pIrxgfVPIXfgFnvDrA"; 
@@ -462,7 +548,7 @@ Answer questions about Vatsal's work, general coding, or AI concepts based on th
   }
 }
 
-askForm.addEventListener('submit', e => {
+askForm?.addEventListener('submit', e => {
   e.preventDefault();
   const q = askInput.value.trim();
   if (!q) return;
@@ -473,7 +559,7 @@ askForm.addEventListener('submit', e => {
   
   // If the user triggered a specific UI action (like "show resume", "open terminal"), run it
   if (action) { 
-    action[1](); 
+    action[1](q.match(action[0])); 
     return; 
   }
   

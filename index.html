@@ -813,27 +813,30 @@
 
   <!-- ============ Companion robot (free-roaming) ============ -->
   <div class="companion" id="companion">
-    <!-- Chat bubble -->
-    <div class="companion-panel" id="companionPanel">
-      <div class="bubble" id="companionBubble">
-        <div class="bubble-content" id="bubbleContent">Reading your environment...</div>
-        <div class="typing-indicator" id="typingIndicator" style="display: none;">
-          <span></span><span></span><span></span>
+    <div class="companion-inner">
+      <!-- Chat bubble -->
+      <div class="companion-panel" id="companionPanel">
+        <div class="bubble" id="companionBubble">
+          <div class="bubble-content" id="bubbleContent">Reading your environment...</div>
+          <div class="typing-indicator" id="typingIndicator" style="display: none;">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="bubble-actions" id="bubbleActions" style="display: none;">
+            <button class="action-chip mono" data-action="tour">tour</button>
+            <button class="action-chip mono" data-action="projects">projects</button>
+            <button class="action-chip mono" data-action="train">train</button>
+          </div>
         </div>
-        <div class="bubble-actions" id="bubbleActions" style="display: none;">
-          <button class="action-chip mono" data-action="tour">tour</button>
-          <button class="action-chip mono" data-action="projects">projects</button>
-          <button class="action-chip mono" data-action="train">train</button>
+        <div class="ask-form-wrapper">
+          <form class="ask-form" id="askForm" onsubmit="event.preventDefault(); return false;">
+            <input type="text" id="askInput" class="mono" placeholder="Ask about this repo..." autocomplete="off">
+          </form>
         </div>
       </div>
-      <form class="ask-form" id="askForm" onsubmit="event.preventDefault(); return false;">
-        <input type="text" id="askInput" class="mono" placeholder="Ask about this repo..." autocomplete="off">
-        <button type="submit" class="ask-submit" aria-label="Send">↑</button>
-      </form>
-    </div>
-    <div class="robot" id="robotBtn" role="button" tabindex="0" aria-label="AI companion, click to talk">
-      <div id="robotAvatar"></div>
-      <span class="robot-emoji" aria-hidden="true">✨</span>
+      <div class="robot" id="robotBtn" role="button" tabindex="0" aria-label="AI companion, click to talk">
+        <div id="robotAvatar"></div>
+        <span class="robot-emoji" aria-hidden="true">✨</span>
+      </div>
     </div>
   </div>
 
