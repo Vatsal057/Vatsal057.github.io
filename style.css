@@ -409,7 +409,7 @@ a { color: var(--sage-deep); }
 .companion.dragging { cursor: grabbing; }
 .companion-panel {
   position: absolute; bottom: calc(100% + 10px); right: 0;
-  display: flex; flex-direction: column; align-items: flex-end; gap: .45rem;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 0;
   width: max-content;
 }
 .companion.on-left .companion-inner { align-items: flex-start; }
@@ -454,11 +454,13 @@ a { color: var(--sage-deep); }
   backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
   opacity: 0; transform: translateY(12px) scale(0.95); 
   transform-origin: bottom right;
-  transition: opacity .4s cubic-bezier(0.16, 1, 0.3, 1), transform .4s cubic-bezier(0.16, 1, 0.3, 1), border-color .3s, box-shadow .3s;
+  transition: margin-bottom .4s cubic-bezier(0.16, 1, 0.3, 1), opacity .4s cubic-bezier(0.16, 1, 0.3, 1), transform .4s cubic-bezier(0.16, 1, 0.3, 1), border-color .3s, box-shadow .3s;
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
 }
+/* closed: drop the bubble into the space the input field would occupy */
+.companion:not(.open) .bubble { margin-bottom: 0; }
 .bubble.show { opacity: 1; transform: translateY(0) scale(1); }
 .bubble.mood-thinking { border-color: rgba(94, 163, 255, 0.4); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3), 0 0 15px rgba(94, 163, 255, 0.15); }
 .bubble.mood-happy { border-color: rgba(143, 169, 143, 0.5); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3), 0 0 15px rgba(143, 169, 143, 0.2); }
@@ -611,10 +613,16 @@ mark.hl {
 /* ============ Companion panel ============ */
 .ask-form { 
   opacity: 0; transform: translateY(8px); 
-  transition: opacity .3s, transform .3s; pointer-events: none; 
+  /* closed: collapse to exactly 0 height so the bubble drops into this slot.
+     margin-top (not padding) carries the open-state gap, since a padded box
+     can't shrink below its own padding. opacity:0 already hides the field,
+     so no overflow clipping is needed and shadows stay intact when open. */
+  max-height: 0; margin-top: 0;
+  transition: opacity .3s, transform .3s, max-height .4s cubic-bezier(0.16, 1, 0.3, 1), margin-top .4s cubic-bezier(0.16, 1, 0.3, 1); 
+  pointer-events: none; 
   display: flex; gap: 6px; align-items: center;
 }
-.companion.open .ask-form { opacity: 1; transform: none; pointer-events: auto; }
+.companion.open .ask-form { opacity: 1; transform: none; pointer-events: auto; max-height: 60px; margin-top: .45rem; }
 #askInput {
   width: 220px; padding: .65rem 1.1rem; border-radius: 30px; 
   border: 1px solid rgba(15, 17, 20, 0.15);
