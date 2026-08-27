@@ -7,3 +7,9 @@ PORTFOLIO_WEBSITE.md
 DESIGN.md
 PRODUCT.md
 references
+
+# Cloudflare Worker local artifacts (never commit these; the repo root is
+# published by GitHub Pages)
+worker/node_modules/
+worker/.wrangler/
+worker/package-lock.json

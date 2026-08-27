@@ -1,0 +1,43 @@
+{
+  "name": "portfolio-companion",
+  "main": "src/index.js",
+  "compatibility_date": "2026-08-27",
+
+  // Workers AI. This is what removes the need for an API key entirely:
+  // Cloudflare authenticates the inference call on its side, so there is no
+  // credential in this repo, in the browser, or even in Worker secrets.
+  "ai": {
+    "binding": "AI"
+  },
+
+  // Rate limiting (GA since Sept 2025). Limits are per Cloudflare location and
+  // eventually consistent, so these are budget guards rather than hard gates.
+  // period must be exactly 10 or 60.
+  "ratelimits": [
+    {
+      // Per-visitor ceiling. Cloudflare's docs note IPs can be shared, so this
+      // is deliberately generous: plenty for a real conversation, hostile to a
+      // script hammering the endpoint.
+      "name": "PER_IP_LIMITER",
+      "namespace_id": "1001",
+      "simple": {
+        "limit": 12,
+        "period": 60
+      }
+    },
+    {
+      // Whole-Worker ceiling, protecting the 10,000 Neurons/day free allocation
+      // from a single determined abuser rotating IPs.
+      "name": "GLOBAL_LIMITER",
+      "namespace_id": "1002",
+      "simple": {
+        "limit": 240,
+        "period": 60
+      }
+    }
+  ],
+
+  "observability": {
+    "enabled": true
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "portfolio-companion-worker",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Cloudflare Worker backing the portfolio companion chat. Holds no API key.",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail"
+  },
+  "devDependencies": {
+    "wrangler": "4.127.0"
+  }
+}

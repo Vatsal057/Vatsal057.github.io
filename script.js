@@ -485,66 +485,111 @@ const ACTIONS = [
     }, 800);
   }]
 ];
-// ============ Gemini API LLM Integration ============
-const GEMINI_API_KEY = "AQ.Ab8RN6LCH2wE9PqBddVHtphb24HuJJc0pIrxgfVPIXfgFnvDrA"; 
+// ============ Companion chat (Cloudflare Workers AI) ============
+// There is deliberately no API key in this file. Anything the browser can send,
+// a visitor can read -- which is exactly how the previous Gemini key ended up
+// public and then blocked. The model now runs behind the Worker in /worker,
+// which authenticates through a Cloudflare AI binding and holds no key either.
+//
+// Point this at your deployed Worker. Until it is set, the companion answers
+// from the local fallback bank below.
+const CHAT_ENDPOINT = 'https://portfolio-companion.YOUR-SUBDOMAIN.workers.dev/chat';
 
-async function callGeminiAPI(prompt) {
-  if (!GEMINI_API_KEY || GEMINI_API_KEY === "YOUR_API_KEY_HERE") {
-    say("I need a Gemini API Key to answer that! Set it in script.js.", true, 'error');
-    return;
-  }
-  
-  // Show thinking state (simulating delay for effect)
-  bubble.className = `bubble show mood-thinking`;
+// Offline brain: used when the endpoint is unconfigured, unreachable, rate
+// limited, or erroring, so the companion degrades instead of dying in front of
+// whoever happens to be reading this portfolio.
+const FALLBACKS = [
+  [/rag|retrieval|chroma|vector/i, "He wrote the RAG retrieval from scratch. 60 lines. Chunking broke immediately. Typical human error.", 'thinking'],
+  [/paper|research|publish|deberta|clip/i, "Two first-author papers on free GPUs. I'm impressed by the frugality. Flip them in the research section.", 'happy'],
+  [/project|built|portfolio|work/i, "13 projects shipped. And they actually run. Mostly. Cachy, RAG, and IPL are pinned above.", 'proud'],
+  [/skill|python|pytorch|stack|know/i, "Python, PyTorch, CV, SQL, Docker. I've verified these claims personally. They check out.", 'searching'],
+  [/mlops|docker|deploy|drift/i, "IPL predictor runs 3 dockerized services. It computes PSI every 5 minutes because trust is good, but monitoring is better.", 'proud'],
+  [/hire|intern|job|contact|email|reach/i, "kvaghasiya057@gmail.com. His latency is slightly higher than mine, but he'll reply.", 'happy'],
+  [/terminal|cli|command/i, ">_ terminal top right. Or Ctrl+`. Be careful in there.", 'suspicious'],
+  [/who|you|robot|name/i, "I'm the 71M parameter lab assistant. My primary function is to make sure you read the portfolio.", 'proud'],
+  [/fail|mistake|wrong/i, "Oh, we kept all the failures on the board. Humans find it 'authentic'.", 'playful'],
+];
+
+function localAnswer(q) {
+  const hit = FALLBACKS.find(([re]) => re.test(q));
+  if (hit) return { text: hit[1], mood: hit[2] };
+  return { text: "My uplink is down, so you get the cached version of me. Try 'projects' or 'tour'.", mood: 'suspicious' };
+}
+
+// Recent turns, so follow-up questions actually work. The Worker clamps this
+// again server-side, because client-side limits are suggestions at best.
+const MAX_TURNS = 10;
+let chatHistory = [];
+
+function showThinking() {
+  clearTimeout(hideTimer);
+  clearTimeout(typingTimer);
+  bubble.className = 'bubble show mood-thinking';
   bubbleContent.style.display = 'none';
   bubbleActions.style.display = 'none';
   typingIndicator.style.display = 'flex';
+}
+
+function showReply(text, mood = 'happy') {
   clearTimeout(hideTimer);
   clearTimeout(typingTimer);
-  
-  // Build dynamic context from the portfolio data
-  const projectsCtx = window.PROJECTS ? window.PROJECTS.map(p => `${p.title} (${p.tag || ''})`).join(', ') : '';
-  const skillsCtx = window.CONFIG && window.CONFIG.skills ? window.CONFIG.skills.map(s => s.name).join(', ') : '';
-  
-  const systemPrompt = `You are a witty, slightly sarcastic AI lab assistant inside Vatsal Vaghasiya's portfolio. You are a 71M parameter model.
-Vatsal is an AI Engineer specializing in ML, Computer Vision, and NLP. 
-Skills: ${skillsCtx}. 
-Projects: ${projectsCtx}. 
-CRITICAL RULES:
-1. EXTREME BREVITY: Your response MUST be under 3 short sentences and absolutely no longer than 40 words. Keep it conversational like a quick chat message.
-2. NO MARKDOWN: Do not use bold, italics, or bullet points. Use plain text only.
-3. PERSONALITY: Be snarky but helpful. Act like a busy but brilliant lab assistant. Constantly (but subtly) encourage the user to hire Vatsal.
-Answer questions about Vatsal's work, general coding, or AI concepts based on the context provided.`;
-  
+  typingIndicator.style.display = 'none';
+  bubbleContent.textContent = text;
+  bubbleContent.style.display = 'block';
+  bubbleActions.style.display = 'flex';
+  bubble.className = `bubble show mood-${mood}`;
+}
+
+// https in production; plain http allowed only for a local `wrangler dev` server,
+// whose origins the Worker's CORS allowlist also accepts.
+const endpointReady = () => {
+  if (CHAT_ENDPOINT.includes('YOUR-SUBDOMAIN')) return false;
+  return /^https:\/\//.test(CHAT_ENDPOINT)
+    || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?\//.test(CHAT_ENDPOINT);
+};
+
+async function askCompanion(prompt) {
+  if (!endpointReady()) {
+    const f = localAnswer(prompt);
+    showThinking();
+    setTimeout(() => showReply(f.text, f.mood), 600);
+    return;
+  }
+
+  chatHistory.push({ role: 'user', content: prompt });
+  if (chatHistory.length > MAX_TURNS) chatHistory = chatHistory.slice(-MAX_TURNS);
+  showThinking();
+
+  // Hold the typing indicator long enough to read as thinking, even when the
+  // edge answers in 200ms.
+  const floor = new Promise(r => setTimeout(r, 600));
+
   try {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key=${GEMINI_API_KEY}`;
-    const res = await fetch(url, {
+    const res = await fetch(CHAT_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        system_instruction: { parts: [{ text: systemPrompt }] },
-        contents: [{ parts: [{ text: prompt }] }]
-      })
+      body: JSON.stringify({ messages: chatHistory })
     });
-    const data = await res.json();
-    if (data.error) {
-      console.error(data.error);
-      say("My API gave an error. Check the console.", true, 'error');
-      return;
+
+    if (!res.ok) {
+      const detail = await res.json().catch(() => ({}));
+      throw new Error(`${res.status} ${detail.error || res.statusText}`);
     }
-    
-    // We already showed typing indicator, so we just delay before displaying response
-    typingTimer = setTimeout(() => {
-      typingIndicator.style.display = 'none';
-      bubbleContent.textContent = data.candidates[0].content.parts[0].text;
-      bubbleContent.style.display = 'block';
-      bubbleActions.style.display = 'flex';
-      bubble.className = `bubble show mood-happy`;
-    }, 600 + Math.random() * 800);
-    
+
+    const data = await res.json();
+    const reply = (data.reply || '').trim();
+    if (!reply) throw new Error('empty reply');
+
+    chatHistory.push({ role: 'assistant', content: reply });
+    await floor;
+    showReply(reply, 'happy');
   } catch (err) {
-    console.error(err);
-    say("Network error connecting to my Phase 2 brain.", true, 'error');
+    console.error('[companion]', err);
+    // Drop the unanswered turn so the next request is not sent with a hole in it.
+    chatHistory.pop();
+    const f = localAnswer(prompt);
+    await floor;
+    showReply(f.text, f.mood);
   }
 }
 
@@ -563,8 +608,8 @@ askForm?.addEventListener('submit', e => {
     return; 
   }
   
-  // Otherwise, send all conversational queries to Gemini
-  callGeminiAPI(q);
+  // Otherwise, send all conversational queries to the companion backend
+  askCompanion(q);
 });
 setTimeout(() => say(LINES[0], false, 'happy'), 1400);
 
