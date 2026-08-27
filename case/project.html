@@ -100,11 +100,10 @@
           <button class="action-chip mono" data-action="train">train</button>
         </div>
       </div>
-        <div class="ask-form-wrapper">
-          <form class="ask-form" id="askForm" onsubmit="event.preventDefault(); return false;">
-            <input type="text" id="askInput" class="mono" placeholder="Ask about this repo..." autocomplete="off">
-          </form>
-        </div>
+      <form class="ask-form" id="askForm" onsubmit="event.preventDefault(); return false;">
+        <input type="text" id="askInput" class="mono" placeholder="Ask about this repo..." autocomplete="off">
+        <button type="submit" class="ask-submit" aria-label="Send">↑</button>
+      </form>
     </div>
     <div class="robot" id="robotBtn" role="button" tabindex="0" aria-label="AI companion, click to talk">
       <div id="robotAvatar"></div>

@@ -408,13 +408,13 @@ a { color: var(--sage-deep); }
 }
 .companion.dragging { cursor: grabbing; }
 .companion-panel {
-  position: absolute; bottom: calc(100% + 20px); right: 0;
-  display: flex; flex-direction: column; align-items: flex-end; gap: .3rem;
+  position: absolute; bottom: calc(100% + 10px); right: 0;
+  display: flex; flex-direction: column; align-items: flex-end; gap: .45rem;
   width: max-content;
 }
 .companion.on-left .companion-inner { align-items: flex-start; }
 .companion.on-left .companion-panel { right: auto; left: 0; align-items: flex-start; }
-.companion.on-left .bubble { transform-origin: bottom left; }
+.companion.on-left .bubble { border-radius: 28px 28px 28px 6px; transform-origin: bottom left; }
 .robot { width: 74px; height: 74px; animation: bob 3.2s ease-in-out infinite; position: relative; }
 .robot img {
   width: 100%; height: 100%; object-fit: contain;
@@ -439,52 +439,27 @@ a { color: var(--sage-deep); }
 .robot.fallback .robot-emoji { display: block; }
 @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
 .bubble {
-  position: relative;
-  background: #050505; 
-  border: none; 
-  border-radius: 28px;
+  background: rgba(15, 17, 20, 0.65); 
+  border: 1px solid rgba(255, 255, 255, 0.15); 
+  border-radius: 28px 28px 6px 28px;
   padding: 1rem 1.4rem; 
-  margin-bottom: 0;
+  margin-bottom: 0.8rem; 
   font-size: .88rem; 
   font-weight: 500;
-  color: #FFF;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4); 
+  color: #F7F5F0;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.08); 
   max-width: 280px; 
   text-align: left;
   line-height: 1.5;
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
   opacity: 0; transform: translateY(12px) scale(0.95); 
   transform-origin: bottom right;
-  transition: margin-bottom .3s, opacity .4s cubic-bezier(0.16, 1, 0.3, 1), transform .4s cubic-bezier(0.16, 1, 0.3, 1), border-color .3s, box-shadow .3s;
+  transition: opacity .4s cubic-bezier(0.16, 1, 0.3, 1), transform .4s cubic-bezier(0.16, 1, 0.3, 1), border-color .3s, box-shadow .3s;
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
 }
 .bubble.show { opacity: 1; transform: translateY(0) scale(1); }
-
-/* Thought bubble dots */
-.bubble::before, .bubble::after {
-  content: '';
-  position: absolute;
-  border: none; 
-  background: #050505; 
-  border-radius: 50%;
-  pointer-events: none;
-}
-.bubble::before {
-  bottom: -12px;
-  right: 25px;
-  width: 12px;
-  height: 12px;
-}
-.bubble::after {
-  bottom: -22px;
-  right: 14px;
-  width: 6px;
-  height: 6px;
-}
-
-.companion.on-left .bubble::before { right: auto; left: 25px; }
-.companion.on-left .bubble::after { right: auto; left: 14px; }
 .bubble.mood-thinking { border-color: rgba(94, 163, 255, 0.4); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3), 0 0 15px rgba(94, 163, 255, 0.15); }
 .bubble.mood-happy { border-color: rgba(143, 169, 143, 0.5); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3), 0 0 15px rgba(143, 169, 143, 0.2); }
 .bubble.mood-error { border-color: rgba(224, 117, 106, 0.5); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3), 0 0 15px rgba(224, 117, 106, 0.2); }
@@ -634,37 +609,43 @@ mark.hl {
 }
 
 /* ============ Companion panel ============ */
-.ask-form-wrapper {
-  overflow: hidden;
-  max-height: 0;
-  transition: max-height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  display: flex;
-  justify-content: flex-end;
-}
-.companion.open .ask-form-wrapper { max-height: 60px; }
-
 .ask-form { 
   opacity: 0; transform: translateY(8px); 
   transition: opacity .3s, transform .3s; pointer-events: none; 
   display: flex; gap: 6px; align-items: center;
-  padding-top: 6px;
 }
-.companion.open .ask-form { opacity: 1; transform: none; pointer-events: auto; transition-delay: 0.1s; }
+.companion.open .ask-form { opacity: 1; transform: none; pointer-events: auto; }
 #askInput {
-  width: 240px; 
-  padding: 0.9rem 1.25rem; 
-  border-radius: 28px; 
-  border: none;
-  background: #050505; 
-  font: .88rem 'JetBrains Mono', monospace; 
-  color: #FFF;
-  outline: none; 
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  width: 220px; padding: .65rem 1.1rem; border-radius: 30px; 
+  border: 1px solid rgba(15, 17, 20, 0.15);
+  background: rgba(255, 255, 255, 0.95); 
+  font: .85rem 'JetBrains Mono', monospace; 
+  color: #111;
+  outline: none; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   transition: all 0.2s ease;
 }
-#askInput::placeholder { color: rgba(255, 255, 255, 0.5); }
-#askInput:focus { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 0 0 2px rgba(255, 255, 255, 0.2); }
-
+#askInput:focus { border-color: rgba(15, 17, 20, 0.5); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 0 0 3px rgba(15, 17, 20, 0.1); }
+.ask-submit {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--ink); color: var(--paper); border: none;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; cursor: pointer; transition: transform 0.2s, background 0.2s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.ask-submit:hover { transform: translateY(-2px); background: #3d4f59; }
+body.dark-mode #askInput {
+  background: rgba(30, 34, 38, 0.9);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #F7F5F0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+}
+body.dark-mode #askInput:focus {
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+body.dark-mode .ask-submit { background: var(--amber); color: #111; }
+body.dark-mode .ask-submit:hover { background: #E2BC85; }
 
 
 /* ============ Gradient-descent rain (konami) ============ */
