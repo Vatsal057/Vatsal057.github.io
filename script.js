@@ -493,7 +493,7 @@ const ACTIONS = [
 //
 // Point this at your deployed Worker. Until it is set, the companion answers
 // from the local fallback bank below.
-const CHAT_ENDPOINT = 'https://portfolio-companion.YOUR-SUBDOMAIN.workers.dev/chat';
+const CHAT_ENDPOINT = 'https://portfolio-companion.vatxzz.workers.dev/chat';
 
 // Offline brain: used when the endpoint is unconfigured, unreachable, rate
 // limited, or erroring, so the companion degrades instead of dying in front of
