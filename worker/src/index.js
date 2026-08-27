@@ -16,12 +16,17 @@
 // headers, so a random site cannot burn through the daily Neuron budget.
 const ALLOWED_ORIGINS = new Set([
   'https://vatsal057.github.io',
-  // local development
-  'http://localhost:8000',
-  'http://127.0.0.1:8000',
-  'http://localhost:5500',
-  'http://127.0.0.1:5500',
 ]);
+
+// Any localhost port, so dev servers work without maintaining a port list.
+// This is safe: only a page genuinely served from localhost gets a localhost
+// Origin, and that is by definition the developer's own machine. Anchored at
+// both ends so lookalikes such as http://localhost.evil.com are rejected.
+const LOCAL_ORIGIN = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d{1,5})?$/;
+
+function isAllowedOrigin(origin) {
+  return ALLOWED_ORIGINS.has(origin) || LOCAL_ORIGIN.test(origin);
+}
 
 // Tried in order. Both are on the Workers Free allocation as of the
 // 2026-07-28 Cloudflare changelog; the second covers the first being at
@@ -99,7 +104,7 @@ function extractReply(result) {
 export default {
   async fetch(request, env) {
     const origin = request.headers.get('Origin') || '';
-    const allowed = ALLOWED_ORIGINS.has(origin);
+    const allowed = isAllowedOrigin(origin);
 
     if (request.method === 'OPTIONS') {
       return allowed
