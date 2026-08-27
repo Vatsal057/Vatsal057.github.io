@@ -3,6 +3,13 @@
   "main": "src/index.js",
   "compatibility_date": "2026-08-27",
 
+  // Regenerates src/knowledge.json from projects-data.js and index.html before
+  // every deploy (and every `wrangler dev`), so the companion's knowledge is
+  // always rebuilt from the live site rather than a committed snapshot.
+  "build": {
+    "command": "node build-knowledge.mjs"
+  },
+
   // Workers AI. This is what removes the need for an API key entirely:
   // Cloudflare authenticates the inference call on its side, so there is no
   // credential in this repo, in the browser, or even in Worker secrets.

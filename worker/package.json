@@ -5,6 +5,7 @@
   "type": "module",
   "description": "Cloudflare Worker backing the portfolio companion chat. Holds no API key.",
   "scripts": {
+    "build:kb": "node build-knowledge.mjs",
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
     "tail": "wrangler tail"

@@ -8,6 +8,10 @@ on:
     paths:
       - 'worker/**'
       - '.github/workflows/deploy-worker.yml'
+      # the companion's knowledge is generated from these, so editing a project
+      # must redeploy the Worker or the chatbot would answer from stale data
+      - 'projects-data.js'
+      - 'index.html'
   workflow_dispatch:
 
 jobs:

@@ -13,3 +13,7 @@ references
 worker/node_modules/
 worker/.wrangler/
 worker/package-lock.json
+
+# Generated from projects-data.js + index.html by worker/build-knowledge.mjs on
+# every deploy. Not committed, so it can never be a stale snapshot of the site.
+worker/src/knowledge.js
