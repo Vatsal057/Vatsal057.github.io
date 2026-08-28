@@ -47,12 +47,26 @@
     var demoClass = p.links.website ? "btn btn-ghost" : "btn btn-primary";
     links.appendChild(anchor(p.links.demo, "live demo ↗", demoClass));
   }
+  if (p.links && p.links.download) {
+    var dlClass = (p.links.website || p.links.demo) ? "btn btn-ghost" : "btn btn-primary";
+    links.appendChild(anchor(p.links.download, (p.downloadLabel || "download") + " ↓", dlClass));
+  }
   if (p.links && p.links.github) {
-    var ghClass = (p.links.website || p.links.demo) ? "btn btn-ghost" : "btn btn-primary";
+    var ghClass = (p.links.website || p.links.demo || p.links.download) ? "btn btn-ghost" : "btn btn-primary";
     links.appendChild(anchor(p.links.github, "github repo →", ghClass));
   }
   if (p.links && p.links.certificate) {
     links.appendChild(anchor(p.links.certificate, "view certificate →", "btn btn-primary"));
+  }
+
+  // An honest caveat next to the buttons — e.g. "this needs two players", or
+  // why a research project has no repo link yet. Better than a dead link.
+  if (p.note) {
+    var noteEl = document.getElementById("note");
+    if (noteEl) {
+      noteEl.textContent = p.note;
+      noteEl.hidden = false;
+    }
   }
 
   document.getElementById("problem").textContent = p.problem || p.oneLiner || "";
@@ -65,7 +79,10 @@
     img.alt = p.media.alt || p.title;
     document.getElementById("mediaCaption").textContent = p.media.caption || "";
     document.getElementById("mediaBlock").hidden = false;
-  } else if (p.kind === "app" || p.kind === "tool") {
+  } else if ((p.kind === "app" || p.kind === "tool") &&
+             !(p.links && (p.links.demo || p.links.website))) {
+    // Only apologise for a missing screenshot when there's nothing live to
+    // click either. If the thing runs in a browser, the demo *is* the media.
     document.getElementById("mediaPending").hidden = false;
   }
 

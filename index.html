@@ -16,7 +16,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@500;600&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=5">
+  <link rel="stylesheet" href="style.css?v=6">
 </head>
 
 <body>
@@ -264,6 +264,8 @@
           <p class="card-proof mono"><span>3-provider LLM fallback</span><span>semantic graph</span><span>1 SQLite, 0
               Redis</span></p>
           <p class="card-stack mono">Whisper · OpenCV · Tesseract · SQLite · HF Spaces</p>
+          <p class="card-avail mono"><span class="is-live">try the web app</span><span class="is-live">product
+              site</span><span class="is-dl">android apk</span></p>
 
         </article>
 
@@ -368,6 +370,7 @@
           <p class="card-proof mono"><span>orientation-invariant</span><span>dwell-time guards</span><span>6
               gestures</span></p>
           <p class="card-stack mono">MediaPipe · OpenCV · PyQt6</p>
+          <p class="card-avail mono"><span class="is-dl">macOS app</span></p>
 
         </article>
 
@@ -384,6 +387,7 @@
           <p class="card-proof mono"><span>14 stations · 1 year</span><span>3 algorithms compared</span><span>hotspots =
               outliers</span></p>
           <p class="card-stack mono">pandas · scikit-learn · DBSCAN</p>
+          <p class="card-avail mono"><span class="is-live">explore the findings</span></p>
 
         </article>
 
@@ -399,6 +403,7 @@
           <p class="card-proof mono"><span>100% on-device</span><span>tremor smoothing</span><span>real Kotlin
               IME</span></p>
           <p class="card-stack mono">ML Kit · Flutter · Kotlin IME</p>
+          <p class="card-avail mono"><span class="is-dl">android apk</span></p>
 
         </article>
 
@@ -485,6 +490,7 @@
               <li>Scriptable via <code>insomniac://</code> URL scheme</li>
             </ul>
             <p class="card-stack mono">Swift 5.9 · AppKit · IOKit · NWPathMonitor</p>
+            <p class="card-avail mono"><span class="is-dl">.dmg download</span></p>
 
           </div>
         </article>
@@ -500,6 +506,7 @@
               <li>Reciprocal undo, haptic feedback, per-app filters</li>
             </ul>
             <p class="card-stack mono">Swift · AppKit · IOKit multitouch</p>
+            <p class="card-avail mono"><span class="is-dl">.dmg download</span></p>
 
           </div>
         </article>
@@ -514,6 +521,7 @@
               <li>Lives in the menu bar; does one thing well</li>
             </ul>
             <p class="card-stack mono">Swift · SwiftUI · AppKit</p>
+            <p class="card-avail mono"><span class="is-dl">download app</span></p>
 
           </div>
         </article>
@@ -528,6 +536,7 @@
               <li>Full color even in monochrome widget mode</li>
             </ul>
             <p class="card-stack mono">Swift · WidgetKit · AppIntents</p>
+            <p class="card-avail mono"><span class="is-dl">.dmg download</span></p>
 
           </div>
         </article>
@@ -544,6 +553,36 @@
             </ul>
             <p class="card-stack mono">Flutter · SQLite · on-device, no account</p>
 
+          </div>
+        </article>
+        <article onclick="window.location.href='case/project.html?id=twin'" role="link" tabindex="0"
+          class="app-window reveal">
+          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
+              class="app-name">TWIN</span><span class="app-platform">Web · Android</span></div>
+          <div class="app-body">
+            <p class="app-lead">Two players name words aimed at the middle of the last pair, until they match.</p>
+            <ul class="app-features">
+              <li>Firestore is the whole backend — no server, no socket layer</li>
+              <li>In-flight words live in a subcollection so neither player can read the other's first</li>
+              <li>Rounds resolve client-side via a guarded transaction: one write lands, the other backs out</li>
+            </ul>
+            <p class="card-stack mono">Flutter · Firestore · Firebase Hosting</p>
+            <p class="card-avail mono"><span class="is-live">play it live</span></p>
+          </div>
+        </article>
+        <article onclick="window.location.href='case/project.html?id=lull'" role="link" tabindex="0"
+          class="app-window reveal">
+          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
+              class="app-name">Lull.app</span><span class="app-platform">macOS</span></div>
+          <div class="app-body">
+            <p class="app-lead">Menu-bar control for the Background Sounds feature Apple buried in Accessibility.</p>
+            <ul class="app-features">
+              <li>Drives the same private framework System Settings uses, so macOS still owns the audio</li>
+              <li>Two-way sync with Settings; equalizer, sleep timer, stop-on-lock</li>
+              <li>Every private-API call is guarded, so it degrades instead of crashing</li>
+            </ul>
+            <p class="card-stack mono">Swift · AppKit · HearingUtilities (private)</p>
+            <p class="card-avail mono"><span class="is-dl">.dmg download</span></p>
           </div>
         </article>
       </div>
@@ -588,16 +627,6 @@
           <p>An Obsidian plugin that auto-hides both sidebars in fullscreen or a narrow window, then reveals them when
             you hover the window edge. Leaving fullscreen restores the layout you had.</p>
           <p class="card-stack mono">TypeScript · Obsidian API</p>
-
-        </article>
-        <article onclick="window.location.href='case/project.html?id=chitchat-automator'" role="link" tabindex="0"
-          class="card reveal">
-          <div class="pin"></div>
-          <h3>Chitchat Automator</h3>
-          <p class="card-tag mono">chrome extension · automation</p>
-          <p>Automates the boring parts of a random-chat site behind a toggle: keyword-skip, username filters (regex
-            too), skip-history, auto-greet, and auto-restart on disconnect — all from a clean popup.</p>
-          <p class="card-stack mono">JavaScript · Chrome MV3</p>
 
         </article>
       </div>

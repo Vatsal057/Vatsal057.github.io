@@ -108,7 +108,13 @@ window.PROJECTS = [
     ],
     learned: "A three-provider fallback chain shipped faster and broke less than waiting for one reliable paid API.",
     stack: ["Whisper", "OpenCV", "Tesseract", "SQLite", "FastAPI", "Flutter", "HF Spaces"],
-    links: { github: "https://github.com/Vatsal057/Cachy", website: "https://cachy.vatxzz.workers.dev" }
+    links: {
+      website: "https://cachy.vatxzz.workers.dev",
+      demo: "https://vatxzz-cachy.hf.space",
+      download: "https://github.com/Vatsal057/Cachy/releases/latest",
+      github: "https://github.com/Vatsal057/Cachy"
+    },
+    downloadLabel: "android apk"
   },
   {
     slug: "constitution-rag",
@@ -165,7 +171,11 @@ window.PROJECTS = [
     ],
     learned: "Most of the work in a gesture controller isn't recognising gestures — it's refusing to recognise the ones you didn't mean.",
     stack: ["MediaPipe", "OpenCV", "PyQt6"],
-    links: { github: "https://github.com/Vatsal057/AirSwipe" }
+    links: {
+      download: "https://github.com/Vatsal057/AirSwipe/releases/latest",
+      github: "https://github.com/Vatsal057/AirSwipe"
+    },
+    downloadLabel: "macOS app"
   },
   {
     slug: "bangalore-aqi",
@@ -185,7 +195,10 @@ window.PROJECTS = [
     ],
     learned: "DBSCAN beat K-Means here precisely because it doesn't force every point into a cluster — the points it refused to place were the answer.",
     stack: ["pandas", "scikit-learn", "DBSCAN", "Jupyter"],
-    links: { github: "https://github.com/Vatsal057/AirQuality" }
+    links: {
+      demo: "https://vatsal057.github.io/AirQuality/",
+      github: "https://github.com/Vatsal057/AirQuality"
+    }
   },
   {
     slug: "indian-food-search",
@@ -241,7 +254,11 @@ window.PROJECTS = [
       "Ships as a real Kotlin IME, not a demo app."
     ],
     stack: ["ML Kit", "Flutter", "Kotlin IME"],
-    links: { github: "https://github.com/Vatsal057/Scribbleeeee" }
+    links: {
+      download: "https://github.com/Vatsal057/Scribbleeeee/releases/latest",
+      github: "https://github.com/Vatsal057/Scribbleeeee"
+    },
+    downloadLabel: "android apk"
   },
 
   /* ---------- Native apps ---------- */
@@ -261,7 +278,11 @@ window.PROJECTS = [
       "Scriptable via an insomniac:// URL scheme."
     ],
     stack: ["Swift 5.9", "AppKit", "IOKit", "NWPathMonitor"],
-    links: { github: "https://github.com/Vatsal057/Insomniac" }
+    links: {
+      download: "https://github.com/Vatsal057/Insomniac/releases/latest",
+      github: "https://github.com/Vatsal057/Insomniac"
+    },
+    downloadLabel: "download .dmg"
   },
   {
     slug: "glide",
@@ -280,7 +301,11 @@ window.PROJECTS = [
       "Reads raw multitouch data directly via IOKit."
     ],
     stack: ["Swift", "AppKit", "IOKit multitouch"],
-    links: { github: "https://github.com/Vatsal057/Glide" }
+    links: {
+      download: "https://github.com/Vatsal057/Glide/releases/latest",
+      github: "https://github.com/Vatsal057/Glide"
+    },
+    downloadLabel: "download .dmg"
   },
   {
     slug: "dimmer",
@@ -297,7 +322,11 @@ window.PROJECTS = [
       "Lives in the menu bar, does one thing well."
     ],
     stack: ["Swift", "SwiftUI", "AppKit"],
-    links: { github: "https://github.com/Vatsal057/Dimmer" }
+    links: {
+      download: "https://github.com/Vatsal057/Dimmer/releases/latest",
+      github: "https://github.com/Vatsal057/Dimmer"
+    },
+    downloadLabel: "download app"
   },
   {
     slug: "photowidget",
@@ -315,7 +344,11 @@ window.PROJECTS = [
       "Full colour even in monochrome widget mode."
     ],
     stack: ["Swift", "WidgetKit", "AppIntents"],
-    links: { github: "https://github.com/Vatsal057/PhotoWidget" }
+    links: {
+      download: "https://github.com/Vatsal057/PhotoWidget/releases/latest",
+      github: "https://github.com/Vatsal057/PhotoWidget"
+    },
+    downloadLabel: "download .dmg"
   },
   {
     slug: "smart-wardrobe",
@@ -334,6 +367,53 @@ window.PROJECTS = [
     ],
     stack: ["Flutter", "SQLite", "on-device"],
     links: { github: "https://github.com/Vatsal057/Smart-Wardrobe" }
+  },
+  {
+    slug: "twin",
+    title: "TWIN",
+    kind: "app",
+    status: "shipped",
+    platform: "Web · Android",
+    tag: "realtime game · firestore, no server",
+    oneLiner: "A two-player word convergence game: keep naming words aimed at the middle of the last pair until you both say the same one.",
+    problem: "I wanted a real-time multiplayer game with no backend to run and no way for either player to cheat. Both constraints turn out to be the same problem: if the server is just a database, what stops one client reading the other's move before committing its own?",
+    how: ["create room", "both submit privately", "simultaneous reveal", "aim for the middle", "converge"],
+    highlights: [
+      "Firestore is the entire backend — no custom server, no socket layer. Both clients hold a live listener on the room document and react to changes.",
+      "In-flight words live in a subcollection, not on the room doc, because Firestore cannot hide a field from someone who can read the document. Security rules only release the opponent's word once both players have submitted, and submissions are create-only.",
+      "Rounds resolve without a server: both clients compute the outcome and race a transaction that only appends if rounds.length still equals the round index. One write lands, the other backs out — safe because the rule is string equality, so two clients can't disagree.",
+      "Room codes omit I, L, O, 0 and 1 because codes get dictated over the phone and retyped from screenshots.",
+      "Android App Links via a staged assetlinks.json, with the web build as the universal fallback after Firebase Dynamic Links shut down."
+    ],
+    learned: "A rule that errors in Firestore denies. Checking `resource == null` first mattered because reserving a room code reads the document it is about to write — and that one missing check blocked every room creation.",
+    note: "It genuinely needs two players. Anonymous auth gives each browser one identity, so open the link in two browsers or on two devices to play it properly.",
+    stack: ["Flutter", "Firestore", "Firebase Auth", "Firebase Hosting"],
+    links: { demo: "https://twinnn.web.app" }
+  },
+  {
+    slug: "lull",
+    media: { src: "../images/shots/lull.png", alt: "Lull menu bar popover controlling macOS Background Sounds", caption: "the whole app: a menu-bar remote for a feature Apple buried in Accessibility settings" },
+    title: "Lull.app",
+    kind: "app",
+    status: "shipped",
+    platform: "macOS",
+    tag: "macOS · private-framework reverse engineering",
+    oneLiner: "Menu-bar control for macOS Background Sounds — the real system feature, two-way synced with System Settings.",
+    problem: "Background Sounds is a genuinely good macOS feature buried three levels deep in Accessibility settings. Every third-party alternative ships its own audio files. I wanted a remote for the system feature itself, not a replacement for it.",
+    highlights: [
+      "Drives the same private framework System Settings uses (HearingUtilities → HUComfortSoundsSettings), so playback, the hi-quality downloaded audio and EQ are all handled by macOS.",
+      "Writes com.apple.ComfortSounds prefs and notifies the `heard` daemon, so changes appear in System Settings and vice-versa.",
+      "Equalizer, sleep timer, stop-on-lock, and a customizable global shortcut (⌥⌘L by default).",
+      "Guards every private-API call and falls back to a Settings shortcut rather than breaking if a future macOS changes it.",
+      "No network, no accounts, no data collection, no Dock icon."
+    ],
+    learned: "Driving an undocumented framework is only defensible if you assume it will disappear. Every call is wrapped so the failure mode is a degraded app, not a crashing one.",
+    stack: ["Swift", "AppKit", "HearingUtilities (private)"],
+    links: {
+      download: "https://github.com/Vatsal057/Lull/releases/latest",
+      github: "https://github.com/Vatsal057/Lull"
+    },
+    downloadLabel: "download .dmg"
   },
   /* ---------- Developer tools & extensions ---------- */
   {
@@ -392,24 +472,6 @@ window.PROJECTS = [
     stack: ["TypeScript", "Obsidian API"],
     links: { github: "https://github.com/Vatsal057/HideBars" }
   },
-  {
-    slug: "chitchat-automator",
-    title: "Chitchat Automator",
-    kind: "tool",
-    status: "shipped",
-    platform: "Chrome",
-    tag: "chrome extension · automation",
-    oneLiner: "A Chrome extension that automates chitchat.gg — keyword-skip, auto-greet, auto-restart, all from a clean popup.",
-    problem: "Random-chat sites are mostly waiting: for a good match, for a restart after a disconnect, for someone you haven't already talked to. I automated the boring parts behind a toggle.",
-    highlights: [
-      "Keyword skip: auto-skips a chat when an incoming message matches your keywords.",
-      "Username filtering with plain-text and regex patterns.",
-      "Skip history: automatically skip anyone you've already chatted with.",
-      "Auto-greeting and auto-restart on disconnect; one toggle pauses everything without losing settings."
-    ],
-    stack: ["JavaScript", "Chrome Extension APIs", "MV3"],
-    links: { github: "https://github.com/Vatsal057/ChitChatExtension" }
-  },
 
   /* ---------- Research ---------- */
   {
@@ -428,7 +490,10 @@ window.PROJECTS = [
     ],
     learned: "Swap augmentation bought more accuracy than a bigger model would have — it killed the position bias directly.",
     stack: ["DeBERTa-v3", "PyTorch", "free T4 GPUs"],
-    links: { github: "https://github.com/Vatsal057" }
+    // Deliberately no repo link: the paper is under review, so code and
+    // weights stay unpublished until a decision. A link to the bare profile
+    // would just look like a dead end.
+    note: "Code and weights are held back until the review decision."
   },
   {
     slug: "probclip-a",
@@ -446,7 +511,7 @@ window.PROJECTS = [
     ],
     learned: "Skip the KL warmup schedule and the variance collapses to zero — the model quietly stops being probabilistic.",
     stack: ["CLIP", "PyTorch", "Monte Carlo sampling"],
-    links: { github: "https://github.com/Vatsal057" }
+    note: "Code and weights are held back until the review decision."
   },
 
   /* ---------- Planned / building next ---------- */

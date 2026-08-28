@@ -896,6 +896,34 @@ html.js .cards .reveal:nth-child(6), html.js .app-grid .reveal:nth-child(6) { tr
 }
 
 
+/* Availability chips — "you can actually use this right now". Sage = something
+   live in the browser, amber = a real file to download. Only ever added to a
+   card whose project genuinely has that link in projects-data.js. */
+.card-avail {
+  display: flex; flex-wrap: wrap; gap: .35rem; margin: .55rem 0 0;
+}
+.card-avail span {
+  font-size: .66rem; font-weight: 500; padding: .2rem .55rem;
+  border-radius: 999px; white-space: nowrap;
+  display: inline-flex; align-items: center; gap: .3rem;
+}
+.card-avail span::before {
+  content: ""; width: 5px; height: 5px; border-radius: 50%;
+  background: currentColor; flex: none;
+}
+.card-avail .is-live {
+  background: #EEF3EE; border: 1px solid #C6D6C6; color: #4A6B4A;
+}
+.card-avail .is-dl {
+  background: #FAF4EA; border: 1px solid #E6D5BC; color: #8A6A3C;
+}
+body.dark-mode .card-avail .is-live {
+  background: #232B23; border-color: #3E5A3E; color: #9DBE9D;
+}
+body.dark-mode .card-avail .is-dl {
+  background: #2E2720; border-color: #5A4834; color: #D0A972;
+}
+
 /* Dark mode specific overrides */
 body.dark-mode .s-sage { background: #2A332A; border-color: var(--sage); }
 body.dark-mode .s-amber { background: #3B3024; border-color: var(--amber); }

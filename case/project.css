@@ -30,6 +30,11 @@
 
 .detail-links { display: flex; gap: .8rem; flex-wrap: wrap; }
 .detail-links .btn { padding: .5rem 1.1rem; font-size: .85rem; }
+.detail-note {
+  margin-top: .9rem; max-width: 58ch;
+  font-size: .86rem; line-height: 1.55; color: var(--ink-soft);
+  padding-left: .8rem; border-left: 2px solid var(--amber);
+}
 
 .detail-block { margin-bottom: 2.4rem; }
 .detail-block .eyebrow { margin-bottom: .7rem; }
