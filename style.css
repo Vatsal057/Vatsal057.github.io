@@ -896,6 +896,37 @@ html.js .cards .reveal:nth-child(6), html.js .app-grid .reveal:nth-child(6) { tr
 }
 
 
+/* Hero "these run right now" strip. The whole point of the site is that the work
+   is reachable, so the reachable things belong above the fold. */
+.hero-live { margin-top: 1.8rem; }
+.hero-live-label {
+  font-size: .74rem; letter-spacing: .04em; color: var(--sage-text);
+  margin-bottom: .6rem;
+}
+.hero-live-list {
+  list-style: none; display: flex; flex-wrap: wrap; gap: .5rem;
+  padding: 0; margin: 0;
+}
+.hero-live-list a {
+  display: inline-flex; align-items: baseline; gap: .45rem;
+  text-decoration: none; font-size: .85rem; font-weight: 600;
+  color: var(--ink); background: var(--card);
+  border: 1px solid var(--grid); border-left: 3px solid var(--sage);
+  border-radius: 8px; padding: .42rem .75rem;
+  transition: transform .15s ease, border-color .15s ease;
+}
+.hero-live-list a:hover {
+  transform: translateY(-1px); border-color: var(--sage);
+  border-left-color: var(--sage-deep);
+}
+.hero-live-list a span {
+  font-family: 'JetBrains Mono', monospace; font-size: .68rem;
+  font-weight: 400; color: var(--ink-soft);
+}
+@media (max-width: 620px) {
+  .hero-live-list a span { display: none; }
+}
+
 /* Availability chips — "you can actually use this right now". Sage = something
    live in the browser, amber = a real file to download. Only ever added to a
    card whose project genuinely has that link in projects-data.js. */

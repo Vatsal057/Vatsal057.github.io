@@ -7,7 +7,7 @@
 window.CONFIG = {
   // Hero section stats
   heroStats: {
-    shipped: 18,
+    shipped: 19,
     papers: 2,
     building: 2
   },
@@ -351,6 +351,28 @@ window.PROJECTS = [
     downloadLabel: "download .dmg"
   },
   {
+    slug: "media-manager",
+    title: "Samsung Media Manager",
+    kind: "app",
+    status: "shipped",
+    platform: "macOS",
+    tag: "macOS · library triage, reversibly",
+    oneLiner: "Organizes, de-duplicates and compresses a photo library — and can undo every batch it ran.",
+    problem: "Years of phone photos land on a drive as an unnavigable pile, and every tool that offers to tidy it wants you to trust it with irreversible bulk file moves. I wanted one that explains each move before making it and can put everything back afterwards.",
+    highlights: [
+      "Explainable move previews built from the original Android folder structure, EXIF camera metadata and dates. Only high-confidence moves are pre-selected; ambiguous media is proposed under _review/YYYY-MM and duplicates stay unchecked until approved.",
+      "Every file operation goes through one Mover choke point that performs the move and returns a record. The History screen groups those into batches and Undo reverses a whole batch back to exactly where files were.",
+      "GPS trip clustering: groups located photos into trips, reverse-geocodes the place name, and files them under DCIM/Trips/<name>.",
+      "Duplicate detection by size then SHA-256, keeping the best copy and quarantining the rest rather than deleting.",
+      "Blur and darkness screening via variance-of-Laplacian plus brightness, always review-then-quarantine.",
+      "Per-library state: each folder keeps its own settings and history in a hidden .mediamanager/, so nothing is hardcoded to one machine or one user."
+    ],
+    learned: "The feature that made it safe to use wasn't any of the detection logic — it was routing every mutation through a single logged choke point, which is what made a real Undo possible at all.",
+    stack: ["Swift", "SwiftUI", "swiftc", "ffmpeg", "Core Location"],
+    note: "Built from source with build.sh — there is no packaged download yet.",
+    links: { github: "https://github.com/Vatsal057/SamsungMediaManager" }
+  },
+  {
     slug: "smart-wardrobe",
     title: "Smart Wardrobe",
     kind: "app",
@@ -366,7 +388,11 @@ window.PROJECTS = [
       "Fully on-device, no account."
     ],
     stack: ["Flutter", "SQLite", "on-device"],
-    links: { github: "https://github.com/Vatsal057/Smart-Wardrobe" }
+    links: {
+      demo: "https://vatsal057.github.io/Smart-Wardrobe/",
+      github: "https://github.com/Vatsal057/Smart-Wardrobe"
+    },
+    note: "The web build runs the same Flutter code with SQLite compiled to WebAssembly, and opens on a pre-filled wardrobe so the outfit scoring has something to work with. Photo capture is the one feature it drops — a browser has no app documents directory to write to."
   },
   {
     slug: "twin",
@@ -521,7 +547,11 @@ window.PROJECTS = [
     kind: "planned",
     status: "in progress",
     tag: "flagship · grounded rag + rules",
-    links: { github: "https://github.com/Vatsal057/sahayak" },
+    links: {
+      demo: "https://vatsal057.github.io/sahayak/",
+      github: "https://github.com/Vatsal057/sahayak"
+    },
+    note: "The demo runs the actual Python package in your browser through Pyodide — the retriever has zero dependencies, so there is nothing to install and no server to call. Ask it something out of scope and watch it refuse.",
     oneLiner: "Grounded, cited answers about Indian welfare schemes, with a deterministic eligibility engine.",
     problem: "India runs 3,000+ welfare schemes and the binding constraint is awareness — eligible people don't know schemes exist or can't parse the bureaucratic eligibility language. Existing portals are keyword-search and English-form-heavy. Nobody answers 'I'm a Karnataka farmer with 2 acres — what do I get?' in plain language with trustworthy citations.",
     how: ["ingest schemes", "retrieve", "rules engine", "action card", "abstain if unsure"],
@@ -541,7 +571,11 @@ window.PROJECTS = [
     kind: "planned",
     status: "in progress",
     tag: "on-device · conformal calibration",
-    links: { github: "https://github.com/Vatsal057/oracle" },
+    links: {
+      demo: "https://vatsal057.github.io/oracle/",
+      github: "https://github.com/Vatsal057/oracle"
+    },
+    note: "The demo runs the walk-forward backtest live in your browser on CPython + numpy. Drag the history slider down to 50 days: calibration error climbs and the conformal sets widen to {0, 1} — the model declining to commit rather than guessing.",
     oneLiner: "Honest, calibrated predictions about your own behaviour — the shown 80% is right ~80% of the time.",
     problem: "Habit trackers show dashboards of the past. None make calibrated predictions about your future behaviour, or explain why. The hard, unsolved part is doing meaningful ML on tiny (n=30–300), noisy, single-person datasets without lying about confidence.",
     how: ["log signals", "learn per-person", "predict", "explain", "self-score calibration"],

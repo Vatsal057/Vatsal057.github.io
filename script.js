@@ -36,36 +36,48 @@ document.querySelectorAll('.card .pipeline').forEach(pl => {
 });
 
 // ============ Notebook card: real day + page = days since B.Tech init ============
-document.getElementById('ncDay').textContent =
-  new Date().toLocaleDateString('en', { weekday: 'short' });
-document.getElementById('ncPage').textContent =
-  Math.floor((Date.now() - new Date('2021-10-01')) / 864e5);
+// This file is also loaded by case/project.html, which ships none of the
+// homepage furniture. Unguarded lookups here used to throw on every detail
+// page, and since this is one flat top-level script that killed everything
+// below the throw.
+const ncDay = document.getElementById('ncDay');
+const ncPage = document.getElementById('ncPage');
+if (ncDay) {
+  ncDay.textContent = new Date().toLocaleDateString('en', { weekday: 'short' });
+}
+if (ncPage) {
+  ncPage.textContent = Math.floor((Date.now() - new Date('2021-10-01')) / 864e5);
+}
 
 // ============ GitHub live activity ============
-fetch('https://api.github.com/users/Vatsal057/events/public')
-  .then(r => r.ok ? r.json() : Promise.reject())
-  .then(events => {
-    if (!events.length) return;
-    const hrs = Math.round((Date.now() - new Date(events[0].created_at)) / 36e5);
-    const ago = hrs < 1 ? 'under an hour ago' : hrs < 48 ? `${hrs}h ago` : `${Math.round(hrs / 24)}d ago`;
-    const el = document.getElementById('ghLive');
-    el.textContent = `// last GitHub activity: ${ago}`;
-    el.hidden = false;
-  })
-  .catch(() => {});
+if (document.getElementById('ghLive')) {
+  fetch('https://api.github.com/users/Vatsal057/events/public')
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(events => {
+      if (!events.length) return;
+      const hrs = Math.round((Date.now() - new Date(events[0].created_at)) / 36e5);
+      const ago = hrs < 1 ? 'under an hour ago' : hrs < 48 ? `${hrs}h ago` : `${Math.round(hrs / 24)}d ago`;
+      const el = document.getElementById('ghLive');
+      el.textContent = `// last GitHub activity: ${ago}`;
+      el.hidden = false;
+    })
+    .catch(() => {});
+}
 
 // ============ Typewriter ============
-const ROLES = ['AI engineer in training', 'MTech · Data Science', 'RAG, from scratch', 'two papers under review', '13 projects shipped'];
+const ROLES = ['AI engineer in training', 'MTech · Data Science', 'RAG, from scratch', 'two papers under review', '19 projects shipped'];
 const typeTarget = document.getElementById('typeTarget');
-(function typeLoop(ri = 0, ci = 0, deleting = false) {
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { typeTarget.textContent = ROLES[0]; return; }
-  const word = ROLES[ri % ROLES.length];
-  typeTarget.textContent = word.slice(0, ci);
-  let delay = deleting ? 32 : 62;
-  if (!deleting && ci === word.length) { deleting = true; delay = 1700; }
-  else if (deleting && ci === 0) { deleting = false; ri++; delay = 350; }
-  setTimeout(() => typeLoop(ri, ci + (deleting ? -1 : 1), deleting), delay);
-})();
+if (typeTarget) {
+  (function typeLoop(ri = 0, ci = 0, deleting = false) {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { typeTarget.textContent = ROLES[0]; return; }
+    const word = ROLES[ri % ROLES.length];
+    typeTarget.textContent = word.slice(0, ci);
+    let delay = deleting ? 32 : 62;
+    if (!deleting && ci === word.length) { deleting = true; delay = 1700; }
+    else if (deleting && ci === 0) { deleting = false; ri++; delay = 350; }
+    setTimeout(() => typeLoop(ri, ci + (deleting ? -1 : 1), deleting), delay);
+  })();
+}
 
 // ============ Paper flip cards ============
 document.querySelectorAll('.paper-flip, .card-flip').forEach(card => {
@@ -78,19 +90,23 @@ document.querySelectorAll('.paper-flip, .card-flip').forEach(card => {
 
 // ============ Recruiter mode ============
 const recruiterToggle = document.getElementById('recruiterToggle');
-recruiterToggle.checked = localStorage.getItem('recruiter') === '1';
-document.body.classList.toggle('recruiter', recruiterToggle.checked);
-recruiterToggle.addEventListener('change', () => {
-  document.body.classList.toggle('recruiter', recruiterToggle.checked);
-  localStorage.setItem('recruiter', recruiterToggle.checked ? '1' : '0');
-});
+// The switch only exists on the homepage, but the preference is global, so the
+// body class is applied either way — a detail page should stay quiet too.
+document.body.classList.toggle('recruiter', localStorage.getItem('recruiter') === '1');
+if (recruiterToggle) {
+  recruiterToggle.checked = localStorage.getItem('recruiter') === '1';
+  recruiterToggle.addEventListener('change', () => {
+    document.body.classList.toggle('recruiter', recruiterToggle.checked);
+    localStorage.setItem('recruiter', recruiterToggle.checked ? '1' : '0');
+  });
+}
 
 // ============ AI companion ============
 // ponytail: keyword matcher now; swap answer() for a RAG endpoint when an API key exists
 const LINES = [
   "Welcome. I've compiled my thoughts. It took exactly 12ms.",
   "You can say 'tour' and I'll drag you through the highlights.",
-  "13 projects, 2 papers. I'd clap, but I lack hands.",
+  "19 projects, 2 papers, 6 you can open in this tab. I'd clap, but I lack hands.",
   "I'm fully authorized to run things. Try 'run train' or 'projects'.",
   "The terminal is top right. Don't break production, please.",
   "Recruiter switch is up top. Flipping it hurts my feelings.",
@@ -712,10 +728,13 @@ function openTerminal() {
 }
 function closeTerminal() { overlay.hidden = true; }
 
-document.getElementById('terminalBtn').addEventListener('click', openTerminal);
-document.getElementById('terminalClose').addEventListener('click', closeTerminal);
-overlay.addEventListener('click', e => { if (e.target === overlay) closeTerminal(); });
-termBody.addEventListener('click', () => termInput.focus());
+// Terminal mode is homepage-only furniture; detail pages ship none of it.
+if (overlay && termOut && termInput && termBody) {
+  document.getElementById('terminalBtn').addEventListener('click', openTerminal);
+  document.getElementById('terminalClose').addEventListener('click', closeTerminal);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeTerminal(); });
+  termBody.addEventListener('click', () => termInput.focus());
+}
 document.addEventListener('keydown', e => {
   if (e.key === '`' && e.ctrlKey) { e.preventDefault(); overlay.hidden ? openTerminal() : closeTerminal(); }
   if (e.key === 'Escape' && !overlay.hidden) closeTerminal();
@@ -816,17 +835,19 @@ function fakeTrain() {
   });
 }
 
-termInput.addEventListener('keydown', e => {
-  if (e.key === 'Enter') { runCommand(termInput.value); termInput.value = ''; }
-  else if (e.key === 'ArrowUp') { e.preventDefault(); if (histIdx < history.length - 1) termInput.value = history[++histIdx] || ''; }
-  else if (e.key === 'ArrowDown') { e.preventDefault(); termInput.value = histIdx > 0 ? history[--histIdx] : (histIdx = -1, ''); }
-  else if (e.key === 'Tab') {
-    e.preventDefault();
-    const cmds = ['help', 'about', 'projects', 'papers', 'skills', 'timeline', 'train', 'contact', 'resume', 'open ', 'sudo hire-me', 'clear', 'exit', 'cat '];
-    const hit = cmds.find(c => c.startsWith(termInput.value) && termInput.value);
-    if (hit) termInput.value = hit;
-  }
-});
+if (termInput) {
+  termInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { runCommand(termInput.value); termInput.value = ''; }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); if (histIdx < history.length - 1) termInput.value = history[++histIdx] || ''; }
+    else if (e.key === 'ArrowDown') { e.preventDefault(); termInput.value = histIdx > 0 ? history[--histIdx] : (histIdx = -1, ''); }
+    else if (e.key === 'Tab') {
+      e.preventDefault();
+      const cmds = ['help', 'about', 'projects', 'papers', 'skills', 'timeline', 'train', 'contact', 'resume', 'open ', 'sudo hire-me', 'clear', 'exit', 'cat '];
+      const hit = cmds.find(c => c.startsWith(termInput.value) && termInput.value);
+      if (hit) termInput.value = hit;
+    }
+  });
+}
 
 // ============ Konami → gradient descent rain ============
 const KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
@@ -838,6 +859,7 @@ document.addEventListener('keydown', e => {
 
 function gradientRain() {
   const cv = document.getElementById('rain');
+  if (!cv) return;                       // homepage-only easter egg
   cv.hidden = false;
   cv.width = innerWidth; cv.height = innerHeight;
   const ctx = cv.getContext('2d');
@@ -1040,11 +1062,15 @@ function gradientRain() {
   addEventListener('pointerdown', () => { dot.classList.add('is-down'); ring.classList.add('is-down'); });
   addEventListener('pointerup', () => { dot.classList.remove('is-down'); ring.classList.remove('is-down'); });
 
-  // recruiter switch kills it, native cursor returns
-  document.getElementById('recruiterToggle').addEventListener('change', () => {
-    document.body.classList.toggle('nbc-on', started && !recruiterOn());
-    morphReset(); setState(false, null);
-  });
+  // recruiter switch kills it, native cursor returns. The switch itself lives
+  // only on the homepage; detail pages read the stored preference instead.
+  const rt = document.getElementById('recruiterToggle');
+  if (rt) {
+    rt.addEventListener('change', () => {
+      document.body.classList.toggle('nbc-on', started && !recruiterOn());
+      morphReset(); setState(false, null);
+    });
+  }
 })();
 
 // ============ Web3Forms Contact Handler ============

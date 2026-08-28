@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vatsal Vaghasiya · AI Engineer</title>
   <meta name="description"
-    content="Vatsal Vaghasiya, MTech Data Science student. 18 shipped projects, 2 research papers under review, 5 more building.">
+    content="Vatsal Vaghasiya, MTech Data Science student. 19 shipped projects with 6 running live in the browser, 2 research papers under review, 5 more building.">
   <meta property="og:title" content="Vatsal Vaghasiya · AI Engineer">
   <meta property="og:description" content="Projects, papers, and the experiments that didn't work.">
   <meta property="og:image" content="images/og.png">
@@ -16,7 +16,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@500;600&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="stylesheet" href="style.css?v=7">
 </head>
 
 <body>
@@ -59,13 +59,32 @@
         <p class="typewriter mono reveal"><span id="typeTarget"></span><span class="caret">▊</span></p>
         <p class="hero-sub reveal">AI engineer in training. I build models, ship the apps around them,
           and <em>keep notes on what didn't work</em>.</p>
-        <p class="hero-stats mono reveal"><span class="count" id="stat-shipped" data-count="18">18</span> projects shipped &nbsp;·&nbsp;
+        <p class="hero-stats mono reveal"><span class="count" id="stat-shipped" data-count="19">19</span> projects shipped &nbsp;·&nbsp;
           <span class="count" id="stat-papers" data-count="2">2</span> papers under review &nbsp;·&nbsp; <span class="count" id="stat-building" data-count="2">2</span> building next
         </p>
         <div class="hero-cta reveal">
           <a class="btn btn-primary" href="#projects">See the experiments</a>
           <a class="btn btn-ghost" href="https://github.com/Vatsal057" target="_blank" rel="noopener">GitHub ↗</a>
           <a class="btn btn-ghost" href="resume.pdf" download>Download résumé</a>
+        </div>
+        <!-- Six of these run in a browser with no install and no signup. Putting
+             them in the hero so nobody has to go looking for something working. -->
+        <div class="hero-live reveal">
+          <p class="mono hero-live-label">// short on time? these run right now, in this tab</p>
+          <ul class="hero-live-list" role="list">
+            <li><a href="https://vatxzz-cachy.hf.space" target="_blank" rel="noopener">Cachy <span>reel → knowledge
+                  card</span></a></li>
+            <li><a href="https://vatsal057.github.io/sahayak/" target="_blank" rel="noopener">Sahayak <span>cited answers,
+                  refuses to guess</span></a></li>
+            <li><a href="https://vatsal057.github.io/oracle/" target="_blank" rel="noopener">Oracle <span>calibration
+                  backtest, live</span></a></li>
+            <li><a href="https://vatsal057.github.io/AirQuality/" target="_blank" rel="noopener">Bangalore AQI <span>14
+                  stations, mapped</span></a></li>
+            <li><a href="https://vatsal057.github.io/Smart-Wardrobe/" target="_blank" rel="noopener">Smart Wardrobe
+                <span>Flutter + WASM SQLite</span></a></li>
+            <li><a href="https://twinnn.web.app" target="_blank" rel="noopener">TWIN <span>realtime, no server</span></a>
+            </li>
+          </ul>
         </div>
       </div>
       <div class="hero-doodle reveal" aria-hidden="true">
@@ -552,7 +571,22 @@
               <li>Wash tracking and packing lists built against the forecast</li>
             </ul>
             <p class="card-stack mono">Flutter · SQLite · on-device, no account</p>
-
+            <p class="card-avail mono"><span class="is-live">try it in the browser</span></p>
+          </div>
+        </article>
+        <article onclick="window.location.href='case/project.html?id=media-manager'" role="link" tabindex="0"
+          class="app-window reveal">
+          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
+              class="app-name">Samsung Media Manager</span><span class="app-platform">macOS</span></div>
+          <div class="app-body">
+            <p class="app-lead">Tidies a photo library, and can undo every batch it ran.</p>
+            <ul class="app-features">
+              <li>Explainable move previews from Android folders + EXIF; ambiguous media goes to <code>_review/</code>
+              </li>
+              <li>Every file operation routes through one logged choke point, which is what makes Undo real</li>
+              <li>GPS trip clustering with reverse-geocoded place names</li>
+            </ul>
+            <p class="card-stack mono">Swift · SwiftUI · ffmpeg · Core Location</p>
           </div>
         </article>
         <article onclick="window.location.href='case/project.html?id=twin'" role="link" tabindex="0"
@@ -586,7 +620,7 @@
           </div>
         </article>
       </div>
-      <p class="app-count mono reveal">// running total: 18 shipped, 5 more building. all on this page.</p>
+      <p class="app-count mono reveal">// running total: 19 shipped, 6 you can open right now, 5 more building. all on this page.</p>
     </section>
 
     <!-- ============ TOOLS & EXTENSIONS ============ -->
@@ -638,14 +672,14 @@
         <img class="section-icon" src="images/icon-flask.png" alt="">
         <p class="eyebrow mono">// git branch --unmerged</p>
         <h2>Building next <span class="margin-note caveat">← live on github</span></h2>
-        <p class="section-sub">Two projects currently in active development, both with working cores on GitHub. One
-          thread runs through them: AI that knows when it doesn't know — calibration, abstention, verifiable privacy.
-        </p>
+        <p class="section-sub">Two projects in active development. The products aren't finished, but both modeling
+          cores are, and both now run live in your browser — no install, no server, no API key. One thread runs through
+          them: AI that knows when it doesn't know, which means calibration, abstention and verifiable privacy.</p>
       </div>
       <div class="cards roadmap-cards">
         <article onclick="window.location.href='case/project.html?id=sahayak'" role="link" tabindex="0"
           class="card planned-card building-card reveal">
-          <span class="planned-badge building-badge mono">building · flagship · code on github</span>
+          <span class="planned-badge building-badge mono">building · flagship · core runs live</span>
           <h3>Sahayak</h3>
           <p class="card-tag mono">grounded rag + rules engine</p>
           <p>Grounded, cited answers about India's 3,000+ welfare schemes, plus a deterministic eligibility engine. Ask
@@ -653,13 +687,13 @@
             when it isn't sure. <mark class="hl">Retrieval core shipped</mark> — from-scratch hybrid retriever + rules
             engine + eval harness.</p>
           <p class="card-stack mono">hybrid retrieval · BM25 + TF-IDF · rules engine</p>
-
-          <a class="card-link mono" href="https://github.com/Vatsal057/sahayak" target="_blank" rel="noopener">github
-            →</a>
+          <p class="card-avail mono"><span class="is-live">run the retriever in your browser</span></p>
+          <a class="card-link mono" href="https://vatsal057.github.io/sahayak/" target="_blank" rel="noopener">live
+            demo ↗</a>
         </article>
         <article onclick="window.location.href='case/project.html?id=oracle'" role="link" tabindex="0"
           class="card planned-card building-card reveal">
-          <span class="planned-badge building-badge mono">building · code on github</span>
+          <span class="planned-badge building-badge mono">building · core runs live</span>
           <h3>Oracle</h3>
           <p class="card-tag mono">on-device · conformal calibration</p>
           <p>Honest, calibrated predictions about your own behaviour — the shown 80% is right ~80% of the time. The hard
@@ -667,9 +701,9 @@
               class="hl">Modeling core shipped</mark> — from-scratch logistic regression + split-conformal, backtested.
           </p>
           <p class="card-stack mono">conformal prediction · Platt scaling</p>
-
-          <a class="card-link mono" href="https://github.com/Vatsal057/oracle" target="_blank" rel="noopener">github
-            →</a>
+          <p class="card-avail mono"><span class="is-live">run the backtest in your browser</span></p>
+          <a class="card-link mono" href="https://vatsal057.github.io/oracle/" target="_blank" rel="noopener">live
+            demo ↗</a>
         </article>
       </div>
     </section>
@@ -888,8 +922,8 @@
 
   <canvas id="rain" hidden></canvas>
 
-  <script src="projects-data.js?v=2"></script>
-  <script src="script.js?v=2"></script>
+  <script src="projects-data.js?v=7"></script>
+  <script src="script.js?v=7"></script>
   <script type="module">
     import { createAvatar } from 'https://esm.sh/@bible-strong/avatar-web';
     fetch('./grok-bot.avatar.json')
