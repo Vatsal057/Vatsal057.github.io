@@ -418,7 +418,12 @@ window.PROJECTS = [
     learned: "A rule that errors in Firestore denies. Checking `resource == null` first mattered because reserving a room code reads the document it is about to write — and that one missing check blocked every room creation.",
     note: "It genuinely needs two players. Anonymous auth gives each browser one identity, so open the link in two browsers or on two devices to play it properly.",
     stack: ["Flutter", "Firestore", "Firebase Auth", "Firebase Hosting"],
-    links: { demo: "https://twinnn.web.app" }
+    links: {
+      demo: "https://twinnn.web.app",
+      download: "https://github.com/Vatsal057/TWIN/releases/latest",
+      github: "https://github.com/Vatsal057/TWIN"
+    },
+    downloadLabel: "android apk"
   },
   {
     slug: "lull",
