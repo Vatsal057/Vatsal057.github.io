@@ -764,11 +764,20 @@ body.nbc-on .nbc-dot, body.nbc-on .nbc-ring { opacity: 1; }
 .nbc-dot {
   width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px;
   border-radius: 50%; background: var(--ink);
+  will-change: translate, scale;
 }
 .nbc-ring {
   width: 38px; height: 38px; border-radius: 50%;
+  /* Centred with a negative margin so the JS loop can write plain pixel
+     translates. It used to centre with calc(Xpx - 50%), which made every frame
+     resolve a percentage against this box. JS overrides the margin when the ring
+     morphs to a button's size. */
+  margin: -19px 0 0 -19px;
   display: flex; align-items: center; justify-content: center;
-  will-change: translate, width, height;
+  /* Both properties that actually animate, and only those. width/height used to be
+     listed, which asks the browser to prepare for layout on a composited element;
+     scale was missing, so every press animated it uncomposited and relayed out. */
+  will-change: translate, scale;
 }
 .nbc-ring::before {
   content: ""; position: absolute; inset: 0; border-radius: inherit;
@@ -784,7 +793,7 @@ body.nbc-on .nbc-dot, body.nbc-on .nbc-ring { opacity: 1; }
 }
 
 /* states (classes live on the ring; dot follows suit) */
-.nbc-ring, .nbc-ring::before, .nbc-dot { transition: opacity .25s ease, scale .3s cubic-bezier(.22,1,.36,1), background .2s, border-color .2s, width .35s cubic-bezier(.22,1,.36,1), height .35s cubic-bezier(.22,1,.36,1), border-radius .35s cubic-bezier(.22,1,.36,1); }
+.nbc-ring, .nbc-ring::before, .nbc-dot { transition: opacity .25s ease, scale .3s cubic-bezier(.22,1,.36,1), background .2s, border-color .2s, width .35s cubic-bezier(.22,1,.36,1), height .35s cubic-bezier(.22,1,.36,1), margin .35s cubic-bezier(.22,1,.36,1), border-radius .35s cubic-bezier(.22,1,.36,1); }
 .nbc-ring.is-link { scale: .68; }
 .nbc-ring.is-link::before { border-color: var(--amber); border-style: solid; opacity: 1; animation-play-state: paused; }
 .nbc-dot.is-link { scale: 1.5; background: var(--amber); }

@@ -230,10 +230,29 @@ const homeXY = () => [vw() - SIZE - 22, vh() - SIZE - 22];
 place(...homeXY());
 addEventListener('resize', () => { if (!walking) place(pos.x, pos.y); });
 
+// The avatar library redraws its SVG on every frame for as long as it is playing,
+// and it never stopped. Measured on the homepage that was 120 layouts a second —
+// two per frame, forever — which is what made every click feel like the page had
+// to catch up first. Pausing it took the idle rate to 5 layouts a second.
+//
+// So a pose plays long enough to be seen and then holds on its last frame. The
+// `bob` CSS animation on .robot is a plain transform and keeps it looking alive
+// while the SVG rests, so nothing appears frozen.
+let avatarHold;
+function avatarPlay(anim, holdMs = 2600) {
+  if (!window.veeAvatar) return;
+  clearTimeout(avatarHold);
+  try { window.veeAvatar.play(anim); } catch { return; }
+  if (document.hidden) { try { window.veeAvatar.pause(); } catch { } return; }
+  avatarHold = setTimeout(() => {
+    try { window.veeAvatar.pause(); } catch { }
+  }, holdMs);
+}
+
 function setPose(name) {
   if (robotBtn?.classList.contains('fallback')) return;
   if (!window.veeAvatar) return;
-  
+
   const map = {
     'searching': 'searching',
     'playful': 'playful',
@@ -246,19 +265,19 @@ function setPose(name) {
   };
 
   if (map[name]) {
-    window.veeAvatar.play(map[name]);
+    avatarPlay(map[name]);
   } else if (name.includes('sleep')) {
-    window.veeAvatar.play('sleeping');
+    avatarPlay('sleeping');
   } else if (name.includes('think')) {
-    window.veeAvatar.play('thinking');
+    avatarPlay('thinking');
   } else if (name.includes('point') || name.includes('searching')) {
-    window.veeAvatar.play('searching');
+    avatarPlay('searching');
   } else if (name.includes('cheer') || name.includes('celebrate')) {
-    window.veeAvatar.play('celebrate');
+    avatarPlay('celebrate');
   } else if (name.includes('wave') || name.includes('idle')) {
-    window.veeAvatar.play('idle');
+    avatarPlay('idle');
   } else {
-    window.veeAvatar.play(name);
+    avatarPlay(name);
   }
 }
 
@@ -332,7 +351,9 @@ function roamAct() {
     say("Thinking. It's most of the job.");
   } else if (roll < .92) {
     setPose('robot-point.png');
-    const ids = ['experiments', 'projects', 'research', 'principles'];
+    // Only sections that exist. The robot used to offer to take people to an
+    // "experiments" section, and goToSection would then silently do nothing.
+    const ids = ['projects', 'apps', 'research', 'principles'];
     const id = ids[Math.floor(Math.random() * ids.length)];
     pendingGoto = id;
     say(`Have you seen the ${id} section? Click me and I'll take you.`, true);
@@ -463,6 +484,19 @@ function armIdle() {
 }
 ['click', 'scroll', 'keydown', 'pointermove'].forEach(ev =>
   addEventListener(ev, armIdle, { passive: true }));
+
+// The avatar redraws its SVG on a timer for as long as the page is open, and a
+// CPU profile put it at the top of everything this page does. Nothing to look at
+// while the tab is in the background, so stop it there.
+document.addEventListener('visibilitychange', () => {
+  if (!window.veeAvatar) return;
+  if (document.hidden) {
+    clearTimeout(avatarHold);
+    try { window.veeAvatar.pause(); } catch { /* older builds have no pause */ }
+  } else {
+    avatarPlay(asleep ? 'sleeping' : 'idle');
+  }
+});
 armIdle();
 // commands the robot executes on the site, checked before Q&A answers
 const ACTIONS = [
@@ -492,7 +526,9 @@ const ACTIONS = [
   [/^open linkedin/i, () => { window.open('https://www.linkedin.com/in/vatsal-vaghasiya/', '_blank'); say("LinkedIn. He's less funny there.", true); }],
   [/^(show|go to) (apps?|macos|swift)/i, () => goToSection('apps', "Five macOS apps. All native.")],
   [/^(show|go to) skills?/i, () => goToSection('skills', "His own estimates. I checked.")],
-  [/^(show|go to) (experiments?|board|fail)/i, () => goToSection('experiments', "Go read the failed column.")],
+  // The separate experiments board is gone; the project cards are the experiments,
+  // and what didn't work is on each case study's "what I learned" card.
+  [/^(show|go to) (experiments?|board|fail)/i, () => goToSection('projects', "The failures are on each project's card.")],
   [/^(show|go to) (principles)/i, () => goToSection('principles', "Four cards. All true.")],
   [/^(show|go to) (projects?|cachy|airswipe)/i, () => goToSection('projects', "Nineteen shipped. Six pinned.")],
   [/^(show|go to) (research|papers?)/i, () => goToSection('research', "Both first-author. Click to flip.")],
@@ -660,7 +696,7 @@ setTimeout(() => {
 
 // contextual lines as sections scroll into view (each said once)
 const SECTION_LINES = {
-  experiments: "Most portfolios skip the failed experiments. These stayed on the board.",
+
   principles: "Index cards. His desk really looks like this.",
   projects: "Try `cat rag` in the terminal for the short version.",
   apps: "He ships Mac apps between papers.",
@@ -785,7 +821,7 @@ function runCommand(raw) {
     case 'whoami':
       tprint(`Vatsal Vaghasiya - AI engineer in training.
 MTech Data Science @ Ramaiah University (Bengaluru).
-Builds ML systems end to end and keeps the failed experiments on the board.
+Builds ML systems end to end and keeps notes on what didn't work.
 2 first-author papers under review · 19 projects shipped.`); break;
     case 'ls':
     case 'projects':
@@ -999,34 +1035,51 @@ function gradientRain() {
   document.body.append(dot, ring);
 
   // dot snaps, ring lags — pen tip and its halo. One rAF lerp loop, no library.
+  //
+  // Two things here used to cost a frame's worth of work forever. The ring was
+  // positioned with `calc(Xpx - 50%)`, so every single frame had to resolve a
+  // percentage against the ring's own box; it is centred with a margin now and
+  // the loop writes plain pixels. And the loop never returned, so the compositor
+  // had work queued even with the mouse sitting still — it now stops once the
+  // lerp has caught up and is restarted by kick().
   const pos = { dx: 0, dy: 0, rx: 0, ry: 0, tx: 0, ty: 0, rtx: 0, rty: 0 };
-  (function loop() {
+  let raf = 0;
+  const settled = () =>
+    Math.abs(pos.tx - pos.dx) < 0.05 && Math.abs(pos.ty - pos.dy) < 0.05 &&
+    Math.abs(pos.rtx - pos.rx) < 0.05 && Math.abs(pos.rty - pos.ry) < 0.05;
+
+  function loop() {
     pos.dx += (pos.tx - pos.dx) * 0.55;
     pos.dy += (pos.ty - pos.dy) * 0.55;
     pos.rx += (pos.rtx - pos.rx) * 0.16;
     pos.ry += (pos.rty - pos.ry) * 0.16;
-    dot.style.translate = `${pos.dx}px ${pos.dy}px`;
-    ring.style.translate = `calc(${pos.rx}px - 50%) calc(${pos.ry}px - 50%)`;
-    requestAnimationFrame(loop);
-  })();
+    dot.style.translate = `${pos.dx.toFixed(1)}px ${pos.dy.toFixed(1)}px`;
+    ring.style.translate = `${pos.rx.toFixed(1)}px ${pos.ry.toFixed(1)}px`;
+    if (settled()) { raf = 0; return; }
+    raf = requestAnimationFrame(loop);
+  }
+  const kick = () => { if (!raf) raf = requestAnimationFrame(loop); };
   const dx = v => { pos.tx = v; }, dy = v => { pos.ty = v; };
   const rx = v => { pos.rtx = v; }, ry = v => { pos.rty = v; };
 
   const recruiterOn = () => document.body.classList.contains('recruiter');
   let started = false, stuck = null, cx = 0, cy = 0;
+  const stuckBox = { cx: 0, cy: 0 };
 
   addEventListener('pointermove', e => {
     if (!started && !recruiterOn()) { document.body.classList.add('nbc-on'); started = true; }
     cx = e.clientX; cy = e.clientY;
     dx(cx); dy(cy);
     if (stuck) {
-      // conform to the button, follow the cursor only a little (magnetic stick)
-      const r = stuck.getBoundingClientRect();
-      const bx = r.left + r.width / 2, by = r.top + r.height / 2;
+      // Conform to the button, follow the cursor only a little (magnetic stick).
+      // The rect is cached at morph time; reading it here meant a forced layout
+      // on every pointermove.
+      const bx = stuckBox.cx, by = stuckBox.cy;
       rx(bx + (cx - bx) * 0.18); ry(by + (cy - by) * 0.18);
     } else {
       rx(cx); ry(cy);
     }
+    kick();
   }, { passive: true });
 
   // ring morphs into the button's own box (size + corner radius) and sticks
@@ -1035,16 +1088,25 @@ function gradientRain() {
     stuck = el;
     const r = el.getBoundingClientRect();
     const br = parseFloat(getComputedStyle(el).borderRadius) || 6;
+    const w = r.width + 12, h = r.height + 12;
+    stuckBox.cx = r.left + r.width / 2;
+    stuckBox.cy = r.top + r.height / 2;
     dot.classList.add('is-shape'); ring.classList.add('is-shape');
-    ring.style.width = (r.width + 12) + 'px';
-    ring.style.height = (r.height + 12) + 'px';
+    ring.style.width = w + 'px';
+    ring.style.height = h + 'px';
     ring.style.borderRadius = (br + 5) + 'px';
+    // Centring is a margin rather than a percentage translate, so it only has to
+    // be recomputed when the size changes instead of on every frame.
+    ring.style.margin = `${-h / 2}px 0 0 ${-w / 2}px`;
+    kick();
   }
   function morphReset() {
     if (!stuck) return;
     stuck = null;
     dot.classList.remove('is-shape'); ring.classList.remove('is-shape');
     ring.style.width = ''; ring.style.height = ''; ring.style.borderRadius = '';
+    ring.style.margin = '';
+    kick();
   }
 
   // what the cursor becomes, first match wins
@@ -1088,8 +1150,31 @@ function gradientRain() {
   document.documentElement.addEventListener('mouseleave', () => document.body.classList.remove('nbc-on'));
   document.documentElement.addEventListener('mouseenter', () => { if (started && !recruiterOn()) document.body.classList.add('nbc-on'); });
 
-  addEventListener('pointerdown', () => { dot.classList.add('is-down'); ring.classList.add('is-down'); });
-  addEventListener('pointerup', () => { dot.classList.remove('is-down'); ring.classList.remove('is-down'); });
+  const setDown = on => {
+    dot.classList.toggle('is-down', on);
+    ring.classList.toggle('is-down', on);
+  };
+  addEventListener('pointerdown', () => setDown(true));
+  addEventListener('pointerup', () => setDown(false));
+
+  // Clicking something that opens a new tab moves focus away before pointerup
+  // ever reaches this page, so is-down stayed on and the cursor kept its pressed
+  // size for good — that is the cursor "getting stuck" after coming back. Every
+  // path that can swallow the pointerup has to release it.
+  addEventListener('pointercancel', () => setDown(false));
+  addEventListener('blur', () => { setDown(false); morphReset(); });
+  addEventListener('contextmenu', () => setDown(false));
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) { setDown(false); morphReset(); }
+  });
+  // Returning via the back/forward cache restores the DOM as it was, pressed
+  // state included, so it has to be cleared on the way back in too.
+  addEventListener('pageshow', () => {
+    setDown(false);
+    morphReset();
+    if (started && !recruiterOn()) document.body.classList.add('nbc-on');
+    kick();
+  });
 
   // recruiter switch kills it, native cursor returns. The switch itself lives
   // only on the homepage; detail pages read the stored preference instead.
