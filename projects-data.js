@@ -1,7 +1,10 @@
 /* ============================================================
    projects-data.js — single source of truth for every project.
-   Cards in index.html and detail pages (projects/project.html?id=slug)
+   Cards in index.html and detail pages (case/project.html?id=slug)
    both read from window.PROJECTS. Add a project = add one entry here.
+   The companion's knowledge base is generated from this file at deploy
+   time by worker/build-knowledge.mjs, so editing prose here changes what
+   the companion can answer. It needs a worker redeploy to take effect.
    ============================================================ */
 
 window.CONFIG = {
@@ -52,9 +55,9 @@ window.CONFIG = {
     {
       name: "SQL & Data Wrangling",
       pct: 72,
-      ships: "14 stations",
+      ships: "14 exports",
       note: "pandas, SQLite, messy real-world Excel included.",
-      shipsList: "✓ Bangalore AQI &nbsp;✓ 14-station consolidation"
+      shipsList: "✓ Bangalore AQI &nbsp;✓ 14 station exports consolidated, 13 usable"
     },
     {
       name: "MLOps · Docker · FastAPI",
@@ -184,7 +187,7 @@ window.PROJECTS = [
     kind: "project",
     status: "shipped",
     tag: "data mining · unsupervised",
-    oneLiner: "A year of data from 14 CPCB stations, clustered to find the pollution hotspots a city-wide average hides.",
+    oneLiner: "A year of data from 13 CPCB stations, clustered to find the pollution hotspots a city-wide average hides.",
     problem: "A single city AQI number hides everything interesting. A traffic junction and a leafy suburb get averaged into a meaningless middle. I wanted to surface the local variance.",
     how: ["excel mess", "clean", "features", "cluster", "hotspots"],
     highlights: [
@@ -358,16 +361,16 @@ window.PROJECTS = [
     platform: "macOS",
     tag: "macOS · library triage, reversibly",
     oneLiner: "Organizes, de-duplicates and compresses a photo library — and can undo every batch it ran.",
-    problem: "Years of phone photos land on a drive as an unnavigable pile, and every tool that offers to tidy it wants you to trust it with irreversible bulk file moves. I wanted one that explains each move before making it and can put everything back afterwards.",
+    problem: "Years of phone photos end up on a drive as one big unsorted pile, and every tool that offers to tidy it wants you to trust it with bulk file moves you cannot take back. I wanted one that shows me each move before it makes it and can put everything back afterwards.",
     highlights: [
-      "Explainable move previews built from the original Android folder structure, EXIF camera metadata and dates. Only high-confidence moves are pre-selected; ambiguous media is proposed under _review/YYYY-MM and duplicates stay unchecked until approved.",
+      "Every proposed move comes with the reason for it, worked out from the original Android folder structure, EXIF camera metadata and dates. Only high-confidence moves are pre-selected; ambiguous media is proposed under _review/YYYY-MM and duplicates stay unchecked until approved.",
       "Every file operation goes through one Mover choke point that performs the move and returns a record. The History screen groups those into batches and Undo reverses a whole batch back to exactly where files were.",
       "GPS trip clustering: groups located photos into trips, reverse-geocodes the place name, and files them under DCIM/Trips/<name>.",
-      "Duplicate detection by size then SHA-256, keeping the best copy and quarantining the rest rather than deleting.",
+      "Duplicate detection by size then SHA-256, keeping the best copy and moving the rest to quarantine. It never deletes a file.",
       "Blur and darkness screening via variance-of-Laplacian plus brightness, always review-then-quarantine.",
       "Per-library state: each folder keeps its own settings and history in a hidden .mediamanager/, so nothing is hardcoded to one machine or one user."
     ],
-    learned: "The feature that made it safe to use wasn't any of the detection logic — it was routing every mutation through a single logged choke point, which is what made a real Undo possible at all.",
+    learned: "Undo works because every file move goes through one logged choke point. I wrote all the detection logic first and then had to restructure the app around that single Mover, because there was no way to reverse a batch until every mutation had a record.",
     stack: ["Swift", "SwiftUI", "swiftc", "ffmpeg", "Core Location"],
     note: "Built from source with build.sh — there is no packaged download yet.",
     links: { github: "https://github.com/Vatsal057/SamsungMediaManager" }
@@ -402,11 +405,11 @@ window.PROJECTS = [
     platform: "Web · Android",
     tag: "realtime game · firestore, no server",
     oneLiner: "A two-player word convergence game: keep naming words aimed at the middle of the last pair until you both say the same one.",
-    problem: "I wanted a real-time multiplayer game with no backend to run and no way for either player to cheat. Both constraints turn out to be the same problem: if the server is just a database, what stops one client reading the other's move before committing its own?",
+    problem: "I wanted a real-time multiplayer game with no backend to run and no way for either player to cheat. Those two turn out to be the same problem. If the server is only a database, something still has to stop one client reading the other's move before it commits its own.",
     how: ["create room", "both submit privately", "simultaneous reveal", "aim for the middle", "converge"],
     highlights: [
       "Firestore is the entire backend — no custom server, no socket layer. Both clients hold a live listener on the room document and react to changes.",
-      "In-flight words live in a subcollection, not on the room doc, because Firestore cannot hide a field from someone who can read the document. Security rules only release the opponent's word once both players have submitted, and submissions are create-only.",
+      "In-flight words live in their own subcollection. Firestore cannot hide one field from someone who is allowed to read the document, so keeping them on the room doc would have handed each player the other's word. Security rules release it only once both have submitted, and submissions are create-only.",
       "Rounds resolve without a server: both clients compute the outcome and race a transaction that only appends if rounds.length still equals the round index. One write lands, the other backs out — safe because the rule is string equality, so two clients can't disagree.",
       "Room codes omit I, L, O, 0 and 1 because codes get dictated over the phone and retyped from screenshots.",
       "Android App Links via a staged assetlinks.json, with the web build as the universal fallback after Firebase Dynamic Links shut down."
@@ -425,15 +428,15 @@ window.PROJECTS = [
     platform: "macOS",
     tag: "macOS · private-framework reverse engineering",
     oneLiner: "Menu-bar control for macOS Background Sounds — the real system feature, two-way synced with System Settings.",
-    problem: "Background Sounds is a genuinely good macOS feature buried three levels deep in Accessibility settings. Every third-party alternative ships its own audio files. I wanted a remote for the system feature itself, not a replacement for it.",
+    problem: "Background Sounds is a good macOS feature buried three levels deep in Accessibility settings. Every third-party alternative I found ships its own audio files and ignores the built-in one. I wanted a menu-bar remote for the system feature itself.",
     highlights: [
       "Drives the same private framework System Settings uses (HearingUtilities → HUComfortSoundsSettings), so playback, the hi-quality downloaded audio and EQ are all handled by macOS.",
       "Writes com.apple.ComfortSounds prefs and notifies the `heard` daemon, so changes appear in System Settings and vice-versa.",
       "Equalizer, sleep timer, stop-on-lock, and a customizable global shortcut (⌥⌘L by default).",
-      "Guards every private-API call and falls back to a Settings shortcut rather than breaking if a future macOS changes it.",
+      "Every private-API call is guarded. If a future macOS changes the framework, the app falls back to opening the Settings pane.",
       "No network, no accounts, no data collection, no Dock icon."
     ],
-    learned: "Driving an undocumented framework is only defensible if you assume it will disappear. Every call is wrapped so the failure mode is a degraded app, not a crashing one.",
+    learned: "Building on an undocumented framework is only worth doing if you assume it will disappear. Every call is wrapped, so when Apple changes something the app loses that one feature and keeps running.",
     stack: ["Swift", "AppKit", "HearingUtilities (private)"],
     links: {
       download: "https://github.com/Vatsal057/Lull/releases/latest",
@@ -551,7 +554,7 @@ window.PROJECTS = [
       demo: "https://vatsal057.github.io/sahayak/",
       github: "https://github.com/Vatsal057/sahayak"
     },
-    note: "The demo runs the actual Python package in your browser through Pyodide — the retriever has zero dependencies, so there is nothing to install and no server to call. Ask it something out of scope and watch it refuse.",
+    note: "The demo runs the actual Python package in your browser through Pyodide. The retriever has no dependencies, so there is nothing to install and no server to call. Ask it something outside the 11 seed schemes and it stops, with the retrieval score on screen so you can see the number it stopped on.",
     oneLiner: "Grounded, cited answers about Indian welfare schemes, with a deterministic eligibility engine.",
     problem: "India runs 3,000+ welfare schemes and the binding constraint is awareness — eligible people don't know schemes exist or can't parse the bureaucratic eligibility language. Existing portals are keyword-search and English-form-heavy. Nobody answers 'I'm a Karnataka farmer with 2 acres — what do I get?' in plain language with trustworthy citations.",
     how: ["ingest schemes", "retrieve", "rules engine", "action card", "abstain if unsure"],
@@ -575,7 +578,7 @@ window.PROJECTS = [
       demo: "https://vatsal057.github.io/oracle/",
       github: "https://github.com/Vatsal057/oracle"
     },
-    note: "The demo runs the walk-forward backtest live in your browser on CPython + numpy. Drag the history slider down to 50 days: calibration error climbs and the conformal sets widen to {0, 1} — the model declining to commit rather than guessing.",
+    note: "The demo runs the walk-forward backtest in your browser on CPython + numpy. Drag the history slider down to 50 days and calibration error climbs while the conformal sets widen to {0, 1}, which is the model saying it cannot separate the two outcomes yet.",
     oneLiner: "Honest, calibrated predictions about your own behaviour — the shown 80% is right ~80% of the time.",
     problem: "Habit trackers show dashboards of the past. None make calibrated predictions about your future behaviour, or explain why. The hard, unsolved part is doing meaningful ML on tiny (n=30–300), noisy, single-person datasets without lying about confidence.",
     how: ["log signals", "learn per-person", "predict", "explain", "self-score calibration"],

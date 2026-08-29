@@ -16,7 +16,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@500;600&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=7">
+  <link rel="stylesheet" href="style.css?v=8">
 </head>
 
 <body>
@@ -70,7 +70,7 @@
         <!-- Six of these run in a browser with no install and no signup. Putting
              them in the hero so nobody has to go looking for something working. -->
         <div class="hero-live reveal">
-          <p class="mono hero-live-label">// short on time? these run right now, in this tab</p>
+          <p class="mono hero-live-label">// these six run right now, in this tab</p>
           <ul class="hero-live-list" role="list">
             <li><a href="https://vatxzz-cachy.hf.space" target="_blank" rel="noopener">Cachy <span>reel → knowledge
                   card</span></a></li>
@@ -78,7 +78,7 @@
                   refuses to guess</span></a></li>
             <li><a href="https://vatsal057.github.io/oracle/" target="_blank" rel="noopener">Oracle <span>calibration
                   backtest, live</span></a></li>
-            <li><a href="https://vatsal057.github.io/AirQuality/" target="_blank" rel="noopener">Bangalore AQI <span>14
+            <li><a href="https://vatsal057.github.io/AirQuality/" target="_blank" rel="noopener">Bangalore AQI <span>13
                   stations, mapped</span></a></li>
             <li><a href="https://vatsal057.github.io/Smart-Wardrobe/" target="_blank" rel="noopener">Smart Wardrobe
                 <span>Flutter + WASM SQLite</span></a></li>
@@ -398,12 +398,12 @@
           <div class="pin"></div>
           <h3>Bangalore Air Quality</h3>
           <p class="card-tag mono">data mining · unsupervised</p>
-          <p>A year of data from 14 CPCB stations, 6 engineered features, three clustering algorithms compared. DBSCAN
+          <p>A year of data from 13 CPCB stations, 6 engineered features, three clustering algorithms compared. DBSCAN
             worked best since it flags outliers, and the outliers were the hotspots. Silk Board hit <mark class="hl">AQI
               500</mark>.</p>
           <div class="pipeline mono"><span>excel
               mess</span><span>clean</span><span>features</span><span>cluster</span><span>hotspots</span></div>
-          <p class="card-proof mono"><span>14 stations · 1 year</span><span>3 algorithms compared</span><span>hotspots =
+          <p class="card-proof mono"><span>13 stations · 1 year</span><span>3 algorithms compared</span><span>hotspots =
               outliers</span></p>
           <p class="card-stack mono">pandas · scikit-learn · DBSCAN</p>
           <p class="card-avail mono"><span class="is-live">explore the findings</span></p>
@@ -613,7 +613,7 @@
             <ul class="app-features">
               <li>Drives the same private framework System Settings uses, so macOS still owns the audio</li>
               <li>Two-way sync with Settings; equalizer, sleep timer, stop-on-lock</li>
-              <li>Every private-API call is guarded, so it degrades instead of crashing</li>
+              <li>Every private-API call is guarded, so a macOS change costs one feature and not the app</li>
             </ul>
             <p class="card-stack mono">Swift · AppKit · HearingUtilities (private)</p>
             <p class="card-avail mono"><span class="is-dl">.dmg download</span></p>
@@ -672,9 +672,10 @@
         <img class="section-icon" src="images/icon-flask.png" alt="">
         <p class="eyebrow mono">// git branch --unmerged</p>
         <h2>Building next <span class="margin-note caveat">← live on github</span></h2>
-        <p class="section-sub">Two projects in active development. The products aren't finished, but both modeling
-          cores are, and both now run live in your browser — no install, no server, no API key. One thread runs through
-          them: AI that knows when it doesn't know, which means calibration, abstention and verifiable privacy.</p>
+        <p class="section-sub">Two projects in active development. Neither product is finished, but the modeling core of
+          each one is done, and both cores now run in your browser with nothing to install. They are both about getting
+          a model to admit when it does not know. Sahayak stops answering when the retrieval score is too low. Oracle
+          widens its prediction set when it has not seen enough days yet.</p>
       </div>
       <div class="cards roadmap-cards">
         <article onclick="window.location.href='case/project.html?id=sahayak'" role="link" tabindex="0"
@@ -922,8 +923,8 @@
 
   <canvas id="rain" hidden></canvas>
 
-  <script src="projects-data.js?v=7"></script>
-  <script src="script.js?v=7"></script>
+  <script src="projects-data.js?v=8"></script>
+  <script src="script.js?v=8"></script>
   <script type="module">
     import { createAvatar } from 'https://esm.sh/@bible-strong/avatar-web';
     fetch('./grok-bot.avatar.json')
