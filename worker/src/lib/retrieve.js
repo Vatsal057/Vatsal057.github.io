@@ -12,6 +12,9 @@ const B = 0.75;
 // Roughly the weight of one rare term matching, so a full title match reliably
 // beats a couple of incidental body mentions without swamping real relevance.
 const TITLE_BOOST = 6;
+// Chunk kinds that describe one specific piece of work. Two of these in the same
+// prompt is what lets the model blend them together.
+const PROJECT_KINDS = new Set(['project', 'app', 'tool', 'research', 'planned']);
 
 /**
  * @param {string} query
@@ -66,13 +69,28 @@ export function retrieve(query, kb, opts = {}) {
     .slice(0, topK);
 
   // On a project page the visitor asks things like "how does this work", which
-  // names nothing searchable. The page already knows which project it is, so
-  // that chunk is forced to the front. Being able to do that is what lets topK
-  // come down instead of up: one certain chunk beats six guesses.
+  // names nothing searchable. The page already knows which project it is, so that
+  // chunk is forced to the front. Being able to do that is what lets topK come
+  // down instead of up, because one certain chunk beats six guesses.
+  //
+  // The other projects then have to go. Asked "what broke while building this" on
+  // the Oracle page, BM25 also returns Constitution RAG, whose text describes a
+  // chunking bug. The model reads that concrete story and retells it as if it
+  // belonged to whatever page you are on, and telling it not to does not work: a
+  // specific story in the context beats an instruction about it. So another
+  // project only survives here when the question actually names it.
   if (pinId) {
     const pinIdx = kb.chunks.findIndex(c => c.id && c.id.slice(c.id.indexOf(':') + 1) === pinId);
     if (pinIdx > -1) {
-      ranked = [[pinIdx, Infinity], ...ranked.filter(([i]) => i !== pinIdx)].slice(0, topK);
+      ranked = [
+        [pinIdx, Infinity],
+        ...ranked.filter(([i]) => {
+          if (i === pinIdx) return false;
+          if (!PROJECT_KINDS.has(kb.chunks[i].kind)) return true;   // skills, contact, site sections
+          const tt = titles[i] || [];
+          return tt.some(t => querySet.has(t));                     // named explicitly
+        }),
+      ].slice(0, topK);
     }
   }
 
