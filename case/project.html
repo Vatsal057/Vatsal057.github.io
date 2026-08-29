@@ -9,8 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../style.css?v=5">
-<link rel="stylesheet" href="project.css">
+<link rel="stylesheet" href="../style.css?v=8">
+<link rel="stylesheet" href="project.css?v=8">
 </head>
 <body>
 
@@ -95,10 +95,13 @@
         <div class="typing-indicator" id="typingIndicator" style="display: none;">
           <span></span><span></span><span></span>
         </div>
+        <!-- Different chips to the home page on purpose. The tour and the
+             terminal only exist there, and these three are questions the
+             companion can answer about whichever project is on screen. -->
         <div class="bubble-actions" id="bubbleActions" style="display: none;">
-          <button class="action-chip mono" data-action="tour">tour</button>
-          <button class="action-chip mono" data-action="projects">projects</button>
-          <button class="action-chip mono" data-action="train">train</button>
+          <button class="action-chip mono" data-action="how does this work">how it works</button>
+          <button class="action-chip mono" data-action="what broke while building this">what broke</button>
+          <button class="action-chip mono" data-action="what is the stack">the stack</button>
         </div>
       </div>
       <form class="ask-form" id="askForm" onsubmit="event.preventDefault(); return false;">
@@ -113,8 +116,20 @@
   </div>
 </div>
 
-<script src="../projects-data.js?v=7"></script>
-<script src="project.js?v=7"></script>
-<script src="../script.js?v=7"></script>
+<script src="../projects-data.js?v=8"></script>
+<script src="project.js?v=8"></script>
+<script src="../script.js?v=8"></script>
+<script type="module">
+  // Same avatar as the home page. The path has to be ../ from here, and getting
+  // that wrong is why the robot used to fall back to the plain emoji on these
+  // pages: setPose() bails out when window.veeAvatar was never set.
+  import { createAvatar } from 'https://esm.sh/@bible-strong/avatar-web';
+  fetch('../grok-bot.avatar.json')
+    .then(response => response.json())
+    .then(definition => {
+      window.veeAvatar = createAvatar('#robotAvatar', { definition, defaultAnimation: 'idle', size: '100%' });
+    })
+    .catch(console.error);
+</script>
 </body>
 </html>

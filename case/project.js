@@ -25,6 +25,11 @@
   main.hidden = false;
   if (p.kind === "planned") main.classList.add("is-planned");
 
+  // Name the project in the companion's input so it is obvious the robot on this
+  // page knows what you are looking at.
+  var ask = document.getElementById("askInput");
+  if (ask) ask.placeholder = "Ask about " + p.title + "...";
+
   document.getElementById("crumbKind").textContent = kindLabel;
   document.getElementById("crumbTitle").textContent = p.title;
   document.getElementById("title").textContent = p.title;
@@ -59,8 +64,9 @@
     links.appendChild(anchor(p.links.certificate, "view certificate →", "btn btn-primary"));
   }
 
-  // An honest caveat next to the buttons — e.g. "this needs two players", or
-  // why a research project has no repo link yet. Better than a dead link.
+  // An honest caveat next to the buttons — e.g. "this needs two players", or why
+  // a research project has no repo link yet, so the button row does not just
+  // show a link that goes nowhere.
   if (p.note) {
     var noteEl = document.getElementById("note");
     if (noteEl) {

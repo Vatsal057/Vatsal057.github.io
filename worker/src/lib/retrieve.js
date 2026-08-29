@@ -19,11 +19,14 @@ const TITLE_BOOST = 6;
  * @param {object} [opts]
  * @param {number} [opts.topK]      hard cap on chunks returned
  * @param {number} [opts.maxChars]  budget so prompt cost stays predictable
+ * @param {string} [opts.pinId]     slug to force into first place, for when the
+ *                                  caller already knows what is being asked about
  * @returns {{chunks: Array, terms: string[], scores: Array}}
  */
 export function retrieve(query, kb, opts = {}) {
   const topK = opts.topK ?? 6;
   const maxChars = opts.maxChars ?? 6400; // ~1,600 tokens
+  const pinId = opts.pinId || '';
   const { chunks, docLens, avgDocLen, postings } = kb;
   const N = chunks.length;
 
@@ -58,9 +61,20 @@ export function retrieve(query, kb, opts = {}) {
     scores.set(i, (scores.get(i) || 0) + bonus);
   }
 
-  const ranked = [...scores.entries()]
+  let ranked = [...scores.entries()]
     .sort((a, b) => b[1] - a[1])
     .slice(0, topK);
+
+  // On a project page the visitor asks things like "how does this work", which
+  // names nothing searchable. The page already knows which project it is, so
+  // that chunk is forced to the front. Being able to do that is what lets topK
+  // come down instead of up: one certain chunk beats six guesses.
+  if (pinId) {
+    const pinIdx = kb.chunks.findIndex(c => c.id && c.id.slice(c.id.indexOf(':') + 1) === pinId);
+    if (pinIdx > -1) {
+      ranked = [[pinIdx, Infinity], ...ranked.filter(([i]) => i !== pinIdx)].slice(0, topK);
+    }
+  }
 
   const picked = [];
   let used = 0;

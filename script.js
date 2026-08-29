@@ -467,11 +467,19 @@ armIdle();
 // commands the robot executes on the site, checked before Q&A answers
 const ACTIONS = [
   [/^(take me on a )?tour|^show me around|^guide me/i, () => startTour()],
-  [/^run train/i, () => { openTerminal(); runCommand('train'); say("Watch the loss. It always goes down eventually.", true); }],
-  [/^open (terminal|cli)|^terminal$/i, () => { openTerminal(); say("Your shell, my desk. Type help.", true); }],
+  // The terminal markup only exists on the homepage, so from a detail page these
+  // two send the visitor home instead of silently doing nothing.
+  [/^run train/i, () => {
+    if (!document.getElementById('terminalOverlay')) return say("The terminal is on the home page. Head back and ask again.", true);
+    openTerminal(); runCommand('train'); say("Watch the loss. It always goes down eventually.", true);
+  }],
+  [/^open (terminal|cli)|^terminal$/i, () => {
+    if (!document.getElementById('terminalOverlay')) return say("The terminal lives on the home page.", true);
+    openTerminal(); say("Your shell, my desk. Type help.", true);
+  }],
   [/^(download )?(resume|cv)$/i, () => {
     setPose('working');
-    const a = document.createElement('a'); a.href = 'resume.pdf'; a.download = 'Vatsal-Vaghasiya-Resume.pdf'; a.click();
+    const a = document.createElement('a'); a.href = ROOT + 'resume.pdf'; a.download = 'Vatsal-Vaghasiya-Resume.pdf'; a.click();
     say("Sent. It's one page.", true);
   }],
   [/^flip( the)? paper/i, () => {
@@ -486,7 +494,7 @@ const ACTIONS = [
   [/^(show|go to) skills?/i, () => goToSection('skills', "His own estimates. I checked.")],
   [/^(show|go to) (experiments?|board|fail)/i, () => goToSection('experiments', "Go read the failed column.")],
   [/^(show|go to) (principles)/i, () => goToSection('principles', "Four cards. All true.")],
-  [/^(show|go to) (projects?|cachy|airswipe)/i, () => goToSection('projects', "Thirteen shipped. Six pinned.")],
+  [/^(show|go to) (projects?|cachy|airswipe)/i, () => goToSection('projects', "Nineteen shipped. Six pinned.")],
   [/^(show|go to) (research|papers?)/i, () => goToSection('research', "Both first-author. Click to flip.")],
   [/^(show|go to) (timeline|journey|history)/i, () => goToSection('timeline', "git log --journey.")],
   [/^(show|go to) (contact|email)/i, () => { goToSection('contact'); cheer("kvaghasiya057@gmail.com. Go on."); }],
@@ -497,7 +505,7 @@ const ACTIONS = [
     const p = m[2].trim().toLowerCase();
     say(`Opening ${p}.`, true);
     setTimeout(() => {
-      window.location.href = `case/project.html?id=${p}`;
+      window.location.href = `${ROOT}case/project.html?id=${p}`;
     }, 800);
   }]
 ];
@@ -511,13 +519,23 @@ const ACTIONS = [
 // from the local fallback bank below.
 const CHAT_ENDPOINT = 'https://portfolio-companion.vatxzz.workers.dev/chat';
 
+// This file runs from the site root and from /case/, so anything relative has to
+// be resolved against the root or it 404s on the detail pages.
+const ROOT = /\/case\//.test(location.pathname) ? '../' : '';
+
+// On a detail page the URL already says which project is on screen. Sending it
+// lets the Worker pin that project's facts, so "how does this work" resolves
+// without the visitor naming it.
+const PAGE_SLUG = (new URLSearchParams(location.search).get('id') || '')
+  .toLowerCase().replace(/[^a-z0-9-]/g, '');
+
 // Offline brain: used when the endpoint is unconfigured, unreachable, rate
 // limited, or erroring, so the companion degrades instead of dying in front of
 // whoever happens to be reading this portfolio.
 const FALLBACKS = [
   [/rag|retrieval|chroma|vector/i, "He wrote the RAG retrieval from scratch. 60 lines. Chunking broke immediately. Typical human error.", 'thinking'],
   [/paper|research|publish|deberta|clip/i, "Two first-author papers on free GPUs. I'm impressed by the frugality. Flip them in the research section.", 'happy'],
-  [/project|built|portfolio|work/i, "13 projects shipped. And they actually run. Mostly. Cachy, RAG, and IPL are pinned above.", 'proud'],
+  [/project|built|portfolio|work/i, "19 projects shipped, and six of them run right here in the browser. Cachy, Sahayak and Oracle are the ones to try.", 'proud'],
   [/skill|python|pytorch|stack|know/i, "Python, PyTorch, CV, SQL, Docker. I've verified these claims personally. They check out.", 'searching'],
   [/mlops|docker|deploy|drift/i, "IPL predictor runs 3 dockerized services. It computes PSI every 5 minutes because trust is good, but monitoring is better.", 'proud'],
   [/hire|intern|job|contact|email|reach/i, "kvaghasiya057@gmail.com. His latency is slightly higher than mine, but he'll reply.", 'happy'],
@@ -584,7 +602,9 @@ async function askCompanion(prompt) {
     const res = await fetch(CHAT_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: chatHistory })
+      body: JSON.stringify(PAGE_SLUG
+        ? { messages: chatHistory, slug: PAGE_SLUG }
+        : { messages: chatHistory })
     });
 
     if (!res.ok) {
@@ -627,7 +647,16 @@ askForm?.addEventListener('submit', e => {
   // Otherwise, send all conversational queries to the companion backend
   askCompanion(q);
 });
-setTimeout(() => say(LINES[0], false, 'happy'), 1400);
+// On a detail page the opening line names the project, so the first thing the
+// companion says is about the page you are actually on. The homepage lines talk
+// about the tour and the terminal, neither of which exists here.
+setTimeout(() => {
+  if (PAGE_SLUG && window.PROJECTS) {
+    const p = window.PROJECTS.find(x => x.slug === PAGE_SLUG);
+    if (p) return say(`That's ${p.title}. Ask me how it works, or what broke.`, false, 'happy');
+  }
+  say(LINES[0], false, 'happy');
+}, 1400);
 
 // contextual lines as sections scroll into view (each said once)
 const SECTION_LINES = {
@@ -757,7 +786,7 @@ function runCommand(raw) {
       tprint(`Vatsal Vaghasiya - AI engineer in training.
 MTech Data Science @ Ramaiah University (Bengaluru).
 Builds ML systems end to end and keeps the failed experiments on the board.
-2 first-author papers under review · 13 projects shipped.`); break;
+2 first-author papers under review · 19 projects shipped.`); break;
     case 'ls':
     case 'projects':
       tprint(Object.keys(PROJECT_FILES).map(k => `<span class="t-sage">${k}/</span>`).join('  ') +
@@ -804,7 +833,7 @@ linkedin: linkedin.com/in/vatsal-vaghasiya
 kaggle:   kaggle.com/vatsalvaghasiya`); break;
     case 'resume':
       tprint(`downloading resume.pdf …`, 't-sage');
-      { const a = document.createElement('a'); a.href = 'resume.pdf'; a.download = 'Vatsal-Vaghasiya-Resume.pdf'; a.click(); } break;
+      { const a = document.createElement('a'); a.href = ROOT + 'resume.pdf'; a.download = 'Vatsal-Vaghasiya-Resume.pdf'; a.click(); } break;
     case 'open': {
       const urls = { github: 'https://github.com/Vatsal057', linkedin: 'https://www.linkedin.com/in/vatsal-vaghasiya/', kaggle: 'https://www.kaggle.com/vatsalvaghasiya' };
       if (urls[arg]) { tprint(`opening ${arg}…`, 't-sage'); window.open(urls[arg], '_blank'); }
