@@ -107,9 +107,10 @@ window.PROJECTS = [
       "Transcription via Groq Whisper with a local faster-whisper fallback; keyframe OCR via Tesseract.",
       "Semantic knowledge graph: semantic + reference + tag edges, label-propagation clustering, client-side force-directed layout.",
       "No external infra — single SQLite DB, in-process asyncio worker (no Redis/Celery), deploys to one free HF Space.",
+      "That in-process worker used to ask the jobs table for work every second. On a Postgres that suspends when idle and bills compute by the hour, that keeps it awake permanently, and it drained the monthly allowance in about 17 days with nobody using the app. It now waits on an event the enqueue path fires and backs off to 30 minutes when the queue is empty, so pickup is still instant and the database gets to sleep.",
       "Reel-style Feed replay, per-card and library-wide chat, semantic search, Present mode."
     ],
-    learned: "A three-provider fallback chain shipped faster and broke less than waiting for one reliable paid API.",
+    learned: "A three-provider fallback chain shipped faster and broke less than waiting for one reliable paid API. The database quota running out every month taught me more though. I assumed it was usage and it was my own worker polling once a second, and then my first fix cut the query count by 99.7% and still left the compute awake 83% of the month, because every query restarts the idle timer. The wait has to be several times the sleep threshold before anything actually sleeps.",
     stack: ["Whisper", "OpenCV", "Tesseract", "SQLite", "FastAPI", "Flutter", "HF Spaces"],
     links: {
       website: "https://cachy.vatxzz.workers.dev",
