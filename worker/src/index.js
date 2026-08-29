@@ -189,7 +189,7 @@ export default {
     // Only spent when there is a page to name, and it saves the visitor having
     // to repeat the project name in every follow-up.
     const pageLine = slug
-      ? `\n\nThe visitor is reading the project page for "${slug}". Take "this" or "it" to mean that project.`
+      ? `\n\nThe visitor is reading the project page for "${slug}". Take "this" or "it" to mean that project, and answer from that project's facts only. Other projects appear in the facts below for context; do not attribute their details to this one.`
       : '';
 
     const messages = [
