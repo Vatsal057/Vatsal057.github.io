@@ -5,7 +5,8 @@ brand — the portfolio IS the product. A visitor's impression is the deliverabl
 
 ## Who
 Vatsal Vaghasiya, MTech Data Science student (Ramaiah University), AI engineer in
-training. 18 shipped projects, 2 first-author papers under review, 5 specced
+training. 19 shipped projects, 2 papers under review (first author on one,
+second author on the other), 5 specced
 projects in build.
 
 ## Audience (priority order)

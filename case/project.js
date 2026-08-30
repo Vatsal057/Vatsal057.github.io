@@ -40,6 +40,43 @@
   badge.textContent = p.status;
   badge.classList.add("badge-" + p.status.replace(/\s+/g, "-"));
 
+  // Papers carry an author list. Marking his name and stating the position beats
+  // asserting one in prose, and it matches what is printed on the PDF.
+  if (p.authors && p.authors.length) {
+    var by = document.getElementById("byline");
+    if (by) {
+      var names = document.createElement("p");
+      names.className = "by-names";
+      p.authors.forEach(function (a, i) {
+        if (i) names.appendChild(document.createTextNode(", "));
+        var el = document.createElement(a.me ? "b" : "span");
+        if (a.me) el.className = "is-me";
+        el.textContent = a.name + (a.corresponding ? " *" : "");
+        names.appendChild(el);
+      });
+      by.appendChild(names);
+
+      var meIdx = p.authors.findIndex(function (a) { return a.me; });
+      var ORD = ["first", "second", "third", "fourth", "fifth"];
+      var bits = [];
+      if (meIdx > -1 && ORD[meIdx]) bits.push(ORD[meIdx] + " author");
+      if (p.venue) bits.push(p.venue);
+      if (bits.length) {
+        var meta = document.createElement("p");
+        meta.className = "by-meta";
+        meta.textContent = bits.join(" · ");
+        by.appendChild(meta);
+      }
+      if (p.contribution) {
+        var contrib = document.createElement("p");
+        contrib.className = "by-meta";
+        contrib.textContent = "My contribution: " + p.contribution + ".";
+        by.appendChild(contrib);
+      }
+      by.hidden = false;
+    }
+  }
+
   document.getElementById("stack").textContent =
     (p.stack || []).join(" · ");
 
@@ -62,6 +99,11 @@
   }
   if (p.links && p.links.certificate) {
     links.appendChild(anchor(p.links.certificate, "view certificate →", "btn btn-primary"));
+  }
+  // Papers under review have no repo, so the PDF is the only proof there is. It
+  // gets the primary button. Path is relative to the site root, not /case/.
+  if (p.links && p.links.paper) {
+    links.appendChild(anchor("../" + p.links.paper, "read the paper (PDF) ↗", "btn btn-primary"));
   }
 
   // An honest caveat next to the buttons — e.g. "this needs two players", or why

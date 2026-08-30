@@ -16,7 +16,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@500;600&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=9">
+  <link rel="stylesheet" href="style.css?v=10">
 </head>
 
 <body>
@@ -714,58 +714,113 @@
     <section id="research" class="section">
       <div class="section-head reveal">
         <img class="section-icon" src="images/icon-brain.png" alt="">
-        <p class="eyebrow mono">// research wall · click a paper</p>
+        <p class="eyebrow mono">// research · both PDFs are on this page</p>
         <h2>Papers under review</h2>
-        <p class="section-sub">Written as an MTech student, trained on free GPUs. Click to flip.</p>
+        <p class="section-sub">Written as an MTech student, trained on free GPUs. You can read both of them
+          here — the numbers below are the ones in the PDFs.</p>
       </div>
       <div class="papers">
-        <div class="paper-flip reveal" tabindex="0" role="button"
-          aria-label="Flip paper: Efficient LLM Preference Prediction">
-          <div class="paper-inner">
-            <div class="paper-face paper-front">
-              <div class="pin"></div>
-              <p class="mono paper-status">status: under review</p>
-              <h3>Efficient LLM Preference Prediction</h3>
-              <p class="paper-venue">Siamese DeBERTa with swap augmentation &amp; temperature calibration</p>
-              <span class="paper-note caveat">trained for $0 !</span>
-              <p class="mono flip-hint">flip →</p>
-            </div>
-            <div onclick="window.location.href='case/project.html?id=preference-prediction'" role="link" tabindex="0"
-              class="paper-face paper-back">
-              <h4 class="mono">the short version</h4>
-              <p>Predicts which chatbot answer humans prefer, at 98% of state-of-the-art with a model <mark
-                  class="hl">127× smaller</mark> (71M params), trained for <mark class="hl">$0</mark> on free T4s in 8.4
-                hours.</p>
-              <p class="mono paper-metrics">log loss 1.052 → 0.987 · accuracy +3.5pts</p>
-              <p class="paper-learned"><span class="caveat">what I learned:</span> swap augmentation bought more
-                accuracy than a bigger model would have.</p>
 
-            </div>
-          </div>
-        </div>
-        <div class="paper-flip reveal" tabindex="0" role="button" aria-label="Flip paper: ProbCLIP-A">
-          <div class="paper-inner">
-            <div class="paper-face paper-front">
-              <div class="pin"></div>
-              <p class="mono paper-status">status: under review</p>
-              <h3>ProbCLIP-A: Uncertainty-Aware Retrieval</h3>
-              <p class="paper-venue">Probabilistic adapters for frozen CLIP vision foundation models</p>
-              <span class="paper-note caveat">knows when it's unsure</span>
-              <p class="mono flip-hint">flip →</p>
-            </div>
-            <div onclick="window.location.href='case/project.html?id=probclip-a'" role="link" tabindex="0"
-              class="paper-face paper-back">
-              <h4 class="mono">the short version</h4>
-              <p>Makes CLIP say <em>how sure it is</em>: a 4.2M-param adapter on frozen CLIP outputs distributions,
-                Monte Carlo sampling turns them into uncertainty scores that catch <mark class="hl">36.6% of
-                  failures</mark> at 8.1% false alarms.</p>
-              <p class="mono paper-metrics">R@1 68.9% · ECE 0.062 (best of all baselines)</p>
-              <p class="paper-learned"><span class="caveat">what I learned:</span> skip KL warmup and the variance
-                collapses to zero.</p>
+        <article class="paper-sheet reveal">
+          <div class="pin"></div>
+          <p class="mono paper-state"><span class="dot-review" aria-hidden="true"></span>under review</p>
 
-            </div>
+          <h3>Efficient LLM Preference Classification</h3>
+          <p class="paper-subtitle">Through Position Bias Mitigation and Architectural Symmetry</p>
+
+          <p class="mono paper-byline">
+            <b class="is-me">Vatsal Vaghasiya</b>, Nancy Kshetrimayum, B. Prabadevi, Boppuru Rudra Prathap
+            <span class="paper-pos">first author</span>
+          </p>
+
+          <table class="paper-figs">
+            <caption class="mono">as reported in the paper</caption>
+            <tbody>
+              <tr>
+                <th scope="row">validation log loss</th>
+                <td class="fig">0.9871</td>
+                <td class="ctx">6.2% better than the baselines</td>
+              </tr>
+              <tr>
+                <th scope="row">parameters</th>
+                <td class="fig">71M</td>
+                <td class="ctx">127&times; fewer &mdash; the winning solutions ran 9B+ on 8&times;A100</td>
+              </tr>
+              <tr>
+                <th scope="row">three-class accuracy</th>
+                <td class="fig">52.06%</td>
+                <td class="ctx">up 3.5 percentage points</td>
+              </tr>
+              <tr>
+                <th scope="row">training</th>
+                <td class="fig">8.4 h</td>
+                <td class="ctx">two free Kaggle T4s, 57,477 human preferences</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="paper-aside"><span class="caveat">what I learned:</span> swap augmentation bought more accuracy
+            than a bigger model would have. It killed the position bias directly.</p>
+
+          <div class="paper-actions">
+            <a class="btn btn-primary sm" href="papers/efficient-llm-preference-classification.pdf" target="_blank"
+              rel="noopener">Read the paper (PDF)</a>
+            <a class="btn btn-ghost sm" href="case/project.html?id=preference-prediction">How it works</a>
           </div>
-        </div>
+          <p class="paper-caveat">Code and weights stay unpublished until the review decision.</p>
+        </article>
+
+        <article class="paper-sheet reveal">
+          <div class="pin"></div>
+          <p class="mono paper-state"><span class="dot-review" aria-hidden="true"></span>submitted to Elsevier</p>
+
+          <h3>ProbCLIP-A: Uncertainty-Aware Retrieval</h3>
+          <p class="paper-subtitle">Uncertainty-Aware Cross-Modal Retrieval via Probabilistic Adapters for Frozen CLIP
+            Vision Foundation Models</p>
+
+          <p class="mono paper-byline">
+            Nancy Kshetrimayum, <b class="is-me">Vatsal Vaghasiya</b>
+            <span class="paper-pos">second author</span>
+          </p>
+
+          <table class="paper-figs">
+            <caption class="mono">as reported in the paper</caption>
+            <tbody>
+              <tr>
+                <th scope="row">text&rarr;image R@1</th>
+                <td class="fig">68.9%</td>
+                <td class="ctx">on Flickr30K, just past CLIP-Adapter at 68.8%</td>
+              </tr>
+              <tr>
+                <th scope="row">calibration error</th>
+                <td class="fig">0.062</td>
+                <td class="ctx">down from 0.078 on plain CLIP</td>
+              </tr>
+              <tr>
+                <th scope="row">failures flagged</th>
+                <td class="fig">69.3%</td>
+                <td class="ctx">while touching only 4.9% of the correct results</td>
+              </tr>
+              <tr>
+                <th scope="row">trainable params</th>
+                <td class="fig">4.2M</td>
+                <td class="ctx">2.1M per modality; CLIP itself stays frozen</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="paper-aside"><span class="caveat">what I learned:</span> skip the KL warmup schedule and the
+            variance collapses to zero. The model quietly stops being probabilistic.</p>
+
+          <div class="paper-actions">
+            <a class="btn btn-primary sm" href="papers/probclip-a-uncertainty-aware-retrieval.pdf" target="_blank"
+              rel="noopener">Read the paper (PDF)</a>
+            <a class="btn btn-ghost sm" href="case/project.html?id=probclip-a">How it works</a>
+          </div>
+          <p class="paper-caveat">My part: conceptualization, methodology, software, validation, review and editing.
+            Code and weights stay unpublished until the review decision.</p>
+        </article>
+
       </div>
     </section>
 
@@ -793,9 +848,9 @@
         <div class="commit"><span class="c-hash">f5e6a78</span><span class="c-date">Nov 2025</span><span
             class="c-msg">checkout -b mtech: Data Science @ Ramaiah University of Applied Sciences</span></div>
         <div class="commit"><span class="c-hash">e2c3d44</span><span class="c-date">Feb 2026</span><span class="c-msg">feat:
-            1st paper submitted (LLM Preference Prediction)</span></div>
+            1st paper submitted (LLM Preference Classification, first author)</span></div>
         <div class="commit"><span class="c-hash">a8b9c01</span><span class="c-date">Jul 2026</span><span class="c-msg">feat:
-            2nd paper submitted (ProbCLIP-A)</span></div>
+            2nd paper submitted (ProbCLIP-A, second author)</span></div>
         <div class="commit"><span class="c-hash">b9c0d12</span><span class="c-date">Aug 2026</span><span class="c-msg">feat:
             won 1st prize @ Karnataka Education Datathon 🏆</span></div>
         <div class="commit c-head"><span class="c-hash">HEAD</span><span class="c-date">now</span><span
@@ -823,7 +878,7 @@
         </div>
         <div class="value-item reveal">
           <p class="mono value-k">✓ research rigor on a budget</p>
-          <p>Two first-author papers trained entirely on free-tier GPUs. Both repos document what didn't work along the
+          <p>Two papers under review, both trained entirely on free-tier GPUs. Both write up what didn't work along the
             way.</p>
         </div>
         <div class="value-item reveal">
@@ -923,8 +978,8 @@
 
   <canvas id="rain" hidden></canvas>
 
-  <script src="projects-data.js?v=9"></script>
-  <script src="script.js?v=9"></script>
+  <script src="projects-data.js?v=10"></script>
+  <script src="script.js?v=10"></script>
   <script type="module">
     import { createAvatar } from 'https://esm.sh/@bible-strong/avatar-web';
     fetch('./grok-bot.avatar.json')

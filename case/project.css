@@ -84,3 +84,15 @@
   margin-top: .7rem; font-size: 1.15rem; color: var(--ink-soft); transform: rotate(-.5deg);
 }
 .media-pending { font-size: .78rem; color: var(--ink-soft); margin: -1.2rem 0 2rem; }
+
+/* ---- Paper byline (research detail pages) ---- */
+/* A full-width hairline above, not a left stripe. */
+.detail-byline { margin: 1rem 0 1.1rem; padding-top: .8rem; border-top: 1px solid var(--grid); max-width: 62ch; }
+.detail-byline .by-names { font-size: .82rem; color: var(--ink-soft); line-height: 1.6; }
+.detail-byline .by-names .is-me {
+  color: var(--ink); font-weight: 700;
+  box-shadow: inset 0 -.42em 0 rgba(217, 168, 108, .38);
+}
+.detail-byline .by-meta { margin-top: .35rem; font-size: .74rem; color: #5E6C76; line-height: 1.55; }
+body.dark-mode .detail-byline .by-meta { color: #9BA6AD; }
+body.dark-mode .detail-byline .by-names .is-me { box-shadow: inset 0 -.42em 0 rgba(179, 134, 79, .3); }

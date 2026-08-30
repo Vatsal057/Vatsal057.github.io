@@ -254,6 +254,9 @@ a { color: var(--sage-deep); }
 
 /* flip card (RAG project) */
 .card-flip { perspective: 1200px; cursor: pointer; outline-offset: 4px; }
+/* Lived with the research flip cards until those stopped flipping; the RAG card
+   still uses it, so it belongs here now. */
+.flip-hint { margin-top: auto; font-size: .75rem; color: var(--sage-deep); }
 .cardflip-inner {
   position: relative; transform-style: preserve-3d;
   transition: transform .65s cubic-bezier(.4,.1,.2,1);
@@ -340,37 +343,101 @@ a { color: var(--sage-deep); }
 .value-k { color: var(--sage-deep); font-size: .82rem; margin-bottom: .35rem; letter-spacing: .02em; }
 .value-item p:last-child { font-size: .92rem; color: var(--ink-soft); }
 
-/* ============ Research wall (flip cards) ============ */
-.papers { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.8rem; }
-.paper-flip { perspective: 1200px; cursor: pointer; min-height: 270px; outline-offset: 4px; }
-.paper-inner {
-  position: relative; width: 100%; height: 100%; min-height: 270px;
-  transform-style: preserve-3d; transition: transform .65s cubic-bezier(.4,.1,.2,1);
-}
-.paper-flip.flipped .paper-inner { transform: rotateY(180deg); }
-.paper-face {
-  position: absolute; inset: 0; backface-visibility: hidden;
-  background: var(--card); border-radius: 6px; padding: 1.7rem 1.5rem;
-  box-shadow: var(--shadow); border: 1px solid #EFEAE0;
+/* ============ Research: offprint sheets ============ */
+/* These used to be flip cards, which meant every number that proves the work sat
+   on a face nobody turned over. The sheet shows its evidence flat, the way an
+   offprint on the desk does, and the only interactive things are the two links. */
+.papers { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.8rem; }
+
+.paper-sheet {
+  position: relative;
+  background: var(--card); border: 1px solid #EFEAE0; border-radius: 6px;
+  box-shadow: var(--shadow); padding: 1.8rem 1.6rem 1.5rem;
   display: flex; flex-direction: column;
 }
-.paper-front { transform: rotate(-.6deg); }
-/* folded corner */
-.paper-front::after {
+.paper-sheet:nth-child(odd) { transform: rotate(-.4deg); }
+.paper-sheet:nth-child(even) { transform: rotate(.3deg); }
+/* folded corner, kept from the old front face */
+.paper-sheet::after {
   content: ""; position: absolute; top: 0; right: 0; width: 26px; height: 26px;
   background: linear-gradient(225deg, var(--paper) 0 50%, #EDE7D8 50% 100%);
-  border-bottom-left-radius: 4px; box-shadow: -1px 1px 2px rgba(43,58,66,.08);
+  border-bottom-left-radius: 4px; box-shadow: -1px 1px 2px rgba(43, 58, 66, .08);
 }
-.paper-back { transform: rotateY(180deg); background: #FBF7EC; }
-.paper-status { font-size: .72rem; color: var(--amber); margin-bottom: .8rem; }
-.paper-face h3 { font-size: 1.2rem; margin-bottom: .5rem; }
-.paper-venue { font-size: .88rem; color: var(--ink-soft); }
-.flip-hint { margin-top: auto; font-size: .75rem; color: var(--sage-deep); }
-.paper-back h4 { font-size: .78rem; color: var(--sage-deep); margin-bottom: .6rem; letter-spacing: .05em; }
-.paper-back p { font-size: .88rem; color: var(--ink-soft); margin-bottom: .6rem; }
-.paper-metrics { font-size: .74rem; color: var(--ink); background: #F1ECDD; padding: .4rem .6rem; border-radius: 4px; }
-.paper-learned { margin-top: auto; font-size: .88rem; }
-.paper-learned .caveat { font-size: 1.15rem; color: var(--sage-deep); }
+
+.paper-state {
+  display: inline-flex; align-items: center; gap: .42rem;
+  font-size: .72rem; letter-spacing: .04em;
+  color: #8A6A3C;                 /* darker amber: 4.6:1 on --card */
+  margin-bottom: 1rem;
+}
+.dot-review {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--amber);
+  box-shadow: 0 0 0 3px rgba(217, 168, 108, .22);
+}
+
+.paper-sheet h3 { font-size: 1.24rem; line-height: 1.2; margin-bottom: .3rem; }
+.paper-subtitle {
+  font-size: .86rem; color: var(--ink-soft); line-height: 1.45;
+  max-width: 46ch; margin-bottom: .95rem;
+}
+
+.paper-byline {
+  font-size: .76rem; color: var(--ink-soft); line-height: 1.6;
+  padding-bottom: .9rem; border-bottom: 1px solid var(--grid); margin-bottom: .1rem;
+}
+/* His name marked in the author list, so the position is readable at a glance
+   instead of asserted in prose. */
+.paper-byline .is-me {
+  color: var(--ink); font-weight: 700;
+  box-shadow: inset 0 -.42em 0 rgba(217, 168, 108, .38);
+}
+.paper-pos {
+  display: block; margin-top: .3rem;
+  font-size: .7rem; letter-spacing: .07em; color: var(--sage-text, #567856);
+}
+
+/* The results table. A paper's own artifact, so it earns being a real table. */
+.paper-figs { width: 100%; border-collapse: collapse; margin: .9rem 0 1.1rem; }
+/* Lowercase on purpose: his metadata voice is a lowercase mono comment, and a
+   small tracked all-caps label here would read as generic scaffolding. */
+.paper-figs caption {
+  caption-side: top; text-align: left;
+  font-size: .71rem; letter-spacing: .03em;
+  color: #62707A; padding-bottom: .55rem;
+}
+.paper-figs th, .paper-figs td {
+  padding: .46rem .1rem; text-align: left; vertical-align: baseline;
+  border-bottom: 1px solid var(--grid); font-weight: 400;
+}
+.paper-figs tr:last-child th, .paper-figs tr:last-child td { border-bottom: none; }
+.paper-figs th {
+  font-size: .8rem; color: var(--ink-soft); white-space: nowrap; padding-right: .7rem;
+}
+.paper-figs .fig {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: .96rem; color: var(--ink); font-weight: 500;
+  white-space: nowrap; padding-right: .8rem;
+}
+.paper-figs .ctx { font-size: .78rem; color: var(--ink-soft); line-height: 1.4; }
+
+.paper-aside { font-size: .88rem; color: var(--ink-soft); margin-bottom: 1.2rem; }
+.paper-aside .caveat { font-size: 1.15rem; color: var(--sage-deep); margin-right: .2rem; }
+
+.paper-actions { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: auto; }
+.paper-caveat {
+  /* #6E7C82 measured 4.24:1 on --card, under the 4.5 floor for body text. */
+  margin-top: .9rem; font-size: .76rem; color: #5E6C76; line-height: 1.5;
+}
+
+@media (max-width: 560px) {
+  .paper-sheet, .paper-sheet:nth-child(odd), .paper-sheet:nth-child(even) { transform: none; }
+  .paper-figs th, .paper-figs .fig, .paper-figs .ctx { display: block; padding-right: 0; }
+  .paper-figs th { padding-bottom: 0; }
+  .paper-figs .fig { padding-top: .1rem; }
+  .paper-figs tr { display: block; padding: .5rem 0; border-bottom: 1px solid var(--grid); }
+  .paper-figs tr:last-child { border-bottom: none; }
+  .paper-figs th, .paper-figs td { border-bottom: none; }
+}
 
 /* ============ Git log timeline ============ */
 .gitlog { border-left: 2px solid #D8D2C2; margin-left: .4rem; padding-left: 0; }
@@ -680,7 +747,7 @@ body.recruiter .terminal-btn { display: none; }
 
 /* ============ Recruiter mode: flatten everything ============ */
 body.recruiter { background-image: none; }
-body.recruiter .card, body.recruiter .sticky, body.recruiter .paper-front,
+body.recruiter .card, body.recruiter .sticky, body.recruiter .paper-sheet,
 body.recruiter .card.reveal.in { transform: none !important; }
 body.recruiter .pin, body.recruiter .companion, body.recruiter .margin-note,
 body.recruiter .paper-note, body.recruiter .end-note,
@@ -977,8 +1044,16 @@ body.dark-mode .app-featured .app-titlebar { background: #2A2E30; border-color: 
 body.dark-mode .app-titlebar { background: #2A2E30; border-bottom: 1px solid #363C3F; }
 body.dark-mode .app-body code { background: #2A2E30; }
 body.dark-mode .more-projects { border-color: #4A5559; }
-body.dark-mode .paper-back { background: #24282A; }
-body.dark-mode .paper-metrics { background: #2A2E30; }
+body.dark-mode .paper-sheet { border-color: #2C3235; }
+/* The folded corner is two hardcoded paper tints, so it needs its own pair here
+   or it shows as a pale notch on the dark sheet. */
+body.dark-mode .paper-sheet::after {
+  background: linear-gradient(225deg, var(--paper) 0 50%, #2A2E30 50% 100%);
+  box-shadow: -1px 1px 2px rgba(0, 0, 0, .3);
+}
+body.dark-mode .paper-state { color: #C79A62; }
+body.dark-mode .paper-figs caption, body.dark-mode .paper-caveat { color: #9BA6AD; }
+body.dark-mode .paper-byline .is-me { box-shadow: inset 0 -.42em 0 rgba(179, 134, 79, .3); }
 body.dark-mode .btn-ghost { border-color: #4A5559; }
 body.dark-mode .bar { background: #2A2E30; border-color: #363C3F; }
 body.dark-mode .rag-sketch .caveat-svg { fill: var(--sage-deep); }

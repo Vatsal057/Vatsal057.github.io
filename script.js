@@ -79,8 +79,10 @@ if (typeTarget) {
   })();
 }
 
-// ============ Paper flip cards ============
-document.querySelectorAll('.paper-flip, .card-flip').forEach(card => {
+// ============ Flip cards ============
+// The research sheets used to be in here. They no longer flip: the numbers that
+// prove the papers were on the back face, where a scanning reader never saw them.
+document.querySelectorAll('.card-flip').forEach(card => {
   const flip = () => card.classList.toggle('flipped');
   card.addEventListener('click', e => { if (!e.target.closest('a')) flip(); });
   card.addEventListener('keydown', e => {
@@ -402,7 +404,7 @@ const TOUR = [
   ['principles', "How he works, on index cards."],
   ['projects', "The desk. Selected shipped projects."],
   ['apps', "Five native macOS apps, all Swift."],
-  ['research', "Two first-author papers, under review. Click one to flip it."],
+  ['research', "Two papers under review. Both PDFs are on the page."],
   ['timeline', "Four years in one git log."],
   ['contact', "End of notebook. This is where you email him. Tour's over."],
 ];
@@ -516,11 +518,12 @@ const ACTIONS = [
     const a = document.createElement('a'); a.href = ROOT + 'resume.pdf'; a.download = 'Vatsal-Vaghasiya-Resume.pdf'; a.click();
     say("Sent. It's one page.", true);
   }],
-  [/^flip( the)? paper/i, () => {
+  // "flip paper" is kept as a phrasing people will still try, but the sheets show
+  // everything now, so it just takes them there.
+  [/^(flip|open|read)( the)? paper/i, () => {
     goToSection('research');
     setPose('playful');
-    setTimeout(() => document.querySelectorAll('.paper-flip').forEach(p => p.classList.add('flipped')), 1000);
-    say("Flipped them for you. The backs are the good part.", true);
+    say("Both are on the page, numbers and all. The PDFs are one click.", true);
   }],
   [/^open github/i, () => { window.open('https://github.com/Vatsal057', '_blank'); say("Opening his GitHub. Judge the commits yourself.", true); }],
   [/^open linkedin/i, () => { window.open('https://www.linkedin.com/in/vatsal-vaghasiya/', '_blank'); say("LinkedIn. He's less funny there.", true); }],
@@ -531,7 +534,7 @@ const ACTIONS = [
   [/^(show|go to) (experiments?|board|fail)/i, () => goToSection('projects', "The failures are on each project's card.")],
   [/^(show|go to) (principles)/i, () => goToSection('principles', "Four cards. All true.")],
   [/^(show|go to) (projects?|cachy|airswipe)/i, () => goToSection('projects', "Nineteen shipped. Six pinned.")],
-  [/^(show|go to) (research|papers?)/i, () => goToSection('research', "Both first-author. Click to flip.")],
+  [/^(show|go to) (research|papers?)/i, () => goToSection('research', "Two papers. You can read both.")],
   [/^(show|go to) (timeline|journey|history)/i, () => goToSection('timeline', "git log --journey.")],
   [/^(show|go to) (contact|email)/i, () => { goToSection('contact'); cheer("kvaghasiya057@gmail.com. Go on."); }],
   [/^party|^rain|^konami|^dance/i, () => { gradientRain(); cheer(); }],
@@ -570,7 +573,7 @@ const PAGE_SLUG = (new URLSearchParams(location.search).get('id') || '')
 // whoever happens to be reading this portfolio.
 const FALLBACKS = [
   [/rag|retrieval|chroma|vector/i, "He wrote the RAG retrieval from scratch. 60 lines. Chunking broke immediately. Typical human error.", 'thinking'],
-  [/paper|research|publish|deberta|clip/i, "Two first-author papers on free GPUs. I'm impressed by the frugality. Flip them in the research section.", 'happy'],
+  [/paper|research|publish|deberta|clip/i, "Two papers under review, both trained on free GPUs. He's first author on the DeBERTa one and second on the CLIP one. Both PDFs are on the page.", 'happy'],
   [/project|built|portfolio|work/i, "19 projects shipped, and six of them run right here in the browser. Cachy, Sahayak and Oracle are the ones to try.", 'proud'],
   [/skill|python|pytorch|stack|know/i, "Python, PyTorch, CV, SQL, Docker. I've verified these claims personally. They check out.", 'searching'],
   [/mlops|docker|deploy|drift/i, "IPL predictor runs 3 dockerized services. It computes PSI every 5 minutes because trust is good, but monitoring is better.", 'proud'],
@@ -701,7 +704,7 @@ const SECTION_LINES = {
   projects: "Try `cat rag` in the terminal for the short version.",
   apps: "He ships Mac apps between papers.",
   value: "If you're skimming, this section is the summary.",
-  research: "Two papers, both first-author, both trained on free GPUs.",
+  research: "Two papers under review, both trained on free GPUs. You can read both.",
   timeline: "Four years, one git log.",
   contact: "This is the part where you email him.",
 };
@@ -822,7 +825,7 @@ function runCommand(raw) {
       tprint(`Vatsal Vaghasiya - AI engineer in training.
 MTech Data Science @ Ramaiah University (Bengaluru).
 Builds ML systems end to end and keeps notes on what didn't work.
-2 first-author papers under review · 19 projects shipped.`); break;
+2 papers under review (first author on one) · 19 projects shipped.`); break;
     case 'ls':
     case 'projects':
       tprint(Object.keys(PROJECT_FILES).map(k => `<span class="t-sage">${k}/</span>`).join('  ') +
@@ -837,10 +840,14 @@ web:    <span class="t-sage">career-os</span>
       tprint(PROJECT_FILES[key] ? esc(PROJECT_FILES[key]) : `cat: ${esc(arg) || '?'}: no such file. try: projects`, PROJECT_FILES[key] ? '' : 't-err'); break;
     }
     case 'papers':
-      tprint(`[1] Efficient LLM Preference Prediction - Siamese DeBERTa
-    98% of SOTA at 127× smaller · $0 training cost · <span class="t-amber">under review</span>
+      tprint(`[1] Efficient LLM Preference Classification - Siamese DeBERTa
+    Vaghasiya, Kshetrimayum, Prabadevi, Prathap  <span class="t-dim">(first author)</span>
+    log loss 0.9871, -6.2% rel · 127× fewer params · 8.4h on free T4s
+    <span class="t-amber">under review</span> · papers/efficient-llm-preference-classification.pdf
 [2] ProbCLIP-A - uncertainty-aware retrieval, frozen CLIP + 4.2M adapter
-    R@1 68.9% · ECE 0.062 (best) · <span class="t-amber">under review</span>`); break;
+    Kshetrimayum, Vaghasiya  <span class="t-dim">(second author)</span>
+    R@1 68.9% · ECE 0.078 -> 0.062 · flags 69.3% of failures at 4.9%
+    <span class="t-amber">submitted to Elsevier</span> · papers/probclip-a-uncertainty-aware-retrieval.pdf`); break;
     case 'skills':
       tprint(`Python        ██████████████████░░  90%
 DL / PyTorch  ████████████████░░░░  82%
@@ -1111,7 +1118,7 @@ function gradientRain() {
 
   // what the cursor becomes, first match wins
   const LABELS = [
-    ['.card-flip, .paper-flip', 'flip →'],
+    ['.card-flip', 'flip →'],
     ['.book', 'peek'],
     ['.recruiter-switch', 'quiet mode'],
     ['.cert-card', 'view PDF'],
@@ -1141,7 +1148,7 @@ function gradientRain() {
     if (btn) { setState(false, null); morphTo(btn); return; }
 
     // Card cursor logic (V1: view →)
-    const card = t.closest('.card:not(.card-flip), .app-window, .cardflip-back, .paper-back, .achievement-card');
+    const card = t.closest('.card:not(.card-flip), .app-window, .cardflip-back, .achievement-card');
     if (card) { morphReset(); setState(false, 'view →'); return; }
 
     morphReset();

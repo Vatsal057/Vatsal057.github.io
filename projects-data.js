@@ -511,42 +511,66 @@ window.PROJECTS = [
   /* ---------- Research ---------- */
   {
     slug: "preference-prediction",
-    title: "Efficient LLM Preference Prediction",
+    title: "Efficient LLM Preference Classification",
+    fullTitle: "Efficient LLM Preference Classification Through Position Bias Mitigation and Architectural Symmetry",
     kind: "research",
     status: "under review",
     tag: "siamese DeBERTa · calibration",
-    oneLiner: "Predicts which chatbot answer humans prefer — at 98% of state-of-the-art with a model 127× smaller.",
-    problem: "Preference models used to rank chatbot answers are huge. I wanted to see how far a tiny, cheap-to-train model could get with the right training tricks instead of raw scale.",
+    // Author order as printed on the paper. `me` marks which one is mine so the
+    // page can show the position instead of claiming one.
+    authors: [
+      { name: "Vatsal Vaghasiya", me: true },
+      { name: "Nancy Kshetrimayum" },
+      { name: "B. Prabadevi" },
+      { name: "Boppuru Rudra Prathap" }
+    ],
+    venue: "Under review. Faculty of Engineering, M. S. Ramaiah University of Applied Sciences.",
+    oneLiner: "Predicts which chatbot answer a human will prefer, using a 71M-parameter model where the winning solutions used 9B.",
+    problem: "Preference models that rank chatbot answers are huge. The winning LMSYS solutions ran 9B+ parameter models on eight A100s, which the paper puts at over $100,000 of compute. I wanted to see how far a small model could get on free GPUs if the training tricks did the work instead of the scale.",
     highlights: [
-      "Siamese DeBERTa with swap augmentation and temperature calibration.",
-      "98% of state-of-the-art performance with a 71M-param model — 127× smaller.",
-      "Trained for $0 on free T4 GPUs in 8.4 hours.",
-      "Metrics: log loss 1.052 → 0.987, accuracy +3.5 points."
+      "Siamese DeBERTa-v3-xsmall, 71M parameters, with identical encoders for both responses so the architecture itself is symmetric.",
+      "Swap augmentation doubles the training data and removes the position bias, where the model prefers whichever answer came first.",
+      "Validation log loss 0.9871, a 6.2% relative improvement on the baselines, with 127× fewer parameters.",
+      "52.06% accuracy on the three-class problem, up 3.5 percentage points.",
+      "Post-hoc temperature scaling at T = 1.20 corrects about 20% overconfidence.",
+      "30% of the training data already reaches 95.1% of peak performance.",
+      "Whole pipeline trains in 8.4 hours on two free Kaggle T4s. 57,477 pairwise human preferences from LMSYS Chatbot Arena."
     ],
     learned: "Swap augmentation bought more accuracy than a bigger model would have — it killed the position bias directly.",
     stack: ["DeBERTa-v3", "PyTorch", "free T4 GPUs"],
-    // Deliberately no repo link: the paper is under review, so code and
-    // weights stay unpublished until a decision. A link to the bare profile
-    // would just look like a dead end.
-    note: "Code and weights are held back until the review decision."
+    links: { paper: "papers/efficient-llm-preference-classification.pdf" },
+    // The paper is readable; the code is not. Those are separate decisions and
+    // the note says which is which.
+    note: "The full paper is here to read. Code and weights stay unpublished until the review decision."
   },
   {
     slug: "probclip-a",
     title: "ProbCLIP-A: Uncertainty-Aware Retrieval",
+    fullTitle: "Uncertainty-Aware Cross-Modal Retrieval via Probabilistic Adapters for Frozen CLIP Vision Foundation Models",
     kind: "research",
     status: "under review",
     tag: "probabilistic adapters · frozen CLIP",
+    authors: [
+      { name: "Nancy Kshetrimayum", corresponding: true },
+      { name: "Vatsal Vaghasiya", me: true }
+    ],
+    // CRediT roles exactly as listed in the paper's author block.
+    contribution: "Conceptualization, Methodology, Software, Validation, Writing (review and editing)",
+    venue: "Preprint submitted to Elsevier. Under review.",
     oneLiner: "Makes CLIP report how sure it is — a small adapter that turns a frozen model into a calibrated one.",
-    problem: "CLIP gives you a similarity score but no honest sense of when it's guessing. I wanted uncertainty out of a frozen foundation model without retraining it.",
+    problem: "CLIP returns one similarity score and no sense of when it is guessing, so a reliable match and an uncertain one look identical. Retraining the whole backbone to get uncertainty is expensive, and adapters that are cheap stay deterministic. This sits in between.",
     highlights: [
-      "A 4.2M-param probabilistic adapter on frozen CLIP outputs distributions, not point estimates.",
-      "Monte Carlo sampling turns those into uncertainty scores.",
-      "Catches 36.6% of failures at an 8.1% false-alarm rate.",
-      "Metrics: R@1 68.9%, ECE 0.062 — best calibration of all baselines tested."
+      "ProbCLIP-A learns Gaussian distributions over embeddings instead of single points. 2.1M trainable parameters per modality, 4.2M total, and the CLIP backbone stays frozen.",
+      "Text-to-image R@1 of 68.9% on Flickr30K, just ahead of CLIP-Adapter at 68.8%.",
+      "Expected calibration error drops from 0.078 on plain CLIP to 0.062 with Monte Carlo sampling.",
+      "Uncertainty separates real failures cleanly: mean uncertainty on wrong top-1 results is 4.6× that on correct ones.",
+      "Flagging anything above the 75th percentile catches 69.3% of retrieval failures while touching only 4.9% of the correct ones.",
+      "Trains in about 45 minutes on one free Kaggle P100."
     ],
     learned: "Skip the KL warmup schedule and the variance collapses to zero — the model quietly stops being probabilistic.",
     stack: ["CLIP", "PyTorch", "Monte Carlo sampling"],
-    note: "Code and weights are held back until the review decision."
+    links: { paper: "papers/probclip-a-uncertainty-aware-retrieval.pdf" },
+    note: "The full paper is here to read. Code and weights stay unpublished until the review decision."
   },
 
   /* ---------- Planned / building next ---------- */
