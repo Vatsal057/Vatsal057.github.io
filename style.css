@@ -18,24 +18,31 @@
   --shadow-lift: 0 4px 10px rgba(43, 58, 66, .10), 0 18px 36px rgba(43, 58, 66, .12);
 }
 
+/* Dark mode is the same notebook under a desk lamp, not a grey reskin.
+   The old palette was pure neutral (#161819 / #1D2022 / #24282A), which threw
+   away the whole warm-paper identity for anyone whose OS is in dark mode --
+   i.e. most developers. So: the paper goes deep ink-blue (a darkened cousin of
+   the light theme's --ink #2B3A42), the graph grid stays clearly visible
+   instead of dissolving, and amber gets brighter so it still reads as the
+   marker/pin accent that carries the concept. */
 body.dark-mode {
-  --paper: #161819;
-  --topbar-bg: rgba(22, 24, 25, .88);
-  --card: #1D2022;
-  --ink: #E0E5E8;
-  --ink-soft: #9BA6AD;
-  --sage: #4E6B4E;
-  --sage-deep: #8CA88C;
-  --amber: #B3864F;
-  --rose: #A66565;
-  --grid: #24282A;
-  --rs-border: #5A6B73;
-  --rs-track-bg: #111314;
-  --rs-thumb-bg: #9BA6AD;
-  --sage-text: #8CA88C;
-  --chip-bg: #2A332A;
-  --shadow: 0 4px 12px rgba(0, 0, 0, .2), 0 12px 30px rgba(0, 0, 0, .3);
-  --shadow-lift: 0 8px 16px rgba(0, 0, 0, .3), 0 20px 45px rgba(0, 0, 0, .4);
+  --paper: #10161B;
+  --topbar-bg: rgba(16, 22, 27, .92);
+  --card: #182127;
+  --ink: #E6ECEF;
+  --ink-soft: #9FAEB7;
+  --sage: #5C7F63;
+  --sage-deep: #9CC0A2;
+  --amber: #E0A868;
+  --rose: #C98A8A;
+  --grid: #1C2830;
+  --rs-border: #3A4A54;
+  --rs-track-bg: #0B1013;
+  --rs-thumb-bg: #9FAEB7;
+  --sage-text: #9CC0A2;
+  --chip-bg: #1F2E24;
+  --shadow: 0 4px 12px rgba(0, 0, 0, .3), 0 12px 30px rgba(0, 0, 0, .4);
+  --shadow-lift: 0 8px 16px rgba(0, 0, 0, .4), 0 20px 45px rgba(0, 0, 0, .5);
 }
 
 
@@ -1025,56 +1032,56 @@ html.js .cards .reveal:nth-child(6), html.js .app-grid .reveal:nth-child(6) { tr
   background: #FAF4EA; border: 1px solid #E6D5BC; color: #8A6A3C;
 }
 body.dark-mode .card-avail .is-live {
-  background: #232B23; border-color: #3E5A3E; color: #9DBE9D;
+  background: #1C2A20; border-color: #46664D; color: #9DBE9D;
 }
 body.dark-mode .card-avail .is-dl {
-  background: #2E2720; border-color: #5A4834; color: #D0A972;
+  background: #2C2418; border-color: #5E4A2E; color: #D0A972;
 }
 
 /* Dark mode specific overrides */
-body.dark-mode .s-sage { background: #2A332A; border-color: var(--sage); }
-body.dark-mode .s-amber { background: #3B3024; border-color: var(--amber); }
-body.dark-mode .s-rose { background: #382A2A; border-color: var(--rose); }
-body.dark-mode .card { border-color: #2C3235; }
+body.dark-mode .s-sage { background: #1F2E24; border-color: var(--sage); }
+body.dark-mode .s-amber { background: #33291B; border-color: var(--amber); }
+body.dark-mode .s-rose { background: #332426; border-color: var(--rose); }
+body.dark-mode .card { border-color: #26343C; }
 body.dark-mode .pin { background: radial-gradient(circle at 35% 30%, #D9A86C, #8C6A42 55%, #594228); box-shadow: 0 3px 4px rgba(0,0,0,.4); }
-body.dark-mode .rag-box rect { fill: #1D2022; }
-body.dark-mode .pipeline span { background: #2A2E30; border-color: #363C3F; }
-body.dark-mode .app-window { background: #1D2022; border-color: #2C3235; }
-body.dark-mode .app-featured .app-titlebar { background: #2A2E30; border-color: #2C3235; }
-body.dark-mode .app-titlebar { background: #2A2E30; border-bottom: 1px solid #363C3F; }
-body.dark-mode .app-body code { background: #2A2E30; }
-body.dark-mode .more-projects { border-color: #4A5559; }
-body.dark-mode .paper-sheet { border-color: #2C3235; }
+body.dark-mode .rag-box rect { fill: #182127; }
+body.dark-mode .pipeline span { background: #202D35; border-color: #2E3E47; }
+body.dark-mode .app-window { background: #182127; border-color: #26343C; }
+body.dark-mode .app-featured .app-titlebar { background: #202D35; border-color: #26343C; }
+body.dark-mode .app-titlebar { background: #202D35; border-bottom: 1px solid #2E3E47; }
+body.dark-mode .app-body code { background: #202D35; }
+body.dark-mode .more-projects { border-color: #3A4A54; }
+body.dark-mode .paper-sheet { border-color: #26343C; }
 /* The folded corner is two hardcoded paper tints, so it needs its own pair here
    or it shows as a pale notch on the dark sheet. */
 body.dark-mode .paper-sheet::after {
-  background: linear-gradient(225deg, var(--paper) 0 50%, #2A2E30 50% 100%);
+  background: linear-gradient(225deg, var(--paper) 0 50%, #202D35 50% 100%);
   box-shadow: -1px 1px 2px rgba(0, 0, 0, .3);
 }
 body.dark-mode .paper-state { color: #C79A62; }
 body.dark-mode .paper-figs caption, body.dark-mode .paper-caveat { color: #9BA6AD; }
 body.dark-mode .paper-byline .is-me { box-shadow: inset 0 -.42em 0 rgba(179, 134, 79, .3); }
-body.dark-mode .btn-ghost { border-color: #4A5559; }
-body.dark-mode .bar { background: #2A2E30; border-color: #363C3F; }
+body.dark-mode .btn-ghost { border-color: #3A4A54; }
+body.dark-mode .bar { background: #202D35; border-color: #2E3E47; }
 body.dark-mode .rag-sketch .caveat-svg { fill: var(--sage-deep); }
-body.dark-mode .rag-sketch path[stroke="#EBE4D3"] { stroke: #363C3F; }
-body.dark-mode .rag-sketch rect[fill="#FCFAF4"] { fill: #1A1D1E; }
-body.dark-mode .rag-sketch line { stroke: #2C3235; }
-body.dark-mode .nc-head { border-bottom-color: #363C3F; }
-body.dark-mode .card-proof span { background: #2A2E30; border-color: #363C3F; color: var(--amber); }
-body.dark-mode .gitlog { border-left-color: #363C3F; }
-body.dark-mode .notebook-card { border-color: #2C3235; }
-body.dark-mode .app-stack span { background: #2A332A; border-color: #363C3F; color: var(--sage-deep); }
-body.dark-mode .idea-badge { background: #3B3024; border-color: #4B3D2D; color: var(--amber); }
-body.dark-mode .planned-card { background: #1A1D1E; border-color: #2C3235; }
-body.dark-mode .research-badge { background: #2D2A38; border-color: #3D394C; color: #9A8BC0; }
-body.dark-mode .building-card { background: #1D2022; border-color: #2A332A; }
-body.dark-mode .building-badge { background: #2A332A; border-color: #3A4A3A; color: var(--sage-deep); }
+body.dark-mode .rag-sketch path[stroke="#EBE4D3"] { stroke: #2E3E47; }
+body.dark-mode .rag-sketch rect[fill="#FCFAF4"] { fill: #131B21; }
+body.dark-mode .rag-sketch line { stroke: #26343C; }
+body.dark-mode .nc-head { border-bottom-color: #2E3E47; }
+body.dark-mode .card-proof span { background: #202D35; border-color: #2E3E47; color: var(--amber); }
+body.dark-mode .gitlog { border-left-color: #2E3E47; }
+body.dark-mode .notebook-card { border-color: #26343C; }
+body.dark-mode .app-stack span { background: #1F2E24; border-color: #2E3E47; color: var(--sage-deep); }
+body.dark-mode .idea-badge { background: #33291B; border-color: #453623; color: var(--amber); }
+body.dark-mode .planned-card { background: #131B21; border-color: #26343C; }
+body.dark-mode .research-badge { background: #262336; border-color: #3A3550; color: #9A8BC0; }
+body.dark-mode .building-card { background: #182127; border-color: #1F2E24; }
+body.dark-mode .building-badge { background: #1F2E24; border-color: #38513C; color: var(--sage-deep); }
 body.dark-mode .nbc-ring.is-label::before { background: rgba(30, 34, 36, .9); }
 body.dark-mode .nbc-ring.is-spotlight::before { background: rgba(44, 50, 53, 0.4); }
-body.dark-mode .index-card { background: repeating-linear-gradient(var(--card), var(--card) 26px, #2C3235 27px); border-color: #2C3235; }
-body.dark-mode .paper-fold { background: linear-gradient(225deg, var(--paper) 0 50%, #2A2E30 50% 100%); }
-body.dark-mode .shelf-plank { background: linear-gradient(#3B3E42, #24282A); }
+body.dark-mode .index-card { background: repeating-linear-gradient(var(--card), var(--card) 26px, #26343C 27px); border-color: #26343C; }
+body.dark-mode .paper-fold { background: linear-gradient(225deg, var(--paper) 0 50%, #202D35 50% 100%); }
+body.dark-mode .shelf-plank { background: linear-gradient(#34424A, #24282A); }
 
 /* ============ Achievements (Datathon etc.) ============ */
 .achievements { margin-bottom: 2rem; }
@@ -1161,4 +1168,538 @@ body.dark-mode .contact-input:focus {
 .form-result.error { color: #E0968D; }
 @media (max-width: 600px) {
   .form-row { flex-direction: column; }
+}
+
+/* ============================================================================
+   AUDIT FIXES
+   A render pass in headless Chrome (light, dark, and a 390px phone) turned up
+   a set of problems that a source read does not show. Each block below names
+   the measurement it is answering.
+   ========================================================================= */
+
+/* ---------------------------------------------------------------------------
+   1. Screenshots on cards
+   The homepage carried 19 projects/apps/tools and zero images, while six real
+   screenshots already sat in images/shots/ wired only into the case pages. A
+   visitor scrolling 12,400px of prose had nothing to look at. These bleed to
+   the card edge, so the card reads as "thing with a picture" and not "another
+   paragraph".
+   ------------------------------------------------------------------------ */
+.card-shot,
+.shot-frame {
+  display: block; position: relative;
+  margin: -1.6rem -1.5rem 1.1rem;      /* cancel .card padding, bleed to edge */
+  border-bottom: 1px solid #EFEAE0;
+  background: #F2EEE4;
+  overflow: hidden;
+  border-radius: 6px 6px 0 0;
+}
+/* height stays auto so aspect-ratio actually governs the box. With height:100%
+   here the ratio was ignored and each img fell back to its HTML height
+   attribute -- a 900x562 shot rendered 562px tall inside a 334px card, which is
+   what pushed #apps to 3,367px. */
+.card-shot img,
+.shot-frame img {
+  display: block; width: 100%; height: auto;
+  aspect-ratio: 16 / 10; object-fit: cover; object-position: top center;
+  transition: transform .5s cubic-bezier(.2, .7, .3, 1);
+}
+.card:hover .card-shot img { transform: scale(1.035); }
+body.dark-mode .card-shot,
+body.dark-mode .shot-frame { background: #131B21; border-bottom-color: #26343C; }
+
+/* A caption strip over the bottom of the shot, so the picture also carries a
+   fact instead of only decorating. */
+.shot-note {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: .5rem .7rem;
+  font-family: 'JetBrains Mono', monospace; font-size: .66rem; letter-spacing: .01em;
+  color: #F4F1E8;
+  background: linear-gradient(transparent, rgba(14, 20, 24, .82) 55%);
+}
+
+/* Screenshot inside the macOS window chrome on the app shelf. The window frame
+   was already drawn and had bullet points inside it; a picture is what that
+   frame was asking for. */
+.app-shot { display: block; background: #F2EEE4; border-bottom: 1px solid #E7E1D2; overflow: hidden; }
+.app-shot img {
+  display: block; width: 100%; height: auto; aspect-ratio: 16 / 10;
+  object-fit: cover; object-position: top center;
+  transition: transform .5s cubic-bezier(.2, .7, .3, 1);
+}
+.app-window:hover .app-shot img { transform: scale(1.03); }
+body.dark-mode .app-shot { background: #131B21; border-bottom-color: #26343C; }
+
+/* Some shots are UI on a light ground, some are dark app windows. A hairline
+   inset keeps both from bleeding into the card with no edge. */
+.card-shot::after,
+.app-shot::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(43, 58, 66, .06);
+}
+.app-shot { position: relative; }
+
+/* ---------------------------------------------------------------------------
+   2. Section rhythm
+   All 15 sections were the same five moves (icon, mono eyebrow, serif h2, sub,
+   grid of cream cards on cream paper) at the same width and the same tone, so
+   the eye had no landmarks and the page read as one continuous beige texture.
+   Three surface levels now exist: paper, tinted wash, and a dark band.
+   ------------------------------------------------------------------------ */
+.section--band,
+.section--wash { position: relative; }
+.section--band::before,
+.section--wash::before {
+  content: ""; position: absolute; z-index: -1;
+  top: 0; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%);
+}
+.section--wash::before {
+  background: linear-gradient(180deg, rgba(143, 169, 143, .10), rgba(143, 169, 143, .04));
+  border-top: 1px solid rgba(143, 169, 143, .22);
+  border-bottom: 1px solid rgba(143, 169, 143, .22);
+}
+body.dark-mode .section--wash::before {
+  background: linear-gradient(180deg, rgba(92, 127, 99, .14), rgba(92, 127, 99, .05));
+  border-color: rgba(156, 192, 162, .18);
+}
+
+/* The dark band. Cream offprint sheets on a dark desk is the strongest visual
+   contrast available without introducing a new colour. */
+.section--band::before {
+  background:
+    linear-gradient(180deg, #1B242B, #141C22);
+  border-top: 1px solid #2A3A44;
+  border-bottom: 1px solid #2A3A44;
+}
+.section--band::after {
+  content: ""; position: absolute; z-index: -1; inset: 0 auto auto 50%;
+  width: 100vw; height: 100%; transform: translateX(-50%);
+  background-image:
+    linear-gradient(rgba(255, 255, 255, .022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .022) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+}
+.section--band .section-head h2,
+.section--band .section-head .section-sub,
+.section--band .app-count { color: #EAF0F3; }
+.section--band .section-head .section-sub { color: #A9BAC4; }
+.section--band .eyebrow { color: #9CC0A2; }
+.section--band .margin-note { color: #C9A46E; }
+body.dark-mode .section--band::before { background: linear-gradient(180deg, #0A1014, #0D141A); }
+
+/* ---------------------------------------------------------------------------
+   3. Vertical air
+   Section gaps ran 150-350px of bare grid, and grid-stretched cards left voids
+   inside themselves (the PhotoWidget card held ~180px of blank because it has
+   two bullets while its row-mates have three).
+   ------------------------------------------------------------------------ */
+.section { padding: clamp(2.2rem, 5.5vh, 3.4rem) 1.5rem; }
+.section-head { margin-bottom: 1.6rem; }
+.section-icon { height: 34px; margin-bottom: .35rem; }
+.section--band .section-icon,
+.section--wash .section-icon { filter: drop-shadow(1px 2px 3px rgba(0, 0, 0, .35)); }
+
+/* Cards stop stretching to the tallest sibling, which is what created the
+   internal voids. Content sits top-aligned and the card ends where it ends. */
+.cards, .app-grid { align-items: start; }
+
+/* ---------------------------------------------------------------------------
+   4. Live demo strip
+   "these six run right now, in this tab" was the best asset on the page and it
+   was a bare <ul> of chips. On mobile a media query hid the <span> captions
+   outright, so it degraded to six unexplained names.
+   ------------------------------------------------------------------------ */
+.hero-live-list { display: flex; flex-wrap: wrap; gap: .5rem; list-style: none; margin-top: .55rem; }
+.hero-live-list a {
+  display: inline-flex; align-items: baseline; gap: .42rem;
+  padding: .42rem .8rem; border-radius: 999px;
+  background: var(--card); border: 1px solid #DCD6C6;
+  text-decoration: none; color: var(--ink); font-size: .84rem; font-weight: 600;
+  transition: border-color .2s, transform .2s, box-shadow .2s;
+}
+.hero-live-list a::before {
+  content: ""; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--sage-deep); align-self: center; flex: none;
+  box-shadow: 0 0 0 3px rgba(143, 169, 143, .2);
+}
+.hero-live-list a span {
+  font-family: 'JetBrains Mono', monospace; font-size: .68rem;
+  font-weight: 400; color: var(--ink-soft);
+}
+.hero-live-list a:hover {
+  border-color: var(--sage); transform: translateY(-2px); box-shadow: var(--shadow);
+}
+body.dark-mode .hero-live-list a { border-color: #2E3E47; }
+
+/* ---------------------------------------------------------------------------
+   5. Skills
+   Seven bars all filled to roughly the same 60-75% in the same green say
+   nothing; the evidence line underneath ("Cachy, AirSwipe, IPL pipeline") was
+   the real content and was set smallest. That order is now reversed.
+   ------------------------------------------------------------------------ */
+.skills-grid { gap: 1rem 1.6rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+.skill {
+  background: var(--card); border: 1px solid #EFEAE0; border-radius: 6px;
+  padding: .9rem 1rem;
+}
+body.dark-mode .skill { border-color: #26343C; }
+.skill-top { font-size: .84rem; margin-bottom: .3rem; align-items: baseline; }
+.skill-top b { font-weight: 600; }
+.skill-pct { font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: var(--sage-text); flex: none; }
+/* The bar becomes a thin rule: present as texture, no longer the headline. */
+.bar { height: 3px; border: none; background: var(--grid); border-radius: 2px; }
+body.dark-mode .bar { background: #202D35; border: none; }
+.skill-note { font-size: .8rem; margin-top: .45rem; }
+.skill-ships {
+  font-size: .68rem; margin-top: .4rem; color: var(--sage-text);
+  font-family: 'JetBrains Mono', monospace; line-height: 1.5;
+}
+
+/* ---------------------------------------------------------------------------
+   6. Certifications
+   Five identical IBM/Coursera beginner certificates held a full screen, one
+   orphaned alone on a second row, directly before the strongest work. Same
+   information, one row, no medal emoji repeated five times.
+   ------------------------------------------------------------------------ */
+.cert-grid { display: flex; flex-wrap: wrap; gap: .5rem; }
+.cert-grid .cert-card {
+  display: inline-flex; align-items: center; gap: .45rem;
+  padding: .45rem .8rem; border-radius: 999px;
+  background: var(--card); border: 1px solid #E6DCC8;
+  text-decoration: none; box-shadow: none;
+}
+.cert-grid .cert-card:hover { border-color: var(--amber); transform: translateY(-2px); }
+.cert-grid .cert-card h3 { font-family: 'Inter', sans-serif; font-size: .82rem; font-weight: 500; color: var(--ink); }
+.cert-grid .cert-card .mono,
+.cert-grid .cert-seal { display: none; }
+.cert-grid .cert-card::before { content: "PDF"; font-family: 'JetBrains Mono', monospace; font-size: .6rem; color: var(--amber); letter-spacing: .06em; }
+body.dark-mode .cert-grid .cert-card { border-color: #2E3E47; }
+.cert-issuer { font-size: .8rem; color: var(--ink-soft); margin-top: .7rem; }
+
+/* ---------------------------------------------------------------------------
+   7. Companion
+   isOverlapping() measured only the robot's own 90px box and never the bubble,
+   which is ~280px wide and sits above it, so the collision test passed while
+   the bubble covered card text. roamAct() also walked to a purely random point
+   with no collision check at all. The JS fixes both; this caps the bubble so
+   the worst case is smaller, and on a phone the panel can no longer sit over
+   the hero CTAs.
+   ------------------------------------------------------------------------ */
+.bubble { max-width: min(300px, calc(100vw - 5rem)); }
+@media (max-width: 820px) {
+  /* Docked bottom-right on small screens, and the bubble opens only on tap.
+     It was covering the Download resume button on first load. */
+  .companion { bottom: 12px; right: 12px; left: auto; top: auto; transform: none !important; }
+  .companion:not(.open) .companion-panel { display: none; }
+  .robot { width: 54px; height: 54px; }
+  .bubble { max-width: calc(100vw - 4.5rem); font-size: .82rem; }
+}
+
+/* ---------------------------------------------------------------------------
+   8. Mobile nav
+   The nav is a horizontal scroll strip with the scrollbar hidden, so it looked
+   like it simply ended at "Apps" with "T" clipped -- Tools, Building next,
+   Research and Contact appeared not to exist. A fade edge plus a nudge makes
+   the overflow legible.
+   ------------------------------------------------------------------------ */
+@media (max-width: 820px) {
+  .topbar { position: relative; }
+  .topnav {
+    scroll-snap-type: x proximity;
+    mask-image: linear-gradient(90deg, #000 0, #000 88%, transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, #000 0, #000 88%, transparent 100%);
+    padding-right: 1.6rem;
+  }
+  .topnav a { scroll-snap-align: start; }
+  .topnav::after {
+    content: "\203A"; position: sticky; right: 0; flex: none;
+    color: var(--amber); font-size: 1.1rem; line-height: 1; align-self: center;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   9. Mobile density
+   The page measured 22,648px on a 390px screen, about 27 phone screens.
+   ------------------------------------------------------------------------ */
+@media (max-width: 620px) {
+  .section { padding: 1.8rem 1.1rem; }
+  .section-head { margin-bottom: 1.2rem; }
+  .section-icon { height: 28px; }
+  .cards, .app-grid, .papers { gap: 1rem; }
+  .card { padding: 1.1rem 1rem 1rem; }
+  .card-shot { margin: -1.1rem -1rem .8rem; }
+  .hero { padding-top: 1.6rem; }
+  /* The captions stay. Six unexplained product names is worse than six names
+     with a four-word reason to tap them. */
+  .hero-live-list a { width: 100%; }
+  .hero-live-list a span { display: inline; }
+}
+
+/* Cards no longer rotate on phones: at narrow widths the tilt reads as a
+   rendering fault rather than a pinned note. */
+@media (max-width: 560px) {
+  .card:nth-child(odd), .card:nth-child(even),
+  .paper-sheet:nth-child(odd), .paper-sheet:nth-child(even) { transform: none; }
+}
+
+/* ---------------------------------------------------------------------------
+   10. Above-the-fold proof
+   Nothing on the first screen invited a click, and the genuinely fun parts
+   (terminal, flip card, fake training run) were all hidden behind small
+   affordances further down.
+   ------------------------------------------------------------------------ */
+.hero-live-label { color: var(--sage-text); font-size: .74rem; margin-bottom: .1rem; }
+.hero-live { margin-top: 1.5rem; }
+.hero-hint {
+  margin-top: 1rem; font-size: .74rem; color: var(--ink-soft);
+  font-family: 'JetBrains Mono', monospace;
+}
+.hero-hint kbd {
+  font-family: 'JetBrains Mono', monospace; font-size: .92em;
+  background: var(--card); border: 1px solid #DCD6C6; border-bottom-width: 2px;
+  border-radius: 4px; padding: .05rem .34rem; color: var(--ink);
+}
+body.dark-mode .hero-hint kbd { border-color: #2E3E47; }
+.hero-hint button {
+  background: none; border: none; padding: 0; cursor: pointer;
+  font-family: inherit; font-size: inherit;
+  color: var(--sage-deep); border-bottom: 1px dotted var(--sage);
+}
+.hero-hint button:hover { color: var(--ink); }
+
+/* Flip affordance moves to the card corner. It used to sit at the very bottom
+   of a tall card, which is why nobody found the flip. */
+.card-flip .flip-hint {
+  position: absolute; top: .7rem; right: .8rem; margin: 0;
+  font-size: .64rem; letter-spacing: .04em;
+  background: var(--card); border: 1px solid var(--sage);
+  color: var(--sage-deep); padding: .12rem .45rem; border-radius: 999px;
+  z-index: 3;
+}
+body.dark-mode .card-flip .flip-hint { background: #1F2E24; }
+
+/* Phone-shaped captures (Cachy, Smart Wardrobe) are portrait. Cropping them to
+   a landscape card frame would show only a strip of chrome, so they letterbox
+   on a tinted ground instead, which reads as a device shot on a desk. */
+.card-shot--tall img,
+.app-shot--tall img {
+  object-fit: contain;
+  object-position: center;
+  padding: .5rem 0;
+}
+.card-shot--tall,
+.app-shot--tall {
+  background:
+    radial-gradient(120% 100% at 50% 0%, rgba(143, 169, 143, .16), transparent 70%),
+    #F0ECE1;
+}
+body.dark-mode .card-shot--tall,
+body.dark-mode .app-shot--tall {
+  background:
+    radial-gradient(120% 100% at 50% 0%, rgba(156, 192, 162, .12), transparent 70%),
+    #111A20;
+}
+
+/* ---------------------------------------------------------------------------
+   11. Cards with no screenshot
+   Six of the projects have no capturable UI (a CLI, a notebook pipeline, an
+   Android IME, a Gradio space that sleeps). Rather than fake a screenshot or
+   leave those cards as bare text next to cards that have one, each gets a
+   band carrying its single strongest measured number. Same visual weight as a
+   shot, and the content is already true.
+   ------------------------------------------------------------------------ */
+.card-metric {
+  margin: -1.6rem -1.5rem 1.1rem;
+  padding: 1.1rem 1.5rem 1rem;
+  border-bottom: 1px solid #EFEAE0;
+  border-radius: 6px 6px 0 0;
+  background:
+    linear-gradient(135deg, rgba(143, 169, 143, .13), rgba(217, 168, 108, .10)),
+    var(--card);
+  display: flex; align-items: baseline; gap: .55rem; flex-wrap: wrap;
+}
+.card-metric b {
+  font-family: 'Fraunces', serif; font-size: 1.85rem; font-weight: 600;
+  line-height: 1; color: var(--ink); letter-spacing: -.01em;
+}
+.card-metric span {
+  font-family: 'JetBrains Mono', monospace; font-size: .68rem;
+  color: var(--ink-soft); line-height: 1.35; max-width: 15rem;
+}
+body.dark-mode .card-metric {
+  border-bottom-color: #26343C;
+  background: linear-gradient(135deg, rgba(92, 127, 99, .18), rgba(224, 168, 104, .10)), var(--card);
+}
+.section--band .card-metric { border-bottom-color: #26343C; }
+@media (max-width: 620px) {
+  .card-metric { margin: -1.1rem -1rem .8rem; padding: .85rem 1rem .8rem; }
+  .card-metric b { font-size: 1.5rem; }
+}
+
+/* Tools become a compact list inside the Apps section rather than their own
+   full section with its own icon, eyebrow, heading and card grid. */
+.tool-row {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: .8rem; margin-top: 1rem;
+}
+.tool-item {
+  background: var(--card); border: 1px solid #EFEAE0; border-radius: 6px;
+  padding: .85rem 1rem; cursor: pointer;
+  transition: transform .2s, border-color .2s, box-shadow .2s;
+}
+.tool-item:hover { transform: translateY(-3px); border-color: var(--sage); box-shadow: var(--shadow); }
+.tool-item h4 { font-family: 'JetBrains Mono', monospace; font-size: .84rem; color: var(--ink); font-weight: 700; }
+.tool-item p { font-size: .8rem; color: var(--ink-soft); margin-top: .3rem; }
+.tool-item .card-stack { margin-top: .45rem; }
+body.dark-mode .tool-item { border-color: #26343C; }
+.section--band .tool-item { background: #1B242B; border-color: #2A3A44; }
+.section--band .tool-item h4 { color: #EAF0F3; }
+.section--band .tool-item p { color: #A9BAC4; }
+
+/* Inside the dark band, cream cards need their own border and the app window
+   chrome needs to stop being a light grey strip. */
+.section--band .card,
+.section--band .app-window { border-color: #2A3A44; background: #1B242B; }
+.section--band .card h3,
+.section--band .app-name,
+.section--band .app-lead { color: #EAF0F3; }
+.section--band .card p,
+.section--band .app-body p,
+.section--band .app-features li { color: #A9BAC4; }
+.section--band .app-titlebar { background: #22303A; border-bottom-color: #2A3A44; }
+.section--band .card-stack { color: #7D8F9A; }
+.section--band .paper-sheet { background: #FFFDF8; }
+.section--band .app-shot,
+.section--band .card-shot { background: #131B21; border-bottom-color: #2A3A44; }
+
+/* The original .cert-card was a 140px-tall tilted mini-diploma. The pill above
+   needs those column-layout leftovers switched off explicitly. */
+.cert-grid .cert-card {
+  min-height: 0; flex-direction: row; justify-content: flex-start;
+  border-top-width: 1px; border-top-color: #E6DCC8;
+}
+.cert-grid .cert-card:nth-child(odd),
+.cert-grid .cert-card:nth-child(even) { transform: none; }
+.cert-grid .cert-card:hover { box-shadow: var(--shadow); }
+.cert-grid .cert-card > div { display: contents; }
+body.dark-mode .cert-grid .cert-card { border-top-color: #2E3E47; }
+
+/* Tools heading, now a subhead inside the Apps section rather than a full
+   section header of its own. */
+.tool-heading {
+  font-size: 1.15rem; font-weight: 600; margin-top: 2.4rem;
+  padding-top: 1.6rem; border-top: 1px solid var(--grid);
+}
+.tool-heading .margin-note { font-size: .95rem; }
+
+/* A real figure from the datathon submission, sized so it reads as evidence
+   next to the award card rather than decoration. */
+.award-figure { margin-top: 1.4rem; max-width: 520px; }
+.award-figure img {
+  display: block; width: 100%; height: auto; border-radius: 6px;
+  background: #FFFDF8; border: 1px solid #E7E1D2; box-shadow: var(--shadow);
+}
+.award-figure figcaption {
+  font-size: .7rem; color: var(--ink-soft); margin-top: .55rem; line-height: 1.55;
+}
+body.dark-mode .award-figure img { border-color: #26343C; background: #F7F5F0; }
+
+/* Building-next cards carry a shot above the badge, so the badge needs to clear
+   the image instead of overlapping it. */
+.building-card .card-shot { margin-bottom: .9rem; }
+.building-card .planned-badge { position: static; display: inline-block; margin-bottom: .5rem; }
+
+/* ---------------------------------------------------------------------------
+   12. Length
+   Adding screenshots pushed the page from 12,408px to 13,823px, which trades
+   one audit finding for another. Measured per section, #apps was 3,574px on its
+   own: eight macOS windows each with a full feature list. The shot band gets
+   shorter, the app shelf features five and lists the rest, and the datathon
+   figure sits beside its card instead of under it.
+   ------------------------------------------------------------------------ */
+.card-shot img,
+.shot-frame img,
+.app-shot img { aspect-ratio: 16 / 8; }
+.card-shot--tall img,
+.app-shot--tall img { aspect-ratio: 16 / 9; }
+
+/* Apps that are a menu-bar utility with no interesting window: name, one line,
+   stack, download. Same information, a fifth of the height. */
+.app-mini-row {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: .8rem; margin-top: 1.2rem;
+}
+.app-mini {
+  display: flex; flex-direction: column; gap: .3rem;
+  background: var(--card); border: 1px solid #EFEAE0; border-radius: 8px;
+  padding: .8rem .95rem; cursor: pointer;
+  transition: transform .2s, border-color .2s, box-shadow .2s;
+}
+.app-mini:hover { transform: translateY(-3px); border-color: var(--sage); box-shadow: var(--shadow); }
+.app-mini-top { display: flex; align-items: center; gap: .5rem; }
+.app-mini-top .term-dots { flex: none; }
+.app-mini h4 {
+  font-family: 'JetBrains Mono', monospace; font-size: .8rem;
+  font-weight: 700; color: var(--ink);
+}
+.app-mini .app-platform { margin-left: auto; }
+.app-mini p { font-size: .8rem; color: var(--ink-soft); }
+.app-mini .card-stack { font-size: .68rem; }
+body.dark-mode .app-mini { border-color: #26343C; }
+
+/* Award card and its figure share a row on wide screens. */
+.award-row { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 1.6rem; align-items: start; }
+.award-row .achievements { margin-bottom: 0; }
+.award-row .award-figure { margin-top: 0; max-width: none; }
+@media (max-width: 860px) { .award-row { grid-template-columns: 1fr; } }
+
+/* The proof chips repeat what the metric band above already says, so they only
+   show on cards that carry a screenshot instead of a metric. */
+.card-metric ~ .card-proof { display: none; }
+
+/* Tighter rhythm at the top and bottom of the page. */
+.hero { padding-bottom: 1.5rem; }
+.contact-form { margin-bottom: 1rem; }
+.end-note { margin-top: 1.6rem !important; }
+
+/* ---------------------------------------------------------------------------
+   13. Render-pass corrections
+   Caught by looking at the result rather than the source.
+   ------------------------------------------------------------------------ */
+
+/* The flip pill sat on top of the two-line "Constitution of India · RAG Q&A"
+   heading. Reserve the corner. */
+.card-flip .cardflip-front h3 { padding-right: 4.2rem; }
+
+/* The metric band's tint was too faint to register as a band at all, so those
+   cards still read as plain text next to the cards with screenshots. */
+.card-metric {
+  background:
+    linear-gradient(135deg, rgba(143, 169, 143, .26), rgba(217, 168, 108, .20)),
+    var(--card);
+  border-bottom: 1px solid #E4DCC9;
+}
+body.dark-mode .card-metric {
+  background: linear-gradient(135deg, rgba(92, 127, 99, .32), rgba(224, 168, 104, .16)), var(--card);
+  border-bottom-color: #2E3E47;
+}
+.card-metric b { color: var(--ink); }
+
+/* Caption strip only needs to darken its own line, not a third of the image. */
+.shot-note {
+  background: linear-gradient(transparent, rgba(14, 20, 24, .88) 70%);
+  padding: .9rem .7rem .45rem;
+}
+
+/* The sticky chevron floated on top of the last nav item instead of sitting
+   after it. The mask fade already says "there is more to the right", so the
+   chevron goes and the fade stays. */
+@media (max-width: 820px) {
+  .topnav::after { content: none; }
+}
+
+/* A key combination is not an instruction you can follow on a phone. */
+@media (max-width: 620px) {
+  .hero-hint .kbd-hint { display: none; }
 }

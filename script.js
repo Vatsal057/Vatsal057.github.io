@@ -125,6 +125,18 @@ const askInput = document.getElementById('askInput');
 let lineIdx = 0, hideTimer, typingTimer;
 
 function say(text, sticky = false, mood = 'thinking') {
+  // The bubble is the thing that covers content, so the check belongs here and
+  // not only in the roaming code. Section lines fire wherever the robot happens
+  // to be standing -- usually the bottom-right home spot, which on this layout
+  // sits directly on the right-hand card column. Step aside first, instantly,
+  // so there is no pause before it speaks.
+  try {
+    if (!walking && typeof pos === 'object' && isOverlapping(pos.x, pos.y)) {
+      const safe = getSafePlace(pos.x, pos.y);
+      if (safe.x !== pos.x || safe.y !== pos.y) place(safe.x, safe.y);
+    }
+  } catch { /* positioning is decoration; never let it block the message */ }
+
   bubble.className = `bubble show mood-${mood}`;
   bubbleContent.style.display = 'none';
   bubbleActions.style.display = 'none';
@@ -177,21 +189,44 @@ let walkAnim = null, pendingGoto = null, walkSeq = 0;
 const vw = () => document.documentElement.clientWidth;
 const vh = () => document.documentElement.clientHeight;
 
+// The collision test used to measure only the robot's own 90px box. The speech
+// bubble is up to 300px wide and sits *above* the robot, so the test would pass
+// while the bubble covered card text -- which is what a render pass caught it
+// doing on top of the projects grid, and on mobile on top of the resume button.
+// The footprint below is the robot plus the space the panel occupies.
+const PANEL_W = 300, PANEL_H = 140;
+
+function companionFootprint(x, y) {
+  // Panel is bottom-anchored above the robot and aligned to whichever side the
+  // robot is on, matching .companion-panel / .companion.on-left in the CSS.
+  const onLeft = x < vw() / 2;
+  const panelLeft = onLeft ? x : x + SIZE - PANEL_W;
+  return {
+    left: Math.min(x, panelLeft),
+    right: Math.max(x + SIZE, panelLeft + PANEL_W),
+    top: y - PANEL_H - 10,
+    bottom: y + SIZE,
+  };
+}
+
 function isOverlapping(x, y) {
-  const rect = { left: x, top: y, right: x + SIZE, bottom: y + SIZE };
-  const obstacles = Array.from(document.querySelectorAll('header, .topbar, p, img, .card, .notebook-card, .index-card'));
-  
+  const rect = companionFootprint(x, y);
+  const obstacles = Array.from(document.querySelectorAll(
+    'header, .topbar, p, img, .card, .notebook-card, .index-card, ' +
+    '.app-window, .paper-sheet, .skill, .tool-item, .achievement-card, ' +
+    '.award-figure, h1, h2, h3, .btn, .hero-live-list, .gitlog, .contact-form'
+  ));
+
   for (const el of obstacles) {
     const elRect = el.getBoundingClientRect();
     if (elRect.width === 0 || elRect.height === 0) continue;
-    
-    // Strict header protection - header spans full width essentially, 
-    // but we can just use its bounding box. 
-    // Add some padding to obstacles
+    // Skip anything scrolled out of view; it cannot be covered.
+    if (elRect.bottom < 0 || elRect.top > vh()) continue;
+
     const pad = 10;
-    if (rect.right > elRect.left - pad && 
-        rect.left < elRect.right + pad && 
-        rect.bottom > elRect.top - pad && 
+    if (rect.right > elRect.left - pad &&
+        rect.left < elRect.right + pad &&
+        rect.bottom > elRect.top - pad &&
         rect.top < elRect.bottom + pad) {
       return true;
     }
@@ -215,7 +250,10 @@ function getSafePlace(x, y) {
       radius += 30;
     }
   }
-  return {x, y}; // fallback
+  // Dense sections (the projects grid is eight cards wide) can have no clear
+  // spot at all. Returning the original point put the bubble on the content, so
+  // fall back to the bottom corner furthest from the page's text column.
+  return { x: vw() - SIZE - 12, y: vh() - SIZE - 14 };
 }
 
 function place(x, y) {
@@ -228,7 +266,18 @@ function place(x, y) {
     companion.classList.toggle('on-left', x < vw() / 2);
   }
 }
-const homeXY = () => [vw() - SIZE - 22, vh() - SIZE - 22];
+// Content is a 1100px column centred in the viewport, so on a wide screen there
+// is a real gutter either side. Resting there means the robot is beside the page
+// rather than on top of it. Below that width there is no gutter, so it goes to
+// the bottom corner and the CSS shrinks it.
+const CONTENT_W = 1100;
+const homeXY = () => {
+  const gutter = (vw() - CONTENT_W) / 2;
+  const x = gutter > SIZE + 24
+    ? vw() - gutter / 2 - SIZE / 2
+    : vw() - SIZE - 22;
+  return [x, vh() - SIZE - 22];
+};
 place(...homeXY());
 addEventListener('resize', () => { if (!walking) place(pos.x, pos.y); });
 
@@ -346,7 +395,14 @@ function roamAct() {
     || document.hidden || document.body.classList.contains('recruiter')) { scheduleRoam(); return; }
   const roll = Math.random();
   if (roll < .65) {
-    walkTo(40 + Math.random() * (vw() - 160), vh() * .4 + Math.random() * vh() * .5,
+    // This used to walk to a purely random point with no collision check at all
+    // -- getSafePlace was only consulted on drag-release and when homing, which
+    // is why the robot kept parking itself on top of the content.
+    const target = getSafePlace(
+      40 + Math.random() * (vw() - 160),
+      vh() * .4 + Math.random() * vh() * .5
+    );
+    walkTo(target.x, target.y,
       () => { if (Math.random() < .4) say(WANDER_QUIPS[Math.floor(Math.random() * WANDER_QUIPS.length)]); });
   } else if (roll < .8) {
     setPose('robot-think.png');
@@ -376,6 +432,13 @@ if (roamOK) scheduleRoam();
 addEventListener('scroll', () => {
   if (companion.classList.contains('open') && document.activeElement !== askInput) {
     companion.classList.remove('open');
+  }
+  // A bubble placed in a clear spot stops being in a clear spot the moment the
+  // page scrolls underneath it, which is how it ended up sitting on the project
+  // cards and the ProbCLIP-A results table. It is a transient remark, so scroll
+  // dismisses it. The chat stays if the user is actually typing in it.
+  if (!companion.classList.contains('open') && bubble.classList.contains('show')) {
+    bubble.classList.remove('show');
   }
 }, { passive: true });
 
@@ -802,6 +865,14 @@ if (overlay && termOut && termInput && termBody) {
   document.getElementById('terminalClose').addEventListener('click', closeTerminal);
   overlay.addEventListener('click', e => { if (e.target === overlay) closeTerminal(); });
   termBody.addEventListener('click', () => termInput.focus());
+
+  // The training loop and the terminal were both real and both undiscoverable:
+  // nothing on the first screen invited a click. This puts one honest entry
+  // point in the hero instead of leaving them behind a corner button.
+  document.getElementById('heroTrainBtn')?.addEventListener('click', () => {
+    openTerminal();
+    runCommand('train');
+  });
 }
 document.addEventListener('keydown', e => {
   if (e.key === '`' && e.ctrlKey) { e.preventDefault(); overlay.hidden ? openTerminal() : closeTerminal(); }
@@ -981,9 +1052,12 @@ function gradientRain() {
     if (skillsGrid && c.skills) {
       let html = '';
       c.skills.forEach(s => {
+        // The bar is now a 3px rule rather than the headline. Seven bars all
+        // filled to the same 60-75% said nothing; the shipped-work line below
+        // is the actual evidence, so it carries the weight instead.
         html += `
         <div class="skill reveal" data-pct="${s.pct}">
-          <div class="skill-top mono"><span>${s.name}</span><span class="skill-pct">${s.ships}</span></div>
+          <div class="skill-top mono"><b>${s.name}</b><span class="skill-pct">${s.ships}</span></div>
           <div class="bar"><div class="bar-fill"></div></div>
           <p class="skill-note">${s.note}</p>
           <p class="skill-ships mono">${s.shipsList}</p>

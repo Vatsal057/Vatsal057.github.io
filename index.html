@@ -9,30 +9,32 @@
     content="Vatsal Vaghasiya, MTech Data Science student. 19 shipped projects with 6 running live in the browser, 2 research papers under review, 5 more building.">
   <meta property="og:title" content="Vatsal Vaghasiya · AI Engineer">
   <meta property="og:description" content="Projects, papers, and notes on what didn't work.">
-  <meta property="og:image" content="images/og.png">
+  <meta property="og:image" content="images/og.jpg">
   <link rel="icon" href="images/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@500;600&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=10">
+  <link rel="stylesheet" href="style.css?v=11">
 </head>
 
 <body>
 
   <!-- ============ TOP BAR ============ -->
+  <!-- Nav order follows the page order, which now leads with the work instead of
+       the credentials. -->
   <header class="topbar">
     <a class="logo" href="#top">V<span class="logo-dot">.</span>V</a>
     <nav class="topnav">
+      <a href="#projects">Projects</a>
+      <a href="#research">Research</a>
+      <a href="#datathon">Awards</a>
+      <a href="#apps">Apps</a>
+      <a href="#roadmap">Building next</a>
       <a href="#skills">Skills</a>
       <a href="#experience">Experience</a>
       <a href="#education">Education</a>
-      <a href="#projects">Projects</a>
-      <a href="#apps">Apps</a>
-      <a href="#tools">Tools</a>
-      <a href="#roadmap">Building next</a>
-      <a href="#research">Research</a>
       <a href="#contact">Contact</a>
     </nav>
     <button class="theme-btn" id="themeToggle" aria-label="Toggle dark mode">☾</button>
@@ -68,7 +70,9 @@
           <a class="btn btn-ghost" href="resume.pdf" download>Download résumé</a>
         </div>
         <!-- Six of these run in a browser with no install and no signup. Putting
-             them in the hero so nobody has to go looking for something working. -->
+             them in the hero so nobody has to go looking for something working.
+             The captions used to be hidden below 620px, which turned the best
+             asset on the page into six unexplained product names. -->
         <div class="hero-live reveal">
           <p class="mono hero-live-label">// these six run right now, in this tab</p>
           <ul class="hero-live-list" role="list">
@@ -85,10 +89,16 @@
             <li><a href="https://twinnn.web.app" target="_blank" rel="noopener">TWIN <span>realtime, no server</span></a>
             </li>
           </ul>
+          <!-- Nothing on the first screen used to invite a click. The terminal and
+               the training run were both real and both hidden. -->
+          <p class="hero-hint"><span class="kbd-hint">press <kbd>Ctrl</kbd> <kbd>`</kbd> for a terminal, or
+            </span><button type="button" id="heroTrainBtn">run a training loop</button>
+          </p>
         </div>
       </div>
       <div class="hero-doodle reveal" aria-hidden="true">
-        <img src="images/hero-doodle.png" alt="" onerror="this.closest('.hero-doodle').classList.add('fallback')">
+        <img src="images/hero-doodle.webp" alt="" width="1100" height="733"
+          onerror="this.closest('.hero-doodle').classList.add('fallback')">
         <svg class="nn-fallback" viewBox="0 0 320 200" fill="none">
           <g class="nn-edges" stroke="currentColor" stroke-width="1" opacity=".35">
             <path d="M40 40 C90 40 110 70 160 60" />
@@ -119,151 +129,12 @@
       </div>
     </section>
 
-    <!-- ============ SKILLS / TRAINING PROGRESS ============ -->
-    <section id="skills" class="section">
-      <div class="section-head reveal">
-        <img class="section-icon" src="images/icon-graph.png" alt="">
-        <p class="eyebrow mono">// training progress</p>
-        <h2>Technical Skills</h2>
-        <p class="section-sub">What I know, and what I've built with them.</p>
-      </div>
-      <div class="skills-grid" id="skillsGrid">
-        <!-- Injected by script.js from window.CONFIG -->
-      </div>
-    </section>
-
-    <!-- ============ EXPERIENCE ============ -->
-    <section id="experience" class="section">
-      <div class="section-head reveal">
-        <img class="section-icon" src="images/icon-graph.png" alt="">
-        <p class="eyebrow mono">// professional track</p>
-        <h2>Experience</h2>
-      </div>
-      <div class="cards">
-        <div class="card reveal" style="transform: none;">
-          <h3>Data Science Intern</h3>
-          <p class="card-tag">Amar Infotech – Ahmedabad, Gujarat &nbsp;·&nbsp; 01/2025 to 06/2025</p>
-          <ul style="color: var(--ink-soft); font-size: 0.95rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6;">
-            <li style="margin-bottom: 0.6rem;">Engineered data preprocessing pipelines in Python for 50k+ records, reducing inconsistencies by <mark class="hl">35%</mark>.</li>
-            <li style="margin-bottom: 0.6rem;">Trained predictive ML models (TensorFlow, scikit-learn) achieving <mark class="hl">87% accuracy</mark> and lowering false positives by 22%.</li>
-            <li style="margin-bottom: 0.6rem;">Built <mark class="hl">5+ interactive dashboards</mark> in Power BI to track KPIs and model performance.</li>
-            <li>Automated extraction workflows, reducing manual processing time by <mark class="hl">40%</mark>.</li>
-          </ul>
-        </div>
-        <div class="card reveal" style="transform: none;">
-          <h3>Data Science Intern</h3>
-          <p class="card-tag">iTechBrains – Ahmedabad, India &nbsp;·&nbsp; 06/2024 to 07/2024</p>
-          <ul style="color: var(--ink-soft); font-size: 0.95rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6;">
-            <li style="margin-bottom: 0.6rem;">Implemented data visualization techniques to communicate insights to stakeholders.</li>
-            <li style="margin-bottom: 0.6rem;">Analyzed complex datasets using supervised and unsupervised learning techniques.</li>
-            <li>Performed data extraction and manipulation using <mark class="hl">Python and SQL</mark>.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ EDUCATION ============ -->
-    <section id="education" class="section">
-      <div class="section-head reveal">
-        <img class="section-icon" src="images/icon-books.png" alt="">
-        <p class="eyebrow mono">// academic background</p>
-        <h2>Education</h2>
-      </div>
-      <div class="cards">
-        <div class="card reveal" style="transform: none;">
-          <h3>M.Tech in Data Science</h3>
-          <p class="card-tag">M.S. Ramaiah University of Applied Sciences – Bengaluru, Karnataka &nbsp;·&nbsp; Expected 2027</p>
-        </div>
-        <div class="card reveal" style="transform: none;">
-          <h3>B.Tech in Computer Engineering</h3>
-          <p class="card-tag">SAL College of Engineering – Ahmedabad, Gujarat &nbsp;·&nbsp; 2021 to 2025</p>
-          <ul style="color: var(--ink-soft); font-size: 0.92rem; padding-left: 1.2rem; margin-top: 0.8rem; line-height: 1.5;">
-            <li>CGPA: 8.3 / 10.0</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ CERTIFICATIONS ============ -->
-    <section id="certifications" class="section">
-      <div class="section-head reveal">
-        <img class="section-icon" src="images/icon-brain.png" alt="">
-        <p class="eyebrow mono">// continuous learning</p>
-        <h2>Certifications</h2>
-      </div>
-      <div class="cert-grid">
-        <a href="certificates/Python for Data Science AI and Development.pdf" target="_blank" class="cert-card reveal">
-          <span class="cert-seal">🏅</span>
-          <div>
-            <h3>Python for Data Science, AI & Development</h3>
-            <p class="mono">IBM · Coursera</p>
-          </div>
-        </a>
-        <a href="certificates/Data Science Methodology.pdf" target="_blank" class="cert-card reveal">
-          <span class="cert-seal">🏅</span>
-          <div>
-            <h3>Data Science Methodology</h3>
-            <p class="mono">IBM · Coursera</p>
-          </div>
-        </a>
-        <a href="certificates/Tools for Data Science.pdf" target="_blank" class="cert-card reveal">
-          <span class="cert-seal">🏅</span>
-          <div>
-            <h3>Tools for Data Science</h3>
-            <p class="mono">IBM · Coursera</p>
-          </div>
-        </a>
-        <a href="certificates/What is Data Science.pdf" target="_blank" class="cert-card reveal">
-          <span class="cert-seal">🏅</span>
-          <div>
-            <h3>What is Data Science?</h3>
-            <p class="mono">IBM · Coursera</p>
-          </div>
-        </a>
-        <a href="certificates/Python Project for Data Science.pdf" target="_blank" class="cert-card reveal">
-          <span class="cert-seal">🏅</span>
-          <div>
-            <h3>Python Project for Data Science</h3>
-            <p class="mono">IBM · Coursera</p>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <!-- ============ ENGINEERING PRINCIPLES ============ -->
-    <section id="principles" class="section">
-      <div class="section-head reveal">
-        <img class="section-icon" src="images/icon-plane.png" alt="">
-        <p class="eyebrow mono">// index cards · how I work</p>
-        <h2>Engineering principles</h2>
-      </div>
-      <div class="principles">
-        <div class="index-card reveal">
-          <h3 class="caveat">Ship before perfect</h3>
-          <p>Small working systems beat ambitious prototypes. Cachy launched with a three-provider fallback chain
-            because free APIs kept dropping.</p>
-        </div>
-        <div class="index-card reveal">
-          <h3 class="caveat">Measure everything</h3>
-          <p>If I can't evaluate it, I can't improve it. Even the skills section on this page has numbers.</p>
-        </div>
-        <div class="index-card reveal">
-          <h3 class="caveat">Understand the abstraction</h3>
-          <p>I write core pieces from scratch before reaching for a framework. That's how the 60-line retriever
-            happened.</p>
-        </div>
-        <div class="index-card reveal">
-          <h3 class="caveat">Failures are artifacts</h3>
-          <p>Dead ends get documented. FAILURES.md ships with the repo because I keep needing it later.</p>
-        </div>
-      </div>
-    </section>
-
-
     <!-- ============ PROJECTS ============ -->
+    <!-- Moved to the top of the page. This used to sit seventh, behind skills,
+         experience, education, five certificates and the principles cards. -->
     <section id="projects" class="section">
       <div class="section-head reveal">
-        <img class="section-icon" src="images/icon-gpu.png" alt="">
+        <img class="section-icon" src="images/icon-gpu.webp" alt="">
         <p class="eyebrow mono">// pinned to the desk</p>
         <h2>Selected projects</h2>
         <p class="section-sub">Each card shows the pipeline it ran through. All code on <a
@@ -274,6 +145,11 @@
         <article onclick="window.location.href='case/project.html?id=cachy'" role="link" tabindex="0"
           class="card reveal">
           <div class="pin"></div>
+          <span class="card-shot card-shot--tall">
+            <img src="images/shots/live-cachy.webp" alt="Cachy web app: paste any link, get a knowledge card"
+              width="620" height="1163" loading="lazy" decoding="async">
+            <span class="shot-note">the running web app</span>
+          </span>
           <h3>Cachy</h3>
           <p class="card-tag mono">knowledge engine · flutter + fastapi</p>
           <p>Turns Reels, Shorts and articles into structured knowledge cards: transcription, OCR, an LLM chain with
@@ -361,9 +237,34 @@
           </div>
         </article>
 
+        <article onclick="window.location.href='case/project.html?id=bangalore-aqi'" role="link" tabindex="0"
+          class="card reveal">
+          <div class="pin"></div>
+          <span class="card-shot">
+            <img src="images/shots/live-aqi.webp"
+              alt="Leaflet map of Bengaluru with 13 air-quality stations coloured by yearly average AQI"
+              width="900" height="562" loading="lazy" decoding="async">
+            <span class="shot-note">red circles are the hotspots</span>
+          </span>
+          <h3>Bangalore Air Quality</h3>
+          <p class="card-tag mono">data mining · unsupervised</p>
+          <p>A year of data from 13 CPCB stations, 6 engineered features, three clustering algorithms compared. DBSCAN
+            worked best since it flags outliers, and the outliers were the hotspots. Silk Board hit <mark class="hl">AQI
+              500</mark>.</p>
+          <div class="pipeline mono"><span>excel
+              mess</span><span>clean</span><span>features</span><span>cluster</span><span>hotspots</span></div>
+          <p class="card-proof mono"><span>13 stations · 1 year</span><span>3 algorithms compared</span><span>hotspots =
+              outliers</span></p>
+          <p class="card-stack mono">pandas · scikit-learn · DBSCAN</p>
+          <p class="card-avail mono"><span class="is-live">explore the findings</span></p>
+
+        </article>
+
         <article onclick="window.location.href='case/project.html?id=ipl-mlops'" role="link" tabindex="0"
           class="card reveal">
           <div class="pin"></div>
+          <p class="card-metric"><b>5 min</b><span>how often the monitor recomputes population stability index on a
+              live XGBoost service</span></p>
           <h3>IPL Match Predictor · MLOps</h3>
           <p class="card-tag mono">full ml lifecycle · self-monitoring</p>
           <p>XGBoost match-outcome model served over FastAPI, with a monitor computing Population Stability Index every
@@ -380,6 +281,8 @@
         <article onclick="window.location.href='case/project.html?id=airswipe'" role="link" tabindex="0"
           class="card reveal">
           <div class="pin"></div>
+          <p class="card-metric"><b>6</b><span>gestures, orientation-invariant, with dwell-time guards against
+              accidental triggers</span></p>
           <h3>AirSwipe</h3>
           <p class="card-tag mono">computer vision · gesture control</p>
           <p>Control PowerPoint with bare hands through a webcam: swipe to navigate, point for a live laser dot, pinch
@@ -393,26 +296,29 @@
 
         </article>
 
-        <article onclick="window.location.href='case/project.html?id=bangalore-aqi'" role="link" tabindex="0"
+        <article onclick="window.location.href='case/project.html?id=plant-disease'" role="link" tabindex="0"
           class="card reveal">
           <div class="pin"></div>
-          <h3>Bangalore Air Quality</h3>
-          <p class="card-tag mono">data mining · unsupervised</p>
-          <p>A year of data from 13 CPCB stations, 6 engineered features, three clustering algorithms compared. DBSCAN
-            worked best since it flags outliers, and the outliers were the hotspots. Silk Board hit <mark class="hl">AQI
-              500</mark>.</p>
-          <div class="pipeline mono"><span>excel
-              mess</span><span>clean</span><span>features</span><span>cluster</span><span>hotspots</span></div>
-          <p class="card-proof mono"><span>13 stations · 1 year</span><span>3 algorithms compared</span><span>hotspots =
-              outliers</span></p>
-          <p class="card-stack mono">pandas · scikit-learn · DBSCAN</p>
-          <p class="card-avail mono"><span class="is-live">explore the findings</span></p>
+          <p class="card-metric"><b>15</b><span>classes across 5 crops, every prediction paired with a Grad-CAM
+              heatmap</span></p>
+          <h3>Plant Disease Detector</h3>
+          <p class="card-tag mono">cnn · grad-cam explainability</p>
+          <p>Upload a leaf photo, get a diagnosis, and a <mark class="hl">Grad-CAM heatmap</mark> showing exactly which
+            part of the leaf the model looked at. Because a prediction plus a confidence score tells you nothing about
+            whether it read the lesion or the background.</p>
+          <div class="pipeline mono"><span>leaf</span><span>classify</span><span>grad-cam</span><span>severity</span>
+          </div>
+          <p class="card-proof mono"><span>15 classes · 5 crops</span><span>Grad-CAM heatmap</span><span>severity
+              levels</span></p>
+          <p class="card-stack mono">PyTorch · Grad-CAM · Gradio</p>
 
         </article>
 
         <article onclick="window.location.href='case/project.html?id=scribbletype'" role="link" tabindex="0"
           class="card reveal">
           <div class="pin"></div>
+          <p class="card-metric"><b>100%</b><span>on-device. no network call, no account, Catmull-Rom smoothing for
+              hand tremor</span></p>
           <h3>ScribbleType</h3>
           <p class="card-tag mono">on-device ml · accessibility</p>
           <p>Handwriting-to-text Android keyboard for seniors: on-device ink recognition, a personal dictionary that
@@ -429,6 +335,8 @@
         <article onclick="window.location.href='case/project.html?id=indian-food-search'" role="link" tabindex="0"
           class="card reveal">
           <div class="pin"></div>
+          <p class="card-metric"><b>CLIP</b><span>text and image queries against one index, on a domain it was never
+              fine-tuned for</span></p>
           <h3>Indian Food Multimodal Search</h3>
           <p class="card-tag mono">clip · text + image retrieval</p>
           <p>Find any Indian dish by describing it in plain English, or by uploading a photo of something similar. Built
@@ -443,277 +351,18 @@
 
         </article>
 
-        <article onclick="window.location.href='case/project.html?id=plant-disease'" role="link" tabindex="0"
-          class="card reveal">
-          <div class="pin"></div>
-          <h3>Plant Disease Detector</h3>
-          <p class="card-tag mono">cnn · grad-cam explainability</p>
-          <p>Upload a leaf photo, get a diagnosis, and a <mark class="hl">Grad-CAM heatmap</mark> showing exactly which
-            part of the leaf the model looked at. Because a prediction plus a confidence score tells you nothing about
-            whether it read the lesion or the background.</p>
-          <div class="pipeline mono"><span>leaf</span><span>classify</span><span>grad-cam</span><span>severity</span>
-          </div>
-          <p class="card-proof mono"><span>15 classes · 5 crops</span><span>Grad-CAM heatmap</span><span>severity
-              levels</span></p>
-          <p class="card-stack mono">PyTorch · Grad-CAM · Gradio</p>
-
-        </article>
-
       </div>
 
     </section>
-
-    <!-- ============ DATATHON — ACHIEVEMENT ============ -->
-    <section id="datathon" class="section">
-      <div class="section-head reveal">
-        <img class="section-icon" src="images/icon-flask.png" alt="">
-        <p class="eyebrow mono">// competition · 2026</p>
-        <h2>Competitions &amp; awards</h2>
-      </div>
-      <div class="achievements">
-        <article onclick="window.location.href='case/datathon.html'" class="achievement-card reveal" role="link"
-          tabindex="0">
-          <div class="achievement-medal">🥇</div>
-          <div class="achievement-body">
-            <p class="mono achievement-org">Akshara Foundation · Datathon 2026</p>
-            <h3>1st Place — Karnataka Education Datathon</h3>
-            <p class="achievement-desc">Analysed arithmetic learning outcomes across 1.38 million Karnataka government
-              school students. Built indices, OLS residuals, and a 7-screen Streamlit dashboard to argue the gap is
-              skill-shaped, not geography-shaped.</p>
-            <p class="mono achievement-stack">Python · pandas · scipy · plotly · Streamlit · 1.38M records</p>
-          </div>
-          <span class="achievement-arrow mono">view →</span>
-        </article>
-      </div>
-    </section>
-
-    <!-- ============ APPS · PINNED SHELF ============ -->
-    <section id="apps" class="section">
-      <div class="section-head reveal">
-        <img class="section-icon" src="images/icon-gpu.png" alt="">
-        <p class="eyebrow mono">// the app shelf</p>
-        <h2>Apps I've shipped <span class="margin-note caveat">each began as an itch on my own machine</span></h2>
-        <p class="section-sub">Five native macOS apps in Swift, plus mobile. Most of these started as simple interfaces
-          for my ML projects.</p>
-      </div>
-      <div class="app-grid" id="appShelf">
-        <article onclick="window.location.href='case/project.html?id=insomniac'" role="link" tabindex="0"
-          class="app-window reveal">
-          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
-              class="app-name">Insomniac.app</span><span class="app-platform">macOS</span></div>
-          <div class="app-body">
-            <p class="app-lead">Keeps a Mac awake — lid closed included.</p>
-            <ul class="app-features">
-              <li>Smart triggers: auto-enables on chosen apps, Wi-Fi networks, high CPU, active downloads</li>
-              <li>Timed durations + global shortcut</li>
-              <li>Scriptable via <code>insomniac://</code> URL scheme</li>
-            </ul>
-            <p class="card-stack mono">Swift 5.9 · AppKit · IOKit · NWPathMonitor</p>
-            <p class="card-avail mono"><span class="is-dl">.dmg download</span></p>
-
-          </div>
-        </article>
-        <article onclick="window.location.href='case/project.html?id=glide'" role="link" tabindex="0"
-          class="app-window reveal">
-          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
-              class="app-name">Glide.app</span><span class="app-platform">macOS</span></div>
-          <div class="app-body">
-            <p class="app-lead">Custom 3/4/5-finger trackpad gestures for macOS.</p>
-            <ul class="app-features">
-              <li>Speed-aware: slow swipe switches windows, fast flick opens the browser</li>
-              <li>Window snapping, media control, app launching</li>
-              <li>Reciprocal undo, haptic feedback, per-app filters</li>
-            </ul>
-            <p class="card-stack mono">Swift · AppKit · IOKit multitouch</p>
-            <p class="card-avail mono"><span class="is-dl">.dmg download</span></p>
-
-          </div>
-        </article>
-        <article onclick="window.location.href='case/project.html?id=dimmer'" role="link" tabindex="0"
-          class="app-window reveal">
-          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
-              class="app-name">Dimmer.app</span><span class="app-platform">macOS</span></div>
-          <div class="app-body">
-            <p class="app-lead">Dims displays below the hardware minimum.</p>
-            <ul class="app-features">
-              <li>Overlay windows, each connected monitor independently</li>
-              <li>Lives in the menu bar; does one thing well</li>
-            </ul>
-            <p class="card-stack mono">Swift · SwiftUI · AppKit</p>
-            <p class="card-avail mono"><span class="is-dl">download app</span></p>
-
-          </div>
-        </article>
-        <article onclick="window.location.href='case/project.html?id=photowidget'" role="link" tabindex="0"
-          class="app-window reveal">
-          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
-              class="app-name">PhotoWidget.app</span><span class="app-platform">macOS</span></div>
-          <div class="app-body">
-            <p class="app-lead">Your own photos as desktop widgets.</p>
-            <ul class="app-features">
-              <li>Four sizes, per-widget photo choice</li>
-              <li>Full color even in monochrome widget mode</li>
-            </ul>
-            <p class="card-stack mono">Swift · WidgetKit · AppIntents</p>
-            <p class="card-avail mono"><span class="is-dl">.dmg download</span></p>
-
-          </div>
-        </article>
-        <article onclick="window.location.href='case/project.html?id=smart-wardrobe'" role="link" tabindex="0"
-          class="app-window reveal">
-          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
-              class="app-name">Smart Wardrobe</span><span class="app-platform">Flutter</span></div>
-          <div class="app-body">
-            <p class="app-lead">Photograph your clothes once; the app plans what you wear.</p>
-            <ul class="app-features">
-              <li>Outfit suggestions by occasion, from clothes you actually own</li>
-              <li>"Today" screen checks live weather + recent wear history first</li>
-              <li>Wash tracking and packing lists built against the forecast</li>
-            </ul>
-            <p class="card-stack mono">Flutter · SQLite · on-device, no account</p>
-            <p class="card-avail mono"><span class="is-live">try it in the browser</span></p>
-          </div>
-        </article>
-        <article onclick="window.location.href='case/project.html?id=media-manager'" role="link" tabindex="0"
-          class="app-window reveal">
-          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
-              class="app-name">Samsung Media Manager</span><span class="app-platform">macOS</span></div>
-          <div class="app-body">
-            <p class="app-lead">Tidies a photo library, and can undo every batch it ran.</p>
-            <ul class="app-features">
-              <li>Explainable move previews from Android folders + EXIF; ambiguous media goes to <code>_review/</code>
-              </li>
-              <li>Every file operation routes through one logged choke point, which is what makes Undo real</li>
-              <li>GPS trip clustering with reverse-geocoded place names</li>
-            </ul>
-            <p class="card-stack mono">Swift · SwiftUI · ffmpeg · Core Location</p>
-          </div>
-        </article>
-        <article onclick="window.location.href='case/project.html?id=twin'" role="link" tabindex="0"
-          class="app-window reveal">
-          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
-              class="app-name">TWIN</span><span class="app-platform">Web · Android</span></div>
-          <div class="app-body">
-            <p class="app-lead">Two players name words aimed at the middle of the last pair, until they match.</p>
-            <ul class="app-features">
-              <li>Firestore is the whole backend — no server, no socket layer</li>
-              <li>In-flight words live in a subcollection so neither player can read the other's first</li>
-              <li>Rounds resolve client-side via a guarded transaction: one write lands, the other backs out</li>
-            </ul>
-            <p class="card-stack mono">Flutter · Firestore · Firebase Hosting</p>
-            <p class="card-avail mono"><span class="is-live">play it live</span><span class="is-dl">android apk</span></p>
-          </div>
-        </article>
-        <article onclick="window.location.href='case/project.html?id=lull'" role="link" tabindex="0"
-          class="app-window reveal">
-          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
-              class="app-name">Lull.app</span><span class="app-platform">macOS</span></div>
-          <div class="app-body">
-            <p class="app-lead">Menu-bar control for the Background Sounds feature Apple buried in Accessibility.</p>
-            <ul class="app-features">
-              <li>Drives the same private framework System Settings uses, so macOS still owns the audio</li>
-              <li>Two-way sync with Settings; equalizer, sleep timer, stop-on-lock</li>
-              <li>Every private-API call is guarded, so a macOS change costs one feature and not the app</li>
-            </ul>
-            <p class="card-stack mono">Swift · AppKit · HearingUtilities (private)</p>
-            <p class="card-avail mono"><span class="is-dl">.dmg download</span></p>
-          </div>
-        </article>
-      </div>
-      <p class="app-count mono reveal">// running total: 19 shipped, 6 you can open right now, 5 more building. all on this page.</p>
-    </section>
-
-    <!-- ============ TOOLS & EXTENSIONS ============ -->
-    <section id="tools" class="section">
-      <div class="section-head reveal">
-        <img class="section-icon" src="images/icon-git.png" alt="">
-        <p class="eyebrow mono">// small sharp tools</p>
-        <h2>Tools &amp; extensions <span class="margin-note caveat">scratch-my-own-itch drawer</span></h2>
-        <p class="section-sub">Little utilities that fix one annoyance each. Most exist because the OS said no.</p>
-      </div>
-      <div class="cards">
-        <article onclick="window.location.href='case/project.html?id=chrome-to-safari'" role="link" tabindex="0"
-          class="card reveal">
-          <div class="pin"></div>
-          <h3>chrome-to-safari</h3>
-          <p class="card-tag mono">dev tool · extension signing</p>
-          <p>Turn any Chrome extension into a working, signed Safari extension — no <mark class="hl">$99/year</mark>
-            Apple Developer ID. Drop a folder or paste a store link; it signs with a free Apple ID so the extension
-            stays enabled across restarts.</p>
-          <p class="card-stack mono">Shell · Xcode toolchain · WebExtensions</p>
-
-        </article>
-        <article onclick="window.location.href='case/project.html?id=mac-app-signer'" role="link" tabindex="0"
-          class="card reveal">
-          <div class="pin"></div>
-          <h3>mac-app-signer</h3>
-          <p class="card-tag mono">dev tool · code signing</p>
-          <p>Sign any macOS <code>.app</code> locally with a free Apple certificate. Kills Gatekeeper friction on apps
-            you build yourself and keeps development-signed Safari extensions enabled for good. One command.</p>
-          <p class="card-stack mono">Shell · codesign · Xcode CLT</p>
-
-        </article>
-        <article onclick="window.location.href='case/project.html?id=hidebars'" role="link" tabindex="0"
-          class="card reveal">
-          <div class="pin"></div>
-          <h3>HideBars</h3>
-          <p class="card-tag mono">obsidian plugin · focus</p>
-          <p>An Obsidian plugin that auto-hides both sidebars in fullscreen or a narrow window, then reveals them when
-            you hover the window edge. Leaving fullscreen restores the layout you had.</p>
-          <p class="card-stack mono">TypeScript · Obsidian API</p>
-
-        </article>
-      </div>
-    </section>
-
-    <!-- ============ ROADMAP · BUILDING NEXT ============ -->
-    <section id="roadmap" class="section">
-      <div class="section-head reveal">
-        <img class="section-icon" src="images/icon-flask.png" alt="">
-        <p class="eyebrow mono">// git branch --unmerged</p>
-        <h2>Building next <span class="margin-note caveat">← live on github</span></h2>
-        <p class="section-sub">Two projects in active development. Neither product is finished, but the modeling core of
-          each one is done, and both cores now run in your browser with nothing to install. They are both about getting
-          a model to admit when it does not know. Sahayak stops answering when the retrieval score is too low. Oracle
-          widens its prediction set when it has not seen enough days yet.</p>
-      </div>
-      <div class="cards roadmap-cards">
-        <article onclick="window.location.href='case/project.html?id=sahayak'" role="link" tabindex="0"
-          class="card planned-card building-card reveal">
-          <span class="planned-badge building-badge mono">building · flagship · core runs live</span>
-          <h3>Sahayak</h3>
-          <p class="card-tag mono">grounded rag + rules engine</p>
-          <p>Grounded, cited answers about India's 3,000+ welfare schemes, plus a deterministic eligibility engine. Ask
-            "I'm a Karnataka farmer with 2 acres — what do I get?" and get a checklist, not a keyword search. Abstains
-            when it isn't sure. <mark class="hl">Retrieval core shipped</mark> — from-scratch hybrid retriever + rules
-            engine + eval harness.</p>
-          <p class="card-stack mono">hybrid retrieval · BM25 + TF-IDF · rules engine</p>
-          <p class="card-avail mono"><span class="is-live">run the retriever in your browser</span></p>
-          <a class="card-link mono" href="https://vatsal057.github.io/sahayak/" target="_blank" rel="noopener">live
-            demo ↗</a>
-        </article>
-        <article onclick="window.location.href='case/project.html?id=oracle'" role="link" tabindex="0"
-          class="card planned-card building-card reveal">
-          <span class="planned-badge building-badge mono">building · core runs live</span>
-          <h3>Oracle</h3>
-          <p class="card-tag mono">on-device · conformal calibration</p>
-          <p>Honest, calibrated predictions about your own behaviour — the shown 80% is right ~80% of the time. The hard
-            part is meaningful ML on a tiny, noisy, single-person dataset without lying about confidence. <mark
-              class="hl">Modeling core shipped</mark> — from-scratch logistic regression + split-conformal, backtested.
-          </p>
-          <p class="card-stack mono">conformal prediction · Platt scaling</p>
-          <p class="card-avail mono"><span class="is-live">run the backtest in your browser</span></p>
-          <a class="card-link mono" href="https://vatsal057.github.io/oracle/" target="_blank" rel="noopener">live
-            demo ↗</a>
-        </article>
-      </div>
-    </section>
-
 
     <!-- ============ RESEARCH WALL ============ -->
-    <section id="research" class="section">
+    <!-- Dark band. This is the strongest evidence on the page and it used to sit
+         at 65% depth; anyone who lost interest never reached it. Cream offprint
+         sheets on a dark desk is also the sharpest contrast the existing palette
+         can make without inventing a new colour. -->
+    <section id="research" class="section section--band">
       <div class="section-head reveal">
-        <img class="section-icon" src="images/icon-brain.png" alt="">
+        <img class="section-icon" src="images/icon-brain.webp" alt="">
         <p class="eyebrow mono">// research · both PDFs are on this page</p>
         <h2>Papers under review</h2>
         <p class="section-sub">Written as an MTech student, trained on free GPUs. You can read both of them
@@ -824,11 +473,416 @@
       </div>
     </section>
 
+    <!-- ============ DATATHON — ACHIEVEMENT ============ -->
+    <section id="datathon" class="section section--wash">
+      <div class="section-head reveal">
+        <img class="section-icon" src="images/icon-flask.webp" alt="">
+        <p class="eyebrow mono">// competition · 2026</p>
+        <h2>Competitions &amp; awards</h2>
+      </div>
+      <div class="award-row">
+        <div class="achievements">
+          <article onclick="window.location.href='case/datathon.html'" class="achievement-card reveal" role="link"
+            tabindex="0">
+            <div class="achievement-medal">🥇</div>
+            <div class="achievement-body">
+              <p class="mono achievement-org">Akshara Foundation · Datathon 2026</p>
+              <h3>1st Place — Karnataka Education Datathon</h3>
+              <p class="achievement-desc">Analysed arithmetic learning outcomes across 1.38 million Karnataka government
+                school students. Built indices, OLS residuals, and a 7-screen Streamlit dashboard to argue the gap is
+                skill-shaped, not geography-shaped.</p>
+              <p class="mono achievement-stack">Python · pandas · scipy · plotly · Streamlit · 1.38M records</p>
+            </div>
+            <span class="achievement-arrow mono">view →</span>
+          </article>
+        </div>
+        <!-- One of the actual figures from the analysis, rather than only a claim
+             about it. -->
+        <figure class="award-figure reveal">
+          <img src="images/shots/card-datathon.webp"
+            alt="Scatter plot of infrastructure index against education access index for Karnataka districts, Pearson r = 0.356"
+            width="900" height="900" loading="lazy" decoding="async">
+          <figcaption class="mono">one figure from the submission: infrastructure explains less of the gap than people
+            assume (r = 0.356), which is the whole argument</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ APPS · PINNED SHELF ============ -->
+    <!-- Tools & extensions used to be its own section with its own icon, eyebrow,
+         heading and three-card grid. It is three small utilities, so it is now a
+         compact row at the bottom of this section. -->
+    <section id="apps" class="section">
+      <div class="section-head reveal">
+        <img class="section-icon" src="images/icon-gpu.webp" alt="">
+        <p class="eyebrow mono">// the app shelf</p>
+        <h2>Apps I've shipped <span class="margin-note caveat">each began as an itch on my own machine</span></h2>
+        <p class="section-sub">Five native macOS apps in Swift, plus mobile. Most of these started as simple interfaces
+          for my ML projects.</p>
+      </div>
+      <div class="app-grid" id="appShelf">
+        <article onclick="window.location.href='case/project.html?id=glide'" role="link" tabindex="0"
+          class="app-window reveal">
+          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
+              class="app-name">Glide.app</span><span class="app-platform">macOS</span></div>
+          <span class="app-shot">
+            <img src="images/shots/card-glide.webp" alt="Glide trackpad gesture app" width="900" height="562"
+              loading="lazy" decoding="async">
+          </span>
+          <div class="app-body">
+            <p class="app-lead">Custom 3/4/5-finger trackpad gestures for macOS.</p>
+            <ul class="app-features">
+              <li>Speed-aware: slow swipe switches windows, fast flick opens the browser</li>
+              <li>Window snapping, media control, app launching</li>
+              <li>Reciprocal undo, haptic feedback, per-app filters</li>
+            </ul>
+            <p class="card-stack mono">Swift · AppKit · IOKit multitouch</p>
+            <p class="card-avail mono"><span class="is-dl">.dmg download</span></p>
+
+          </div>
+        </article>
+        <article onclick="window.location.href='case/project.html?id=photowidget'" role="link" tabindex="0"
+          class="app-window reveal">
+          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
+              class="app-name">PhotoWidget.app</span><span class="app-platform">macOS</span></div>
+          <span class="app-shot">
+            <img src="images/shots/card-photowidget.webp"
+              alt="PhotoWidget desktop widgets showing personal photos in four sizes" width="900" height="562"
+              loading="lazy" decoding="async">
+          </span>
+          <div class="app-body">
+            <p class="app-lead">Your own photos as desktop widgets.</p>
+            <ul class="app-features">
+              <li>Four sizes, per-widget photo choice</li>
+              <li>Full color even in monochrome widget mode</li>
+            </ul>
+            <p class="card-stack mono">Swift · WidgetKit · AppIntents</p>
+            <p class="card-avail mono"><span class="is-dl">.dmg download</span></p>
+
+          </div>
+        </article>
+        <article onclick="window.location.href='case/project.html?id=lull'" role="link" tabindex="0"
+          class="app-window reveal">
+          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
+              class="app-name">Lull.app</span><span class="app-platform">macOS</span></div>
+          <span class="app-shot">
+            <img src="images/shots/card-lull.webp"
+              alt="Lull menu bar popover controlling macOS Background Sounds" width="900" height="562" loading="lazy"
+              decoding="async">
+          </span>
+          <div class="app-body">
+            <p class="app-lead">Menu-bar control for the Background Sounds feature Apple buried in Accessibility.</p>
+            <ul class="app-features">
+              <li>Drives the same private framework System Settings uses, so macOS still owns the audio</li>
+              <li>Two-way sync with Settings; equalizer, sleep timer, stop-on-lock</li>
+              <li>Every private-API call is guarded, so a macOS change costs one feature and not the app</li>
+            </ul>
+            <p class="card-stack mono">Swift · AppKit · HearingUtilities (private)</p>
+            <p class="card-avail mono"><span class="is-dl">.dmg download</span></p>
+          </div>
+        </article>
+        <article onclick="window.location.href='case/project.html?id=twin'" role="link" tabindex="0"
+          class="app-window reveal">
+          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
+              class="app-name">TWIN</span><span class="app-platform">Web · Android</span></div>
+          <span class="app-shot">
+            <img src="images/shots/live-twin.webp" alt="TWIN game lobby: create or join a room" width="900"
+              height="562" loading="lazy" decoding="async">
+          </span>
+          <div class="app-body">
+            <p class="app-lead">Two players name words aimed at the middle of the last pair, until they match.</p>
+            <ul class="app-features">
+              <li>Firestore is the whole backend — no server, no socket layer</li>
+              <li>In-flight words live in a subcollection so neither player can read the other's first</li>
+              <li>Rounds resolve client-side via a guarded transaction: one write lands, the other backs out</li>
+            </ul>
+            <p class="card-stack mono">Flutter · Firestore · Firebase Hosting</p>
+            <p class="card-avail mono"><span class="is-live">play it live</span><span class="is-dl">android apk</span></p>
+          </div>
+        </article>
+        <article onclick="window.location.href='case/project.html?id=smart-wardrobe'" role="link" tabindex="0"
+          class="app-window reveal">
+          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
+              class="app-name">Smart Wardrobe</span><span class="app-platform">Flutter</span></div>
+          <span class="app-shot app-shot--tall">
+            <img src="images/shots/live-wardrobe.webp"
+              alt="Smart Wardrobe Today screen with weather and an outfit suggestion" width="620" height="1163"
+              loading="lazy" decoding="async">
+          </span>
+          <div class="app-body">
+            <p class="app-lead">Photograph your clothes once; the app plans what you wear.</p>
+            <ul class="app-features">
+              <li>Outfit suggestions by occasion, from clothes you actually own</li>
+              <li>"Today" screen checks live weather + recent wear history first</li>
+              <li>Wash tracking and packing lists built against the forecast</li>
+            </ul>
+            <p class="card-stack mono">Flutter · SQLite · on-device, no account</p>
+            <p class="card-avail mono"><span class="is-live">try it in the browser</span></p>
+          </div>
+        </article>
+      </div>
+
+      <!-- The three below are menu-bar utilities with no window worth showing.
+           Each was carrying a full three-bullet feature list, which is most of
+           why this section measured 3,574px on its own. Same links, same facts,
+           a fifth of the height. -->
+      <div class="app-mini-row">
+        <article onclick="window.location.href='case/project.html?id=insomniac'" role="link" tabindex="0"
+          class="app-mini reveal">
+          <div class="app-mini-top"><span class="term-dots"><i></i><i></i><i></i></span>
+            <h4>Insomniac.app</h4><span class="app-platform">macOS</span>
+          </div>
+          <p>Keeps a Mac awake, lid closed included. Triggers on app, Wi-Fi network, CPU load or active downloads.</p>
+          <p class="card-stack mono">Swift · AppKit · IOKit · NWPathMonitor</p>
+          <p class="card-avail mono"><span class="is-dl">.dmg download</span></p>
+        </article>
+        <article onclick="window.location.href='case/project.html?id=dimmer'" role="link" tabindex="0"
+          class="app-mini reveal">
+          <div class="app-mini-top"><span class="term-dots"><i></i><i></i><i></i></span>
+            <h4>Dimmer.app</h4><span class="app-platform">macOS</span>
+          </div>
+          <p>Dims displays below the hardware minimum, each connected monitor independently.</p>
+          <p class="card-stack mono">Swift · SwiftUI · AppKit</p>
+          <p class="card-avail mono"><span class="is-dl">download app</span></p>
+        </article>
+        <article onclick="window.location.href='case/project.html?id=media-manager'" role="link" tabindex="0"
+          class="app-mini reveal">
+          <div class="app-mini-top"><span class="term-dots"><i></i><i></i><i></i></span>
+            <h4>Media Manager</h4><span class="app-platform">macOS</span>
+          </div>
+          <p>Tidies a photo library and can undo every batch. One logged choke point is what makes Undo real.</p>
+          <p class="card-stack mono">Swift · SwiftUI · ffmpeg · Core Location</p>
+        </article>
+      </div>
+      <p class="app-count mono reveal">// running total: 19 shipped, 6 you can open right now, 5 more building. all on this page.</p>
+
+      <!-- ============ TOOLS, folded in ============ -->
+      <h3 class="tool-heading reveal">Small sharp tools <span class="margin-note caveat">scratch-my-own-itch
+          drawer</span></h3>
+      <p class="section-sub reveal">Three utilities that fix one annoyance each. Most exist because the OS said no.</p>
+      <div class="tool-row">
+        <article onclick="window.location.href='case/project.html?id=chrome-to-safari'" role="link" tabindex="0"
+          class="tool-item reveal">
+          <h4>chrome-to-safari</h4>
+          <p>Turn any Chrome extension into a working, signed Safari extension — no <mark class="hl">$99/year</mark>
+            Apple Developer ID.</p>
+          <p class="card-stack mono">Shell · Xcode toolchain · WebExtensions</p>
+        </article>
+        <article onclick="window.location.href='case/project.html?id=mac-app-signer'" role="link" tabindex="0"
+          class="tool-item reveal">
+          <h4>mac-app-signer</h4>
+          <p>Sign any macOS <code>.app</code> locally with a free Apple certificate. Kills Gatekeeper friction in one
+            command.</p>
+          <p class="card-stack mono">Shell · codesign · Xcode CLT</p>
+        </article>
+        <article onclick="window.location.href='case/project.html?id=hidebars'" role="link" tabindex="0"
+          class="tool-item reveal">
+          <h4>HideBars</h4>
+          <p>An Obsidian plugin that auto-hides both sidebars in fullscreen, then reveals them when you hover the window
+            edge.</p>
+          <p class="card-stack mono">TypeScript · Obsidian API</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ ROADMAP · BUILDING NEXT ============ -->
+    <section id="roadmap" class="section section--wash">
+      <div class="section-head reveal">
+        <img class="section-icon" src="images/icon-flask.webp" alt="">
+        <p class="eyebrow mono">// git branch --unmerged</p>
+        <h2>Building next <span class="margin-note caveat">← live on github</span></h2>
+        <p class="section-sub">Two projects in active development. Neither product is finished, but the modeling core of
+          each one is done, and both cores now run in your browser with nothing to install. They are both about getting
+          a model to admit when it does not know. Sahayak stops answering when the retrieval score is too low. Oracle
+          widens its prediction set when it has not seen enough days yet.</p>
+      </div>
+      <div class="cards roadmap-cards">
+        <article onclick="window.location.href='case/project.html?id=sahayak'" role="link" tabindex="0"
+          class="card planned-card building-card reveal">
+          <span class="card-shot">
+            <img src="images/shots/live-sahayak.webp"
+              alt="Sahayak Try it panel: 11 schemes indexed, running in the browser" width="900" height="562"
+              loading="lazy" decoding="async">
+            <span class="shot-note">runs client-side via Pyodide</span>
+          </span>
+          <span class="planned-badge building-badge mono">building · flagship · core runs live</span>
+          <h3>Sahayak</h3>
+          <p class="card-tag mono">grounded rag + rules engine</p>
+          <p>Grounded, cited answers about India's 3,000+ welfare schemes, plus a deterministic eligibility engine. Ask
+            "I'm a Karnataka farmer with 2 acres — what do I get?" and get a checklist, not a keyword search. Abstains
+            when it isn't sure. <mark class="hl">Retrieval core shipped</mark> — from-scratch hybrid retriever + rules
+            engine + eval harness.</p>
+          <p class="card-stack mono">hybrid retrieval · BM25 + TF-IDF · rules engine</p>
+          <p class="card-avail mono"><span class="is-live">run the retriever in your browser</span></p>
+          <a class="card-link mono" href="https://vatsal057.github.io/sahayak/" target="_blank" rel="noopener">live
+            demo ↗</a>
+        </article>
+        <article onclick="window.location.href='case/project.html?id=oracle'" role="link" tabindex="0"
+          class="card planned-card building-card reveal">
+          <span class="card-shot">
+            <img src="images/shots/live-oracle.webp"
+              alt="Oracle walk-forward backtest scores table: Brier and log loss against baselines" width="900"
+              height="562" loading="lazy" decoding="async">
+            <span class="shot-note">walk-forward, scored one day at a time</span>
+          </span>
+          <span class="planned-badge building-badge mono">building · core runs live</span>
+          <h3>Oracle</h3>
+          <p class="card-tag mono">on-device · conformal calibration</p>
+          <p>Honest, calibrated predictions about your own behaviour — the shown 80% is right ~80% of the time. The hard
+            part is meaningful ML on a tiny, noisy, single-person dataset without lying about confidence. <mark
+              class="hl">Modeling core shipped</mark> — from-scratch logistic regression + split-conformal, backtested.
+          </p>
+          <p class="card-stack mono">conformal prediction · Platt scaling</p>
+          <p class="card-avail mono"><span class="is-live">run the backtest in your browser</span></p>
+          <a class="card-link mono" href="https://vatsal057.github.io/oracle/" target="_blank" rel="noopener">live
+            demo ↗</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ SKILLS / TRAINING PROGRESS ============ -->
+    <section id="skills" class="section">
+      <div class="section-head reveal">
+        <img class="section-icon" src="images/icon-graph.webp" alt="">
+        <p class="eyebrow mono">// training progress</p>
+        <h2>Technical Skills</h2>
+        <p class="section-sub">What I know, and what I've built with them. The shipped work under each one is the
+          part that matters.</p>
+      </div>
+      <div class="skills-grid" id="skillsGrid">
+        <!-- Injected by script.js from window.CONFIG -->
+      </div>
+    </section>
+
+    <!-- ============ EXPERIENCE ============ -->
+    <section id="experience" class="section">
+      <div class="section-head reveal">
+        <img class="section-icon" src="images/icon-git.webp" alt="">
+        <p class="eyebrow mono">// professional track</p>
+        <h2>Experience</h2>
+      </div>
+      <div class="cards">
+        <div class="card reveal" style="transform: none;">
+          <h3>Data Science Intern</h3>
+          <p class="card-tag">Amar Infotech – Ahmedabad, Gujarat &nbsp;·&nbsp; 01/2025 to 06/2025</p>
+          <ul style="color: var(--ink-soft); font-size: 0.95rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6;">
+            <li style="margin-bottom: 0.6rem;">Engineered data preprocessing pipelines in Python for 50k+ records, reducing inconsistencies by <mark class="hl">35%</mark>.</li>
+            <li style="margin-bottom: 0.6rem;">Trained predictive ML models (TensorFlow, scikit-learn) achieving <mark class="hl">87% accuracy</mark> and lowering false positives by 22%.</li>
+            <li style="margin-bottom: 0.6rem;">Built <mark class="hl">5+ interactive dashboards</mark> in Power BI to track KPIs and model performance.</li>
+            <li>Automated extraction workflows, reducing manual processing time by <mark class="hl">40%</mark>.</li>
+          </ul>
+        </div>
+        <div class="card reveal" style="transform: none;">
+          <h3>Data Science Intern</h3>
+          <p class="card-tag">iTechBrains – Ahmedabad, India &nbsp;·&nbsp; 06/2024 to 07/2024</p>
+          <ul style="color: var(--ink-soft); font-size: 0.95rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6;">
+            <li style="margin-bottom: 0.6rem;">Implemented data visualization techniques to communicate insights to stakeholders.</li>
+            <li style="margin-bottom: 0.6rem;">Analyzed complex datasets using supervised and unsupervised learning techniques.</li>
+            <li>Performed data extraction and manipulation using <mark class="hl">Python and SQL</mark>.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EDUCATION + CERTIFICATIONS ============ -->
+    <!-- Certifications used to be their own section holding a full screen: five
+         cards with the same medal emoji and the same "IBM · Coursera" line, one
+         orphaned alone on a second row. Same links, one row, no repetition. -->
+    <section id="education" class="section">
+      <div class="section-head reveal">
+        <img class="section-icon" src="images/icon-books.webp" alt="">
+        <p class="eyebrow mono">// academic background</p>
+        <h2>Education</h2>
+      </div>
+      <div class="cards">
+        <div class="card reveal" style="transform: none;">
+          <h3>M.Tech in Data Science</h3>
+          <p class="card-tag">M.S. Ramaiah University of Applied Sciences – Bengaluru, Karnataka &nbsp;·&nbsp; Expected 2027</p>
+        </div>
+        <div class="card reveal" style="transform: none;">
+          <h3>B.Tech in Computer Engineering</h3>
+          <p class="card-tag">SAL College of Engineering – Ahmedabad, Gujarat &nbsp;·&nbsp; 2021 to 2025</p>
+          <ul style="color: var(--ink-soft); font-size: 0.92rem; padding-left: 1.2rem; margin-top: 0.8rem; line-height: 1.5;">
+            <li>CGPA: 8.3 / 10.0</li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="certifications">
+        <p class="cert-issuer reveal"><b>Certifications</b> — five from IBM on Coursera. Each links to the PDF.</p>
+        <div class="cert-grid reveal">
+          <a href="certificates/Python for Data Science AI and Development.pdf" target="_blank" class="cert-card">
+            <span class="cert-seal">🏅</span>
+            <div>
+              <h3>Python for Data Science, AI &amp; Development</h3>
+              <p class="mono">IBM · Coursera</p>
+            </div>
+          </a>
+          <a href="certificates/Data Science Methodology.pdf" target="_blank" class="cert-card">
+            <span class="cert-seal">🏅</span>
+            <div>
+              <h3>Data Science Methodology</h3>
+              <p class="mono">IBM · Coursera</p>
+            </div>
+          </a>
+          <a href="certificates/Tools for Data Science.pdf" target="_blank" class="cert-card">
+            <span class="cert-seal">🏅</span>
+            <div>
+              <h3>Tools for Data Science</h3>
+              <p class="mono">IBM · Coursera</p>
+            </div>
+          </a>
+          <a href="certificates/What is Data Science.pdf" target="_blank" class="cert-card">
+            <span class="cert-seal">🏅</span>
+            <div>
+              <h3>What is Data Science?</h3>
+              <p class="mono">IBM · Coursera</p>
+            </div>
+          </a>
+          <a href="certificates/Python Project for Data Science.pdf" target="_blank" class="cert-card">
+            <span class="cert-seal">🏅</span>
+            <div>
+              <h3>Python Project for Data Science</h3>
+              <p class="mono">IBM · Coursera</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ENGINEERING PRINCIPLES ============ -->
+    <section id="principles" class="section">
+      <div class="section-head reveal">
+        <img class="section-icon" src="images/icon-plane.webp" alt="">
+        <p class="eyebrow mono">// index cards · how I work</p>
+        <h2>Engineering principles</h2>
+      </div>
+      <div class="principles">
+        <div class="index-card reveal">
+          <h3 class="caveat">Ship before perfect</h3>
+          <p>Small working systems beat ambitious prototypes. Cachy launched with a three-provider fallback chain
+            because free APIs kept dropping.</p>
+        </div>
+        <div class="index-card reveal">
+          <h3 class="caveat">Measure everything</h3>
+          <p>If I can't evaluate it, I can't improve it. Even the skills section on this page has numbers.</p>
+        </div>
+        <div class="index-card reveal">
+          <h3 class="caveat">Understand the abstraction</h3>
+          <p>I write core pieces from scratch before reaching for a framework. That's how the 60-line retriever
+            happened.</p>
+        </div>
+        <div class="index-card reveal">
+          <h3 class="caveat">Failures are artifacts</h3>
+          <p>Dead ends get documented. FAILURES.md ships with the repo because I keep needing it later.</p>
+        </div>
+      </div>
+    </section>
 
     <!-- ============ TIMELINE ============ -->
     <section id="timeline" class="section">
       <div class="section-head reveal">
-        <img class="section-icon" src="images/icon-git.png" alt="">
+        <img class="section-icon" src="images/icon-git.webp" alt="">
         <p class="eyebrow mono">// git log --journey</p>
         <h2>Commit history</h2>
       </div>
@@ -859,9 +913,9 @@
     </section>
 
     <!-- ============ WHAT I BRING ============ -->
-    <section id="value" class="section">
+    <section id="value" class="section section--wash">
       <div class="section-head reveal">
-        <img class="section-icon" src="images/icon-brain.png" alt="">
+        <img class="section-icon" src="images/icon-brain.webp" alt="">
         <p class="eyebrow mono">// the short version</p>
         <h2>What I bring on day one</h2>
       </div>
@@ -889,11 +943,9 @@
     </section>
 
     <!-- ============ CONTACT ============ -->
-
-    <!-- ============ CONTACT ============ -->
     <section id="contact" class="section contact">
       <div class="section-head reveal">
-        <img class="section-icon" src="images/icon-mail.png" alt="">
+        <img class="section-icon" src="images/icon-mail.webp" alt="">
         <p class="eyebrow mono">// open a pull request</p>
         <h2>Get in touch</h2>
         <p class="section-sub">Looking for AI/ML internships and roles.</p>
@@ -901,7 +953,6 @@
 
       <!-- Contact Form -->
       <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
-        <!-- Replace with your actual Web3Forms Access Key -->
         <!-- Access key injected via script.js -->
         <input type="hidden" name="access_key" id="formAccessKey" value="">
         <input type="hidden" name="subject" value="🔥 New Portfolio Inquiry">
@@ -978,8 +1029,8 @@
 
   <canvas id="rain" hidden></canvas>
 
-  <script src="projects-data.js?v=10"></script>
-  <script src="script.js?v=10"></script>
+  <script src="projects-data.js?v=11"></script>
+  <script src="script.js?v=11"></script>
   <script type="module">
     import { createAvatar } from 'https://esm.sh/@bible-strong/avatar-web';
     fetch('./grok-bot.avatar.json')
