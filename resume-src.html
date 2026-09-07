@@ -2,112 +2,150 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Vatsal Vaghasiya — Resume</title>
+<title>Vatsal Vaghasiya - AI/ML Engineer - Resume</title>
+<!--
+  PRIMARY RESUME - one page, ATS-optimised. This is the file linked from the
+  portfolio and the one to send for applications.
+  resume-detailed-src.html is the longer two-page variant, for research roles or
+  direct emails where depth helps.
+
+  Rules this file follows on purpose, so please keep them if you edit it:
+   - ONE PAGE. Entry-level screening is high volume; one page is the norm and
+     every extra line has to displace something else.
+   - 10pt body minimum. Below 10pt reads as cramming and tech recruiters call
+     out tiny fonts and narrow margins as a red flag.
+   - single column, no tables, no floats, no icons, no images, no text boxes
+   - standard section headings ATS parsers recognise (Professional Experience,
+     Technical Skills, Education, Certifications, ...)
+   - ASCII only: no en dashes, arrows, superscripts or math symbols, since those
+     can extract as garbage. "R-squared", "x", "to", not the glyphs.
+   - every entry is action + technology + measurable impact
+   - entries with a single point run title and point together on one block
+     instead of spending a line on a lone bullet; multi-point roles keep bullets
+   - real selectable text only; nothing important lives in CSS or graphics
+
+  Regenerate the PDF with:
+   "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge" \
+     --headless --disable-gpu --no-pdf-header-footer \
+     --print-to-pdf=resume.pdf resume-src.html
+-->
 <style>
+  .nb { white-space: nowrap; }
   @page { size: A4; margin: 11mm 14mm; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    font-size: 9.1pt; line-height: 1.32; color: #1a2228;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 10pt; line-height: 1.195; color: #14181c;
   }
-  h1 { font-size: 17pt; font-weight: 700; letter-spacing: .01em; }
-  .contact { font-size: 9pt; color: #3d4a52; margin-top: 3pt; }
-  .contact a { color: #3d4a52; text-decoration: none; }
+  h1 { font-size: 18.5pt; font-weight: 700; letter-spacing: .01em; }
+  .role-line { font-size: 10.3pt; font-weight: 600; color: #262f35; margin-top: 1pt; }
+  .contact { font-size: 9.5pt; color: #262f35; margin-top: 2pt; }
+  .contact a { color: #262f35; text-decoration: none; }
   h2 {
-    font-size: 10pt; font-weight: 700; text-transform: uppercase; letter-spacing: .07em;
-    color: #1a2228; border-bottom: 1.2px solid #1a2228;
-    margin: 7pt 0 3.5pt; padding-bottom: 2pt;
+    font-size: 10.3pt; font-weight: 700; text-transform: uppercase; letter-spacing: .05em;
+    border-bottom: 1.1px solid #14181c; margin: 4.8pt 0 2.2pt; padding-bottom: 1.3pt;
+    break-after: avoid; page-break-after: avoid;
   }
-  .summary { margin-top: 6pt; }
-  .skills p { margin-bottom: 2pt; }
-  .skills b { font-weight: 600; }
-  .entry { margin-bottom: 5.5pt; }
-  .entry-head { display: flex; justify-content: space-between; align-items: baseline; }
-  .entry-head h3 { font-size: 10pt; font-weight: 600; }
-  .entry-head .right { font-size: 8.8pt; color: #3d4a52; white-space: nowrap; margin-left: 8pt; }
-  .stack { font-size: 8.6pt; color: #4d5a62; margin: 1pt 0 2pt; }
-  ul { margin: 1.5pt 0 0 12pt; }
-  li { margin-bottom: 1.5pt; }
-  .edu .entry { margin-bottom: 4pt; }
-  .more { font-size: 9pt; color: #3d4a52; margin-top: 2pt; }
+  p.summary { margin-top: 4pt; }
+  .skills p { margin-bottom: 1.2pt; }
+  .entry { margin-bottom: 3pt; break-inside: avoid; page-break-inside: avoid; }
+  .entry b { font-weight: 700; }
+  ul { margin: 1pt 0 0 11pt; }
+  li { margin-bottom: .8pt; padding-left: 1pt; }
+  .edu p { margin-bottom: 1.3pt; }
 </style>
 </head>
 <body>
 
 <h1>Vatsal Vaghasiya</h1>
+<p class="role-line">AI/ML Engineer | Machine Learning Engineer | Data Scientist</p>
 <p class="contact">
-  Bengaluru, India &nbsp;·&nbsp; <a href="mailto:kvaghasiya057@gmail.com">kvaghasiya057@gmail.com</a>
-  &nbsp;·&nbsp; <a href="https://github.com/Vatsal057">github.com/Vatsal057</a>
-  &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/vatsal-vaghasiya/">linkedin.com/in/vatsal-vaghasiya</a>
-  &nbsp;·&nbsp; <a href="https://www.kaggle.com/vatsalvaghasiya">kaggle.com/vatsalvaghasiya</a>
+  Bengaluru, India | +91 8780335009 | <a href="mailto:kvaghasiya057@gmail.com">kvaghasiya057@gmail.com</a>
+  | <a href="https://www.linkedin.com/in/vatsal-vaghasiya/">linkedin.com/in/vatsal-vaghasiya</a><br>
+  <a href="https://github.com/Vatsal057">github.com/Vatsal057</a> | <a href="https://vatsal057.github.io/">vatsal057.github.io</a>
+  | <a href="https://www.kaggle.com/vatsalvaghasiya">kaggle.com/vatsalvaghasiya</a>
 </p>
 
-<p class="summary">MTech Data Science student with two first-author research papers under review and 18 shipped projects
-spanning LLMs, computer vision, and MLOps. Builds ML systems end to end: data pipelines, training, evaluation,
-deployment, and drift monitoring. Seeking AI/ML engineering internship or entry-level role.</p>
+<h2>Professional Summary</h2>
+<p class="summary">AI/ML engineer and MTech Data Science student specialising in LLMs, RAG and MLOps. 8 months of data
+science internship experience, two research papers under review, 19 shipped projects, 1st place at the Karnataka
+Education Datathon 2026. Builds models that reach <span class="nb">state-of-the-art</span> quality at a fraction of the size, and deploys
+them as monitored services.</p>
 
 <h2>Technical Skills</h2>
 <div class="skills">
-  <p><b>Languages:</b> Python, SQL, Dart, Swift</p>
-  <p><b>ML / Deep Learning:</b> PyTorch, scikit-learn, XGBoost, KerasNLP, sentence-transformers, OpenCV, MediaPipe</p>
-  <p><b>LLMs &amp; RAG:</b> retrieval pipelines, embeddings, vector search (ChromaDB), prompt engineering, Hugging Face Inference API, Whisper</p>
-  <p><b>MLOps &amp; Backend:</b> FastAPI, Docker, Docker Compose, Streamlit, drift detection (PSI), Git, SQLite</p>
-  <p><b>Data:</b> pandas, NumPy, feature engineering, matplotlib, seaborn, Jupyter</p>
+  <p><b>Languages:</b> Python, SQL, Bash, TypeScript, Swift</p>
+  <p><b>Machine Learning and Deep Learning:</b> PyTorch, TensorFlow, <span class="nb">scikit-learn</span>, XGBoost, NLP, computer vision,
+    Transformers, CNNs, DeBERTa, CLIP, <span class="nb">Grad-CAM</span>, model calibration, OpenCV</p>
+  <p><b>Generative AI and LLMs:</b> <span class="nb">retrieval-augmented</span> generation (RAG), embeddings, vector search (ChromaDB),
+    prompt engineering, LLM evaluation, Whisper ASR, Hugging Face</p>
+  <p><b>MLOps and Deployment:</b> FastAPI, REST APIs, Docker, Docker Compose, CI/CD with GitHub Actions, model
+    monitoring, drift detection (PSI), Hugging Face Spaces, Cloudflare Workers, Git</p>
+  <p><b>Data and Analytics:</b> pandas, NumPy, SciPy, ETL, feature engineering, OLS regression, clustering (<span class="nb">K-Means</span>,
+    DBSCAN), Power BI</p>
 </div>
 
-<h2>Research (Under Review)</h2>
+<h2>Professional Experience</h2>
 <div class="entry">
-  <div class="entry-head"><h3>Efficient LLM Preference Prediction via Siamese DeBERTa</h3><span class="right">First author</span></div>
+  <b>Data Science Intern</b> | Amar Infotech, Ahmedabad, India | Jan 2025 - Jun 2025
   <ul>
-    <li>Built a 71M-parameter Siamese DeBERTa model that predicts human preference between chatbot responses at 98% of state-of-the-art performance while being 127&times; smaller; trained in 8.4 hours on free-tier T4 GPUs at $0 cost.</li>
-    <li>Eliminated position bias with swap augmentation and corrected overconfidence with temperature scaling (T=1.20), improving log loss by 6.2% and accuracy by 3.5 points over baseline.</li>
+    <li>Built Python data pipelines preprocessing 50,000+ records, reducing inconsistencies by 35%.</li>
+    <li>Trained predictive ML models (TensorFlow, <span class="nb">scikit-learn</span>) to 87% accuracy, cutting false positives by 22%.</li>
+    <li>Built 5+ Power BI dashboards for KPIs and model performance; automated extraction, cutting manual work 40%.</li>
   </ul>
 </div>
 <div class="entry">
-  <div class="entry-head"><h3>ProbCLIP-A: Uncertainty-Aware Cross-Modal Retrieval via Probabilistic Adapters</h3><span class="right">First author</span></div>
+  <b>Data Science Intern</b> | iTechBrains, Ahmedabad, India | Jun 2024 - Jul 2024
   <ul>
-    <li>Designed a 4.2M-parameter probabilistic adapter over frozen CLIP (151M) that outputs calibrated uncertainty; achieved 68.9% R@1 with the best calibration among all baselines (ECE 0.062) on Flickr30K.</li>
-    <li>Monte Carlo inference flags 36.6% of retrieval failures at an 8.1% false-positive rate, enabling practical human-in-the-loop review for high-stakes retrieval.</li>
+    <li>Analysed datasets using supervised and unsupervised learning; extracted and transformed data in Python and SQL.</li>
   </ul>
+</div>
+
+<h2>Research Publications</h2>
+<div class="entry">
+  <b>Efficient LLM Preference Classification via Position Bias Mitigation</b> | First author | Under review, 2026 - A
+  <span class="nb">71M-parameter</span> Siamese <span class="nb">DeBERTa-v3</span> model reaching 98% of <span class="nb">state-of-the-art</span> quality with 127x fewer parameters than the
+  9B+ winning systems; swap augmentation and temperature scaling cut log loss 6.2% to 0.9871 and added 3.5 accuracy
+  points, in 8.4 hours on free T4 GPUs at $0.
+</div>
+<div class="entry">
+  <b>ProbCLIP-A: Uncertainty-Aware Cross-Modal Retrieval with Probabilistic Adapters</b> | Second author | Submitted
+  to Elsevier, 2026 - A <span class="nb">4.2M-parameter</span> probabilistic adapter over frozen CLIP: 68.9% <span class="nb">text-to-image</span> <span class="nb">R@1</span> on Flickr30K,
+  calibration error cut from 0.078 to 0.062, flagging 69.3% of retrieval failures at a 4.9% false-alarm rate.
+</div>
+
+<h2>Awards</h2>
+<div class="entry">
+  <b>1st Place, Karnataka Education Datathon 2026</b> | Akshara Foundation - Analysed arithmetic outcomes for 1.38M
+  students across 31 districts, cleared infrastructure and geography via variance decomposition and OLS regression
+  (<span class="nb">R-squared</span> 0.56), isolated a <span class="nb">carry-and-borrow</span> procedure gap as the driver, and shipped a Streamlit dashboard.
 </div>
 
 <h2>Projects</h2>
 <div class="entry">
-  <div class="entry-head"><h3>Constitution of India — RAG Question Answering</h3><span class="right">sentence-transformers · ChromaDB · Mistral-7B</span></div>
-  <ul>
-    <li>Built retrieval-augmented QA over the Indian Constitution with exact source citations and similarity scores; wrote the retrieval and prompting logic from scratch (~60 lines, no framework).</li>
-    <li>Stress-tested with 20 adversarial queries, published the failure analysis, and improved chunking to reach 78% answer accuracy.</li>
-  </ul>
+  <b>IPL Match Predictor, <span class="nb">end-to-end</span> MLOps pipeline</b> | XGBoost, FastAPI, Docker Compose - Deployed three
+  containerised services over 9 engineered features: a prediction REST API, a Population Stability Index drift monitor
+  running every 5 minutes to flag retraining, and a live Streamlit health dashboard.
 </div>
 <div class="entry">
-  <div class="entry-head"><h3>IPL Match Outcome Predictor — MLOps Pipeline</h3><span class="right">XGBoost · FastAPI · Docker Compose · Streamlit</span></div>
-  <ul>
-    <li>Deployed a three-service prediction system (REST API, drift monitor, health dashboard); the monitor computes Population Stability Index every 5 minutes and flags the model for retraining on drift.</li>
-    <li>Engineered 9 features (rolling win rates, venue history, toss decisions) for an XGBoost classifier serving win probabilities.</li>
-  </ul>
+  <b>Cachy, <span class="nb">short-form</span> media knowledge engine</b> | FastAPI, Flutter, Whisper, LLM chain, SQLite - Turns video and
+  articles into searchable knowledge cards via Whisper transcription, OCR and a <span class="nb">three-provider</span> LLM fallback chain;
+  diagnosed a polling bug draining the monthly database compute quota in 17 days, cutting queries 99.7%.
 </div>
 <div class="entry">
-  <div class="entry-head"><h3>Cachy — Short-Form Media Knowledge Engine</h3><span class="right">Python · FastAPI · Flutter · faster-whisper</span></div>
-  <ul>
-    <li>Built a cross-platform app that converts Reels/Shorts and articles into structured knowledge cards using local Whisper transcription, Tesseract OCR, and an LLM chain with automatic fallback across three providers; cards linked in a semantic knowledge graph, fully offline-capable.</li>
-  </ul>
+  <b>Constitution of India, RAG question answering</b> | <span class="nb">sentence-transformers</span>, ChromaDB, <span class="nb">Mistral-7B</span> - Hand-wrote the
+  full RAG loop in roughly 60 lines without LangChain, returning cited answers; a 20-query adversarial evaluation
+  lifted accuracy from 65% to 78% by fixing chunk boundaries.
 </div>
 <div class="entry">
-  <div class="entry-head"><h3>Bangalore Air Quality Hotspot Analysis</h3><span class="right">pandas · scikit-learn</span></div>
-  <ul>
-    <li>Consolidated a year of non-standardized data from 14 CPCB monitoring stations, engineered 6 domain features, and compared K-Means, hierarchical clustering, and DBSCAN; DBSCAN correctly isolated critical hotspots (Silk Board, max AQI 500).</li>
-  </ul>
+  <b>Also shipped:</b> CLIP multimodal search, <span class="nb">Grad-CAM</span> classifier, gesture control, Kotlin IME, 5 macOS apps in Swift.
 </div>
-<p class="more"><b>Selected additional projects:</b> AirSwipe (gesture-controlled presentations, MediaPipe/OpenCV), ScribbleType (on-device handwriting recognition, ML Kit), and 7 more on GitHub.</p>
 
-<h2 class="edu-h">Education</h2>
+<h2>Education and Certifications</h2>
 <div class="edu">
-  <div class="entry">
-    <div class="entry-head"><h3>MTech, Data Science — Ramaiah University of Applied Sciences, Bengaluru</h3><span class="right">Nov 2025 – 2027 (expected)</span></div>
-  </div>
-  <div class="entry">
-    <div class="entry-head"><h3>BTech, Computer Engineering — SAL College of Engineering</h3><span class="right">Oct 2021 – Apr 2025</span></div>
-  </div>
+  <p><b>M.Tech, Data Science</b> | M.S. Ramaiah University of Applied Sciences, Bengaluru | Nov 2025 - 2027 (expected)</p>
+  <p><b>B.Tech, Computer Engineering</b> | SAL College of Engineering, Ahmedabad | 2021 - 2025 | CGPA 8.3 / 10.0</p>
+  <p><b>Certifications:</b> IBM Data Science series on Coursera (5 courses, 2024).</p>
 </div>
 
 </body>

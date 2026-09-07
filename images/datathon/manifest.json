@@ -1,4 +1,9 @@
 {
   "_comment": "Drop prize-ceremony photos into images/datathon/ and list them here. Format: {\"file\": \"photo1.jpg\", \"caption\": \"Prize ceremony\"}. An empty list keeps the gallery placeholder and stops the page requesting a file that is not there.",
-  "photos": []
+  "photos": [
+    {
+      "file": "prize-distribution.jpg",
+      "caption": "1st Place Award Ceremony — Karnataka Education Datathon 2026"
+    }
+  ]
 }
