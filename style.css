@@ -1593,9 +1593,12 @@ body.dark-mode .cert-grid .cert-card { border-top-color: #2E3E47; }
 }
 .tool-heading .margin-note { font-size: .95rem; }
 
-/* A real figure from the datathon submission, sized so it reads as evidence
-   next to the award card rather than decoration. */
+/* Ceremony photo framed beside the award card, sized to read as proof of the
+   win rather than decoration. */
 .award-figure { margin-top: 1.4rem; max-width: 520px; }
+.award-figure-link { display: block; text-decoration: none; }
+.award-figure-link .figure-arrow { color: var(--sage-deep); opacity: 0; transition: opacity .2s, transform .2s; }
+.award-figure-link:hover .figure-arrow { opacity: 1; transform: translateX(3px); }
 .award-figure img {
   display: block; width: 100%; height: auto; border-radius: 6px;
   background: #FFFDF8; border: 1px solid #E7E1D2; box-shadow: var(--shadow);
