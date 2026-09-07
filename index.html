@@ -90,8 +90,21 @@
           </p>
         </div>
       </div>
-      <div class="hero-doodle reveal" aria-hidden="true">
-        <img src="images/hero-doodle.webp" alt="" width="1100" height="733"
+      <!-- This slot used to hold a neural-network doodle, which said nothing a
+           visitor couldn't already infer from the rest of the page. It is a
+           photo of me instead: the site had no picture of the person it is
+           about. Kept as a plain rectangle rather than a background cutout,
+           because the surrounding CSS is a taped print (1.6deg rotation, cream
+           border, amber tape at two corners) and tape only reads correctly on a
+           rectangle. The cream wall in the shot also happens to blend into
+           --paper, which a cutout would throw away.
+           Square, not the 4:5 crop: at 4:5 the photo ran 550px tall and
+           overpowered the text column; square lands at ~440px, aligning with
+           the headline and the live-demo list, at the same face size.
+           No longer aria-hidden, since it is now content rather than decoration. -->
+      <div class="hero-doodle reveal">
+        <img src="images/vatsal-portrait.webp"
+          alt="Vatsal Vaghasiya, seated, holding his glasses" width="1000" height="1000"
           onerror="this.closest('.hero-doodle').classList.add('fallback')">
         <svg class="nn-fallback" viewBox="0 0 320 200" fill="none">
           <g class="nn-edges" stroke="currentColor" stroke-width="1" opacity=".35">
