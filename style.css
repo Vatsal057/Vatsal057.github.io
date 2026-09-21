@@ -383,7 +383,10 @@ body.dark-mode .hero-doodle img {
 /* These used to be flip cards, which meant every number that proves the work sat
    on a face nobody turned over. The sheet shows its evidence flat, the way an
    offprint on the desk does, and the only interactive things are the two links. */
-.papers { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 1.8rem; }
+.papers {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 1.8rem; max-width: 740px; margin: 0 auto;
+}
 
 .paper-sheet {
   position: relative;
@@ -855,8 +858,9 @@ body.recruiter .gitlog.reveal .commit { opacity: 1; translate: none; transition:
   .hero {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    padding-top: 2rem;
+    align-items: center;
+    text-align: center;
+    padding-top: 2.2rem;
     padding-bottom: 2rem;
   }
   .hero-photo, .hero-doodle {
@@ -871,17 +875,38 @@ body.recruiter .gitlog.reveal .commit { opacity: 1; translate: none; transition:
   .hero-inner {
     grid-column: auto;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
   .hero h1 {
     font-size: clamp(2.2rem, 7vw, 3.2rem);
-    margin: .3rem 0 .7rem;
+    margin: .3rem auto .7rem;
+    text-align: center;
+  }
+  .typewriter {
+    text-align: center;
+    margin: -.4rem auto 1rem;
   }
   .hero-sub {
     font-size: 1.05rem;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  .hero-stats {
+    justify-content: center;
   }
   .hero-cta {
+    justify-content: center;
     gap: .65rem;
     margin-top: 1.3rem;
+  }
+  .hero-hint {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
   }
   .commit { grid-template-columns: 74px 1fr; }
   .commit .c-date { display: none; }

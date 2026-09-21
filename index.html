@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vatsal Vaghasiya · AI Engineer</title>
   <meta name="description"
-    content="Vatsal Vaghasiya, MTech Data Science student. 19 shipped projects with 6 running live in the browser, 2 research papers under review, 5 more building.">
+    content="Vatsal Vaghasiya, MTech Data Science student. 19 shipped projects, 1 research paper under review, native apps and AI tools.">
   <meta property="og:title" content="Vatsal Vaghasiya · AI Engineer">
-  <meta property="og:description" content="Projects, papers, and notes on what didn't work.">
+  <meta property="og:description" content="AI engineer in training: projects, paper, and apps.">
   <meta property="og:image" content="images/og.jpg">
   <link rel="icon" href="images/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,8 +28,8 @@
     <a class="logo" href="#top">V<span class="logo-dot">.</span>V</a>
     <nav class="topnav">
       <a href="#projects">Projects</a>
-      <a href="#research">Research</a>
       <a href="#datathon">Awards</a>
+      <a href="#research">Research</a>
       <a href="#apps">Apps</a>
       <a href="#roadmap">Building next</a>
       <a href="#skills">Skills</a>
@@ -55,12 +55,11 @@
         
         <h1 class="reveal"><span class="marker">Vatsal Vaghasiya</span></h1>
         <p class="typewriter mono reveal"><span id="typeTarget"></span><span class="caret">▊</span></p>
-        <p class="hero-sub reveal">AI engineer in training. I build models, ship the apps around them,
-          and <em>keep notes on what didn't work</em>.</p>
+        <p class="hero-sub reveal">AI engineer in training. I build apps, train models, and ship working software.</p>
         <p class="hero-stats mono reveal">
           <span class="stat-item"><span class="count" id="stat-shipped" data-count="19">19</span> projects shipped</span>
           <span class="stat-sep">&nbsp;·&nbsp;</span>
-          <span class="stat-item"><span class="count" id="stat-papers" data-count="2">2</span> papers under review</span>
+          <span class="stat-item"><span class="count" id="stat-papers" data-count="1">1</span> paper under review</span>
           <span class="stat-sep">&nbsp;·&nbsp;</span>
           <span class="stat-item"><span class="count" id="stat-building" data-count="2">2</span> building next</span>
         </p>
@@ -316,18 +315,50 @@
 
     </section>
 
+    <!-- ============ DATATHON — ACHIEVEMENT ============ -->
+    <section id="datathon" class="section section--wash">
+      <div class="section-head reveal">
+        <img class="section-icon" src="images/icon-flask.webp" alt="">
+        <p class="eyebrow mono">// competition · 2026</p>
+        <h2>Competitions &amp; awards</h2>
+      </div>
+      <div class="award-row">
+        <div class="achievements">
+          <article onclick="window.location.href='case/datathon.html'" class="achievement-card reveal" role="link"
+            tabindex="0">
+            <div class="achievement-medal">🥇</div>
+            <div class="achievement-body">
+              <p class="mono achievement-org">Akshara Foundation · Datathon 2026</p>
+              <h3>1st Place — Karnataka Education Datathon</h3>
+              <p class="achievement-desc">Analysed arithmetic learning outcomes across 1.38 million Karnataka government
+                school students. Built indices, OLS residuals, and a 7-screen Streamlit dashboard to argue the gap is
+                skill-shaped, not geography-shaped.</p>
+              <p class="mono achievement-stack">Python · pandas · scipy · plotly · Streamlit · 1.38M records</p>
+            </div>
+            <span class="achievement-arrow mono">view →</span>
+          </article>
+        </div>
+        <!-- The prize-ceremony photo is the active gateway into the case study,
+             mirroring the award card so the whole row navigates. -->
+        <a href="case/datathon.html" class="award-figure-link reveal">
+          <figure class="award-figure">
+            <img src="images/shots/prize-teaser.webp"
+              alt="1st Place Award Ceremony — Karnataka Education Datathon 2026"
+              width="1040" height="1040" loading="lazy" decoding="async">
+            <figcaption class="mono">1st place award ceremony, Karnataka Education Datathon 2026
+              <span class="figure-arrow">view →</span></figcaption>
+          </figure>
+        </a>
+      </div>
+    </section>
+
     <!-- ============ RESEARCH WALL ============ -->
-    <!-- Dark band. This is the strongest evidence on the page and it used to sit
-         at 65% depth; anyone who lost interest never reached it. Cream offprint
-         sheets on a dark desk is also the sharpest contrast the existing palette
-         can make without inventing a new colour. -->
     <section id="research" class="section section--band">
       <div class="section-head reveal">
         <img class="section-icon" src="images/icon-brain.webp" alt="">
-        <p class="eyebrow mono">// research · both PDFs are on this page</p>
-        <h2>Papers under review</h2>
-        <p class="section-sub">Written as an MTech student, trained on free GPUs. You can read both of them
-          here — the numbers below are the ones in the PDFs.</p>
+        <p class="eyebrow mono">// research · preprint PDF on this page</p>
+        <h2>Paper under review</h2>
+        <p class="section-sub">Written as an MTech student, trained on free GPUs. Read the full PDF below — numbers match the preprint.</p>
       </div>
       <div class="papers">
 
@@ -380,94 +411,6 @@
           <p class="paper-caveat">Code and weights stay unpublished until the review decision.</p>
         </article>
 
-        <article class="paper-sheet reveal">
-          <div class="pin"></div>
-          <p class="mono paper-state"><span class="dot-review" aria-hidden="true"></span>submitted to Elsevier</p>
-
-          <h3>ProbCLIP-A: Uncertainty-Aware Retrieval</h3>
-          <p class="paper-subtitle">Uncertainty-Aware Cross-Modal Retrieval via Probabilistic Adapters for Frozen CLIP
-            Vision Foundation Models</p>
-
-          <p class="mono paper-byline">
-            Nancy Kshetrimayum, <b class="is-me">Vatsal Vaghasiya</b>
-            <span class="paper-pos">second author</span>
-          </p>
-
-          <table class="paper-figs">
-            <caption class="mono">as reported in the paper</caption>
-            <tbody>
-              <tr>
-                <th scope="row">text&rarr;image R@1</th>
-                <td class="fig">68.9%</td>
-                <td class="ctx">on Flickr30K, just past CLIP-Adapter at 68.8%</td>
-              </tr>
-              <tr>
-                <th scope="row">calibration error</th>
-                <td class="fig">0.062</td>
-                <td class="ctx">down from 0.078 on plain CLIP</td>
-              </tr>
-              <tr>
-                <th scope="row">failures flagged</th>
-                <td class="fig">69.3%</td>
-                <td class="ctx">while touching only 4.9% of the correct results</td>
-              </tr>
-              <tr>
-                <th scope="row">trainable params</th>
-                <td class="fig">4.2M</td>
-                <td class="ctx">2.1M per modality; CLIP itself stays frozen</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <p class="paper-aside"><span class="caveat">what I learned:</span> skip the KL warmup schedule and the
-            variance collapses to zero. The model quietly stops being probabilistic.</p>
-
-          <div class="paper-actions">
-            <a class="btn btn-primary sm" href="papers/probclip-a-uncertainty-aware-retrieval.pdf" target="_blank"
-              rel="noopener">Read the paper (PDF)</a>
-            <a class="btn btn-ghost sm" href="case/project.html?id=probclip-a">How it works</a>
-          </div>
-          <p class="paper-caveat">My part: conceptualization, methodology, software, validation, review and editing.
-            Code and weights stay unpublished until the review decision.</p>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- ============ DATATHON — ACHIEVEMENT ============ -->
-    <section id="datathon" class="section section--wash">
-      <div class="section-head reveal">
-        <img class="section-icon" src="images/icon-flask.webp" alt="">
-        <p class="eyebrow mono">// competition · 2026</p>
-        <h2>Competitions &amp; awards</h2>
-      </div>
-      <div class="award-row">
-        <div class="achievements">
-          <article onclick="window.location.href='case/datathon.html'" class="achievement-card reveal" role="link"
-            tabindex="0">
-            <div class="achievement-medal">🥇</div>
-            <div class="achievement-body">
-              <p class="mono achievement-org">Akshara Foundation · Datathon 2026</p>
-              <h3>1st Place — Karnataka Education Datathon</h3>
-              <p class="achievement-desc">Analysed arithmetic learning outcomes across 1.38 million Karnataka government
-                school students. Built indices, OLS residuals, and a 7-screen Streamlit dashboard to argue the gap is
-                skill-shaped, not geography-shaped.</p>
-              <p class="mono achievement-stack">Python · pandas · scipy · plotly · Streamlit · 1.38M records</p>
-            </div>
-            <span class="achievement-arrow mono">view →</span>
-          </article>
-        </div>
-        <!-- The prize-ceremony photo is the active gateway into the case study,
-             mirroring the award card so the whole row navigates. -->
-        <a href="case/datathon.html" class="award-figure-link reveal">
-          <figure class="award-figure">
-            <img src="images/shots/prize-teaser.webp"
-              alt="1st Place Award Ceremony — Karnataka Education Datathon 2026"
-              width="1040" height="1040" loading="lazy" decoding="async">
-            <figcaption class="mono">1st place award ceremony, Karnataka Education Datathon 2026
-              <span class="figure-arrow">view →</span></figcaption>
-          </figure>
-        </a>
       </div>
     </section>
 
@@ -865,9 +808,7 @@
         <div class="commit"><span class="c-hash">f5e6a78</span><span class="c-date">Nov 2025</span><span
             class="c-msg">checkout -b mtech: Data Science @ Ramaiah University of Applied Sciences</span></div>
         <div class="commit"><span class="c-hash">e2c3d44</span><span class="c-date">Feb 2026</span><span class="c-msg">feat:
-            1st paper submitted (LLM Preference Classification, first author)</span></div>
-        <div class="commit"><span class="c-hash">a8b9c01</span><span class="c-date">Jul 2026</span><span class="c-msg">feat:
-            2nd paper submitted (ProbCLIP-A, second author)</span></div>
+            paper submitted (LLM Preference Classification, first author)</span></div>
         <div class="commit"><span class="c-hash">b9c0d12</span><span class="c-date">Aug 2026</span><span class="c-msg">feat:
             won 1st prize @ Karnataka Education Datathon 🏆</span></div>
         <div class="commit c-head"><span class="c-hash">HEAD</span><span class="c-date">now</span><span
@@ -895,8 +836,7 @@
         </div>
         <div class="value-item reveal">
           <p class="mono value-k">✓ research rigor on a budget</p>
-          <p>Two papers under review, both trained entirely on free-tier GPUs. Both write up what didn't work along the
-            way.</p>
+          <p>First author on an LLM preference classification paper under review, trained entirely on free-tier GPUs.</p>
         </div>
         <div class="value-item reveal">
           <p class="mono value-k">✓ the whole product</p>

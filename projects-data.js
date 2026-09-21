@@ -11,7 +11,7 @@ window.CONFIG = {
   // Hero section stats
   heroStats: {
     shipped: 19,
-    papers: 2,
+    papers: 1,
     building: 2
   },
 
@@ -34,16 +34,16 @@ window.CONFIG = {
     {
       name: "Deep Learning · PyTorch",
       pct: 82,
-      ships: "2 papers",
-      note: "Two research papers built on it.",
-      shipsList: "✓ ProbCLIP-A &nbsp;✓ preference paper"
+      ships: "1 paper",
+      note: "Research paper on LLM preference classification.",
+      shipsList: "✓ preference paper (under review)"
     },
     {
       name: "Computer Vision",
       pct: 80,
-      ships: "4 shipped",
-      note: "MediaPipe, OpenCV, CLIP in shipped products.",
-      shipsList: "✓ AirSwipe &nbsp;✓ Cachy OCR &nbsp;✓ ProbCLIP-A"
+      ships: "3 shipped",
+      note: "MediaPipe, OpenCV, OCR in shipped products.",
+      shipsList: "✓ AirSwipe &nbsp;✓ Cachy OCR"
     },
     {
       name: "LLMs & RAG",
@@ -541,35 +541,6 @@ window.PROJECTS = [
     links: { paper: "papers/efficient-llm-preference-classification.pdf" },
     // The paper is readable; the code is not. Those are separate decisions and
     // the note says which is which.
-    note: "The full paper is here to read. Code and weights stay unpublished until the review decision."
-  },
-  {
-    slug: "probclip-a",
-    title: "ProbCLIP-A: Uncertainty-Aware Retrieval",
-    fullTitle: "Uncertainty-Aware Cross-Modal Retrieval via Probabilistic Adapters for Frozen CLIP Vision Foundation Models",
-    kind: "research",
-    status: "under review",
-    tag: "probabilistic adapters · frozen CLIP",
-    authors: [
-      { name: "Nancy Kshetrimayum", corresponding: true },
-      { name: "Vatsal Vaghasiya", me: true }
-    ],
-    // CRediT roles exactly as listed in the paper's author block.
-    contribution: "Conceptualization, Methodology, Software, Validation, Writing (review and editing)",
-    venue: "Preprint submitted to Elsevier. Under review.",
-    oneLiner: "Makes CLIP report how sure it is — a small adapter that turns a frozen model into a calibrated one.",
-    problem: "CLIP returns one similarity score and no sense of when it is guessing, so a reliable match and an uncertain one look identical. Retraining the whole backbone to get uncertainty is expensive, and adapters that are cheap stay deterministic. This sits in between.",
-    highlights: [
-      "ProbCLIP-A learns Gaussian distributions over embeddings instead of single points. 2.1M trainable parameters per modality, 4.2M total, and the CLIP backbone stays frozen.",
-      "Text-to-image R@1 of 68.9% on Flickr30K, just ahead of CLIP-Adapter at 68.8%.",
-      "Expected calibration error drops from 0.078 on plain CLIP to 0.062 with Monte Carlo sampling.",
-      "Uncertainty separates real failures cleanly: mean uncertainty on wrong top-1 results is 4.6× that on correct ones.",
-      "Flagging anything above the 75th percentile catches 69.3% of retrieval failures while touching only 4.9% of the correct ones.",
-      "Trains in about 45 minutes on one free Kaggle P100."
-    ],
-    learned: "Skip the KL warmup schedule and the variance collapses to zero — the model quietly stops being probabilistic.",
-    stack: ["CLIP", "PyTorch", "Monte Carlo sampling"],
-    links: { paper: "papers/probclip-a-uncertainty-aware-retrieval.pdf" },
     note: "The full paper is here to read. Code and weights stay unpublished until the review decision."
   },
 

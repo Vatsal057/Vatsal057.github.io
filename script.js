@@ -65,7 +65,7 @@ if (document.getElementById('ghLive')) {
 }
 
 // ============ Typewriter ============
-const ROLES = ['AI engineer in training', 'MTech · Data Science', 'RAG, from scratch', 'two papers under review', '19 projects shipped'];
+const ROLES = ['AI engineer in training', 'MTech · Data Science', 'RAG, from scratch', 'paper under review', '19 projects shipped'];
 const typeTarget = document.getElementById('typeTarget');
 if (typeTarget) {
   (function typeLoop(ri = 0, ci = 0, deleting = false) {
@@ -108,7 +108,7 @@ if (recruiterToggle) {
 const LINES = [
   "Welcome. I've compiled my thoughts. It took exactly 12ms.",
   "You can say 'tour' and I'll drag you through the highlights.",
-  "19 projects, 2 papers, 6 you can open in this tab. I'd clap, but I lack hands.",
+  "19 projects, 1 paper under review, 6 you can open in this tab. I'd clap, but I lack hands.",
   "I'm fully authorized to run things. Try 'run train' or 'projects'.",
   "The terminal is top right. Don't break production, please.",
   "Recruiter switch is up top. Flipping it hurts my feelings.",
@@ -435,7 +435,7 @@ addEventListener('scroll', () => {
   }
   // A bubble placed in a clear spot stops being in a clear spot the moment the
   // page scrolls underneath it, which is how it ended up sitting on the project
-  // cards and the ProbCLIP-A results table. It is a transient remark, so scroll
+  // cards and the paper sheet. It is a transient remark, so scroll
   // dismisses it. The chat stays if the user is actually typing in it.
   if (!companion.classList.contains('open') && bubble.classList.contains('show')) {
     bubble.classList.remove('show');
@@ -466,8 +466,9 @@ const TOUR = [
   ['skills', "Skills. Each bar lists the projects it came from."],
   ['principles', "How he works, on index cards."],
   ['projects', "The desk. Selected shipped projects."],
+  ['datathon', "Won 1st prize @ Karnataka Education Datathon."],
+  ['research', "Paper under review. The PDF is on the page."],
   ['apps', "Five native macOS apps, all Swift."],
-  ['research', "Two papers under review. Both PDFs are on the page."],
   ['timeline', "Four years in one git log."],
   ['contact', "End of notebook. This is where you email him. Tour's over."],
 ];
@@ -597,7 +598,7 @@ const ACTIONS = [
   [/^(show|go to) (experiments?|board|fail)/i, () => goToSection('projects', "The failures are on each project's card.")],
   [/^(show|go to) (principles)/i, () => goToSection('principles', "Four cards. All true.")],
   [/^(show|go to) (projects?|cachy|airswipe)/i, () => goToSection('projects', "Nineteen shipped. Six pinned.")],
-  [/^(show|go to) (research|papers?)/i, () => goToSection('research', "Two papers. You can read both.")],
+  [/^(show|go to) (research|papers?)/i, () => goToSection('research', "Paper under review. You can read the PDF.")],
   [/^(show|go to) (timeline|journey|history)/i, () => goToSection('timeline', "git log --journey.")],
   [/^(show|go to) (contact|email)/i, () => { goToSection('contact'); cheer("kvaghasiya057@gmail.com. Go on."); }],
   [/^party|^rain|^konami|^dance/i, () => { gradientRain(); cheer(); }],
@@ -636,7 +637,7 @@ const PAGE_SLUG = (new URLSearchParams(location.search).get('id') || '')
 // whoever happens to be reading this portfolio.
 const FALLBACKS = [
   [/rag|retrieval|chroma|vector/i, "He wrote the RAG retrieval from scratch. 60 lines. Chunking broke immediately. Typical human error.", 'thinking'],
-  [/paper|research|publish|deberta|clip/i, "Two papers under review, both trained on free GPUs. He's first author on the DeBERTa one and second on the CLIP one. Both PDFs are on the page.", 'happy'],
+  [/paper|research|publish|deberta/i, "Paper under review on LLM preference classification (first author), trained on free GPUs. The PDF is on the page.", 'happy'],
   [/project|built|portfolio|work/i, "19 projects shipped, and six of them run right here in the browser. Cachy, Sahayak and Oracle are the ones to try.", 'proud'],
   [/skill|python|pytorch|stack|know/i, "Python, PyTorch, CV, SQL, Docker. I've verified these claims personally. They check out.", 'searching'],
   [/mlops|docker|deploy|drift/i, "IPL predictor runs 3 dockerized services. It computes PSI every 5 minutes because trust is good, but monitoring is better.", 'proud'],
@@ -765,9 +766,10 @@ const SECTION_LINES = {
 
   principles: "Index cards. His desk really looks like this.",
   projects: "Try `cat rag` in the terminal for the short version.",
+  datathon: "1st prize @ Karnataka Education Datathon — ML predictions that beat the baseline.",
+  research: "Paper under review, trained on free GPUs. You can read the PDF.",
   apps: "He ships Mac apps between papers.",
   value: "If you're skimming, this section is the summary.",
-  research: "Two papers under review, both trained on free GPUs. You can read both.",
   timeline: "Four years, one git log.",
   contact: "This is the part where you email him.",
 };
@@ -895,8 +897,8 @@ function runCommand(raw) {
     case 'whoami':
       tprint(`Vatsal Vaghasiya - AI engineer in training.
 MTech Data Science @ Ramaiah University (Bengaluru).
-Builds ML systems end to end and keeps notes on what didn't work.
-2 papers under review (first author on one) · 19 projects shipped.`); break;
+Builds ML systems end to end and ships working software.
+1 paper under review (first author) · 19 projects shipped.`); break;
     case 'ls':
     case 'projects':
       tprint(Object.keys(PROJECT_FILES).map(k => `<span class="t-sage">${k}/</span>`).join('  ') +
@@ -911,14 +913,11 @@ web:    <span class="t-sage">career-os</span>
       tprint(PROJECT_FILES[key] ? esc(PROJECT_FILES[key]) : `cat: ${esc(arg) || '?'}: no such file. try: projects`, PROJECT_FILES[key] ? '' : 't-err'); break;
     }
     case 'papers':
+    case 'paper':
       tprint(`[1] Efficient LLM Preference Classification - Siamese DeBERTa
     Vaghasiya, Kshetrimayum, Prabadevi, Prathap  <span class="t-dim">(first author)</span>
     log loss 0.9871, -6.2% rel · 127× fewer params · 8.4h on free T4s
-    <span class="t-amber">under review</span> · papers/efficient-llm-preference-classification.pdf
-[2] ProbCLIP-A - uncertainty-aware retrieval, frozen CLIP + 4.2M adapter
-    Kshetrimayum, Vaghasiya  <span class="t-dim">(second author)</span>
-    R@1 68.9% · ECE 0.078 -> 0.062 · flags 69.3% of failures at 4.9%
-    <span class="t-amber">submitted to Elsevier</span> · papers/probclip-a-uncertainty-aware-retrieval.pdf`); break;
+    <span class="t-amber">under review</span> · papers/efficient-llm-preference-classification.pdf`); break;
     case 'skills':
       tprint(`Python        ██████████████████░░  90%
 DL / PyTorch  ████████████████░░░░  82%
@@ -933,8 +932,7 @@ MLOps         ██████████████░░░░░░  70%`
 <span class="t-amber">c7e8f01</span> 2024      feat: AirSwipe, first real users
 <span class="t-amber">d9a0b12</span> Apr 2025  release: B.Tech complete
 <span class="t-amber">f5e6a78</span> Nov 2025  checkout -b mtech @ Ramaiah University
-<span class="t-amber">e2c3d44</span> Feb 2026  feat: 1st paper submitted (LLM Preference Prediction)
-<span class="t-amber">a8b9c01</span> Jul 2026  feat: 2nd paper submitted (ProbCLIP-A)
+<span class="t-amber">e2c3d44</span> Feb 2026  feat: paper submitted (LLM Preference Prediction)
 <span class="t-amber">b9c0d12</span> Aug 2026  feat: won 1st prize @ Karnataka Education Datathon
 <span class="t-sage">HEAD</span>    now       training…`); break;
     case 'train': fakeTrain(); break;
