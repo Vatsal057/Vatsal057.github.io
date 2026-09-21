@@ -37,13 +37,15 @@
       <a href="#education">Education</a>
       <a href="#contact">Contact</a>
     </nav>
-    <button class="theme-btn" id="themeToggle" aria-label="Toggle dark mode">☾</button>
-    <button class="terminal-btn mono" id="terminalBtn" title="Terminal mode (Ctrl+`)">&gt;_ terminal</button>
-    <label class="recruiter-switch" title="Recruiter mode: turns off the animations and Vee">
-      <input type="checkbox" id="recruiterToggle">
-      <span class="rs-track"><span class="rs-thumb"></span></span>
-      <span class="rs-label">Recruiter&nbsp;mode</span>
-    </label>
+    <div class="topbar-actions">
+      <button class="theme-btn" id="themeToggle" aria-label="Toggle dark mode">☾</button>
+      <button class="terminal-btn mono" id="terminalBtn" title="Terminal mode (Ctrl+`)">&gt;_ terminal</button>
+      <label class="recruiter-switch" title="Recruiter mode: clean presentation, turns off playful animations">
+        <input type="checkbox" id="recruiterToggle">
+        <span class="rs-track"><span class="rs-thumb"></span></span>
+        <span class="rs-label">Recruiter<span class="rs-mode-word">&nbsp;mode</span></span>
+      </label>
+    </div>
   </header>
 
   <!-- ============ HERO ============ -->
@@ -55,8 +57,12 @@
         <p class="typewriter mono reveal"><span id="typeTarget"></span><span class="caret">▊</span></p>
         <p class="hero-sub reveal">AI engineer in training. I build models, ship the apps around them,
           and <em>keep notes on what didn't work</em>.</p>
-        <p class="hero-stats mono reveal"><span class="count" id="stat-shipped" data-count="19">19</span> projects shipped &nbsp;·&nbsp;
-          <span class="count" id="stat-papers" data-count="2">2</span> papers under review &nbsp;·&nbsp; <span class="count" id="stat-building" data-count="2">2</span> building next
+        <p class="hero-stats mono reveal">
+          <span class="stat-item"><span class="count" id="stat-shipped" data-count="19">19</span> projects shipped</span>
+          <span class="stat-sep">&nbsp;·&nbsp;</span>
+          <span class="stat-item"><span class="count" id="stat-papers" data-count="2">2</span> papers under review</span>
+          <span class="stat-sep">&nbsp;·&nbsp;</span>
+          <span class="stat-item"><span class="count" id="stat-building" data-count="2">2</span> building next</span>
         </p>
         <div class="hero-cta reveal">
           <a class="btn btn-primary" href="#projects">See the experiments</a>
@@ -69,49 +75,18 @@
             </span><button type="button" id="heroTrainBtn">run a training loop</button>
           </p>
       </div>
-      <!-- This slot used to hold a neural-network doodle, which said nothing a
-           visitor couldn't already infer from the rest of the page. It is a
-           photo of me instead: the site had no picture of the person it is
-           about. Kept as a plain rectangle rather than a background cutout,
-           because the surrounding CSS is a taped print (1.6deg rotation, cream
-           border, amber tape at two corners) and tape only reads correctly on a
-           rectangle. The cream wall in the shot also happens to blend into
-           --paper, which a cutout would throw away.
-           Square, not the 4:5 crop: at 4:5 the photo ran 550px tall and
-           overpowered the text column; square lands at ~440px, aligning with
-           the headline and the live-demo list, at the same face size.
-           No longer aria-hidden, since it is now content rather than decoration. -->
-      <div class="hero-doodle reveal">
+      <!-- Portrait of Vatsal Vaghasiya. Kept as a physical taped print in notebook mode
+           (subtle tilt, cream mat, amber tape), and cleanly framed in recruiter mode.
+           High fetchpriority for Largest Contentful Paint (LCP). -->
+      <div class="hero-photo hero-doodle reveal">
         <img src="images/vatsal-portrait.webp"
           alt="Vatsal Vaghasiya, seated, holding his glasses" width="1000" height="1000"
-          onerror="this.closest('.hero-doodle').classList.add('fallback')">
-        <svg class="nn-fallback" viewBox="0 0 320 200" fill="none">
-          <g class="nn-edges" stroke="currentColor" stroke-width="1" opacity=".35">
-            <path d="M40 40 C90 40 110 70 160 60" />
-            <path d="M40 100 C90 95 110 65 160 60" />
-            <path d="M40 160 C90 150 110 70 160 60" />
-            <path d="M40 40 C90 60 110 100 160 105" />
-            <path d="M40 100 C90 100 110 105 160 105" />
-            <path d="M40 160 C90 140 110 110 160 105" />
-            <path d="M40 40 C95 80 115 140 160 150" />
-            <path d="M40 100 C95 115 115 145 160 150" />
-            <path d="M40 160 C95 160 115 152 160 150" />
-            <path d="M160 60 C210 60 230 85 280 100" />
-            <path d="M160 105 C210 102 230 100 280 100" />
-            <path d="M160 150 C210 140 230 112 280 100" />
-          </g>
-          <g class="nn-nodes">
-            <circle cx="40" cy="40" r="9" />
-            <circle cx="40" cy="100" r="9" />
-            <circle cx="40" cy="160" r="9" />
-            <circle cx="160" cy="60" r="9" />
-            <circle cx="160" cy="105" r="9" />
-            <circle cx="160" cy="150" r="9" />
-            <circle cx="280" cy="100" r="11" />
-          </g>
-          <text x="128" y="30" class="nn-label caveat-svg">hidden layer</text>
-          <text x="252" y="140" class="nn-label caveat-svg">output ↑</text>
-        </svg>
+          fetchpriority="high" decoding="async"
+          onerror="this.closest('.hero-photo').classList.add('fallback')">
+        <div class="photo-fallback" aria-hidden="true">
+          <span class="fallback-monogram mono">VV</span>
+          <span class="fallback-caption mono">Vatsal Vaghasiya</span>
+        </div>
       </div>
     </section>
 

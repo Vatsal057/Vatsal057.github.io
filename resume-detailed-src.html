@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Vatsal Vaghasiya - AI/ML Engineer - Resume</title>
+<title>Vatsal Vaghasiya - Resume</title>
 <!--
   SECONDARY / DETAILED resume source - two pages.
   The one-page resume-src.html (which builds resume.pdf) is the primary and the
@@ -19,7 +19,7 @@
   Regenerate the PDF with:
    "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge" \
      --headless --disable-gpu --no-pdf-header-footer \
-     --print-to-pdf=resume.pdf resume-src.html
+     --print-to-pdf=resume-detailed.pdf resume-detailed-src.html
 -->
 <style>
   .nb { white-space: nowrap; }
@@ -56,7 +56,6 @@
 <body>
 
 <h1>Vatsal Vaghasiya</h1>
-<p class="role-line">AI/ML Engineer | Machine Learning Engineer | Data Scientist</p>
 <p class="contact">
   Bengaluru, Karnataka, India | +91 8780335009 | <a href="mailto:kvaghasiya057@gmail.com">kvaghasiya057@gmail.com</a><br>
   <a href="https://www.linkedin.com/in/vatsal-vaghasiya/">linkedin.com/in/vatsal-vaghasiya</a> | <a href="https://github.com/Vatsal057">github.com/Vatsal057</a>
@@ -64,25 +63,25 @@
 </p>
 
 <h2>Professional Summary</h2>
-<p class="summary">Machine learning engineer and MTech Data Science student with 8 months of data science internship
-experience, two research papers under review, and 19 shipped projects across LLMs and RAG, computer vision, and MLOps.
-Builds ML systems end to end: data pipelines and feature engineering, model training, evaluation and calibration,
-REST API deployment with FastAPI and Docker, and production drift monitoring. 1st place at the Karnataka Education
-Datathon 2026 for an analysis of 1.38 million student records. Seeking AI/ML engineer or data scientist roles.</p>
+<p class="summary">MTech Data Science student and aspiring AI/ML engineer with industry internship experience, a first-author
+research paper under review on efficient LLM preference classification, and 19 shipped projects across LLMs,
+RAG pipelines, computer vision, and backend APIs. Experienced in data preparation, predictive modeling, and deploying
+lightweight ML models into production services. 1st place winner at the Karnataka Education Datathon 2026 for
+large-scale educational assessment data analysis.</p>
 
 <h2>Technical Skills</h2>
 <div class="skills">
-  <p><b>Programming:</b> Python, SQL, Dart, Swift, Kotlin, TypeScript, Shell</p>
+  <p><b>Programming:</b> Python, SQL, Swift, Shell</p>
   <p><b>Machine Learning and Deep Learning:</b> PyTorch, TensorFlow, <span class="nb">scikit-learn</span>, XGBoost, CNNs, Transformers,
-    DeBERTa, CLIP, Siamese networks, NLP, computer vision, <span class="nb">Grad-CAM</span>, model calibration (temperature scaling, ECE),
+    DeBERTa, CLIP, Siamese networks, NLP, computer vision, model calibration (temperature scaling, ECE),
     OpenCV, MediaPipe</p>
   <p><b>LLMs, NLP and RAG:</b> <span class="nb">retrieval-augmented</span> generation, <span class="nb">sentence-transformers</span> embeddings, vector search
     (ChromaDB), chunking and retrieval evaluation, prompt engineering, Whisper ASR, Tesseract OCR, Hugging Face</p>
   <p><b>MLOps and Deployment:</b> FastAPI, REST APIs, Docker, Docker Compose, CI/CD with GitHub Actions, model
-    monitoring, data drift detection (PSI), Streamlit, Gradio, Hugging Face Spaces, Cloudflare Workers, Firebase,
+    monitoring, Hugging Face Spaces, Cloudflare Workers, Firebase,
     Git, SQLite, PostgreSQL</p>
   <p><b>Data Analysis and Statistics:</b> pandas, NumPy, SciPy, ETL, feature engineering, OLS regression,
-    hypothesis testing, clustering (<span class="nb">K-Means</span>, DBSCAN, hierarchical), Power BI, Plotly, matplotlib, seaborn, Jupyter</p>
+    hypothesis testing, clustering (<span class="nb">K-Means</span>, DBSCAN, hierarchical), Plotly, matplotlib, seaborn, Jupyter</p>
   <p><b>Application Development:</b> Flutter, SwiftUI, AppKit, Firebase (Firestore, Authentication), PyQt6</p>
 </div>
 
@@ -90,23 +89,15 @@ Datathon 2026 for an analysis of 1.38 million student records. Seeking AI/ML eng
 <div class="entry">
   <h3>Data Science Intern</h3><span class="meta"> - Amar Infotech, Ahmedabad, India | Jan 2025 - Jun 2025</span>
   <ul>
-    <li>Built Python data pipelines preprocessing 50,000+ records, reducing data inconsistencies by 35%.</li>
+    <li>Built Python data processing pipelines handling 50,000+ records, improving data cleanliness and consistency by 35%.</li>
     <li>Trained and tuned predictive ML models in TensorFlow and <span class="nb">scikit-learn</span>, reaching 87% accuracy and lowering
       false positives by 22%.</li>
-    <li>Built 5+ interactive Power BI dashboards tracking business KPIs and live model performance for stakeholders.</li>
-    <li>Automated data extraction workflows, cutting manual processing time by 40%.</li>
-  </ul>
-</div>
-<div class="entry">
-  <h3>Data Science Intern</h3><span class="meta"> - iTechBrains, Ahmedabad, India | Jun 2024 - Jul 2024</span>
-  <ul>
-    <li>Analysed complex datasets using supervised and unsupervised learning techniques to support business decisions.</li>
-    <li>Performed data extraction, cleaning and transformation with Python and SQL.</li>
-    <li>Delivered data visualizations that communicated findings to non-technical stakeholders.</li>
+    <li>Automated data extraction and validation workflows, cutting recurring manual processing time by 40%.</li>
+    <li>Collaborated with engineering team to structure reporting tables and document data validation rules for production handoff.</li>
   </ul>
 </div>
 
-<h2>Research Publications</h2>
+<h2>Research Publication</h2>
 <div class="entry">
   <h3>Efficient LLM Preference Classification Through Position Bias Mitigation and Architectural Symmetry</h3>
   <span class="meta"> - First author (with N. Kshetrimayum, B. Prabadevi, B. R. Prathap) | Under review, 2026</span>
@@ -121,32 +112,19 @@ Datathon 2026 for an analysis of 1.38 million student records. Seeking AI/ML eng
       $0 cost; ablations showed 30% of the training data already reaches 95.1% of peak performance.</li>
   </ul>
 </div>
-<div class="entry">
-  <h3>ProbCLIP-A: Uncertainty-Aware Cross-Modal Retrieval via Probabilistic Adapters for Frozen CLIP Models</h3>
-  <span class="meta"> - Second author; contributed conceptualization, methodology, software and validation |
-    Submitted to Elsevier, under review, 2026</span>
-  <ul>
-    <li>Designed a <span class="nb">4.2M-parameter</span> probabilistic adapter (2.1M per modality) over a frozen CLIP backbone that learns
-      Gaussian distributions over embeddings instead of point estimates, making retrieval confidence measurable.</li>
-    <li>Achieved 68.9% <span class="nb">text-to-image</span> <span class="nb">R@1</span> on Flickr30K with the best calibration of all baselines, cutting expected
-      calibration error from 0.078 to 0.062 through Monte Carlo sampling; trained in 45 minutes on one free Kaggle P100.</li>
-    <li>Uncertainty thresholding flags 69.3% of retrieval failures while touching only 4.9% of correct results,
-      enabling practical <span class="nb">human-in-the-loop</span> review for high-stakes retrieval.</li>
-  </ul>
-</div>
 
 <h2>Awards and Competitions</h2>
 <div class="entry">
   <h3>1st Place, Karnataka Education Datathon 2026</h3>
   <span class="meta"> - Akshara Foundation | Aug 2026</span>
-  <div class="stack">Python, pandas, SciPy, statsmodels, Plotly, Streamlit</div>
+  <div class="stack">Python, pandas, SciPy, statsmodels, Plotly</div>
   <ul>
     <li>Analysed item-level arithmetic assessment data for 1.38 million government primary school students across 31
       Karnataka districts and 3 academic years, and ruled out infrastructure, gender and geography as primary drivers
       using rank correlation and variance decomposition.</li>
     <li>Isolated the driver at question level (matched pairs showed children failing an operation only once it
-      required carrying or borrowing), built district Infrastructure and Education Access indices ranked by OLS
-      regression (<span class="nb">R-squared</span> 0.56), and shipped a 7-screen Streamlit dashboard with a documented data quality report.</li>
+      required carrying or borrowing), and built district Infrastructure and Education Access indices ranked by OLS
+      regression with a documented data quality report.</li>
   </ul>
 </div>
 
@@ -165,18 +143,18 @@ Datathon 2026 for an analysis of 1.38 million student records. Seeking AI/ML eng
 </div>
 <div class="entry">
   <h3>IPL Match Outcome Predictor - Full MLOps Pipeline</h3>
-  <div class="stack">XGBoost, FastAPI, Docker Compose, Streamlit, SQLite</div>
+  <div class="stack">XGBoost, FastAPI, Docker Compose, SQLite</div>
   <ul>
-    <li>Deployed a <span class="nb">three-service</span> system on Docker Compose (FastAPI prediction API, drift monitor, live health
+    <li>Deployed a <span class="nb">three-service</span> system on Docker Compose (FastAPI prediction API, data distribution monitor, live health
       dashboard) where the monitor computes Population Stability Index between training and live prediction
-      distributions every 5 minutes and flags the model for retraining.</li>
+      distributions every 5 minutes.</li>
     <li>Engineered 9 features (rolling win rates, venue history, toss decisions) and selected XGBoost over an MLP for
       equal accuracy with faster inference and interpretable feature importances.</li>
   </ul>
 </div>
 <div class="entry">
   <h3>Constitution of India - Retrieval-Augmented Question Answering</h3>
-  <div class="stack"><span class="nb">sentence-transformers</span>, ChromaDB, <span class="nb">Mistral-7B</span>, Streamlit</div>
+  <div class="stack"><span class="nb">sentence-transformers</span>, ChromaDB, <span class="nb">Mistral-7B</span></div>
   <ul>
     <li>Wrote the full RAG loop from scratch in roughly 60 lines without LangChain (MiniLM embeddings, ChromaDB cosine
       <span class="nb">top-5</span> retrieval, <span class="nb">page-level</span> citations), then stress-tested it with 20 adversarial queries, published the failure
@@ -194,23 +172,21 @@ Datathon 2026 for an analysis of 1.38 million student records. Seeking AI/ML eng
 </div>
 <div class="entry">
   <h3>Explainable Computer Vision - Plant Disease Detector and Multimodal Image Search</h3>
-  <div class="stack">PyTorch, <span class="nb">Grad-CAM</span>, CLIP, Gradio, Hugging Face Spaces</div>
+  <div class="stack">PyTorch, CLIP, Hugging Face Spaces</div>
   <ul>
-    <li>Trained a CNN over 15 plant disease classes with <span class="nb">Grad-CAM</span> overlays and severity grading so predictions are
-      explainable, and built CLIP <span class="nb">text-to-image</span> and <span class="nb">image-to-image</span> retrieval with a per-query category breakdown chart;
-      both deployed as public Gradio demos.</li>
+    <li>Trained a CNN over 15 plant disease classes with visual feature attribution overlays and severity grading so predictions are
+      explainable, and built CLIP <span class="nb">text-to-image</span> and <span class="nb">image-to-image</span> retrieval with a per-query category breakdown chart.</li>
   </ul>
 </div>
 <p class="tight"><b>Additional shipped work (19 projects total, github.com/Vatsal057):</b> AirSwipe, a MediaPipe
 webcam gesture controller for presentations with dwell timers and dead zones to suppress false triggers; TWIN, a
 <span class="nb">real-time</span> <span class="nb">two-player</span> game with no backend, secured by Firestore rules and transactional writes; ScribbleType, an
-<span class="nb">on-device</span> handwriting-recognition Android keyboard built as a Kotlin IME; and five native macOS apps in Swift.</p>
+<span class="nb">on-device</span> handwriting-recognition Android keyboard; and five native macOS apps in Swift.</p>
 
-<h2>Education and Certifications</h2>
+<h2>Education</h2>
 <div class="edu">
   <p><b>M.Tech, Data Science</b> - M.S. Ramaiah University of Applied Sciences, Bengaluru, India | Nov 2025 - 2027 (expected)</p>
   <p><b>B.Tech, Computer Engineering</b> - SAL College of Engineering, Ahmedabad, India | 2021 - 2025 | CGPA 8.3 / 10.0</p>
-  <p><b>Certifications:</b> IBM Data Science series on Coursera (5 courses, 2024).</p>
 </div>
 
 </body>
