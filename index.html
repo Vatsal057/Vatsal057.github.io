@@ -378,24 +378,24 @@
             <caption class="mono">as reported in the paper</caption>
             <tbody>
               <tr>
-                <th scope="row">validation log loss</th>
-                <td class="fig">0.9871</td>
-                <td class="ctx">6.2% better than the baselines</td>
+                <th scope="row">held-out log loss</th>
+                <td class="fig">1.0384</td>
+                <td class="ctx">on 8,000 held-out LMSYS Chatbot Arena interactions</td>
               </tr>
               <tr>
                 <th scope="row">parameters</th>
-                <td class="fig">71M</td>
-                <td class="ctx">127&times; fewer &mdash; the winning solutions ran 9B+ on 8&times;A100</td>
+                <td class="fig">71.3M</td>
+                <td class="ctx">&asymp;127&times; fewer than the 9B+ Kaggle solutions</td>
               </tr>
               <tr>
                 <th scope="row">three-class accuracy</th>
-                <td class="fig">52.06%</td>
-                <td class="ctx">up 3.5 percentage points</td>
+                <td class="fig">46.40%</td>
+                <td class="ctx">on the held-out set</td>
               </tr>
               <tr>
                 <th scope="row">training</th>
-                <td class="fig">8.4 h</td>
-                <td class="ctx">two free Kaggle T4s, 57,477 human preferences</td>
+                <td class="fig">two Tesla T4 GPUs</td>
+                <td class="ctx">12,000 interactions, 3 epochs</td>     <th scope="row">flip consistency</th>     <td class="fig">0.825 &rarr; 0.920</td>     <td class="ctx">swap augmentation, with a duplicate-augmentation control</td>
               </tr>
             </tbody>
           </table>
