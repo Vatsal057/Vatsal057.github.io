@@ -83,12 +83,53 @@ if (typeTarget) {
 // The research sheets used to be in here. They no longer flip: the numbers that
 // prove the papers were on the back face, where a scanning reader never saw them.
 document.querySelectorAll('.card-flip').forEach(card => {
-  const flip = () => card.classList.toggle('flipped');
+  // ISSUE 18 — the card announces itself as a button but never announced its
+  // state, so a screen-reader user had no way to know the card was now showing
+  // its other side. aria-pressed is the right property for a toggle button.
+  card.setAttribute('aria-pressed', 'false');
+  const flip = () => {
+    const flipped = card.classList.toggle('flipped');
+    card.setAttribute('aria-pressed', flipped ? 'true' : 'false');
+  };
   card.addEventListener('click', e => { if (!e.target.closest('a')) flip(); });
   card.addEventListener('keydown', e => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); }
   });
 });
+
+// ============ Nav: current section ============
+// ISSUE 17 — the top nav is nine links over a document that measures 11,162px
+// and it had no current state, so it was a jump list rather than an orientation
+// aid. rootMargin biases the "active" band to the upper third of the viewport so
+// the highlight changes when a section heading reaches reading position, not
+// when the section merely touches the bottom edge.
+(() => {
+  const links = [...document.querySelectorAll('.topnav a[href^="#"]')];
+  if (!links.length || !('IntersectionObserver' in window)) return;
+  const byId = new Map();
+  links.forEach(a => {
+    const el = document.getElementById(a.hash.slice(1));
+    if (el) byId.set(el, a);
+  });
+  if (!byId.size) return;
+
+  const visible = new Set();
+  const paint = () => {
+    // topmost visible section wins, so overlapping sections cannot both light up
+    let best = null, bestTop = Infinity;
+    visible.forEach(el => {
+      const t = el.getBoundingClientRect().top;
+      if (t < bestTop) { bestTop = t; best = el; }
+    });
+    links.forEach(a => a.removeAttribute('aria-current'));
+    if (best) byId.get(best).setAttribute('aria-current', 'page');
+  };
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => e.isIntersecting ? visible.add(e.target) : visible.delete(e.target));
+    paint();
+  }, { rootMargin: '-72px 0px -62% 0px', threshold: 0 });
+  byId.forEach((_, el) => io.observe(el));
+})();
 
 // ============ Recruiter mode ============
 const recruiterToggle = document.getElementById('recruiterToggle');
@@ -1142,12 +1183,21 @@ function gradientRain() {
   const rx = v => { pos.rtx = v; }, ry = v => { pos.rty = v; };
 
   const recruiterOn = () => document.body.classList.contains('recruiter');
-  let started = false, stuck = null, cx = 0, cy = 0;
+  // `armed` replaces the old one-way `started`. It has to be able to go back to
+  // false: see cursorPark() for why.
+  let armed = false, stuck = null, cx = 0, cy = 0;
   const stuckBox = { cx: 0, cy: 0 };
 
   addEventListener('pointermove', e => {
-    if (!started && !recruiterOn()) { document.body.classList.add('nbc-on'); started = true; }
     cx = e.clientX; cy = e.clientY;
+    if (!armed && !recruiterOn()) {
+      // Snap every target to the pointer before showing the cursor, otherwise it
+      // flies in across the page from wherever it was last parked.
+      pos.dx = pos.tx = pos.rx = pos.rtx = cx;
+      pos.dy = pos.ty = pos.ry = pos.rty = cy;
+      document.body.classList.add('nbc-on');
+      armed = true;
+    }
     dx(cx); dy(cy);
     if (stuck) {
       // Conform to the button, follow the cursor only a little (magnetic stick).
@@ -1188,6 +1238,38 @@ function gradientRain() {
     kick();
   }
 
+  // morphReset() early-returns unless something is morphed, so it can only ever
+  // clear `is-shape` — it cannot clear `is-link` or `is-label`. Every "put the
+  // cursor back to normal" caller below was calling it and silently leaving the
+  // label state behind. This clears all of it, unconditionally.
+  function cursorReset() {
+    stuck = null;
+    dot.classList.remove('is-shape', 'is-link', 'is-label', 'is-down');
+    ring.classList.remove('is-shape', 'is-link', 'is-label', 'is-down');
+    ring.style.width = ''; ring.style.height = '';
+    ring.style.borderRadius = ''; ring.style.margin = '';
+    label.textContent = '';
+  }
+
+  // Park the cursor: clear it, hide it, and disarm so the next real pointermove
+  // re-arms it at the pointer's actual position.
+  //
+  // This is the fix for "I clicked a card, it opened a new page, I came back and
+  // the cursor was stuck to that card". A same-origin back navigation is served
+  // from the back/forward cache, which restores the DOM *and* the JS heap exactly
+  // as they were — including `is-label` on the ring, the "view →" text inside it,
+  // the ring's last translate, and `nbc-on` on <body> (which hides the native
+  // cursor). So the page came back with a 2.15x "view →" ring frozen on the card
+  // you left from and no system cursor to replace it, and it stayed that way
+  // until you moved the mouse far enough to cross into a different element and
+  // trigger a mouseover. Parking on the way out *and* the way back in means the
+  // frozen state is clean in both directions.
+  function cursorPark() {
+    cursorReset();
+    document.body.classList.remove('nbc-on');
+    armed = false;
+  }
+
   // what the cursor becomes, first match wins
   const LABELS = [
     ['.card-flip', 'flip →'],
@@ -1211,7 +1293,7 @@ function gradientRain() {
     const t = e.target;
     if (recruiterOn()) return;
     if (t.closest(NATIVE)) { document.body.classList.remove('nbc-on'); morphReset(); setState(false, null); return; }
-    if (started) document.body.classList.add('nbc-on');
+    if (armed) document.body.classList.add('nbc-on');
     for (const [sel, text] of LABELS) {
       if (t.closest(sel)) { morphReset(); setState(false, text); return; }
     }
@@ -1227,7 +1309,15 @@ function gradientRain() {
     setState(!!t.closest(GROW), null);
   });
   document.documentElement.addEventListener('mouseleave', () => document.body.classList.remove('nbc-on'));
-  document.documentElement.addEventListener('mouseenter', () => { if (started && !recruiterOn()) document.body.classList.add('nbc-on'); });
+  document.documentElement.addEventListener('mouseenter', () => { if (armed && !recruiterOn()) document.body.classList.add('nbc-on'); });
+
+  // A morph caches the target's rect once, and morphTo() early-returns while the
+  // same element is still hovered, so a scroll that does not change the hovered
+  // element leaves the magnetic anchor pointing at coordinates the element has
+  // moved away from — the ring then hangs off a point in space. Measured: after
+  // scrollBy(0, 400) the anchor was still 400px stale. Dropping the morph on
+  // scroll is enough; the next mouseover re-measures.
+  addEventListener('scroll', () => { if (stuck) morphReset(); }, { passive: true });
 
   const setDown = on => {
     dot.classList.toggle('is-down', on);
@@ -1238,30 +1328,33 @@ function gradientRain() {
 
   // Clicking something that opens a new tab moves focus away before pointerup
   // ever reaches this page, so is-down stayed on and the cursor kept its pressed
-  // size for good — that is the cursor "getting stuck" after coming back. Every
-  // path that can swallow the pointerup has to release it.
+  // size for good. Every path that can swallow the pointerup has to release it.
   addEventListener('pointercancel', () => setDown(false));
-  addEventListener('blur', () => { setDown(false); morphReset(); });
   addEventListener('contextmenu', () => setDown(false));
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) { setDown(false); morphReset(); }
-  });
-  // Returning via the back/forward cache restores the DOM as it was, pressed
-  // state included, so it has to be cleared on the way back in too.
-  addEventListener('pageshow', () => {
-    setDown(false);
-    morphReset();
-    if (started && !recruiterOn()) document.body.classList.add('nbc-on');
-    kick();
-  });
+
+  // These all mean "the pointer is no longer ours". They used to call
+  // morphReset(), which cannot clear the label state, so a ring showing
+  // "view →" survived every one of them.
+  addEventListener('blur', cursorPark);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) cursorPark(); });
+  // Clean on the way out, so the state the back/forward cache freezes is already
+  // neutral...
+  addEventListener('pagehide', cursorPark);
+  // ...and clean on the way back in, because a restore hands back whatever was
+  // frozen. Deliberately does NOT re-add nbc-on: the browser is showing the
+  // native cursor at this point, and the first pointermove re-arms ours at the
+  // pointer's real position rather than leaving one frozen on the old card.
+  // Gated on persisted: only a restore can carry stale state, and parking on a
+  // fresh parse would race a pointermove that arrived while the page was loading.
+  addEventListener('pageshow', e => { if (e.persisted) cursorPark(); });
 
   // recruiter switch kills it, native cursor returns. The switch itself lives
   // only on the homepage; detail pages read the stored preference instead.
   const rt = document.getElementById('recruiterToggle');
   if (rt) {
     rt.addEventListener('change', () => {
-      document.body.classList.toggle('nbc-on', started && !recruiterOn());
-      morphReset(); setState(false, null);
+      cursorReset();
+      document.body.classList.toggle('nbc-on', armed && !recruiterOn());
     });
   }
 })();

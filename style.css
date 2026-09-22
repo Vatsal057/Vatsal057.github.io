@@ -13,9 +13,54 @@
   --rs-border: #D9D4C7;
   --rs-track-bg: var(--grid);
   --rs-thumb-bg: var(--card);
-  --sage-text: #567856;   /* sage for small text — AA on card + paper */
+  /* Sage for TEXT. Was #567856, which cleared 4.5:1 on --paper (4.56) but not on
+     the tinted chip grounds it also lands on (#EEF3EE 4.43, #E5EDE2 4.13).
+     #4F6E4F clears all three: 5.24 on paper, 5.08 on the sage chip, 4.77 on the
+     app-platform chip. --sage-deep stays #6E8B6E for strokes, arrows and fills,
+     where contrast minimums do not apply. */
+  --sage-text: #4F6E4F;
+  --amber-text: #8A6A3C;  /* amber for small text — 4.6:1 on --card */
+  --plan-text: #6A5B90;   /* "planned, not started" violet, small text only */
   --shadow: 0 2px 6px rgba(43, 58, 66, .08), 0 10px 24px rgba(43, 58, 66, .07);
   --shadow-lift: 0 4px 10px rgba(43, 58, 66, .10), 0 18px 36px rgba(43, 58, 66, .12);
+
+  /* Text that sits on the dark band / dark companion surfaces. These do not flip
+     with the theme: the band is dark in both themes, so its foregrounds are
+     fixed rather than themed. */
+  --band-ink: #EAF0F3;
+  --band-ink-soft: #A9BAC4;
+  --band-ink-faint: #7D8F9A;
+  --band-sage: #9CC0A2;
+  --band-amber: #C9A46E;
+
+  /* ---- Type ----------------------------------------------------------------
+     Four families, nine steps. Every font-family and font-size in this file
+     resolves to one of these; the literals that used to be inlined produced 8
+     rendered families and 37 rendered sizes, 23 of them crammed between 9.9px
+     and 16px, which is finer than anyone can perceive and finer than anyone can
+     maintain. 11px is the floor, and only for chips and badges. */
+  --font-sans:  'Inter', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Fraunces', Georgia, serif;
+  --font-mono:  'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  --font-hand:  'Caveat', cursive;
+
+  --fs-3xs: .6875rem;   /* 11px — chips, badges, pills. Never prose. */
+  --fs-2xs: .75rem;     /* 12px — mono metadata, captions, eyebrows */
+  --fs-xs:  .8125rem;   /* 13px — small secondary copy */
+  --fs-sm:  .875rem;    /* 14px — card copy, nav, buttons */
+  --fs-base: 1rem;      /* 16px — body, form fields */
+  --fs-md:  1.125rem;   /* 18px — lead copy, margin notes */
+  --fs-lg:  1.375rem;   /* 22px — h3 */
+  --fs-xl:  1.5rem;     /* 24px — handwritten index-card h3, award h3 */
+  --fs-h2: clamp(1.7rem, 3.5vw, 2.4rem);
+  --fs-h1: clamp(2.4rem, 5.5vw, 4.2rem);
+
+  /* ---- Radii --------------------------------------------------------------
+     Five steps plus 50% for true circles. Was eleven. */
+  --r-xs: 4px;
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-pill: 999px;
 }
 
 /* Dark mode is the same notebook under a desk lamp, not a grey reskin.
@@ -40,6 +85,8 @@ body.dark-mode {
   --rs-track-bg: #0B1013;
   --rs-thumb-bg: #9FAEB7;
   --sage-text: #9CC0A2;
+  --amber-text: #D0A972;
+  --plan-text: #A99BD0;
   --chip-bg: #1F2E24;
   --shadow: 0 4px 12px rgba(0, 0, 0, .3), 0 12px 30px rgba(0, 0, 0, .4);
   --shadow-lift: 0 8px 16px rgba(0, 0, 0, .4), 0 20px 45px rgba(0, 0, 0, .5);
@@ -52,7 +99,7 @@ section[id], #top { scroll-margin-top: 64px; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 body {
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: var(--font-sans);
   color: var(--ink);
   background-color: var(--paper);
   background-image:
@@ -63,10 +110,13 @@ body {
   overflow-x: hidden;
 }
 
-.mono { font-family: 'JetBrains Mono', monospace; }
-.caveat { font-family: 'Caveat', cursive; }
-h1, h2, h3 { font-family: 'Fraunces', serif; line-height: 1.15; }
-a { color: var(--sage-deep); }
+.mono { font-family: var(--font-mono); }
+/* ISSUE 1 — <code> in .tool-item had no rule, so it fell through to the user
+   agent's bare `monospace` and became a fifth rendered family. */
+code, kbd, samp, pre { font-family: var(--font-mono); }
+.caveat { font-family: var(--font-hand); }
+h1, h2, h3 { font-family: var(--font-serif); line-height: 1.15; }
+a { color: var(--sage-text); }
 
 /* ============ Top bar ============ */
 .topbar {
@@ -78,32 +128,52 @@ a { color: var(--sage-deep); }
   border-bottom: 1px solid var(--grid);
 }
 .logo {
-  font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.25rem;
+  font-family: var(--font-serif); font-weight: 700; font-size: var(--fs-lg);
   color: var(--ink); text-decoration: none;
 }
 .logo-dot { color: var(--amber); }
 .topnav { display: flex; gap: 1.1rem; flex-wrap: wrap; margin-right: auto; }
+/* ISSUE 17 — partly accepted. Two thirds of the suggestion is already shipped:
+   .topbar already has backdrop-filter: blur(8px) and a border-bottom. And the
+   rest state measures #5A6B73 on #F7F5F0 = 4.73:1, which passes AA, so "low
+   contrast" is not the defect either.
+   The real defect on a document that measures 11,162px is that the nav never
+   says where you are: nine links, no current state, so it is a jump list and
+   not an orientation aid. Size goes up one notch and a current-section state is
+   added (script.js drives aria-current from an IntersectionObserver). The links
+   deliberately stay at the 14px step rather than growing further — nine of them
+   already wrap to a scroll strip at 1040px. */
 .topnav a {
-  color: var(--ink-soft); text-decoration: none; font-size: .9rem; font-weight: 500;
-  border-bottom: 2px solid transparent; padding-bottom: 2px;
+  color: var(--ink-soft); text-decoration: none; font-size: var(--fs-sm); font-weight: 600;
+  border-bottom: 2px solid transparent; padding-bottom: 3px;
   transition: color .2s, border-color .2s;
 }
 .topnav a:hover { color: var(--ink); border-color: var(--amber); }
+.topnav a[aria-current="page"] { color: var(--ink); border-color: var(--amber); }
 
 .topbar-actions {
   display: flex; align-items: center; gap: .75rem; margin-left: auto; flex-shrink: 0;
 }
 
+/* Icon-only buttons share one shape so they are one style rather than several,
+   and one target size: #themeToggle measured 18x29px, which fails WCAG 2.5.8
+   Target Size (Minimum) on the width. */
+.theme-btn, .term-close {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 28px; min-height: 28px; padding: .2rem;
+  background: none; border: 0; border-radius: var(--r-xs);
+  cursor: pointer;
+}
 .theme-btn {
-  background: none; border: none; font-size: 1.2rem; color: var(--ink-soft);
-  cursor: pointer; transition: color .2s, transform .2s; padding: .2rem;
+  font-size: var(--fs-md); color: var(--ink-soft);
+  transition: color .2s, transform .2s;
 }
 .theme-btn:hover { color: var(--amber); transform: scale(1.1); }
 /* recruiter switch */
 .recruiter-switch { display: flex; align-items: center; gap: .5rem; cursor: pointer; user-select: none; }
 .recruiter-switch input { position: absolute; opacity: 0; }
 .rs-track {
-  width: 38px; height: 21px; border-radius: 21px; background: var(--rs-track-bg);
+  width: 38px; height: 21px; border-radius: var(--r-pill); background: var(--rs-track-bg);
   display: inline-block; position: relative; transition: background .25s;
   border: 1px solid var(--rs-border);
 }
@@ -115,7 +185,7 @@ a { color: var(--sage-deep); }
 .recruiter-switch input:checked + .rs-track { background: var(--sage); }
 .recruiter-switch input:checked + .rs-track .rs-thumb { transform: translateX(17px); }
 .recruiter-switch input:focus-visible + .rs-track { outline: 2px solid var(--sage-deep); outline-offset: 2px; }
-.rs-label { font-size: .78rem; font-family: 'JetBrains Mono', monospace; color: var(--ink-soft); }
+.rs-label { font-size: var(--fs-xs); font-family: var(--font-mono); color: var(--ink-soft); }
 
 /* ============ Hero ============ */
 .hero {
@@ -127,8 +197,8 @@ a { color: var(--sage-deep); }
   grid-column: 1; grid-row: 1; position: relative;
   max-width: 440px; width: 100%;
 }
-.eyebrow { color: var(--sage-text); font-size: .85rem; letter-spacing: .02em; }
-.hero h1 { font-size: clamp(2.4rem, 5.5vw, 4.2rem); font-weight: 600; margin: .6rem 0 1rem; }
+.eyebrow { color: var(--sage-text); font-size: var(--fs-sm); letter-spacing: .02em; }
+.hero h1 { font-size: var(--fs-h1); font-weight: 600; margin: .6rem 0 1rem; }
 
 /* amber marker underline, draws in */
 .marker { position: relative; white-space: nowrap; }
@@ -136,25 +206,25 @@ a { color: var(--sage-deep); }
   content: ""; position: absolute; left: -1%; right: auto; bottom: .06em;
   width: 102%; height: .28em; z-index: -1;
   background: linear-gradient(100deg, var(--amber), #e6bf8b);
-  border-radius: 3px; opacity: .55; transform: skewX(-8deg) scaleX(0);
+  border-radius: var(--r-xs); opacity: .55; transform: skewX(-8deg) scaleX(0);
   transform-origin: left; animation: markerDraw .9s .5s ease forwards;
 }
 @keyframes markerDraw { to { transform: skewX(-8deg) scaleX(1); } }
 
-.hero-sub { font-size: 1.15rem; color: var(--ink-soft); max-width: 34rem; }
+.hero-sub { font-size: var(--fs-md); color: var(--ink-soft); max-width: 34rem; }
 .hero-sub em { color: var(--ink); font-style: normal; border-bottom: 2px dotted var(--amber); }
 
 /* stats with non-breaking item chunks */
 .hero-stats {
   display: flex; flex-wrap: wrap; align-items: center; gap: .35rem .6rem;
-  margin-top: 1.1rem; font-size: .85rem; color: var(--sage-deep);
+  margin-top: 1.1rem; font-size: var(--fs-sm); color: var(--sage-text);
 }
 .stat-item { white-space: nowrap; }
 .stat-sep { color: var(--ink-soft); opacity: .45; }
 
 .hero-cta { display: flex; gap: .8rem; margin-top: 1.6rem; flex-wrap: wrap; }
 .hero-note {
-  display: inline-block; margin-top: 1.4rem; font-size: 1.25rem; color: var(--ink-soft);
+  display: inline-block; margin-top: 1.4rem; font-size: var(--fs-lg); color: var(--ink-soft);
   transform: rotate(-2deg);
 }
 .hero-note::after { content: ""; display: inline-block; width: .6em; animation: dots 1.6s steps(3) infinite; }
@@ -164,7 +234,7 @@ a { color: var(--sage-deep); }
 .hero-photo img, .hero-doodle img {
   width: 100%; height: auto; aspect-ratio: 1 / 1; display: block;
   object-fit: cover; object-position: center;
-  border-radius: 6px; transform: rotate(1.4deg);
+  border-radius: var(--r-sm); transform: rotate(1.4deg);
   box-shadow: var(--shadow-lift); border: 1px solid #EAE4D5;
   transition: transform .25s ease, box-shadow .25s ease;
 }
@@ -176,7 +246,7 @@ body.dark-mode .hero-doodle img {
 .hero-photo::before, .hero-photo::after,
 .hero-doodle::before, .hero-doodle::after {
   content: ""; position: absolute; width: 74px; height: 26px; z-index: 2;
-  background: rgba(217, 168, 108, .5); border-radius: 2px;
+  background: rgba(217, 168, 108, .5); border-radius: var(--r-xs);
   box-shadow: 0 1px 2px rgba(43,58,66,.12);
   pointer-events: none;
 }
@@ -187,22 +257,45 @@ body.dark-mode .hero-doodle img {
 .photo-fallback {
   display: none; width: 100%; aspect-ratio: 1 / 1;
   background: var(--card); border: 1px solid var(--grid);
-  border-radius: 6px; flex-direction: column; align-items: center; justify-content: center;
+  border-radius: var(--r-sm); flex-direction: column; align-items: center; justify-content: center;
   gap: .5rem; color: var(--ink-soft);
 }
-.fallback-monogram { font-size: 2.5rem; font-weight: 700; color: var(--amber); }
-.fallback-caption { font-size: .85rem; letter-spacing: .05em; }
+/* --amber on --card measured 2.11:1. In the fallback state this monogram stands
+   in for the portrait, so it is content and not decoration. */
+.fallback-monogram { font-size: var(--fs-h2); font-weight: 700; color: var(--amber-text); }
+.fallback-caption { font-size: var(--fs-sm); letter-spacing: .05em; }
 .hero-photo.fallback img, .hero-doodle.fallback img { display: none; }
 .hero-photo.fallback .photo-fallback, .hero-doodle.fallback .photo-fallback { display: flex; }
 .hero-photo.fallback::before, .hero-photo.fallback::after,
 .hero-doodle.fallback::before, .hero-doodle.fallback::after { display: none; }
 
-/* ============ Buttons ============ */
+/* ============ Buttons ============
+   ISSUE 5 — the audit counted 9 distinct button styles; a render pass counted
+   11. The largest single cause was not variety, it was that .btn never reset the
+   <button> user-agent defaults. #submitBtn ("Send Message") carries the exact
+   same `btn btn-primary` classes as the hero CTA and rendered in Arial 16px with
+   a 2px outset BLACK border, against Inter 14.7px borderless on the anchor. One
+   class, two unrelated-looking buttons. The reset below collapses those two
+   signatures into one.
+   Two remaining false positives are worth naming so nobody "fixes" them: the
+   RAG card and the mascot both carry role="button" and are counted as button
+   styles by any computed-style crawler. They are a card and a mascot. */
+
+/* Form controls do not inherit type. This is why three buttons were rendering
+   in Arial on a page that loads four deliberate families (see ISSUE 1). */
+button, input, select, textarea { font-family: inherit; }
+
 .btn {
-  display: inline-block; padding: .65rem 1.25rem; border-radius: 8px;
-  font-weight: 600; font-size: .92rem; text-decoration: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: .65rem 1.25rem; border: 0; border-radius: var(--r-md);
+  font-family: inherit; font-weight: 600; font-size: var(--fs-sm);
+  line-height: 1.25; text-decoration: none; cursor: pointer;
   transition: transform .18s, box-shadow .18s, background .18s;
 }
+/* `sm` was on the two paper-card actions and had never been defined anywhere,
+   so those buttons had always rendered full size. Defining it would have added
+   two more button signatures to a page already flagged for having too many, so
+   the dead class is removed from the markup instead. No visual change. */
 .btn-primary { background: var(--ink); color: var(--paper); box-shadow: var(--shadow); }
 .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-lift); }
 .btn-ghost { color: var(--ink); border: 1.5px solid #cfc9ba; background: var(--card); }
@@ -232,29 +325,29 @@ body.dark-mode .hero-doodle img {
   height: 46px; width: auto; display: block; margin-bottom: .5rem;
   transform: rotate(-4deg); filter: drop-shadow(1px 2px 2px rgba(43,58,66,.15));
 }
-.section-head h2 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); font-weight: 600; margin: .5rem 0; }
+.section-head h2 { font-size: var(--fs-h2); font-weight: 600; margin: .5rem 0; }
 .section-sub { color: var(--ink-soft); }
 
 /* ============ Skills bars ============ */
 .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.4rem 2.5rem; }
-.skill-top { display: flex; justify-content: space-between; font-size: .88rem; margin-bottom: .45rem; }
+.skill-top { display: flex; justify-content: space-between; font-size: var(--fs-sm); margin-bottom: .45rem; }
 .skill-pct { color: var(--sage-text); }
-.bar { height: 10px; border-radius: 6px; background: #EAE6DA; border: 1px solid #E0DBCC; overflow: hidden; }
+.bar { height: 10px; border-radius: var(--r-sm); background: #EAE6DA; border: 1px solid #E0DBCC; overflow: hidden; }
 .bar-fill {
-  height: 100%; width: 0; border-radius: 6px;
+  height: 100%; width: 0; border-radius: var(--r-sm);
   background: linear-gradient(90deg, var(--sage), var(--sage-deep));
   transition: width 1.1s cubic-bezier(.25,.7,.3,1);
 }
 .skill.in .bar-fill { width: var(--w); }
-.skill-note { font-size: .82rem; color: var(--ink-soft); margin-top: .35rem; }
-.skill-ships { font-size: .7rem; color: var(--sage-text); margin-top: .25rem; }
+.skill-note { font-size: var(--fs-xs); color: var(--ink-soft); margin-top: .35rem; }
+.skill-ships { font-size: var(--fs-2xs); color: var(--sage-text); margin-top: .25rem; }
 
 /* ============ Experiment board ============ */
 .board { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.4rem; }
-.board-title { font-size: .85rem; color: var(--ink-soft); margin-bottom: 1rem; letter-spacing: .04em; }
+.board-title { font-size: var(--fs-sm); color: var(--ink-soft); margin-bottom: 1rem; letter-spacing: .04em; }
 .sticky {
-  padding: 1rem 1.1rem; margin-bottom: 1rem; border-radius: 4px;
-  font-size: .92rem; box-shadow: var(--shadow); position: relative;
+  padding: 1rem 1.1rem; margin-bottom: 1rem; border-radius: var(--r-xs);
+  font-size: var(--fs-sm); box-shadow: var(--shadow); position: relative;
   transition: transform .2s;
 }
 .sticky:hover { transform: scale(1.02) rotate(0deg) !important; }
@@ -268,7 +361,7 @@ body.dark-mode .hero-doodle img {
 /* ============ Project cards ============ */
 .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 1.8rem; }
 .card {
-  background: var(--card); border-radius: 6px; padding: 1.6rem 1.5rem 1.3rem;
+  background: var(--card); border-radius: var(--r-sm); padding: 1.6rem 1.5rem 1.3rem;
   box-shadow: var(--shadow); position: relative; border: 1px solid #EFEAE0;
   transition: transform .25s ease, box-shadow .25s ease;
   cursor: pointer;
@@ -283,16 +376,34 @@ body.dark-mode .hero-doodle img {
   background: radial-gradient(circle at 35% 30%, #eec687, var(--amber) 55%, #b07f42);
   box-shadow: 0 3px 4px rgba(43,58,66,.28);
 }
-.card h3 { font-size: 1.25rem; margin-bottom: .2rem; }
-.card-tag { font-size: .74rem; color: var(--sage-text); margin-bottom: .7rem; letter-spacing: .03em; }
-.card p { font-size: .92rem; color: var(--ink-soft); }
-.card > p:nth-of-type(2) { color: var(--ink); opacity: .85; }
+.card h3 { font-size: var(--fs-lg); margin-bottom: .2rem; }
+.card p { font-size: var(--fs-sm); color: var(--ink-soft); }
+
+/* ISSUE 15 — "cards are overloaded, the tags compete with the description".
+   The cause is mechanical, not editorial. `.card p` is specificity (0,1,1);
+   `.card-tag`, `.card-stack` and `.card-avail` are all (0,1,0), so every one of
+   them lost and rendered at 14.72px — identical to the description. Measured:
+   .card-tag 14.72px (authored .74rem), .card-stack 14.72px (authored .72rem).
+   The cards had no type hierarchy at all, which is exactly what "hard to scan"
+   feels like. Re-scoping restores the hierarchy the author already wrote.
+   Nothing is removed: the information is all true and all load-bearing. */
+.card .card-tag,
+.card .card-stack,
+.card .card-avail { font-size: var(--fs-2xs); }
+.card .card-tag { color: var(--sage-text); margin-bottom: .7rem; letter-spacing: .03em; }
+.card .card-stack { color: var(--ink-soft); }
+
+/* Was `.card > p:nth-of-type(2)`, which assumed the description is the second
+   paragraph. On the five cards that open with a .card-metric band it selected
+   the .card-tag instead, so the emphasis landed on the wrong line. The
+   description is the only unclassed paragraph, so say that. */
+.card > p:not([class]) { color: var(--ink); opacity: .85; }
 
 /* flip card (RAG project) */
 .card-flip { perspective: 1200px; cursor: pointer; outline-offset: 4px; }
 /* Lived with the research flip cards until those stopped flipping; the RAG card
    still uses it, so it belongs here now. */
-.flip-hint { margin-top: auto; font-size: .75rem; color: var(--sage-deep); }
+.flip-hint { margin-top: auto; font-size: var(--fs-2xs); color: var(--sage-text); }
 .cardflip-inner {
   position: relative; transform-style: preserve-3d;
   transition: transform .65s cubic-bezier(.4,.1,.2,1);
@@ -305,36 +416,43 @@ body.dark-mode .hero-doodle img {
 }
 .cardflip-back .rag-sketch {
   width: 100%; height: auto; flex: none; margin: auto 0;
-  border: 1px solid #EAE4D5; border-radius: 4px;
+  border: 1px solid #EAE4D5; border-radius: var(--r-xs);
 }
 .cardflip-back .cardflip-links { margin-top: auto; }
-.cardflip-links { font-size: .78rem; }
-.cardflip-links a { color: var(--sage-deep); text-decoration: none; border-bottom: 1px dotted var(--sage); }
+.cardflip-links { font-size: var(--fs-xs); }
+.cardflip-links a { color: var(--sage-text); text-decoration: none; border-bottom: 1px dotted var(--sage); }
 .rag-title { font-size: 26px; fill: var(--ink); }
 .rag-sketch .caveat-svg { font-size: 19px; }
 .rag-sketch .rag-title { font-size: 26px; }
-.rag-mono { font-family: 'JetBrains Mono', monospace; font-size: 15px; fill: var(--ink); }
+.rag-mono { font-family: var(--font-mono); font-size: 15px; fill: var(--ink); }
 .rag-box rect { fill: #FFFEFA; stroke: var(--ink-soft); stroke-width: 1.5; }
 .rag-arrow { stroke: var(--sage-deep); stroke-width: 1.8; stroke-linecap: round; marker-end: url(#ragArrowhead); }
 
 /* pipeline chips */
-.pipeline { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem; margin: .9rem 0 .6rem; font-size: .7rem; }
+.pipeline { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem; margin: .9rem 0 .6rem; font-size: var(--fs-2xs); }
+/* ISSUE 15, second half — each card carried two rows of boxed chips (pipeline
+   and proof) plus three mono metadata lines, so five bands of equal visual
+   weight surrounded one paragraph. The pipeline loses its box and keeps its
+   arrows, which is what DESIGN.md actually specifies for it ("mono spans with
+   arrows"); the box was incidental. .card-proof keeps its chip treatment,
+   because those are the measured numbers a recruiter is scanning for. Result:
+   one boxed row per card instead of two. */
 .pipeline span {
-  background: #EFEBDF; border: 1px solid #E3DECE; color: var(--ink-soft);
-  padding: .18rem .5rem; border-radius: 20px; position: relative;
-  transition: background .3s, color .3s;
+  background: none; border: 0; color: var(--ink-soft);
+  padding: .18rem 0; position: relative;
+  transition: color .3s;
 }
 .pipeline span:not(:last-child)::after { content: "→"; position: absolute; right: -14px; color: var(--sage); }
 .pipeline span { margin-right: 12px; }
 .card.in .pipeline span { animation: chipLight .5s ease forwards; animation-delay: calc(var(--i, 0) * .18s + .3s); }
-@keyframes chipLight { to { background: var(--chip-bg, #E5EDE2); color: var(--sage-deep); border-color: var(--sage); } }
-.card-stack { font-size: .72rem; color: #9AA5A0; }
+@keyframes chipLight { to { color: var(--sage-text); } }
+.card-stack { font-size: var(--fs-2xs); color: var(--ink-soft); }
 
 /* more projects */
-.more-projects { margin-top: 2.6rem; background: var(--card); border: 1px dashed #D8D2C2; border-radius: 6px; padding: 1.4rem 1.6rem; }
-.more-title { color: var(--sage-deep); font-size: .82rem; margin-bottom: .8rem; }
+.more-projects { margin-top: 2.6rem; background: var(--card); border: 1px dashed #D8D2C2; border-radius: var(--r-sm); padding: 1.4rem 1.6rem; }
+.more-title { color: var(--sage-text); font-size: var(--fs-xs); margin-bottom: .8rem; }
 .more-projects ul { list-style: none; }
-.more-projects li { font-size: .82rem; color: var(--ink-soft); padding: .28rem 0; border-bottom: 1px dotted var(--grid); }
+.more-projects li { font-size: var(--fs-xs); color: var(--ink-soft); padding: .28rem 0; border-bottom: 1px dotted var(--grid); }
 .more-projects li:last-child { border-bottom: none; }
 .more-projects strong { color: var(--ink); font-weight: 500; }
 
@@ -342,42 +460,64 @@ body.dark-mode .hero-doodle img {
 .app-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
 .app-window {
   background: var(--card);
-  cursor: pointer; border: 1px solid #E7E1D2; border-radius: 10px;
+  cursor: pointer; border: 1px solid #E7E1D2; border-radius: var(--r-md);
   box-shadow: var(--shadow); overflow: hidden;
   transition: transform .22s, box-shadow .22s;
 }
 .app-window:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); }
 .app-titlebar {
   display: flex; align-items: center; gap: .7rem; padding: .5rem .8rem;
-  background: #F0EBDE; border-bottom: 1px solid #E7E1D2; font-size: .74rem; color: var(--ink-soft);
+  background: #F0EBDE; border-bottom: 1px solid #E7E1D2; font-size: var(--fs-2xs); color: var(--ink-soft);
 }
-.app-name { font-weight: 600; color: var(--ink); }
+/* ISSUE 14 — .app-name is now an <h3> rather than a <span>. The five app-shelf
+   cards previously contributed no heading at all, which is what made the jump
+   from the section's H2 straight to the app-mini H4s: Glide, PhotoWidget, Lull,
+   TWIN and Smart Wardrobe were missing from the document outline entirely.
+   These overrides keep the titlebar looking exactly as it did. */
+.app-name {
+  font-family: inherit; font-size: inherit; line-height: inherit;
+  font-weight: 600; color: var(--ink);
+}
 .app-platform {
-  margin-left: auto; font-size: .66rem; padding: .1rem .5rem; border-radius: 10px;
-  background: #E5EDE2; color: var(--sage-deep); border: 1px solid #D5E0D1;
+  margin-left: auto; font-size: var(--fs-3xs); padding: .1rem .5rem; border-radius: var(--r-md);
+  background: #E5EDE2; color: var(--sage-text); border: 1px solid #D5E0D1;
 }
 .app-body { padding: 1rem 1.1rem 1.1rem; }
-.app-body p { font-size: .88rem; color: var(--ink-soft); }
-.app-body code { font-family: 'JetBrains Mono', monospace; font-size: .8em; background: #F1ECDD; padding: 0 .3em; border-radius: 3px; }
+.app-body p { font-size: var(--fs-sm); color: var(--ink-soft); }
+.app-body code { font-family: var(--font-mono); font-size: var(--fs-2xs); background: #F1ECDD; padding: 0 .3em; border-radius: var(--r-xs); }
 .app-body .card-stack { margin-top: .6rem; }
-.app-count { margin-top: 2rem; font-size: .78rem; color: var(--sage-deep); }
+.app-count { margin-top: 2rem; font-size: var(--fs-xs); color: var(--sage-text); }
 /* featured apps: full-width windows with feature lists */
 .app-featured { grid-column: 1 / -1; }
 .app-featured .app-titlebar { background: #EBE4D2; }
 .app-features { list-style: none; margin: .7rem 0; columns: 2; column-gap: 2.2rem; }
 .app-features li {
-  font-size: .85rem; color: var(--ink-soft); padding: .25rem 0 .25rem 1.1rem;
+  font-size: var(--fs-sm); color: var(--ink-soft); padding: .25rem 0 .25rem 1.1rem;
   position: relative; break-inside: avoid;
 }
 .app-features li::before { content: "→"; position: absolute; left: 0; color: var(--sage); }
 .app-features b { color: var(--ink); font-weight: 600; }
 @media (max-width: 820px) { .app-features { columns: 1; } }
 
+/* ISSUE 2 — the Experience and Education bullet lists were carrying inline
+   `font-size: 0.95rem` and `0.92rem`, which were the last two sizes on the page
+   that belonged to no scale (15.2px and 14.72px). One class, one step. */
+.cv-list {
+  list-style: none; margin-top: .9rem; padding-left: 1.2rem;
+  color: var(--ink-soft); font-size: var(--fs-sm); line-height: 1.6;
+}
+.cv-list li { position: relative; padding-left: .1rem; margin-bottom: .55rem; }
+.cv-list li:last-child { margin-bottom: 0; }
+.cv-list li::before {
+  content: "→"; position: absolute; left: -1.2rem;
+  color: var(--sage); font-family: var(--font-mono); font-size: var(--fs-2xs);
+}
+
 /* ============ Value / what I bring ============ */
 .value-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.6rem 2.4rem; }
 .value-item { border-left: 3px solid var(--sage); padding-left: 1rem; }
-.value-k { color: var(--sage-deep); font-size: .82rem; margin-bottom: .35rem; letter-spacing: .02em; }
-.value-item p:last-child { font-size: .92rem; color: var(--ink-soft); }
+.value-k { color: var(--sage-text); font-size: var(--fs-xs); margin-bottom: .35rem; letter-spacing: .02em; }
+.value-item p:last-child { font-size: var(--fs-sm); color: var(--ink-soft); }
 
 /* ============ Research: offprint sheets ============ */
 /* These used to be flip cards, which meant every number that proves the work sat
@@ -390,7 +530,7 @@ body.dark-mode .hero-doodle img {
 
 .paper-sheet {
   position: relative;
-  background: var(--card); border: 1px solid #EFEAE0; border-radius: 6px;
+  background: var(--card); border: 1px solid #EFEAE0; border-radius: var(--r-sm);
   box-shadow: var(--shadow); padding: 1.8rem 1.6rem 1.5rem;
   display: flex; flex-direction: column;
 }
@@ -405,8 +545,8 @@ body.dark-mode .hero-doodle img {
 
 .paper-state {
   display: inline-flex; align-items: center; gap: .42rem;
-  font-size: .72rem; letter-spacing: .04em;
-  color: #8A6A3C;                 /* darker amber: 4.6:1 on --card */
+  font-size: var(--fs-2xs); letter-spacing: .04em;
+  color: var(--amber-text);                 /* darker amber: 4.6:1 on --card */
   margin-bottom: 1rem;
 }
 .dot-review {
@@ -414,14 +554,14 @@ body.dark-mode .hero-doodle img {
   box-shadow: 0 0 0 3px rgba(217, 168, 108, .22);
 }
 
-.paper-sheet h3 { font-size: 1.24rem; line-height: 1.2; margin-bottom: .3rem; }
+.paper-sheet h3 { font-size: var(--fs-lg); line-height: 1.2; margin-bottom: .3rem; }
 .paper-subtitle {
-  font-size: .86rem; color: var(--ink-soft); line-height: 1.45;
+  font-size: var(--fs-sm); color: var(--ink-soft); line-height: 1.45;
   max-width: 46ch; margin-bottom: .95rem;
 }
 
 .paper-byline {
-  font-size: .76rem; color: var(--ink-soft); line-height: 1.6;
+  font-size: var(--fs-xs); color: var(--ink-soft); line-height: 1.6;
   padding-bottom: .9rem; border-bottom: 1px solid var(--grid); margin-bottom: .1rem;
 }
 /* His name marked in the author list, so the position is readable at a glance
@@ -432,7 +572,7 @@ body.dark-mode .hero-doodle img {
 }
 .paper-pos {
   display: block; margin-top: .3rem;
-  font-size: .7rem; letter-spacing: .07em; color: var(--sage-text, #567856);
+  font-size: var(--fs-2xs); letter-spacing: .07em; color: var(--sage-text, #567856);
 }
 
 /* The results table. A paper's own artifact, so it earns being a real table. */
@@ -441,8 +581,8 @@ body.dark-mode .hero-doodle img {
    small tracked all-caps label here would read as generic scaffolding. */
 .paper-figs caption {
   caption-side: top; text-align: left;
-  font-size: .71rem; letter-spacing: .03em;
-  color: #62707A; padding-bottom: .55rem;
+  font-size: var(--fs-2xs); letter-spacing: .03em;
+  color: var(--ink-soft); padding-bottom: .55rem;
 }
 .paper-figs th, .paper-figs td {
   padding: .46rem .1rem; text-align: left; vertical-align: baseline;
@@ -450,22 +590,22 @@ body.dark-mode .hero-doodle img {
 }
 .paper-figs tr:last-child th, .paper-figs tr:last-child td { border-bottom: none; }
 .paper-figs th {
-  font-size: .8rem; color: var(--ink-soft); white-space: nowrap; padding-right: .7rem;
+  font-size: var(--fs-xs); color: var(--ink-soft); white-space: nowrap; padding-right: .7rem;
 }
 .paper-figs .fig {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: .96rem; color: var(--ink); font-weight: 500;
+  font-family: var(--font-mono);
+  font-size: var(--fs-base); color: var(--ink); font-weight: 500;
   white-space: nowrap; padding-right: .8rem;
 }
-.paper-figs .ctx { font-size: .78rem; color: var(--ink-soft); line-height: 1.4; }
+.paper-figs .ctx { font-size: var(--fs-xs); color: var(--ink-soft); line-height: 1.4; }
 
-.paper-aside { font-size: .88rem; color: var(--ink-soft); margin-bottom: 1.2rem; }
-.paper-aside .caveat { font-size: 1.15rem; color: var(--sage-deep); margin-right: .2rem; }
+.paper-aside { font-size: var(--fs-sm); color: var(--ink-soft); margin-bottom: 1.2rem; }
+.paper-aside .caveat { font-size: var(--fs-md); color: var(--sage-text); margin-right: .2rem; }
 
 .paper-actions { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: auto; }
 .paper-caveat {
   /* #6E7C82 measured 4.24:1 on --card, under the 4.5 floor for body text. */
-  margin-top: .9rem; font-size: .76rem; color: #5E6C76; line-height: 1.5;
+  margin-top: .9rem; font-size: var(--fs-xs); color: var(--ink-soft); line-height: 1.5;
 }
 
 @media (max-width: 560px) {
@@ -482,7 +622,7 @@ body.dark-mode .hero-doodle img {
 .gitlog { border-left: 2px solid #D8D2C2; margin-left: .4rem; padding-left: 0; }
 .commit {
   display: grid; grid-template-columns: 90px 90px 1fr; gap: 1rem; align-items: baseline;
-  padding: .55rem 0 .55rem 1.6rem; position: relative; font-size: .86rem;
+  padding: .55rem 0 .55rem 1.6rem; position: relative; font-size: var(--fs-sm);
 }
 .commit::before {
   content: ""; position: absolute; left: -7px; top: 1.05em;
@@ -491,15 +631,15 @@ body.dark-mode .hero-doodle img {
 }
 .c-head::before { background: var(--amber); animation: headPulse 2s ease-in-out infinite; }
 @keyframes headPulse { 50% { box-shadow: 0 0 0 6px rgba(217,168,108,.25); } }
-.c-hash { color: var(--sage-deep); }
-.c-date { color: #9AA5A0; }
+.c-hash { color: var(--sage-text); }
+.c-date { color: var(--ink-soft); }
 .c-msg { color: var(--ink-soft); }
 .c-head .c-msg { color: var(--ink); font-weight: 500; }
 
 /* ============ Contact ============ */
 .contact { text-align: left; padding-bottom: 5rem; }
 .contact-row { display: flex; gap: .8rem; flex-wrap: wrap; }
-.footer-joke { margin-top: 3rem; font-size: .74rem; color: #A8A296; }
+.footer-joke { margin-top: 3rem; font-size: var(--fs-2xs); color: var(--ink-soft); }
 
 /* ============ Companion robot (free-roaming) ============ */
 .companion {
@@ -550,7 +690,7 @@ body.dark-mode .hero-doodle img {
   border-radius: 28px 28px 6px 28px;
   padding: 1rem 1.4rem; 
   margin-bottom: 0.8rem; 
-  font-size: .88rem; 
+  font-size: var(--fs-sm); 
   font-weight: 500;
   color: #F7F5F0;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.08); 
@@ -592,7 +732,7 @@ body.dark-mode .hero-doodle img {
 .bubble-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.2rem; }
 .action-chip {
   background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 14px; padding: 0.3rem 0.7rem; font-size: 0.72rem; color: #E0E5E8;
+  border-radius: var(--r-pill); padding: 0.3rem 0.7rem; font-size: var(--fs-2xs); color: var(--band-ink);
   cursor: pointer; transition: all 0.2s;
 }
 .action-chip:hover { background: rgba(255, 255, 255, 0.2); color: #FFF; transform: translateY(-1px); }
@@ -600,13 +740,13 @@ body.dark-mode .hero-doodle img {
 /* ============ Notebook page card (hero) ============ */
 .notebook-card {
   display: inline-block; background: var(--card); border: 1px solid #E3DECE;
-  border-radius: 6px; box-shadow: var(--shadow); padding: .7rem .95rem;
-  font-size: .74rem; color: var(--ink-soft); margin-bottom: 1.1rem;
+  border-radius: var(--r-sm); box-shadow: var(--shadow); padding: .7rem .95rem;
+  font-size: var(--fs-2xs); color: var(--ink-soft); margin-bottom: 1.1rem;
   transform: rotate(-1.2deg);
 }
 .nc-head {
   display: flex; gap: 1.4rem; justify-content: space-between;
-  color: var(--sage-deep); border-bottom: 1px dashed #DDD7C6;
+  color: var(--sage-text); border-bottom: 1px dashed #DDD7C6;
   padding-bottom: .4rem; margin-bottom: .45rem;
 }
 .nc-label { color: var(--amber); margin-bottom: .15rem; }
@@ -614,16 +754,16 @@ body.dark-mode .hero-doodle img {
 
 /* ============ Margin notes & highlights ============ */
 .margin-note {
-  font-size: 1.05rem; color: var(--sage-deep); font-weight: 500;
+  font-size: var(--fs-md); color: var(--sage-text); font-weight: 500;
   white-space: nowrap; margin-left: .5rem; display: inline-block; transform: rotate(-2deg);
 }
 mark.hl {
   background: linear-gradient(100deg, transparent 2%, rgba(217,168,108,.42) 8%, rgba(217,168,108,.42) 92%, transparent 98%);
-  color: inherit; padding: 0 .15em; border-radius: 2px;
+  color: inherit; padding: 0 .15em; border-radius: var(--r-xs);
 }
 .paper-note {
   position: absolute; bottom: 2.4rem; right: 1.2rem;
-  font-size: 1.05rem; color: var(--amber); transform: rotate(-4deg);
+  font-size: var(--fs-md); color: var(--amber); transform: rotate(-4deg);
 }
 
 /* ============ Engineering principles (index cards) ============ */
@@ -631,21 +771,21 @@ mark.hl {
 .index-card {
   background: repeating-linear-gradient(var(--card), var(--card) 26px, #F0EBDD 27px);
   border: 1px solid #EFEAE0; border-top: 3px solid var(--sage);
-  border-radius: 4px; padding: 1.1rem 1.2rem; box-shadow: var(--shadow);
+  border-radius: var(--r-xs); padding: 1.1rem 1.2rem; box-shadow: var(--shadow);
   transition: transform .2s;
 }
 .index-card:nth-child(odd) { transform: rotate(-.7deg); }
 .index-card:nth-child(even) { transform: rotate(.6deg); }
 .index-card:hover { transform: rotate(0) translateY(-4px); }
-.index-card h3 { font-size: 1.45rem; color: var(--ink); margin-bottom: .3rem; font-weight: 600; }
-.index-card p { font-size: .88rem; color: var(--ink-soft); }
+.index-card h3 { font-size: var(--fs-xl); color: var(--ink); margin-bottom: .3rem; font-weight: 600; }
+.index-card p { font-size: var(--fs-sm); color: var(--ink-soft); }
 
 /* ============ Certifications (mini diplomas) ============ */
 .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem; }
 .cert-card {
   display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between;
   background: var(--card); border: 1px solid #EFEAE0; border-top: 3px solid var(--amber);
-  border-radius: 4px; padding: 1.2rem; box-shadow: var(--shadow);
+  border-radius: var(--r-xs); padding: 1.2rem; box-shadow: var(--shadow);
   text-decoration: none; color: inherit;
   transition: transform .2s, box-shadow .2s;
   min-height: 140px;
@@ -653,23 +793,23 @@ mark.hl {
 .cert-card:nth-child(odd) { transform: rotate(.4deg); }
 .cert-card:nth-child(even) { transform: rotate(-.5deg); }
 .cert-card:hover { transform: rotate(0) translateY(-4px); box-shadow: 2px 5px 12px rgba(0,0,0,0.08); z-index: 2; position: relative; }
-.cert-card .cert-seal { font-size: 1.6rem; margin-bottom: 0.5rem; }
-.cert-card h3 { font-size: 0.95rem; color: var(--ink); margin: 0; line-height: 1.35; font-weight: 600; font-family: 'Inter', sans-serif; }
-.cert-card p { font-size: 0.75rem; color: var(--ink-soft); margin: 0; margin-top: 0.8rem; }
+.cert-card .cert-seal { font-size: var(--fs-xl); margin-bottom: 0.5rem; }
+.cert-card h3 { font-size: var(--fs-base); color: var(--ink); margin: 0; line-height: 1.35; font-weight: 600; font-family: var(--font-sans); }
+.cert-card p { font-size: var(--fs-2xs); color: var(--ink-soft); margin: 0; margin-top: 0.8rem; }
 
 /* ============ End of notebook / gh live ============ */
-.end-note { font-size: 1.25rem; color: var(--ink-soft); margin-bottom: 1.2rem; transform: rotate(-1deg); display: inline-block; }
-.gh-live { font-size: .78rem; color: var(--sage-deep); margin-bottom: 1rem; }
+.end-note { font-size: var(--fs-lg); color: var(--ink-soft); margin-bottom: 1.2rem; transform: rotate(-1deg); display: inline-block; }
+.gh-live { font-size: var(--fs-xs); color: var(--sage-text); margin-bottom: 1rem; }
 
 /* ============ Typewriter ============ */
-.typewriter { font-size: .95rem; color: var(--sage-deep); margin: -.4rem 0 1rem; min-height: 1.5em; }
+.typewriter { font-size: var(--fs-base); color: var(--sage-text); margin: -.4rem 0 1rem; min-height: 1.5em; }
 .caret { animation: blink 1s steps(1) infinite; color: var(--amber); }
 @keyframes blink { 50% { opacity: 0; } }
 
 /* ============ Terminal button ============ */
 .terminal-btn {
-  background: var(--ink); color: var(--paper); border: none; border-radius: 6px;
-  padding: .4rem .7rem; font-size: .76rem; cursor: pointer;
+  background: var(--ink); color: var(--paper); border: none; border-radius: var(--r-sm);
+  padding: .4rem .7rem; font-size: var(--fs-xs); cursor: pointer;
   transition: transform .15s, background .15s;
 }
 .terminal-btn:hover { transform: translateY(-1px); background: #3d4f59; }
@@ -682,7 +822,7 @@ mark.hl {
 .terminal-overlay[hidden] { display: none; }
 .terminal {
   width: min(760px, 94vw); height: min(480px, 80vh);
-  background: #1E2A31; border-radius: 10px; overflow: hidden;
+  background: #1E2A31; border-radius: var(--r-md); overflow: hidden;
   box-shadow: 0 30px 80px rgba(20, 30, 36, .5);
   display: flex; flex-direction: column;
   animation: termIn .25s ease;
@@ -691,17 +831,17 @@ mark.hl {
 
 .term-titlebar {
   display: flex; align-items: center; gap: 1rem; padding: .55rem .9rem;
-  background: #162026; color: #8FA3AD; font-size: .74rem;
+  background: #162026; color: #8FA3AD; font-size: var(--fs-2xs);
 }
 .term-dots { display: flex; gap: 6px; }
 .term-dots i { width: 11px; height: 11px; border-radius: 50%; display: block; }
 .term-dots i:nth-child(1) { background: #E0756A; }
 .term-dots i:nth-child(2) { background: var(--amber); }
 .term-dots i:nth-child(3) { background: var(--sage); }
-.term-close { margin-left: auto; background: none; border: none; color: #8FA3AD; cursor: pointer; font-size: .8rem; }
+.term-close { margin-left: auto; color: #8FA3AD; font-size: var(--fs-xs); }
 .term-close:hover { color: #fff; }
 .term-body {
-  flex: 1; overflow-y: auto; padding: 1rem 1.1rem; font-size: .82rem; line-height: 1.55;
+  flex: 1; overflow-y: auto; padding: 1rem 1.1rem; font-size: var(--fs-xs); line-height: 1.55;
   color: #D7E0D7; cursor: text;
 }
 .term-body .t-dim { color: #7C8F98; }
@@ -730,10 +870,10 @@ mark.hl {
 }
 .companion.open .ask-form { opacity: 1; transform: none; pointer-events: auto; max-height: 60px; margin-top: .45rem; }
 #askInput {
-  width: 220px; padding: .65rem 1.1rem; border-radius: 30px; 
+  width: 220px; padding: .65rem 1.1rem; border-radius: var(--r-pill); 
   border: 1px solid rgba(15, 17, 20, 0.15);
   background: rgba(255, 255, 255, 0.95); 
-  font: .85rem 'JetBrains Mono', monospace; 
+  font-family: var(--font-mono); font-size: var(--fs-sm); 
   color: #111;
   outline: none; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   transition: all 0.2s ease;
@@ -743,7 +883,7 @@ mark.hl {
   width: 36px; height: 36px; border-radius: 50%;
   background: var(--ink); color: var(--paper); border: none;
   display: flex; align-items: center; justify-content: center;
-  font-size: 1.1rem; cursor: pointer; transition: transform 0.2s, background 0.2s;
+  font-size: var(--fs-md); cursor: pointer; transition: transform 0.2s, background 0.2s;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 .ask-submit:hover { transform: translateY(-2px); background: #3d4f59; }
@@ -798,7 +938,7 @@ body.recruiter .hero-doodle img {
   transform: none !important;
   box-shadow: var(--shadow);
   border: 1px solid var(--rs-border, #D9D4C7);
-  border-radius: 8px;
+  border-radius: var(--r-md);
 }
 body.recruiter .hero-photo::before,
 body.recruiter .hero-photo::after,
@@ -890,7 +1030,7 @@ body.recruiter .gitlog.reveal .commit { opacity: 1; translate: none; transition:
     margin: -.4rem auto 1rem;
   }
   .hero-sub {
-    font-size: 1.05rem;
+    font-size: var(--fs-md);
     margin-left: auto;
     margin-right: auto;
     text-align: center;
@@ -914,7 +1054,7 @@ body.recruiter .gitlog.reveal .commit { opacity: 1; translate: none; transition:
 
 @media (max-width: 480px) {
   .rs-mode-word { display: none; }
-  .terminal-btn { padding: .35rem .55rem; font-size: .72rem; }
+  .terminal-btn { padding: .35rem .55rem; font-size: var(--fs-2xs); }
   .topbar { padding: .55rem .8rem .45rem; }
   .hero { padding: 1.5rem 1rem 1.8rem; }
   .hero-photo, .hero-doodle {
@@ -999,7 +1139,7 @@ body.nbc-on .nbc-dot, body.nbc-on .nbc-ring { opacity: 1; }
 }
 @keyframes nbcSpin { to { transform: rotate(360deg); } }
 .nbc-label {
-  font-family: 'Caveat', cursive; font-size: 1.05rem; color: var(--ink);
+  font-family: var(--font-hand); font-size: var(--fs-md); color: var(--ink);
   white-space: nowrap; opacity: 0; transform: scale(.6) rotate(-4deg);
   transition: opacity .2s ease, transform .25s cubic-bezier(.34,1.4,.4,1);
 }
@@ -1027,40 +1167,49 @@ body.nbc-on .nbc-dot, body.nbc-on .nbc-ring { opacity: 1; }
 body.recruiter .nbc-dot, body.recruiter .nbc-ring { opacity: 0; }
 
 /* ============ Case-study links + new project sections ============ */
+/* Measured 86x23px, one pixel under the WCAG 2.5.8 minimum. Found while
+   checking ISSUE 20, same root cause: a block-level link with no vertical room. */
 .card-link {
-  display: inline-block; margin-top: .9rem;
+  display: inline-flex; align-items: center; min-height: 24px; margin-top: .9rem;
   color: var(--sage-text); text-decoration: none;
-  font-size: .8rem; font-weight: 500;
+  font-size: var(--fs-xs); font-weight: 500;
   border-bottom: 1px solid transparent; transition: border-color .2s, gap .2s;
 }
 .card-link:hover { border-color: var(--sage-deep); }
 .app-body .card-link { margin-top: .7rem; }
-.cardflip-links a[href^="projects/"] { color: var(--sage-deep); }
+.cardflip-links a[href^="projects/"] { color: var(--sage-text); }
 
 /* in-progress tag on a project card heading */
 .card-status {
-  font-family: 'JetBrains Mono', monospace; font-size: .6rem;
+  font-family: var(--font-mono); font-size: var(--fs-3xs);
   text-transform: uppercase; letter-spacing: .04em;
   vertical-align: middle; margin-left: .5rem;
-  padding: .12rem .45rem; border-radius: 4px;
-  background: #fbf2e3; color: #b07d3a; border: 1px solid #ecd9b8;
+  padding: .12rem .45rem; border-radius: var(--r-xs);
+  background: #fbf2e3; color: var(--amber-text); border: 1px solid #ecd9b8;
 }
 
 /* ---- Roadmap / planned cards ---- */
 .planned-card { position: relative; border-style: dashed; background: #fbfaf6; }
 .planned-card::before { display: none; } /* no pin on planned cards */
 .planned-card .pin { display: none; }
+/* ISSUES 11 + 12 — this one badge was both problems at once. It measured
+   9.92px (the smallest text on the page) AND text-transform: uppercase, applied
+   to a 36-character string: "BUILDING · FLAGSHIP · CORE RUNS LIVE". 10px
+   all-caps mono is close to the worst-case combination for legibility.
+   Dropping the transform is also the more faithful fix: the HTML is authored in
+   lowercase and DESIGN.md specifies a lowercase mono metadata voice, so the
+   uppercase was fighting the source. Size moves to the 11px chip floor. */
 .planned-badge {
-  display: inline-block; font-size: .62rem; text-transform: uppercase;
-  letter-spacing: .05em; padding: .18rem .5rem; border-radius: 4px;
-  background: #f0eef6; color: #7a6ba0; border: 1px solid #ddd6ea;
+  display: inline-block; font-size: var(--fs-3xs);
+  letter-spacing: .04em; padding: .22rem .55rem; border-radius: var(--r-xs);
+  background: #f0eef6; color: var(--plan-text); border: 1px solid #ddd6ea;
   margin-bottom: .7rem;
 }
-#roadmap .section-sub em { color: var(--sage-deep); font-style: normal; }
+#roadmap .section-sub em { color: var(--sage-text); font-style: normal; }
 
 /* ---- roadmap: cards that have started (code on github) ---- */
 .building-card { border-style: solid; border-color: #d4e0d4; background: #fbfdfb; }
-.building-badge { background: #eef3ee; color: var(--sage-deep); border-color: #d4e0d4; }
+.building-badge { background: #eef3ee; color: var(--sage-text); border-color: #d4e0d4; }
 .building-card .card-link + .card-link { margin-left: 1.1rem; }
 
 /* ---- proof terminal: real repo output, the credibility anchor ---- */
@@ -1083,7 +1232,7 @@ html:not(.js) .board-col .sticky {
 
 /* ---- keyboard focus ---- */
 a:focus-visible, button:focus-visible, [role="button"]:focus-visible, [tabindex]:focus-visible {
-  outline: 2px solid var(--sage-deep); outline-offset: 3px; border-radius: 4px;
+  outline: 2px solid var(--sage-deep); outline-offset: 3px; border-radius: var(--r-xs);
 }
 
 /* ---- grid stagger: cards cascade in, 60ms apart ---- */
@@ -1097,23 +1246,23 @@ html.js .cards .reveal:nth-child(6), html.js .app-grid .reveal:nth-child(6) { tr
 }
 
 /* ---- app windows: lead + ticks (replaces the text-wall body) ---- */
-.app-lead { font-weight: 600; color: var(--ink); font-size: .95rem; margin-bottom: .55rem; }
+.app-lead { font-weight: 600; color: var(--ink); font-size: var(--fs-base); margin-bottom: .55rem; }
 .app-grid .app-features { list-style: none; margin: 0 0 .4rem; display: grid; gap: .35rem; }
 .app-grid .app-features li {
   position: relative; padding-left: 1.05rem;
-  font-size: .84rem; color: var(--ink-soft); line-height: 1.45;
+  font-size: var(--fs-sm); color: var(--ink-soft); line-height: 1.45;
 }
 .app-grid .app-features li::before {
   content: "→"; position: absolute; left: 0; top: 0;
-  color: var(--sage-text); font-family: 'JetBrains Mono', monospace; font-size: .75rem;
+  color: var(--sage-text); font-family: var(--font-mono); font-size: var(--fs-2xs);
 }
 
 /* ---- proof chips: the numbers a recruiter scans for ---- */
 .card-proof { display: flex; flex-wrap: wrap; gap: .35rem; margin: .65rem 0 .1rem; }
 .card-proof span {
-  font-size: .66rem; letter-spacing: .01em; padding: .18rem .5rem;
-  border-radius: 4px; background: #faf6ec; border: 1px solid #eadfc8;
-  color: #7d6a4a; white-space: nowrap;
+  font-size: var(--fs-3xs); letter-spacing: .01em; padding: .18rem .5rem;
+  border-radius: var(--r-xs); background: #faf6ec; border: 1px solid #eadfc8;
+  color: var(--amber-text); white-space: nowrap;
 }
 
 
@@ -1121,7 +1270,7 @@ html.js .cards .reveal:nth-child(6), html.js .app-grid .reveal:nth-child(6) { tr
    is reachable, so the reachable things belong above the fold. */
 .hero-live { margin-top: 1.8rem; }
 .hero-live-label {
-  font-size: .74rem; letter-spacing: .04em; color: var(--sage-text);
+  font-size: var(--fs-2xs); letter-spacing: .04em; color: var(--sage-text);
   margin-bottom: .6rem;
 }
 .hero-live-list {
@@ -1130,10 +1279,10 @@ html.js .cards .reveal:nth-child(6), html.js .app-grid .reveal:nth-child(6) { tr
 }
 .hero-live-list a {
   display: inline-flex; align-items: baseline; gap: .45rem;
-  text-decoration: none; font-size: .85rem; font-weight: 600;
+  text-decoration: none; font-size: var(--fs-sm); font-weight: 600;
   color: var(--ink); background: var(--card);
   border: 1px solid var(--grid); border-left: 3px solid var(--sage);
-  border-radius: 8px; padding: .42rem .75rem;
+  border-radius: var(--r-md); padding: .42rem .75rem;
   transition: transform .15s ease, border-color .15s ease;
 }
 .hero-live-list a:hover {
@@ -1141,7 +1290,7 @@ html.js .cards .reveal:nth-child(6), html.js .app-grid .reveal:nth-child(6) { tr
   border-left-color: var(--sage-deep);
 }
 .hero-live-list a span {
-  font-family: 'JetBrains Mono', monospace; font-size: .68rem;
+  font-family: var(--font-mono); font-size: var(--fs-2xs);
   font-weight: 400; color: var(--ink-soft);
 }
 @media (max-width: 620px) {
@@ -1155,8 +1304,8 @@ html.js .cards .reveal:nth-child(6), html.js .app-grid .reveal:nth-child(6) { tr
   display: flex; flex-wrap: wrap; gap: .35rem; margin: .55rem 0 0;
 }
 .card-avail span {
-  font-size: .66rem; font-weight: 500; padding: .2rem .55rem;
-  border-radius: 999px; white-space: nowrap;
+  font-size: var(--fs-3xs); font-weight: 500; padding: .2rem .55rem;
+  border-radius: var(--r-pill); white-space: nowrap;
   display: inline-flex; align-items: center; gap: .3rem;
 }
 .card-avail span::before {
@@ -1164,10 +1313,10 @@ html.js .cards .reveal:nth-child(6), html.js .app-grid .reveal:nth-child(6) { tr
   background: currentColor; flex: none;
 }
 .card-avail .is-live {
-  background: #EEF3EE; border: 1px solid #C6D6C6; color: #4A6B4A;
+  background: #EEF3EE; border: 1px solid #C6D6C6; color: var(--sage-text);
 }
 .card-avail .is-dl {
-  background: #FAF4EA; border: 1px solid #E6D5BC; color: #8A6A3C;
+  background: #FAF4EA; border: 1px solid #E6D5BC; color: var(--amber-text);
 }
 body.dark-mode .card-avail .is-live {
   background: #1C2A20; border-color: #46664D; color: #9DBE9D;
@@ -1183,7 +1332,7 @@ body.dark-mode .s-rose { background: #332426; border-color: var(--rose); }
 body.dark-mode .card { border-color: #26343C; }
 body.dark-mode .pin { background: radial-gradient(circle at 35% 30%, #D9A86C, #8C6A42 55%, #594228); box-shadow: 0 3px 4px rgba(0,0,0,.4); }
 body.dark-mode .rag-box rect { fill: #182127; }
-body.dark-mode .pipeline span { background: #202D35; border-color: #2E3E47; }
+/* pipeline chips are unboxed now (ISSUE 15), so there is no box to re-tint */
 body.dark-mode .app-window { background: #182127; border-color: #26343C; }
 body.dark-mode .app-featured .app-titlebar { background: #202D35; border-color: #26343C; }
 body.dark-mode .app-titlebar { background: #202D35; border-bottom: 1px solid #2E3E47; }
@@ -1196,8 +1345,11 @@ body.dark-mode .paper-sheet::after {
   background: linear-gradient(225deg, var(--paper) 0 50%, #202D35 50% 100%);
   box-shadow: -1px 1px 2px rgba(0, 0, 0, .3);
 }
-body.dark-mode .paper-state { color: #C79A62; }
-body.dark-mode .paper-figs caption, body.dark-mode .paper-caveat { color: #9BA6AD; }
+/* The only .paper-sheet on the site sits inside .section--band and is cream in
+   both themes, so a dark-mode amber here was lighter text on a light card:
+   measured 2.51:1. The sheet's pinned --amber-text (#8A6A3C, 4.6:1) is correct
+   for it, so this override is removed rather than re-tuned. */
+body.dark-mode .paper-figs caption, body.dark-mode .paper-caveat { color: var(--ink-soft); }
 body.dark-mode .paper-byline .is-me { box-shadow: inset 0 -.42em 0 rgba(179, 134, 79, .3); }
 body.dark-mode .btn-ghost { border-color: #3A4A54; }
 body.dark-mode .bar { background: #202D35; border-color: #2E3E47; }
@@ -1209,12 +1361,18 @@ body.dark-mode .nc-head { border-bottom-color: #2E3E47; }
 body.dark-mode .card-proof span { background: #202D35; border-color: #2E3E47; color: var(--amber); }
 body.dark-mode .gitlog { border-left-color: #2E3E47; }
 body.dark-mode .notebook-card { border-color: #26343C; }
-body.dark-mode .app-stack span { background: #1F2E24; border-color: #2E3E47; color: var(--sage-deep); }
+body.dark-mode .app-stack span { background: #1F2E24; border-color: #2E3E47; color: var(--sage-text); }
+/* Not in the audit, found while verifying it, and the same class of bug as the
+   research sheet: .app-platform hardcodes background #E5EDE2 (light green) but
+   takes its text from the theme, so in dark mode it rendered --sage-text
+   (#9CC0A2) on that light green — measured 1.67:1, on all eight app cards. The
+   background has to follow the theme too. */
+body.dark-mode .app-platform { background: #1F2E24; border-color: #38513C; color: var(--sage-text); }
 body.dark-mode .idea-badge { background: #33291B; border-color: #453623; color: var(--amber); }
 body.dark-mode .planned-card { background: #131B21; border-color: #26343C; }
 body.dark-mode .research-badge { background: #262336; border-color: #3A3550; color: #9A8BC0; }
 body.dark-mode .building-card { background: #182127; border-color: #1F2E24; }
-body.dark-mode .building-badge { background: #1F2E24; border-color: #38513C; color: var(--sage-deep); }
+body.dark-mode .building-badge { background: #1F2E24; border-color: #38513C; color: var(--sage-text); }
 body.dark-mode .nbc-ring.is-label::before { background: rgba(30, 34, 36, .9); }
 body.dark-mode .nbc-ring.is-spotlight::before { background: rgba(44, 50, 53, 0.4); }
 body.dark-mode .index-card { background: repeating-linear-gradient(var(--card), var(--card) 26px, #26343C 27px); border-color: #26343C; }
@@ -1226,22 +1384,28 @@ body.dark-mode .shelf-plank { background: linear-gradient(#34424A, #24282A); }
 .achievement-card {
   display: flex; gap: 1.6rem; align-items: flex-start;
   background: var(--card); border: 1px solid var(--grid);
-  border-left: 4px solid var(--amber); border-radius: 8px;
+  border-left: 4px solid var(--amber); border-radius: var(--r-md);
   padding: 1.6rem 2rem; box-shadow: var(--shadow);
   cursor: pointer; position: relative;
   transition: transform .25s, box-shadow .25s;
   outline-offset: 4px;
 }
 .achievement-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
-.achievement-medal { font-size: 3rem; flex-shrink: 0; line-height: 1; margin-top: .2rem; }
+/* The 🥇 glyph was the last off-scale size (3rem/48px). It is decoration, so it
+   borrows the h2 step rather than owning a step of its own. */
+.achievement-medal { font-size: var(--fs-h2); flex-shrink: 0; line-height: 1; margin-top: .2rem; }
 .achievement-body { flex: 1; padding-right: 3rem; }
-.achievement-org { font-size: .72rem; color: var(--ink-soft); letter-spacing: .06em; text-transform: uppercase; margin-bottom: .4rem; }
-.achievement-card h3 { font-family: 'Fraunces', serif; font-size: 1.45rem; font-weight: 700; color: var(--ink); margin-bottom: .5rem; line-height: 1.2; }
-.achievement-desc { font-size: .92rem; color: var(--ink-soft); line-height: 1.6; margin-bottom: 1rem; }
-.achievement-stack { font-size: .74rem; color: var(--sage-deep); }
+/* ISSUE 8 — measured 11.52px, and the audit missed the compounding factor:
+   text-transform: uppercase was setting a 34-character organisation name in
+   all-caps mono at 11.5px. Size goes to the 12px label step and the caps come
+   off, which also matches the lowercase-mono metadata voice in DESIGN.md. */
+.achievement-org { font-size: var(--fs-2xs); color: var(--ink-soft); letter-spacing: .04em; margin-bottom: .4rem; }
+.achievement-card h3 { font-family: var(--font-serif); font-size: var(--fs-xl); font-weight: 700; color: var(--ink); margin-bottom: .5rem; line-height: 1.2; }
+.achievement-desc { font-size: var(--fs-sm); color: var(--ink-soft); line-height: 1.6; margin-bottom: 1rem; }
+.achievement-stack { font-size: var(--fs-2xs); color: var(--sage-text); }
 .achievement-arrow {
   position: absolute; right: 2rem; top: 50%; transform: translateY(-50%);
-  font-size: .85rem; color: var(--sage-deep); opacity: 0; transition: opacity .2s, transform .2s;
+  font-size: var(--fs-sm); color: var(--sage-text); opacity: 0; transition: opacity .2s, transform .2s;
 }
 .achievement-card:hover .achievement-arrow { opacity: 1; transform: translateY(-50%) translateX(4px); }
 
@@ -1272,10 +1436,10 @@ body.dark-mode .shelf-plank { background: linear-gradient(#34424A, #24282A); }
   width: 100%;
   background: var(--card);
   border: 1px solid var(--grid);
-  border-radius: 8px;
+  border-radius: var(--r-md);
   padding: 1rem 1.2rem;
   color: var(--ink);
-  font-size: 0.95rem;
+  font-size: var(--fs-base);
   transition: border-color 0.2s, box-shadow 0.2s;
   outline: none;
 }
@@ -1293,13 +1457,12 @@ body.dark-mode .contact-input:focus {
   min-height: 120px;
   resize: vertical;
 }
-.submit-btn {
-  align-self: flex-start;
-  padding: 0.8rem 2rem;
-  font-size: 1rem;
-}
+/* Inherits .btn entirely, so the form's primary action is now the same rendered
+   object as the hero's primary action rather than a second one that happens to
+   share a class name. */
+.submit-btn { align-self: flex-start; }
 .form-result {
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
   margin-top: 0.5rem;
 }
 .form-result.success { color: var(--sage); }
@@ -1330,7 +1493,7 @@ body.dark-mode .contact-input:focus {
   border-bottom: 1px solid #EFEAE0;
   background: #F2EEE4;
   overflow: hidden;
-  border-radius: 6px 6px 0 0;
+  border-radius: var(--r-sm) var(--r-sm) 0 0;
 }
 /* height stays auto so aspect-ratio actually governs the box. With height:100%
    here the ratio was ignored and each img fell back to its HTML height
@@ -1351,8 +1514,8 @@ body.dark-mode .shot-frame { background: #131B21; border-bottom-color: #26343C; 
 .shot-note {
   position: absolute; left: 0; right: 0; bottom: 0;
   padding: .5rem .7rem;
-  font-family: 'JetBrains Mono', monospace; font-size: .66rem; letter-spacing: .01em;
-  color: #F4F1E8;
+  font-family: var(--font-mono); font-size: var(--fs-3xs); letter-spacing: .01em;
+  color: var(--band-ink);
   background: linear-gradient(transparent, rgba(14, 20, 24, .82) 55%);
 }
 
@@ -1451,9 +1614,9 @@ body.dark-mode .section--band::before { background: linear-gradient(180deg, #0A1
 .hero-live-list { display: flex; flex-wrap: wrap; gap: .5rem; list-style: none; margin-top: .55rem; }
 .hero-live-list a {
   display: inline-flex; align-items: baseline; gap: .42rem;
-  padding: .42rem .8rem; border-radius: 999px;
+  padding: .42rem .8rem; border-radius: var(--r-pill);
   background: var(--card); border: 1px solid #DCD6C6;
-  text-decoration: none; color: var(--ink); font-size: .84rem; font-weight: 600;
+  text-decoration: none; color: var(--ink); font-size: var(--fs-sm); font-weight: 600;
   transition: border-color .2s, transform .2s, box-shadow .2s;
 }
 .hero-live-list a::before {
@@ -1462,7 +1625,7 @@ body.dark-mode .section--band::before { background: linear-gradient(180deg, #0A1
   box-shadow: 0 0 0 3px rgba(143, 169, 143, .2);
 }
 .hero-live-list a span {
-  font-family: 'JetBrains Mono', monospace; font-size: .68rem;
+  font-family: var(--font-mono); font-size: var(--fs-2xs);
   font-weight: 400; color: var(--ink-soft);
 }
 .hero-live-list a:hover {
@@ -1478,20 +1641,20 @@ body.dark-mode .hero-live-list a { border-color: #2E3E47; }
    ------------------------------------------------------------------------ */
 .skills-grid { gap: 1rem 1.6rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
 .skill {
-  background: var(--card); border: 1px solid #EFEAE0; border-radius: 6px;
+  background: var(--card); border: 1px solid #EFEAE0; border-radius: var(--r-sm);
   padding: .9rem 1rem;
 }
 body.dark-mode .skill { border-color: #26343C; }
-.skill-top { font-size: .84rem; margin-bottom: .3rem; align-items: baseline; }
+.skill-top { font-size: var(--fs-sm); margin-bottom: .3rem; align-items: baseline; }
 .skill-top b { font-weight: 600; }
-.skill-pct { font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: var(--sage-text); flex: none; }
+.skill-pct { font-family: var(--font-mono); font-size: var(--fs-2xs); color: var(--sage-text); flex: none; }
 /* The bar becomes a thin rule: present as texture, no longer the headline. */
-.bar { height: 3px; border: none; background: var(--grid); border-radius: 2px; }
+.bar { height: 3px; border: none; background: var(--grid); border-radius: var(--r-xs); }
 body.dark-mode .bar { background: #202D35; border: none; }
-.skill-note { font-size: .8rem; margin-top: .45rem; }
+.skill-note { font-size: var(--fs-xs); margin-top: .45rem; }
 .skill-ships {
-  font-size: .68rem; margin-top: .4rem; color: var(--sage-text);
-  font-family: 'JetBrains Mono', monospace; line-height: 1.5;
+  font-size: var(--fs-2xs); margin-top: .4rem; color: var(--sage-text);
+  font-family: var(--font-mono); line-height: 1.5;
 }
 
 /* ---------------------------------------------------------------------------
@@ -1503,17 +1666,17 @@ body.dark-mode .bar { background: #202D35; border: none; }
 .cert-grid { display: flex; flex-wrap: wrap; gap: .5rem; }
 .cert-grid .cert-card {
   display: inline-flex; align-items: center; gap: .45rem;
-  padding: .45rem .8rem; border-radius: 999px;
+  padding: .45rem .8rem; border-radius: var(--r-pill);
   background: var(--card); border: 1px solid #E6DCC8;
   text-decoration: none; box-shadow: none;
 }
 .cert-grid .cert-card:hover { border-color: var(--amber); transform: translateY(-2px); }
-.cert-grid .cert-card h3 { font-family: 'Inter', sans-serif; font-size: .82rem; font-weight: 500; color: var(--ink); }
+.cert-grid .cert-card h3 { font-family: var(--font-sans); font-size: var(--fs-xs); font-weight: 500; color: var(--ink); }
 .cert-grid .cert-card .mono,
 .cert-grid .cert-seal { display: none; }
-.cert-grid .cert-card::before { content: "PDF"; font-family: 'JetBrains Mono', monospace; font-size: .6rem; color: var(--amber); letter-spacing: .06em; }
+.cert-grid .cert-card::before { content: "PDF"; font-family: var(--font-mono); font-size: var(--fs-3xs); color: var(--amber); letter-spacing: .06em; }
 body.dark-mode .cert-grid .cert-card { border-color: #2E3E47; }
-.cert-issuer { font-size: .8rem; color: var(--ink-soft); margin-top: .7rem; }
+.cert-issuer { font-size: var(--fs-xs); color: var(--ink-soft); margin-top: .7rem; }
 
 /* ---------------------------------------------------------------------------
    7. Companion
@@ -1531,7 +1694,7 @@ body.dark-mode .cert-grid .cert-card { border-color: #2E3E47; }
   .companion { bottom: 12px; right: 12px; left: auto; top: auto; transform: none !important; }
   .companion:not(.open) .companion-panel { display: none; }
   .robot { width: 54px; height: 54px; }
-  .bubble { max-width: calc(100vw - 4.5rem); font-size: .82rem; }
+  .bubble { max-width: calc(100vw - 4.5rem); font-size: var(--fs-xs); }
 }
 
 /* ---------------------------------------------------------------------------
@@ -1581,35 +1744,93 @@ body.dark-mode .cert-grid .cert-card { border-color: #2E3E47; }
    (terminal, flip card, fake training run) were all hidden behind small
    affordances further down.
    ------------------------------------------------------------------------ */
-.hero-live-label { color: var(--sage-text); font-size: .74rem; margin-bottom: .1rem; }
+.hero-live-label { color: var(--sage-text); font-size: var(--fs-2xs); margin-bottom: .1rem; }
 .hero-live { margin-top: 1.5rem; }
+/* ISSUE 6 — the hint line was 11.84px. It is a sentence, not a label, so it
+   moves up to the 13px small-copy step. Note the audit's "especially on mobile"
+   does not apply: .kbd-hint is display:none below 620px. */
 .hero-hint {
-  margin-top: 1.6rem; font-size: .74rem; color: var(--ink-soft);
-  font-family: 'JetBrains Mono', monospace;
+  margin-top: 1.6rem; font-size: var(--fs-xs); color: var(--ink-soft);
+  font-family: var(--font-mono);
+  display: flex; flex-wrap: wrap; align-items: center; gap: .2rem .45rem;
 }
 .hero-hint kbd {
-  font-family: 'JetBrains Mono', monospace; font-size: .92em;
+  font-family: var(--font-mono); font-size: var(--fs-2xs);
   background: var(--card); border: 1px solid #DCD6C6; border-bottom-width: 2px;
-  border-radius: 4px; padding: .05rem .34rem; color: var(--ink);
+  border-radius: var(--r-xs); padding: .05rem .34rem; color: var(--ink);
 }
 body.dark-mode .hero-hint kbd { border-color: #2E3E47; }
+
+/* ISSUE 20 — #heroTrainBtn measured 135x17px, which fails WCAG 2.5.8 Target
+   Size (Minimum) at 24x24. It is not promoted to a hero CTA: it is a tertiary
+   easter egg and a third full-size button would compete with "See the
+   experiments". Instead it borrows the existing ghost-button language at chip
+   scale, so it reads as pressable without adding a new button style. */
 .hero-hint button {
-  background: none; border: none; padding: 0; cursor: pointer;
-  font-family: inherit; font-size: inherit;
-  color: var(--sage-deep); border-bottom: 1px dotted var(--sage);
+  display: inline-flex; align-items: center; gap: .3rem;
+  min-height: 24px; padding: .15rem .6rem;
+  font-family: inherit; font-size: inherit; line-height: 1.2; cursor: pointer;
+  color: var(--ink); background: var(--card);
+  border: 1px solid var(--sage); border-radius: var(--r-pill);
+  transition: border-color .18s, background .18s, color .18s;
 }
-.hero-hint button:hover { color: var(--ink); }
+.hero-hint button::before { content: "▸"; color: var(--sage-text); font-size: .9em; }
+.hero-hint button:hover { border-color: var(--sage-deep); color: var(--sage-text); }
+body.dark-mode .hero-hint button { background: #1F2E24; }
 
 /* Flip affordance moves to the card corner. It used to sit at the very bottom
-   of a tall card, which is why nobody found the flip. */
+   of a tall card, which is why nobody found the flip.
+
+   ISSUE 18 — the label was doing all the work at 10.24px. It now gets a rotate
+   glyph (a shape, not a word) at the 12px step, and the front face gets a
+   dog-eared corner, which is the second, non-textual "there is a back here"
+   signifier the audit asked for. The fold reuses the .paper-sheet fold already
+   in this file rather than inventing a new device. */
 .card-flip .flip-hint {
   position: absolute; top: .7rem; right: .8rem; margin: 0;
-  font-size: .64rem; letter-spacing: .04em;
+  display: inline-flex; align-items: center; gap: .3rem;
+  font-size: var(--fs-2xs); letter-spacing: .03em;
   background: var(--card); border: 1px solid var(--sage);
-  color: var(--sage-deep); padding: .12rem .45rem; border-radius: 999px;
+  color: var(--sage-text); padding: .16rem .5rem; border-radius: var(--r-pill);
   z-index: 3;
 }
 body.dark-mode .card-flip .flip-hint { background: #1F2E24; }
+/* On the scale, not 1.15em — a relative size here reintroduced a 13.8px step. */
+.flip-icon { font-size: var(--fs-xs); line-height: 1; transition: transform .35s ease; }
+.card-flip:hover .flip-icon { transform: rotate(180deg); }
+.card-flip.flipped .flip-icon { transform: rotate(360deg); }
+@media (prefers-reduced-motion: reduce) { .flip-icon { transition: none; } }
+
+/* The dog ear. Sits under the hint pill, above the card background. The last
+   line of the front face has to keep clear of it, the same way .card-flip h3
+   already reserves room for the hint pill in the opposite corner. */
+.card-flip .cardflip-front .card-stack { padding-right: 2.4rem; }
+.cardflip-front::after {
+  content: ""; position: absolute; right: 0; bottom: 0;
+  width: 30px; height: 30px; pointer-events: none;
+  background: linear-gradient(45deg, var(--paper) 0 50%, #EDE7D8 50% 100%);
+  border-top-left-radius: var(--r-xs);
+  box-shadow: -1px -1px 2px rgba(43, 58, 66, .10);
+  transition: width .25s ease, height .25s ease;
+}
+.card-flip:hover .cardflip-front::after,
+.card-flip:focus-visible .cardflip-front::after { width: 40px; height: 40px; }
+body.dark-mode .cardflip-front::after {
+  background: linear-gradient(45deg, var(--paper) 0 50%, #202D35 50% 100%);
+  box-shadow: -1px -1px 2px rgba(0, 0, 0, .35);
+}
+.cardflip-front { position: relative; }
+
+/* Not in the audit, found while checking it: backface-visibility hides a face
+   visually but leaves it in the accessibility tree and the tab order, so the
+   two links on the back of this card were reachable by Tab while facing away
+   from the reader, and a screen reader read both faces at once. visibility
+   removes them properly; the 0s delay at .33s swaps the faces at the halfway
+   point of the .65s rotation so neither one blinks. */
+.cardflip-front, .cardflip-back { transition: visibility 0s .33s; }
+.cardflip-back { visibility: hidden; }
+.card-flip.flipped .cardflip-back { visibility: visible; }
+.card-flip.flipped .cardflip-front { visibility: hidden; }
 
 /* Phone-shaped captures (Cachy, Smart Wardrobe) are portrait. Cropping them to
    a landscape card frame would show only a strip of chrome, so they letterbox
@@ -1645,18 +1866,18 @@ body.dark-mode .app-shot--tall {
   margin: -1.6rem -1.5rem 1.1rem;
   padding: 1.1rem 1.5rem 1rem;
   border-bottom: 1px solid #EFEAE0;
-  border-radius: 6px 6px 0 0;
+  border-radius: var(--r-sm) var(--r-sm) 0 0;
   background:
     linear-gradient(135deg, rgba(143, 169, 143, .13), rgba(217, 168, 108, .10)),
     var(--card);
   display: flex; align-items: baseline; gap: .55rem; flex-wrap: wrap;
 }
 .card-metric b {
-  font-family: 'Fraunces', serif; font-size: 1.85rem; font-weight: 600;
+  font-family: var(--font-serif); font-size: var(--fs-xl); font-weight: 600;
   line-height: 1; color: var(--ink); letter-spacing: -.01em;
 }
 .card-metric span {
-  font-family: 'JetBrains Mono', monospace; font-size: .68rem;
+  font-family: var(--font-mono); font-size: var(--fs-2xs);
   color: var(--ink-soft); line-height: 1.35; max-width: 15rem;
 }
 body.dark-mode .card-metric {
@@ -1666,7 +1887,7 @@ body.dark-mode .card-metric {
 .section--band .card-metric { border-bottom-color: #26343C; }
 @media (max-width: 620px) {
   .card-metric { margin: -1.1rem -1rem .8rem; padding: .85rem 1rem .8rem; }
-  .card-metric b { font-size: 1.5rem; }
+  .card-metric b { font-size: var(--fs-xl); }
 }
 
 /* Tools become a compact list inside the Apps section rather than their own
@@ -1676,13 +1897,13 @@ body.dark-mode .card-metric {
   gap: .8rem; margin-top: 1rem;
 }
 .tool-item {
-  background: var(--card); border: 1px solid #EFEAE0; border-radius: 6px;
+  background: var(--card); border: 1px solid #EFEAE0; border-radius: var(--r-sm);
   padding: .85rem 1rem; cursor: pointer;
   transition: transform .2s, border-color .2s, box-shadow .2s;
 }
 .tool-item:hover { transform: translateY(-3px); border-color: var(--sage); box-shadow: var(--shadow); }
-.tool-item h4 { font-family: 'JetBrains Mono', monospace; font-size: .84rem; color: var(--ink); font-weight: 700; }
-.tool-item p { font-size: .8rem; color: var(--ink-soft); margin-top: .3rem; }
+.tool-item h4 { font-family: var(--font-mono); font-size: var(--fs-sm); color: var(--ink); font-weight: 700; }
+.tool-item p { font-size: var(--fs-xs); color: var(--ink-soft); margin-top: .3rem; }
 .tool-item .card-stack { margin-top: .45rem; }
 body.dark-mode .tool-item { border-color: #26343C; }
 .section--band .tool-item { background: #1B242B; border-color: #2A3A44; }
@@ -1701,7 +1922,33 @@ body.dark-mode .tool-item { border-color: #26343C; }
 .section--band .app-features li { color: #A9BAC4; }
 .section--band .app-titlebar { background: #22303A; border-bottom-color: #2A3A44; }
 .section--band .card-stack { color: #7D8F9A; }
-.section--band .paper-sheet { background: #FFFDF8; }
+/* This sheet is deliberately cream in BOTH themes — a paper offprint on a dark
+   desk is the whole device of this section. But only its background was pinned,
+   not its foregrounds, so in dark mode every colour inside it still resolved to
+   the dark-theme value. Measured in dark mode: the h3 title and all four result
+   figures rendered #E6ECEF on #FFFDF8 = 1.17:1, and 22 of the 24 text nodes in
+   the card were below 4.5:1. The single most important credential on the page
+   was invisible to anyone whose OS is in dark mode.
+   Pinning the ink tokens alongside the background fixes all of them at once. */
+.section--band .paper-sheet {
+  background: #FFFDF8;
+  --ink: #2B3A42;
+  --ink-soft: #5A6B73;
+  --card: #FFFDF8;
+  --sage-deep: #6E8B6E;
+  --sage-text: #4F6E4F;
+  --amber-text: #8A6A3C;
+  --grid: #E7E3D8;
+  color: var(--ink);
+}
+/* The two actions inside the sheet sit on cream, so they need the light-theme
+   button colours too, not the dark-theme ones. */
+.section--band .paper-sheet .btn-primary { background: #2B3A42; color: #F7F5F0; }
+.section--band .paper-sheet .btn-ghost { background: #FFFDF8; color: #2B3A42; border-color: #cfc9ba; }
+/* .caveat measured 3.7:1 at 18.4px, which is under AA and is not large-text
+   exempt (that needs 18.66px). A handwriting face also reads optically smaller
+   than its metrics, so this one goes darker than --sage-deep. */
+.paper-aside .caveat { color: var(--sage-text); }
 .section--band .app-shot,
 .section--band .card-shot { background: #131B21; border-bottom-color: #2A3A44; }
 
@@ -1720,23 +1967,26 @@ body.dark-mode .cert-grid .cert-card { border-top-color: #2E3E47; }
 /* Tools heading, now a subhead inside the Apps section rather than a full
    section header of its own. */
 .tool-heading {
-  font-size: 1.15rem; font-weight: 600; margin-top: 2.4rem;
+  font-size: var(--fs-md); font-weight: 600; margin-top: 2.4rem;
   padding-top: 1.6rem; border-top: 1px solid var(--grid);
 }
-.tool-heading .margin-note { font-size: .95rem; }
+.tool-heading .margin-note { font-size: var(--fs-base); }
 
 /* Ceremony photo framed beside the award card, sized to read as proof of the
    win rather than decoration. */
 .award-figure { margin-top: 1.4rem; max-width: 520px; }
 .award-figure-link { display: block; text-decoration: none; }
-.award-figure-link .figure-arrow { color: var(--sage-deep); opacity: 0; transition: opacity .2s, transform .2s; }
+.award-figure-link .figure-arrow { color: var(--sage-text); opacity: 0; transition: opacity .2s, transform .2s; }
 .award-figure-link:hover .figure-arrow { opacity: 1; transform: translateX(3px); }
 .award-figure img {
-  display: block; width: 100%; height: auto; border-radius: 6px;
+  display: block; width: 100%; height: auto; border-radius: var(--r-sm);
   background: #FFFDF8; border: 1px solid #E7E1D2; box-shadow: var(--shadow);
 }
+/* ISSUE 9 — measured 11.2px. A figcaption is a sentence describing the image,
+   not a chip label, so it takes the 13px small-copy step rather than the 12px
+   label step. */
 .award-figure figcaption {
-  font-size: .7rem; color: var(--ink-soft); margin-top: .55rem; line-height: 1.55;
+  font-size: var(--fs-xs); color: var(--ink-soft); margin-top: .55rem; line-height: 1.55;
 }
 body.dark-mode .award-figure img { border-color: #26343C; background: #F7F5F0; }
 
@@ -1767,20 +2017,24 @@ body.dark-mode .award-figure img { border-color: #26343C; background: #F7F5F0; }
 }
 .app-mini {
   display: flex; flex-direction: column; gap: .3rem;
-  background: var(--card); border: 1px solid #EFEAE0; border-radius: 8px;
+  background: var(--card); border: 1px solid #EFEAE0; border-radius: var(--r-md);
   padding: .8rem .95rem; cursor: pointer;
   transition: transform .2s, border-color .2s, box-shadow .2s;
 }
 .app-mini:hover { transform: translateY(-3px); border-color: var(--sage); box-shadow: var(--shadow); }
 .app-mini-top { display: flex; align-items: center; gap: .5rem; }
 .app-mini-top .term-dots { flex: none; }
-.app-mini h4 {
-  font-family: 'JetBrains Mono', monospace; font-size: .8rem;
-  font-weight: 700; color: var(--ink);
+/* ISSUE 14 — was h4 under an h2. Now h3; the look is unchanged. */
+.app-mini h3 {
+  font-family: var(--font-mono); font-size: var(--fs-xs);
+  font-weight: 700; color: var(--ink); line-height: 1.3;
 }
 .app-mini .app-platform { margin-left: auto; }
-.app-mini p { font-size: .8rem; color: var(--ink-soft); }
-.app-mini .card-stack { font-size: .68rem; }
+.app-mini p { font-size: var(--fs-xs); color: var(--ink-soft); }
+/* ISSUE 10 — measured 10.88px, the smallest prose on the page. It is a stack
+   list, so it sits on the 12px label step alongside every other .card-stack
+   instead of getting its own smaller one-off. */
+.app-mini .card-stack { font-size: var(--fs-2xs); }
 body.dark-mode .app-mini { border-color: #26343C; }
 
 /* Award card and its figure share a row on wide screens. */

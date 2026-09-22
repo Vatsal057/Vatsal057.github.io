@@ -140,7 +140,10 @@
               <p class="card-proof mono"><span>78% on 20-query eval</span><span>~60 lines</span><span>no
                   framework</span></p>
               <p class="card-stack mono">sentence-transformers · ChromaDB · Mistral-7B</p>
-              <p class="mono flip-hint">flip →</p>
+              <!-- ISSUE 18: the arrow read as "next", which is what a card in a
+                   row of cards would mean. A rotate glyph says "this turns over".
+                   aria-hidden because the article's aria-label already states it. -->
+              <p class="mono flip-hint" aria-hidden="true"><span class="flip-icon">⟳</span> flip</p>
             </div>
             <div onclick="window.location.href='case/project.html?id=constitution-rag'" role="link" tabindex="0"
               class="cardflip-back">
@@ -404,9 +407,9 @@
             than a bigger model would have. It killed the position bias directly.</p>
 
           <div class="paper-actions">
-            <a class="btn btn-primary sm" href="papers/efficient-llm-preference-classification.pdf" target="_blank"
+            <a class="btn btn-primary" href="papers/efficient-llm-preference-classification.pdf" target="_blank"
               rel="noopener">Read the paper (PDF)</a>
-            <a class="btn btn-ghost sm" href="case/project.html?id=preference-prediction">How it works</a>
+            <a class="btn btn-ghost" href="case/project.html?id=preference-prediction">How it works</a>
           </div>
           <p class="paper-caveat">Code and weights stay unpublished until the review decision.</p>
         </article>
@@ -429,8 +432,8 @@
       <div class="app-grid" id="appShelf">
         <article onclick="window.location.href='case/project.html?id=glide'" role="link" tabindex="0"
           class="app-window reveal">
-          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
-              class="app-name">Glide.app</span><span class="app-platform">macOS</span></div>
+          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><h3
+              class="app-name">Glide.app</h3><span class="app-platform">macOS</span></div>
           <span class="app-shot">
             <img src="images/shots/card-glide.webp" alt="Glide trackpad gesture app" width="900" height="562"
               loading="lazy" decoding="async">
@@ -449,8 +452,8 @@
         </article>
         <article onclick="window.location.href='case/project.html?id=photowidget'" role="link" tabindex="0"
           class="app-window reveal">
-          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
-              class="app-name">PhotoWidget.app</span><span class="app-platform">macOS</span></div>
+          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><h3
+              class="app-name">PhotoWidget.app</h3><span class="app-platform">macOS</span></div>
           <span class="app-shot">
             <img src="images/shots/card-photowidget.webp"
               alt="PhotoWidget desktop widgets showing personal photos in four sizes" width="900" height="562"
@@ -469,8 +472,8 @@
         </article>
         <article onclick="window.location.href='case/project.html?id=lull'" role="link" tabindex="0"
           class="app-window reveal">
-          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
-              class="app-name">Lull.app</span><span class="app-platform">macOS</span></div>
+          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><h3
+              class="app-name">Lull.app</h3><span class="app-platform">macOS</span></div>
           <span class="app-shot">
             <img src="images/shots/card-lull.webp"
               alt="Lull menu bar popover controlling macOS Background Sounds" width="900" height="562" loading="lazy"
@@ -489,8 +492,8 @@
         </article>
         <article onclick="window.location.href='case/project.html?id=twin'" role="link" tabindex="0"
           class="app-window reveal">
-          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
-              class="app-name">TWIN</span><span class="app-platform">Web · Android</span></div>
+          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><h3
+              class="app-name">TWIN</h3><span class="app-platform">Web · Android</span></div>
           <span class="app-shot">
             <img src="images/shots/live-twin.webp" alt="TWIN game lobby: create or join a room" width="900"
               height="562" loading="lazy" decoding="async">
@@ -508,8 +511,8 @@
         </article>
         <article onclick="window.location.href='case/project.html?id=smart-wardrobe'" role="link" tabindex="0"
           class="app-window reveal">
-          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><span
-              class="app-name">Smart Wardrobe</span><span class="app-platform">Flutter</span></div>
+          <div class="app-titlebar mono"><span class="term-dots"><i></i><i></i><i></i></span><h3
+              class="app-name">Smart Wardrobe</h3><span class="app-platform">Flutter</span></div>
           <span class="app-shot app-shot--tall">
             <img src="images/shots/live-wardrobe.webp"
               alt="Smart Wardrobe Today screen with weather and an outfit suggestion" width="620" height="1163"
@@ -536,7 +539,7 @@
         <article onclick="window.location.href='case/project.html?id=insomniac'" role="link" tabindex="0"
           class="app-mini reveal">
           <div class="app-mini-top"><span class="term-dots"><i></i><i></i><i></i></span>
-            <h4>Insomniac.app</h4><span class="app-platform">macOS</span>
+            <h3>Insomniac.app</h3><span class="app-platform">macOS</span>
           </div>
           <p>Keeps a Mac awake, lid closed included. Triggers on app, Wi-Fi network, CPU load or active downloads.</p>
           <p class="card-stack mono">Swift · AppKit · IOKit · NWPathMonitor</p>
@@ -545,7 +548,7 @@
         <article onclick="window.location.href='case/project.html?id=dimmer'" role="link" tabindex="0"
           class="app-mini reveal">
           <div class="app-mini-top"><span class="term-dots"><i></i><i></i><i></i></span>
-            <h4>Dimmer.app</h4><span class="app-platform">macOS</span>
+            <h3>Dimmer.app</h3><span class="app-platform">macOS</span>
           </div>
           <p>Dims displays below the hardware minimum, each connected monitor independently.</p>
           <p class="card-stack mono">Swift · SwiftUI · AppKit</p>
@@ -554,7 +557,7 @@
         <article onclick="window.location.href='case/project.html?id=media-manager'" role="link" tabindex="0"
           class="app-mini reveal">
           <div class="app-mini-top"><span class="term-dots"><i></i><i></i><i></i></span>
-            <h4>Media Manager</h4><span class="app-platform">macOS</span>
+            <h3>Media Manager</h3><span class="app-platform">macOS</span>
           </div>
           <p>Tidies a photo library and can undo every batch. One logged choke point is what makes Undo real.</p>
           <p class="card-stack mono">Swift · SwiftUI · ffmpeg · Core Location</p>
@@ -671,19 +674,19 @@
         <div class="card reveal" style="transform: none;">
           <h3>Data Science Intern</h3>
           <p class="card-tag">Amar Infotech – Ahmedabad, Gujarat &nbsp;·&nbsp; 01/2025 to 06/2025</p>
-          <ul style="color: var(--ink-soft); font-size: 0.95rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6;">
-            <li style="margin-bottom: 0.6rem;">Engineered data preprocessing pipelines in Python for 50k+ records, reducing inconsistencies by <mark class="hl">35%</mark>.</li>
-            <li style="margin-bottom: 0.6rem;">Trained predictive ML models (TensorFlow, scikit-learn) achieving <mark class="hl">87% accuracy</mark> and lowering false positives by 22%.</li>
-            <li style="margin-bottom: 0.6rem;">Built <mark class="hl">5+ interactive dashboards</mark> in Power BI to track KPIs and model performance.</li>
+          <ul class="cv-list">
+            <li>Engineered data preprocessing pipelines in Python for 50k+ records, reducing inconsistencies by <mark class="hl">35%</mark>.</li>
+            <li>Trained predictive ML models (TensorFlow, scikit-learn) achieving <mark class="hl">87% accuracy</mark> and lowering false positives by 22%.</li>
+            <li>Built <mark class="hl">5+ interactive dashboards</mark> in Power BI to track KPIs and model performance.</li>
             <li>Automated extraction workflows, reducing manual processing time by <mark class="hl">40%</mark>.</li>
           </ul>
         </div>
         <div class="card reveal" style="transform: none;">
           <h3>Data Science Intern</h3>
           <p class="card-tag">iTechBrains – Ahmedabad, India &nbsp;·&nbsp; 06/2024 to 07/2024</p>
-          <ul style="color: var(--ink-soft); font-size: 0.95rem; padding-left: 1.2rem; margin-top: 1rem; line-height: 1.6;">
-            <li style="margin-bottom: 0.6rem;">Implemented data visualization techniques to communicate insights to stakeholders.</li>
-            <li style="margin-bottom: 0.6rem;">Analyzed complex datasets using supervised and unsupervised learning techniques.</li>
+          <ul class="cv-list">
+            <li>Implemented data visualization techniques to communicate insights to stakeholders.</li>
+            <li>Analyzed complex datasets using supervised and unsupervised learning techniques.</li>
             <li>Performed data extraction and manipulation using <mark class="hl">Python and SQL</mark>.</li>
           </ul>
         </div>
@@ -708,7 +711,7 @@
         <div class="card reveal" style="transform: none;">
           <h3>B.Tech in Computer Engineering</h3>
           <p class="card-tag">SAL College of Engineering – Ahmedabad, Gujarat &nbsp;·&nbsp; 2021 to 2025</p>
-          <ul style="color: var(--ink-soft); font-size: 0.92rem; padding-left: 1.2rem; margin-top: 0.8rem; line-height: 1.5;">
+          <ul class="cv-list">
             <li>CGPA: 8.3 / 10.0</li>
           </ul>
         </div>
