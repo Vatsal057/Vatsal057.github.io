@@ -8,6 +8,7 @@ DESIGN.md
 PRODUCT.md
 references
 reference
+bible-strong-avatar-lab/
 
 # Cloudflare Worker local artifacts (never commit these; the repo root is
 # published by GitHub Pages)

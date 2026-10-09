@@ -158,7 +158,9 @@
       sel: ".hero",
       spots: [
         { sel: ".hero-photo img", mode: "on" },
-        { sel: ".hero-cta a:last-child", mode: "right", phone: false },
+        { sel: ".hero-photo", mode: "on" },
+        { sel: ".hero-cta a:first-child", mode: "on" },
+        { sel: ".hero-stats", mode: "on" },
       ],
     },
     {
@@ -166,7 +168,6 @@
       sel: "#projects",
       greet: "section_projects",
       spots: [
-        { sel: "#projects h2", mode: "right", text: true, phone: false },
         { sel: "#projects .card", mode: "on" },
       ],
     },
@@ -175,7 +176,6 @@
       sel: "#datathon",
       greet: "section_datathon",
       spots: [
-        { sel: "#datathon h2", mode: "right", text: true, phone: false },
         { sel: "#datathon .award-figure", mode: "on" },
         { sel: "#datathon .award-card", mode: "on" },
       ],
@@ -185,8 +185,8 @@
       sel: "#research",
       greet: "section_research",
       spots: [
-        { sel: "#research h2", mode: "right", text: true, phone: false },
         { sel: "#research .paper-sheet", mode: "on" },
+        { sel: "#research .paper-card", mode: "on" },
       ],
     },
     {
@@ -194,7 +194,6 @@
       sel: "#apps",
       greet: "section_apps",
       spots: [
-        { sel: "#apps h2", mode: "right", text: true, phone: false },
         { sel: "#apps .app-window", mode: "on" },
       ],
     },
@@ -203,7 +202,6 @@
       sel: "#principles",
       greet: "section_principles",
       spots: [
-        { sel: "#principles h2", mode: "right", text: true, phone: false },
         { sel: "#principles .card", mode: "on" },
       ],
     },
@@ -212,8 +210,7 @@
       sel: "#timeline",
       greet: "section_timeline",
       spots: [
-        { sel: "#timeline h2", mode: "right", text: true, phone: false },
-        { sel: "#timeline .gitlog", mode: "right", phone: false },
+        { sel: "#timeline .gitlog", mode: "on" },
       ],
     },
     {
@@ -221,8 +218,9 @@
       sel: "#contact",
       greet: "section_contact",
       spots: [
-        { sel: "#contact h2", mode: "right", text: true, phone: false },
+        { sel: "#contactForm", mode: "on" },
         { sel: "#contact .contact-row", mode: "on" },
+        { sel: "#submitBtn", mode: "on" },
       ],
     },
   ];
@@ -233,8 +231,7 @@
       sel: ".detail-head",
       greet: "section_detail",
       spots: [
-        { sel: "#title", mode: "right", text: true, phone: false },
-        { sel: "#stack", mode: "right", phone: false },
+        { sel: "#stack", mode: "on" },
       ],
     },
     {
@@ -242,7 +239,6 @@
       sel: "#problemBlock",
       greet: "section_problem",
       spots: [
-        { sel: "#problemBlock .eyebrow", mode: "right", text: true, phone: false },
         { sel: "#problemBlock", mode: "on" },
       ],
     },
@@ -251,8 +247,7 @@
       sel: "#highlightsBlock",
       greet: "section_highlights",
       spots: [
-        { sel: "#highlightsBlock .eyebrow", mode: "right", text: true, phone: false },
-        { sel: "#highlightsBlock li", mode: "right", phone: false },
+        { sel: "#highlightsBlock", mode: "on" },
       ],
     },
   ];
@@ -750,6 +745,88 @@
       return el.getBoundingClientRect();
     };
 
+    const SOLID_SELECTORS = [
+      ".card",
+      ".project-card",
+      ".cardflip-inner",
+      ".award-card",
+      ".award-figure",
+      ".paper-sheet",
+      ".paper-card",
+      ".app-window",
+      ".terminal-box",
+      ".hero-photo img",
+      ".hero-photo",
+      ".hero-cta a",
+      ".hero-stats",
+      "#contactForm",
+      ".contact-form",
+      ".contact-row",
+      ".contact-input",
+      "#submitBtn",
+      ".btn",
+      ".gitlog",
+      ".exp-item",
+      ".edu-card",
+      ".pipeline"
+    ];
+
+    function getAllSolidElements() {
+      const items = [];
+      for (const sel of SOLID_SELECTORS) {
+        document.querySelectorAll(sel).forEach((el) => {
+          if (el.offsetParent !== null) {
+            const rect = el.getBoundingClientRect();
+            if (rect.width > 24 && rect.height > 12) {
+              items.push({ el, rect });
+            }
+          }
+        });
+      }
+      return items;
+    }
+
+    function findNextElementBeneath(curX, minY) {
+      const all = getAllSolidElements();
+      const below = all.filter(item => {
+        const r = item.rect;
+        return r.top >= minY && r.top <= innerHeight - R * 1.5 && r.bottom > navSafe();
+      });
+
+      if (below.length === 0) return null;
+
+      // 1. Elements directly under curX (horizontal raycast)
+      const directlyUnder = below.filter(item => {
+        const r = item.rect;
+        return curX >= r.left - 30 && curX <= r.right + 30;
+      });
+
+      if (directlyUnder.length > 0) {
+        directlyUnder.sort((a, b) => a.rect.top - b.rect.top);
+        return directlyUnder[0];
+      }
+
+      // 2. Nearest visible element below minY
+      below.sort((a, b) => {
+        const distA = Math.hypot(a.rect.left + a.rect.width / 2 - curX, (a.rect.top - minY) * 1.2);
+        const distB = Math.hypot(b.rect.left + b.rect.width / 2 - curX, (b.rect.top - minY) * 1.2);
+        return distA - distB;
+      });
+      return below[0];
+    }
+
+    function findBestVisibleElement() {
+      const all = getAllSolidElements();
+      const visible = all.filter(item => {
+        const r = item.rect;
+        return r.top >= navSafe() + 10 && r.top <= innerHeight - R * 2.2 && r.bottom > navSafe();
+      });
+      if (visible.length === 0) return null;
+      const ideal = innerHeight * 0.45;
+      visible.sort((a, b) => Math.abs(a.rect.top - ideal) - Math.abs(b.rect.top - ideal));
+      return visible[0];
+    }
+
     const pointFor = (s) => {
       if (!s) return corner();
       if (s.fixed) {
@@ -759,20 +836,92 @@
         const r = s.el.getBoundingClientRect();
         return { x: r.left + s.relX, y: r.top + s.relY };
       }
-      const r = rectOf(s.el, s.text);
-      if (s.mode === "right") {
-        const x = r.right + 22 + R * 1.45;
-        if (x + R * 1.8 <= innerWidth - 8) return { x, y: r.top + Math.min(r.height, 70) / 2 };
-      }
-      return { x: r.right - R * 1.9, y: r.top + 3 - R };
+      // Mascot ALWAYS sits ON TOP of solid element upper edge - strictly NEVER floats
+      const r = rectOf(s.el, false);
+      const landX = clamp(r.left + r.width * 0.5, r.left + R * 1.5, r.right - R * 1.5);
+      return { x: landX, y: r.top - R + 3 };
     };
 
     const yFits = (y) => y > navSafe() && y < innerHeight - R * 1.4;
-    const corner = () => ({ x: innerWidth - R * 2.3, y: innerHeight - R * 1.4 - 12 });
+    const corner = () => {
+      const best = findBestVisibleElement();
+      if (best) {
+        const r = best.rect;
+        const landX = clamp(r.left + r.width * 0.5, r.left + R * 1.5, r.right - R * 1.5);
+        return { x: landX, y: r.top - R + 3 };
+      }
+      return { x: innerWidth - R * 2.3, y: innerHeight - R * 1.4 - 12 };
+    };
     const clampCenter = (p) => ({
       x: clamp(p.x, R * 1.7 + 6, innerWidth - R * 1.7 - 6),
       y: clamp(p.y, navSafe() + R * 1.2, innerHeight - R * 1.3 - 6),
     });
+
+    let lastScrollFallTime = 0;
+    const handleElementScrolledUp = (oldEl) => {
+      const now = performance.now();
+      if (hop && hop.isFall) return;
+      if (now - lastScrollFallTime < 320) return;
+
+      const nextTarget = findNextElementBeneath(pos.x, navSafe() + 30);
+      if (nextTarget && nextTarget.el !== oldEl) {
+        lastScrollFallTime = now;
+        const nextR = nextTarget.rect;
+        const landX = clamp(pos.x, nextR.left + R * 1.5, nextR.right - R * 1.5);
+        const landY = nextR.top - R + 3;
+
+        startFall(now, Math.max(navSafe() + 10, pos.y), landY, landX);
+        override = {
+          el: nextTarget.el,
+          relX: landX - nextR.left,
+          relY: -R + 3,
+          until: Infinity
+        };
+        spot = override;
+      } else {
+        const best = findBestVisibleElement();
+        if (best && best.el !== oldEl) {
+          lastScrollFallTime = now;
+          const bR = best.rect;
+          const landX = clamp(pos.x, bR.left + R * 1.5, bR.right - R * 1.5);
+          const landY = bR.top - R + 3;
+          startFall(now, Math.max(navSafe() + 10, pos.y), landY, landX);
+          override = {
+            el: best.el,
+            relX: landX - bR.left,
+            relY: -R + 3,
+            until: Infinity
+          };
+          spot = override;
+        } else {
+          override = null;
+        }
+      }
+    };
+
+    const handleElementScrolledDown = (oldEl) => {
+      const now = performance.now();
+      if (hop && hop.isFall) return;
+      if (now - lastScrollFallTime < 320) return;
+
+      const best = findBestVisibleElement();
+      if (best && best.el !== oldEl) {
+        lastScrollFallTime = now;
+        const bR = best.rect;
+        const landX = clamp(pos.x, bR.left + R * 1.5, bR.right - R * 1.5);
+        const landY = bR.top - R + 3;
+        startFall(now, Math.min(innerHeight - 20, pos.y), landY, landX);
+        override = {
+          el: best.el,
+          relX: landX - bR.left,
+          relY: -R + 3,
+          until: Infinity
+        };
+        spot = override;
+      } else {
+        override = null;
+      }
+    };
 
     let candCache = [], candAt = 0, candSection = -1;
     const candidates = (now) => {
@@ -783,7 +932,7 @@
           for (const s of currentSec.spots) {
             if (s.phone === false && isPhone()) continue;
             document.querySelectorAll(s.sel).forEach((el) => {
-              if (el.offsetParent !== null) candCache.push({ el, mode: s.mode, text: !!s.text });
+              if (el.offsetParent !== null) candCache.push({ el, mode: s.mode, text: false });
             });
           }
         }
@@ -795,6 +944,17 @@
 
     const chooseSpot = (now) => {
       if (override && now < override.until && (override.fixed || (override.el && document.contains(override.el)))) {
+        if (override.el) {
+          const r = override.el.getBoundingClientRect();
+          // Element went up above viewport -> detach and fall onto next object beneath it!
+          if (r.bottom < navSafe() + 30 || r.top < navSafe() - 15) {
+            handleElementScrolledUp(override.el);
+            if (override) return override;
+          } else if (r.top > innerHeight - 20) {
+            handleElementScrolledDown(override.el);
+            if (override) return override;
+          }
+        }
         return override;
       }
       override = null;
@@ -814,6 +974,13 @@
         }
       }
       if (spot && currentScore < Infinity && (currentScore < bestScore + 140 || now - spotSince < 900)) {
+        if (spot.el && document.contains(spot.el)) {
+          const sr = spot.el.getBoundingClientRect();
+          if (sr.bottom < navSafe() + 30 || sr.top < navSafe() - 15) {
+            handleElementScrolledUp(spot.el);
+            if (override) return override;
+          }
+        }
         return spot;
       }
       return best;
@@ -1171,11 +1338,6 @@
       }
     });
 
-    const testQ = new URLSearchParams(location.search).get("test_ask");
-    if (testQ) {
-      setTimeout(() => handleAsk(testQ), 800);
-    }
-
     thought.addEventListener("click", (e) => {
       if (e.target.closest(".thought__ask, .thought__chip, .thought__act, .thought__close")) return;
       stopTalking();
@@ -1220,40 +1382,7 @@
     };
 
     function findTargetUnderDrop(dropX, dropY) {
-      const selectors = [
-        ".card",
-        ".project-card",
-        ".cardflip-inner",
-        ".award-card",
-        ".award-figure",
-        ".paper-sheet",
-        ".app-window",
-        ".terminal-box",
-        ".hero-photo img",
-        ".hero-photo",
-        ".contact-row",
-        ".gitlog",
-        ".hero-cta a",
-        ".hero-cta",
-        ".hero-stats",
-        ".section-head",
-        ".btn",
-        ".exp-item",
-        ".edu-card",
-        ".pipeline"
-      ];
-
-      const elements = [];
-      for (const sel of selectors) {
-        document.querySelectorAll(sel).forEach((el) => {
-          if (el.offsetParent !== null) {
-            const rect = el.getBoundingClientRect();
-            if (rect.width > 24 && rect.height > 12) {
-              elements.push({ el, rect });
-            }
-          }
-        });
-      }
+      const elements = getAllSolidElements();
 
       // 1. Direct hit: drop point inside element bounding box
       const direct = elements.filter(item => {
@@ -1278,33 +1407,7 @@
         return below[0];
       }
 
-      // 3. Fallback: closest element below dropY horizontally
-      const anyBelow = elements.filter(item => item.rect.top >= dropY - 20);
-      if (anyBelow.length > 0) {
-        anyBelow.sort((a, b) => {
-          const distA = Math.hypot(dropX - (a.rect.left + a.rect.right) / 2, a.rect.top - dropY);
-          const distB = Math.hypot(dropX - (b.rect.left + b.rect.right) / 2, b.rect.top - dropY);
-          return distA - distB;
-        });
-        return anyBelow[0];
-      }
-
-      // 4. Closest element in viewport
-      let nearest = null;
-      let minDistance = Infinity;
-      for (const item of elements) {
-        const r = item.rect;
-        if (r.bottom > navSafe() && r.top < innerHeight) {
-          const cx = (r.left + r.right) / 2;
-          const cy = (r.top + r.bottom) / 2;
-          const dist = Math.hypot(dropX - cx, dropY - cy);
-          if (dist < minDistance) {
-            minDistance = dist;
-            nearest = item;
-          }
-        }
-      }
-      return nearest;
+      return findBestVisibleElement();
     }
 
     const handleTap = () => {
@@ -1527,6 +1630,18 @@
           if (!fastOnce) {
             fastOnce = true;
             setTimeout(() => talk("scroll_fast", { priority: 1, mood: "wow" }), 600);
+          }
+        }
+
+        if (!isDragging) {
+          const curEl = override?.el || spot?.el;
+          if (curEl && document.contains(curEl)) {
+            const r = curEl.getBoundingClientRect();
+            if (r.bottom < navSafe() + 30 || r.top < navSafe() - 15) {
+              handleElementScrolledUp(curEl);
+            } else if (r.top > innerHeight - 20) {
+              handleElementScrolledDown(curEl);
+            }
           }
         }
       });
