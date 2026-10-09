@@ -1,7 +1,7 @@
 {
   "schema": "bible-strong/avatar-definition",
   "schemaVersion": 1,
-  "name": "Grok bot",
+  "name": "Kernel",
   "body": {
     "primary": {
       "type": "sphere",
@@ -13,8 +13,8 @@
     "nodes": []
   },
   "colors": {
-    "body": "#000000",
-    "eyes": "#ffffff"
+    "body": "#1E282D",
+    "eyes": "#EAF0F3"
   },
   "expressions": {
     "neutral": {
@@ -25,20 +25,20 @@
       },
       "eyes": {
         "left": {
-          "width": 20,
-          "height": 50,
+          "width": 22,
+          "height": 42,
           "x": 0,
           "y": -7,
           "angle": 0
         },
         "right": {
-          "width": 20,
-          "height": 50,
+          "width": 22,
+          "height": 42,
           "x": 0,
           "y": -7,
           "angle": 0
         },
-        "spacing": 35
+        "spacing": 34
       },
       "perspective": 1,
       "motion": {

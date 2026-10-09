@@ -892,34 +892,6 @@
     </section>
   </main>
 
-  <!-- ============ Companion robot (free-roaming) ============ -->
-  <div class="companion" id="companion">
-    <div class="companion-inner">
-      <!-- Chat bubble -->
-      <div class="companion-panel" id="companionPanel">
-        <div class="bubble" id="companionBubble">
-          <div class="bubble-content" id="bubbleContent">Reading your environment...</div>
-          <div class="typing-indicator" id="typingIndicator" style="display: none;">
-            <span></span><span></span><span></span>
-          </div>
-          <div class="bubble-actions" id="bubbleActions" style="display: none;">
-            <button class="action-chip mono" data-action="tour">tour</button>
-            <button class="action-chip mono" data-action="projects">projects</button>
-            <button class="action-chip mono" data-action="train">train</button>
-          </div>
-        </div>
-        <form class="ask-form" id="askForm" onsubmit="event.preventDefault(); return false;">
-          <input type="text" id="askInput" class="mono" placeholder="Ask about this repo..." autocomplete="off">
-          <button type="submit" class="ask-submit" aria-label="Send">↑</button>
-        </form>
-      </div>
-      <div class="robot" id="robotBtn" role="button" tabindex="0" aria-label="AI companion, click to talk">
-        <div id="robotAvatar"></div>
-        <span class="robot-emoji" aria-hidden="true">✨</span>
-      </div>
-    </div>
-  </div>
-
   <!-- ============ TERMINAL ============ -->
   <div class="terminal-overlay" id="terminalOverlay" hidden>
     <div class="terminal" role="dialog" aria-label="Terminal">
@@ -942,18 +914,7 @@
 
   <script src="projects-data.js?v=11"></script>
   <script src="script.js?v=11"></script>
-  <script type="module">
-    import { createAvatar } from 'https://esm.sh/@bible-strong/avatar-web';
-    fetch('./grok-bot.avatar.json')
-      .then(response => response.json())
-      .then(definition => {
-        window.veeAvatar = createAvatar('#robotAvatar', { definition, defaultAnimation: 'idle', size: '100%' });
-        // Let the entrance play, then hold. Left running it redraws the SVG every
-        // frame for the life of the page, which measured at 120 layouts a second.
-        setTimeout(() => { try { window.veeAvatar.pause(); } catch { } }, 3000);
-      })
-      .catch(console.error);
-  </script>
+  <script src="guide.js?v=16"></script>
 </body>
 
 </html>

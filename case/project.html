@@ -87,52 +87,9 @@
   </p>
 </section>
 
-<!-- ============ Companion robot (free-roaming) ============ -->
-<div class="companion" id="companion">
-  <div class="companion-inner">
-    <!-- Chat bubble -->
-    <div class="companion-panel" id="companionPanel">
-      <div class="bubble" id="companionBubble">
-        <div class="bubble-content" id="bubbleContent">Reading your environment...</div>
-        <div class="typing-indicator" id="typingIndicator" style="display: none;">
-          <span></span><span></span><span></span>
-        </div>
-        <!-- Different chips to the home page on purpose. The tour and the
-             terminal only exist there, and these three are questions the
-             companion can answer about whichever project is on screen. -->
-        <div class="bubble-actions" id="bubbleActions" style="display: none;">
-          <button class="action-chip mono" data-action="how does this work">how it works</button>
-          <button class="action-chip mono" data-action="what broke while building this">what broke</button>
-          <button class="action-chip mono" data-action="what is the stack">the stack</button>
-        </div>
-      </div>
-      <form class="ask-form" id="askForm" onsubmit="event.preventDefault(); return false;">
-        <input type="text" id="askInput" class="mono" placeholder="Ask about this repo..." autocomplete="off">
-        <button type="submit" class="ask-submit" aria-label="Send">↑</button>
-      </form>
-    </div>
-    <div class="robot" id="robotBtn" role="button" tabindex="0" aria-label="AI companion, click to talk">
-      <div id="robotAvatar"></div>
-      <span class="robot-emoji" aria-hidden="true">✨</span>
-    </div>
-  </div>
-</div>
-
 <script src="../projects-data.js?v=11"></script>
 <script src="project.js?v=11"></script>
 <script src="../script.js?v=11"></script>
-<script type="module">
-  // Same avatar as the home page. The path has to be ../ from here, and getting
-  // that wrong is why the robot used to fall back to the plain emoji on these
-  // pages: setPose() bails out when window.veeAvatar was never set.
-  import { createAvatar } from 'https://esm.sh/@bible-strong/avatar-web';
-  fetch('../grok-bot.avatar.json')
-    .then(response => response.json())
-    .then(definition => {
-      window.veeAvatar = createAvatar('#robotAvatar', { definition, defaultAnimation: 'idle', size: '100%' });
-      setTimeout(() => { try { window.veeAvatar.pause(); } catch { } }, 3000);
-    })
-    .catch(console.error);
-</script>
+<script src="../guide.js?v=12"></script>
 </body>
 </html>
