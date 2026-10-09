@@ -159,8 +159,6 @@
       spots: [
         { sel: ".hero-photo img", mode: "on" },
         { sel: ".hero-photo", mode: "on" },
-        { sel: ".hero-cta a:first-child", mode: "on" },
-        { sel: ".hero-stats", mode: "on" },
       ],
     },
     {
@@ -625,7 +623,8 @@
     root.innerHTML =
       '<canvas aria-hidden="true"></canvas>' +
       '<button class="mascot__hit" type="button" aria-label="Drag or talk to the lab guide"></button>' +
-      '<button class="mascot__hide" type="button" aria-label="Hide the lab guide">✕</button>';
+      '<button class="mascot__hide" type="button" aria-label="Hide the lab guide" title="Hide mascot">✕</button>' +
+      '<button class="mascot__wake mono" type="button" aria-label="Wake up lab guide" title="Click to summon mascot">▲ wake guide</button>';
 
     const thought = document.createElement("div");
     thought.className = "thought";
@@ -663,6 +662,7 @@
     const ctx = canvas.getContext("2d");
     const hit = root.querySelector(".mascot__hit");
     const hideBtn = root.querySelector(".mascot__hide");
+    const wakeBtn = root.querySelector(".mascot__wake");
     const bubble = thought.querySelector(".thought__body");
     const textOn = thought.querySelector(".thought__text .on");
     const textOff = thought.querySelector(".thought__text .off");
@@ -674,6 +674,7 @@
 
     let R = 30, S = 162, dpr = 1;
     let bw = 0, bh = 0;
+    let hidden = false;
 
     const measureBubble = () => {
       bw = bubble.offsetWidth || 275;
@@ -690,12 +691,21 @@
       root.style.width = root.style.height = S + "px";
 
       const cy = S / 2 + R * 0.4;
-      Object.assign(hit.style, {
-        left: S / 2 - R * 1.1 + "px",
-        top: cy - R * 1.1 + "px",
-        width: R * 2.2 + "px",
-        height: R * 2.2 + "px",
-      });
+      if (hidden) {
+        Object.assign(hit.style, {
+          left: S / 2 - R * 1.5 + "px",
+          top: cy - R * 2.8 + "px",
+          width: R * 3 + "px",
+          height: R * 3.2 + "px",
+        });
+      } else {
+        Object.assign(hit.style, {
+          left: S / 2 - R * 1.1 + "px",
+          top: cy - R * 1.1 + "px",
+          width: R * 2.2 + "px",
+          height: R * 2.2 + "px",
+        });
+      }
       Object.assign(hideBtn.style, { left: S / 2 + R * 0.75 + "px", top: cy - R * 1.65 + "px" });
       measureBubble();
     };
@@ -713,7 +723,6 @@
     let thinking = false, bubbleShown = false, bubbleHover = false;
     let particles = [];
     let cursor = { x: -1e4, y: -1e4, at: -1e9 };
-    let hidden = session.get(HIDE_KEY) === "1";
     let sectionIndex = 0;
     let spot = null, spotSince = 0, spotLookEl = null;
     let override = null;
@@ -830,6 +839,7 @@
     const pointFor = (s) => {
       if (!s) return corner();
       if (s.fixed) {
+        if (s.isFloor) return { x: clamp(s.x, R * 1.6, innerWidth - R * 1.6), y: innerHeight - R * 1.4 - 10 };
         return { x: s.x, y: s.y };
       }
       if (s.relX !== undefined && s.el && document.contains(s.el)) {
@@ -1064,46 +1074,70 @@
       }
     };
 
-    // ── Dynamic Thought Cloud Placement with Anti-Collision ──
+    // ── Dynamic Thought Cloud Placement with Anti-Collision & Directional Puffs ──
     const positionBubble = () => {
       if (!bubbleShown) return;
-      const headTop = pos.y - R * 1.65;
-      const roomRight = innerWidth - pos.x - 16 >= bw + R * 0.3;
-      const roomLeft = pos.x - 16 >= bw + R * 0.3;
+      measureBubble();
 
-      let toRight = roomRight;
-      if (!roomRight && roomLeft) toRight = false;
+      const heroH1 = document.querySelector(".hero h1, .hero-inner h1");
+      const hr = heroH1 ? heroH1.getBoundingClientRect() : null;
 
-      let left = toRight ? pos.x - R * 0.3 : pos.x + R * 0.3 - bw;
-      left = clamp(left, 12, innerWidth - bw - 12);
-
-      let top = headTop - 28 - bh;
-      const below = top < navSafe();
-      if (below) top = pos.y + R * 1.25 + 28;
+      const roomAbove = (pos.y - R * 1.65 - bh - 16) >= navSafe();
+      let roomRight = (pos.x + R + 18 + bw) <= innerWidth - 16;
+      const roomLeft = (pos.x - R - 18 - bw) >= 12;
 
       // ANTI-COLLISION: Never obscure the Hero Title ("Vatsal Vaghasiya")
-      const heroH1 = document.querySelector(".hero h1, .hero-inner h1");
-      if (heroH1) {
-        const range = document.createRange();
-        range.selectNodeContents(heroH1);
-        const hr = range.getBoundingClientRect();
-        const overlapX = left < hr.right + 10 && (left + bw) > hr.left - 10;
-        const overlapY = top < hr.bottom + 4 && (top + bh) > hr.top - 4;
-        if (overlapX && overlapY) {
-          top = hr.bottom + 14;
+      if (hr && roomRight) {
+        const potentialRight = pos.x + R + 18;
+        if (potentialRight < hr.right + 12 && (potentialRight + bw) > hr.left - 12) {
+          roomRight = false;
         }
+      }
+
+      let mode = 'above';
+      let left = 0, top = 0;
+
+      if (roomAbove) {
+        mode = 'above';
+        top = pos.y - R * 1.65 - bh - 14;
+        left = clamp(pos.x - bw / 2, 16, innerWidth - bw - 16);
+      } else if (roomRight && pos.x < innerWidth * 0.55) {
+        mode = 'right';
+        left = pos.x + R + 18;
+        top = clamp(pos.y - bh * 0.45, navSafe() + 8, innerHeight - bh - 16);
+      } else if (roomLeft || pos.x >= 280) {
+        mode = 'left';
+        left = clamp(pos.x - R - bw - 18, 12, innerWidth - bw - 12);
+        top = clamp(pos.y - bh * 0.45, navSafe() + 8, innerHeight - bh - 16);
+      } else {
+        mode = 'below';
+        top = pos.y + R * 1.25 + 18;
+        left = clamp(pos.x - bw / 2, 16, innerWidth - bw - 16);
       }
 
       thought.style.transform = `translate3d(${Math.round(left)}px,${Math.round(top)}px,0)`;
 
-      const hx = pos.x - left + R * 0.1;
-      const near = clamp(hx, 20, bw - 20);
-      if (!below) {
-        puff1.style.transform = `translate(${near + (hx - near) * 0.4 - 7}px,${bh + 5}px)`;
-        puff2.style.transform = `translate(${hx - 4}px,${bh + 19}px)`;
-      } else {
-        puff1.style.transform = `translate(${near + (hx - near) * 0.4 - 7}px,-19px)`;
-        puff2.style.transform = `translate(${hx - 4}px,-31px)`;
+      // Dynamically connect puff circles linking bubble edge directly to mascot body
+      if (mode === 'above') {
+        const hx = clamp(pos.x - left, 24, bw - 24);
+        const dist = Math.max(8, pos.y - (top + bh) - R);
+        puff1.style.transform = `translate(${hx - 7}px,${bh + Math.round(dist * 0.3)}px)`;
+        puff2.style.transform = `translate(${hx - 4}px,${bh + Math.round(dist * 0.72)}px)`;
+      } else if (mode === 'below') {
+        const hx = clamp(pos.x - left, 24, bw - 24);
+        const dist = Math.max(8, top - (pos.y + R));
+        puff1.style.transform = `translate(${hx - 7}px,-${Math.round(dist * 0.3) + 7}px)`;
+        puff2.style.transform = `translate(${hx - 4}px,-${Math.round(dist * 0.72) + 4}px)`;
+      } else if (mode === 'right') {
+        const hy = clamp(pos.y - top, 20, bh - 20);
+        const dist = Math.max(8, left - (pos.x + R));
+        puff1.style.transform = `translate(-${Math.round(dist * 0.35) + 7}px,${hy - 6}px)`;
+        puff2.style.transform = `translate(-${Math.round(dist * 0.75) + 4}px,${hy - 3}px)`;
+      } else if (mode === 'left') {
+        const hy = clamp(pos.y - top, 20, bh - 20);
+        const dist = Math.max(8, (pos.x - R) - (left + bw));
+        puff1.style.transform = `translate(${bw + Math.round(dist * 0.35)}px,${hy - 6}px)`;
+        puff2.style.transform = `translate(${bw + Math.round(dist * 0.75)}px,${hy - 3}px)`;
       }
     };
 
@@ -1354,13 +1388,63 @@
     let dragStart = { x: 0, y: 0 };
     let dragPointerId = null;
 
+    const unhideMascot = () => {
+      if (!hidden) return;
+      hidden = false;
+      session.set(HIDE_KEY, "0");
+      root.classList.remove("is-peeking");
+      layout();
+      setMood("wow", null, 1200);
+      override = null;
+
+      const best = findBestVisibleElement();
+      if (best) {
+        const r = best.rect;
+        const landX = clamp(r.left + r.width * 0.5, r.left + R * 1.5, r.right - R * 1.5);
+        const landY = r.top - R + 3;
+        startFall(performance.now(), innerHeight - 20, landY, landX);
+        override = {
+          el: best.el,
+          relX: landX - r.left,
+          relY: -R + 3,
+          until: Infinity,
+        };
+        spot = override;
+      } else {
+        startHop(performance.now(), corner());
+      }
+
+      spawn("spark", 8);
+      setTimeout(() => {
+        speakDirect("I'm back! Ask me anything or drag me onto a card.", { mood: "happy", arm: "wave" });
+      }, 350);
+    };
+
+    window.wakeMascot = unhideMascot;
+
     hit.addEventListener("pointerdown", (e) => {
-      if (hidden) return;
       activity();
+      if (hidden) {
+        e.stopPropagation();
+        unhideMascot();
+        return;
+      }
       dragStart = { x: e.clientX, y: e.clientY };
       didDrag = false;
       dragPointerId = e.pointerId;
       try { hit.setPointerCapture(e.pointerId); } catch {}
+    });
+
+    wakeBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      unhideMascot();
+    });
+
+    root.addEventListener("click", (e) => {
+      if (hidden) {
+        e.stopPropagation();
+        unhideMascot();
+      }
     });
 
     const onPointerMove = (e) => {
@@ -1395,11 +1479,11 @@
       }
 
       // 2. Downward Gravity Raycast: find element directly below dropX
-      // Horizontal margin: element left - 28 <= dropX <= element right + 28
-      // Vertical margin: element top >= dropY - 20
+      // Horizontal margin: within element left/right boundaries (+ small 16px tolerance)
+      // Vertical margin: element top must be beneath dropY
       const below = elements.filter(item => {
         const r = item.rect;
-        return dropX >= r.left - 28 && dropX <= r.right + 28 && r.top >= dropY - 20;
+        return dropX >= r.left - 16 && dropX <= r.right + 16 && r.top >= dropY - 20;
       });
       if (below.length > 0) {
         // Pick the element whose top edge is closest below dropY
@@ -1407,17 +1491,14 @@
         return below[0];
       }
 
-      return findBestVisibleElement();
+      // 3. No elements directly underneath: fall straight to the bottom floor
+      return null;
     }
 
     const handleTap = () => {
       activity();
       if (hidden) {
-        hidden = false;
-        session.set(HIDE_KEY, "0");
-        root.classList.remove("is-peeking");
-        setMood("wow", null, 900);
-        jump();
+        unhideMascot();
         return;
       }
 
@@ -1474,6 +1555,7 @@
           landingY = innerHeight - R * 1.4 - 10;
           override = {
             fixed: true,
+            isFloor: true,
             x: landingX,
             y: landingY,
             until: Infinity,
@@ -1530,6 +1612,7 @@
       session.set(HIDE_KEY, "1");
       stopTalking();
       root.classList.add("is-peeking");
+      layout();
     });
 
     // ── Sections: Greet each one as visited ──
@@ -1657,7 +1740,8 @@
       // Position update
       let target;
       if (hidden) {
-        target = { x: innerWidth - R * 2.2, y: innerHeight + R * 0.45 };
+        const peekHover = finePointer && cursor.x > innerWidth - R * 4 && cursor.y > innerHeight - R * 3 && now - cursor.at < 3000;
+        target = { x: innerWidth - R * 2.6, y: peekHover ? innerHeight - R * 0.75 : innerHeight - R * 0.35 };
       } else if (isDragging) {
         target = pos;
       } else {
@@ -1733,7 +1817,8 @@
       };
 
       let want;
-      if (isDragging) want = { x: 0, y: 0.8 };
+      if (hidden) want = { x: -0.2, y: -0.9 };
+      else if (isDragging) want = { x: 0, y: 0.8 };
       else if (thinking) want = { x: pos.x > innerWidth / 2 ? -0.55 : 0.55, y: -0.85 };
       else if (sleeping) want = { x: 0, y: 0.3 };
       else if (glance && now < glance.until) want = { x: look.x * 0.5, y: glance.y };
@@ -1832,7 +1917,8 @@
     try {
       start();
     } catch (e) {
-      console.error("[Guide boot error]", e);
+      window.__lastBootError = e.stack || e.message;
+      console.error("[Guide boot error]", e.stack || e);
     }
   };
 
