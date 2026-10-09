@@ -7,6 +7,7 @@ PORTFOLIO_WEBSITE.md
 DESIGN.md
 PRODUCT.md
 references
+reference
 
 # Cloudflare Worker local artifacts (never commit these; the repo root is
 # published by GitHub Pages)

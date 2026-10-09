@@ -528,13 +528,13 @@ window.PROJECTS = [
     oneLiner: "Predicts which chatbot answer a human will prefer, using a 71M-parameter model where the winning solutions used 9B.",
     problem: "Preference models that rank chatbot answers are huge. The winning LMSYS solutions ran 9B+ parameter models on eight A100s, which the paper puts at over $100,000 of compute. I wanted to see how far a small model could get on free GPUs if the training tricks did the work instead of the scale.",
     highlights: [
-      "Siamese DeBERTa-v3-xsmall, 71M parameters, with identical encoders for both responses so the architecture itself is symmetric.",
+      "Siamese DeBERTa-v3-xsmall, 71.3M parameters, with identical encoders for both responses so the architecture itself is symmetric.",
       "Swap augmentation doubles the training data and removes the position bias, where the model prefers whichever answer came first.",
-      "Validation log loss 0.9871, a 6.2% relative improvement on the baselines, with 127× fewer parameters.",
-      "52.06% accuracy on the three-class problem, up 3.5 percentage points.",
+      "Held-out log loss 1.0384 on 8,000 held-out LMSYS Chatbot Arena interactions, with ≈127× fewer parameters than 9B+ Kaggle solutions.",
+      "46.40% accuracy on the three-class problem on the held-out set.",
       "Post-hoc temperature scaling at T = 1.20 corrects about 20% overconfidence.",
-      "30% of the training data already reaches 95.1% of peak performance.",
-      "Whole pipeline trains in 8.4 hours on two free Kaggle T4s. 57,477 pairwise human preferences from LMSYS Chatbot Arena."
+      "Flip consistency 0.825 → 0.920 with swap augmentation, against a duplicate-augmentation control.",
+      "Trained on two Tesla T4 GPUs across 12,000 interactions, 3 epochs."
     ],
     learned: "Swap augmentation bought more accuracy than a bigger model would have — it killed the position bias directly.",
     stack: ["DeBERTa-v3", "PyTorch", "free T4 GPUs"],

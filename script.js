@@ -97,6 +97,17 @@ document.querySelectorAll('.card-flip').forEach(card => {
   });
 });
 
+// Keyboard accessibility for cards with role="link"
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    const linkEl = e.target && e.target.closest ? e.target.closest('[role="link"]') : null;
+    if (linkEl && !linkEl.closest('a')) {
+      e.preventDefault();
+      linkEl.click();
+    }
+  }
+});
+
 // ============ Nav: current section ============
 // ISSUE 17 — the top nav is nine links over a document that measures 11,162px
 // and it had no current state, so it was a jump list rather than an orientation
@@ -628,7 +639,7 @@ const ACTIONS = [
   [/^(flip|open|read)( the)? paper/i, () => {
     goToSection('research');
     setPose('playful');
-    say("Both are on the page, numbers and all. The PDFs are one click.", true);
+    say("The paper is on the page, numbers and all. The PDF is one click.", true);
   }],
   [/^open github/i, () => { window.open('https://github.com/Vatsal057', '_blank'); say("Opening his GitHub. Judge the commits yourself.", true); }],
   [/^open linkedin/i, () => { window.open('https://www.linkedin.com/in/vatsal-vaghasiya/', '_blank'); say("LinkedIn. He's less funny there.", true); }],
@@ -862,8 +873,9 @@ const PROJECT_FILES = {
   'glide':        'Glide - custom 3/4/5-finger trackpad gestures.\n  speed-aware actions · reciprocal undo · haptics · IOKit multitouch',
   'dimmer':       'Dimmer - dims displays below hardware minimum.\n  overlay windows · multi-monitor · menu bar app · Swift',
   'photowidget':  'PhotoWidget - your photos as desktop widgets.\n  4 sizes · per-widget photo choice · WidgetKit + AppIntents',
+  'media-manager':'Media Manager - tidies photo library with verifiable Undo.\n  Swift · SwiftUI · ffmpeg · Core Location',
   'wardrobe':     'Smart Wardrobe - AI outfit suggestions.\n  weather + occasion + wash history · cost-per-wear analytics · Flutter, all local',
-  'career-os':    'AI Career OS - career operating system.\n  explainable readiness scoring · in-browser Python (Pyodide) · ATS resume scorer · Next.js',
+  'preference-prediction': 'Efficient LLM Preference Classification.\n  Siamese DeBERTa-v3-xsmall · held-out log loss 1.0384 · 46.40% acc · 2× Tesla T4s',
 };
 const HELP = `available commands:
   <span class="t-sage">about</span>          who is this guy
@@ -916,11 +928,12 @@ if (overlay && termOut && termInput && termBody) {
     openTerminal();
     runCommand('train');
   });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === '`' && e.ctrlKey) { e.preventDefault(); overlay.hidden ? openTerminal() : closeTerminal(); }
+    if (e.key === 'Escape' && !overlay.hidden) closeTerminal();
+  });
 }
-document.addEventListener('keydown', e => {
-  if (e.key === '`' && e.ctrlKey) { e.preventDefault(); overlay.hidden ? openTerminal() : closeTerminal(); }
-  if (e.key === 'Escape' && !overlay.hidden) closeTerminal();
-});
 
 const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 
@@ -945,10 +958,9 @@ Builds ML systems end to end and ships working software.
       tprint(Object.keys(PROJECT_FILES).map(k => `<span class="t-sage">${k}/</span>`).join('  ') +
         `\n<span class="t-dim">13 total. try: cat rag</span>`); break;
     case 'apps':
-      tprint(`macOS: <span class="t-sage">insomniac glide dimmer photowidget</span>
+      tprint(`macOS: <span class="t-sage">insomniac glide dimmer photowidget media-manager</span>
 mobile: <span class="t-sage">scribbletype wardrobe cachy</span>
-web:    <span class="t-sage">career-os</span>
-<span class="t-dim">all native swift · try: cat glide</span>`); break;
+<span class="t-dim">try: cat glide</span>`); break;
     case 'cat': {
       const key = arg.replace(/\/$/, '');
       tprint(PROJECT_FILES[key] ? esc(PROJECT_FILES[key]) : `cat: ${esc(arg) || '?'}: no such file. try: projects`, PROJECT_FILES[key] ? '' : 't-err'); break;
@@ -957,7 +969,7 @@ web:    <span class="t-sage">career-os</span>
     case 'paper':
       tprint(`[1] Efficient LLM Preference Classification - Siamese DeBERTa
     Vaghasiya, Kshetrimayum, Prabadevi, Prathap  <span class="t-dim">(first author)</span>
-    log loss 0.9871, -6.2% rel · 127× fewer params · 8.4h on free T4s
+    log loss 1.0384 · 46.40% acc · 127× fewer params · 2× Tesla T4s
     <span class="t-amber">under review</span> · papers/efficient-llm-preference-classification.pdf`); break;
     case 'skills':
       tprint(`Python        ██████████████████░░  90%

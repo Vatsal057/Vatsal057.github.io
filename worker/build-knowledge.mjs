@@ -164,7 +164,9 @@ add('meta:contact', 'Contact', 'meta', [
 // ---------- 5. narrative sections from index.html ----------
 const html = readFileSync(join(ROOT, 'index.html'), 'utf8');
 for (const id of HTML_SECTIONS) {
-  const re = new RegExp(`<section[^>]*id=["']${id}["'][^>]*>([\\s\\S]*?)<\\/section>`, 'i');
+  const isSec = new RegExp(`<section[^>]*id=["']${id}`, 'i').test(html);
+  const tag = isSec ? 'section' : 'div';
+  const re = new RegExp(`<${tag}[^>]*id=["']${id}["'][^>]*>([\\s\\S]*?)<\\/${tag}>`, 'i');
   const m = html.match(re);
   if (!m) { warnings.push(`index.html section not found: #${id}`); continue; }
   const text = stripHtml(m[1]);
